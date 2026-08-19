@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* Palette reprise de la maquette « Refonte Wizerd UI ». Les noms de jetons
+   sont inchangés : les seize sections adoptent la nouvelle identité sans être
+   réécrites. Les valeurs, elles, viennent toutes du fichier de design. */
+@theme {
+  --color-fond: #ffffff;
+  /* leads : --color-surface */
+  --color-fond-2: #f3f5f2;
+  /* leads : --color-encre */
+  --color-encre: #0f1d17;
+
+  /* leads : --color-texte2. 6,87:1 sur blanc, 6,27:1 sur --color-fond-2. */
+  --color-encre-2: #4a5f54;
+  /* Le texte secondaire des fonds teintés : 7,49:1 sur --color-tendre. */
+  --color-encre-3: #3a4d43;
+
+  /* leads : --color-ligne */
+  --color-trait: #e3ebe4;
+  /* leads : --color-emeraude — 5,08:1 avec du blanc, aplat de bouton compris. */
+  --color-primaire: #177e4f;
+  --color-primaire-2: #12603c;
+
+  /* leads : --color-lueur. Décorative uniquement — 1,43:1 sur blanc, elle ne
+     porte que le dégradé du trait sous le titre du hero, qui est aria-hidden. */
+  --color-accent: #9be8c0;
+
+  /* leads : --color-sapin */
+  --color-sombre: #14402f;
+  --color-sur-sombre: #ffffff;
+  --color-vif: #177e4f;
+  --color-sur-vif: #ffffff;
+  /* Plus clair que le bloc, comme dans la maquette, mais pas au point de perdre
+     le seuil : 4,65:1 avec du blanc, contre 5,08 pour le bloc. */
+  --color-vif-encart: #188553;
+  --color-tendre: #dceee4;
+  --color-carte: #ffffff;
+  /* La pastille « disponible » de la maquette. Sur un site vert, elle ne se lit
+     plus comme un signal distinct — le libellé qui la suit porte le sens. */
+  --color-signal: #22c55e;
+
+  /* Les quatre rayons de cartes de la maquette : 22, 24, 26 et 30 px. */
+  --radius-offre: 1.375rem;
+  --radius-avis: 1.5rem;
+  --radius-carte: 1.625rem;
+  --radius-carte-large: 1.875rem;
+  /* Le geste signature de la maquette : chaque bloc monte sur le précédent. */
+  --radius-bloc: 2.5rem;
+  --radius-pilule: 9999px;
+  /* Le rayon de la pastille du logo, valeur de la maquette. */
+  --radius-marque: 0.8125rem;
+
+}
+
+/* L'entrée du hero est en CSS et non en JS : c'est l'élément le plus haut de la
+   page. Animé par `motion`, il serait rendu à `opacity: 0` dans le HTML
+   statique et n'apparaîtrait qu'à l'hydratation. `motion-safe:` porte déjà la
+   préférence de mouvement réduit — sans elle, la règle ne s'applique pas et le
+   contenu reste simplement visible.
+
+   Les deux défilements servent les bandes de la maquette. Ils translatent la
+   moitié d'une liste doublée : c'est ce qui rend la boucle invisible. */
+@theme {
+  --animate-entree-hero: entree-hero 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-defilement: defilement 34s linear infinite;
+  --animate-defilement-inverse: defilement-inverse 30s linear infinite;
+
+  @keyframes entree-hero {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes defilement {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes defilement-inverse {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+/* Les variables --font-bricolage, --font-outfit et --font-plex-mono sont posées
+   par next/font dans app/[langue]/layout.tsx — invariant entre les trois.
+   Bricolage Grotesque pour les titres, Outfit pour le corps : c'est le couple
+   de la maquette de référence. Le crénage négatif du bloc `base` ci-dessous
+   fait autant que la police elle-même dans son allure. */
+@theme inline {
+  --font-titre: var(--font-bricolage, sans-serif);
+  /* Bricolage porte tout : titres, libellés, boutons, navigation, listes. */
+  --font-corps: var(--font-bricolage, sans-serif);
+  /* Outfit ne garde que les paragraphes descriptifs — c'est là que Bricolage,
+     dessinée pour les grandes tailles, se lit le moins bien. */
+  --font-description: var(--font-outfit, sans-serif);
+  --font-mono: var(--font-plex-mono, ui-monospace, monospace);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    /* Aucun décalage : l'en-tête n'est pas collé (voir en-tete.tsx), donc
+       rien ne recouvre la cible d'une ancre. */
+    scroll-padding-top: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-fond);
+    color: var(--color-encre);
+    font-family: var(--font-corps);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Le crénage négatif de la maquette ne vaut que pour les grandes tailles :
+     appliqué au petit texte, il le rendrait illisible. Les valeurs sont celles
+     converties en em pour suivre la taille. Les h2 partagent la valeur du h1 :
+     la référence les distingue, le client les veut identiques. Le resserrement
+     des mots vient en plus — la référence n'en pose pas. */
+  h1,
+  h2 {
+    letter-spacing: -0.075em;
+    word-spacing: -0.04em;
+  }
+}

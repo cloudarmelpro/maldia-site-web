@@ -75,11 +75,32 @@ La racine est donc un fichier statique, `public/index.html`, qui porte :
 
 - les trois déclarations `hreflang` — `fr`, `en`, `x-default` sur lui-même ;
 - une redirection par `<meta http-equiv="refresh" content="0; url=/fr/">` ;
-- une détection de langue du navigateur en JavaScript, qui envoie vers `/en/`
-  quand c'est la langue préférée ;
-- deux liens visibles vers les deux versions, pour qui n'a pas de JavaScript.
+- deux liens visibles vers les deux versions, si le rafraîchissement échoue.
 
 Ce n'est pas un choix élégant, c'est le seul disponible sans serveur.
+
+## Le français est la langue par défaut
+
+La racine mène toujours à `/fr/`, quelle que soit la langue du navigateur.
+
+Une première version lisait `navigator.language` et envoyait l'anglophone vers
+`/en/`. Écarté pour trois raisons.
+
+Le marché principal est francophone : Québec, Canada francophone, France,
+Belgique, Suisse, Luxembourg, Monaco. La détection sert donc l'exception, et
+elle la sert mal — un anglophone au Québec est exactement le cas où le réglage
+du navigateur ne dit rien de la langue voulue.
+
+Elle rend `x-default` faux. Cette balise désigne la version servie à qui ne
+correspond à aucune langue. Si la racine devine, elle ne sert plus une version
+neutre, elle sert le résultat de la devinette.
+
+Elle n'apporte rien au référencement : un robot ne déclare pas de préférence de
+langue et suivait déjà `/fr/`. Les deux versions restent découvertes par les
+déclarations `hreflang`, pas par la racine.
+
+Le visiteur anglophone change de langue par le sélecteur, qui inscrit son choix
+dans l'adresse — partageable, indexable, et stable au retour.
 
 ## Ce qu'on a écarté
 

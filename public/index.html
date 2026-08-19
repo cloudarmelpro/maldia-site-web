@@ -1,7 +1,11 @@
 <!doctype html>
 <!-- Routeur de langue (décision 0014) : l'hébergement mutualisé ne permet aucune
      redirection côté serveur (décision 0013), la racine est donc ce fichier.
-     Il est la cible x-default des déclarations hreflang du site. -->
+     Il est la cible x-default des déclarations hreflang du site.
+
+     Le français est la langue par défaut : la racine y mène toujours, quelle que
+     soit la langue du navigateur. Le visiteur anglophone passe par le sélecteur
+     du pied de page, qui conserve son choix dans l'adresse. -->
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
@@ -10,15 +14,10 @@
     <link rel="alternate" hreflang="fr" href="https://agencemaldia.com/fr/" />
     <link rel="alternate" hreflang="en" href="https://agencemaldia.com/en/" />
     <link rel="alternate" hreflang="x-default" href="https://agencemaldia.com/" />
-    <script>
-      // S'exécute pendant l'analyse du document, donc avant le meta refresh
-      // ci-dessous ; location.replace ne laisse pas cette page dans l'historique.
-      var langue = (navigator.languages && navigator.languages[0]) || navigator.language || ''
-      location.replace(/^en\b/i.test(langue) ? '/en/' : '/fr/')
-    </script>
     <meta http-equiv="refresh" content="0; url=/fr/" />
   </head>
   <body>
+    <!-- Servis si le meta refresh échoue : les deux langues restent atteignables. -->
     <p>
       <a href="/fr/">Français</a>
       <a href="/en/">English</a>

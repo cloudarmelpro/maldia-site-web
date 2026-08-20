@@ -21,8 +21,11 @@ export function Hero({ contenu }: { contenu: Contenu['accueil']['hero'] }) {
   return (
     <section aria-labelledby="titre-hero" className="bg-fond px-6 pt-20 pb-4">
       <div className="mx-auto flex w-full flex-col items-center gap-7 text-center motion-safe:animate-entree-hero">
-        <p className="inline-flex flex-wrap items-center justify-center gap-3.5 rounded-pilule border border-trait bg-carte px-5 py-2">
-          <span aria-hidden className="flex pl-2">
+        {/* Toujours une rangée : c'est le texte seul qui se replie, pas la
+            pastille. Avec `flex-wrap`, le filet vertical partait seul à droite
+            des avatars et séparait une ligne de rien. */}
+        <p className="inline-flex items-center gap-3 rounded-[1.5rem] border border-trait bg-carte px-4 py-2.5 sm:gap-3.5 sm:rounded-pilule sm:px-5 sm:py-2">
+          <span aria-hidden className="flex shrink-0 pl-2">
             {AVATARS.map((couleur) => (
               <span
                 key={couleur}
@@ -31,8 +34,9 @@ export function Hero({ contenu }: { contenu: Contenu['accueil']['hero'] }) {
               />
             ))}
           </span>
-          <span aria-hidden className="h-5 w-px bg-trait" />
-          <span className="font-description text-[0.9375rem] text-encre-2">
+          {/* Le filet ne sépare que deux éléments côte à côte sur une ligne. */}
+          <span aria-hidden className="hidden h-5 w-px shrink-0 bg-trait sm:block" />
+          <span className="text-left font-description text-fluide-bouton leading-[1.35] text-encre-2 sm:leading-normal">
             {contenu.pastille.avant}
             <strong className="font-semibold text-encre">{contenu.pastille.misEnAvant}</strong>
             {contenu.pastille.apres}
@@ -69,7 +73,7 @@ export function Hero({ contenu }: { contenu: Contenu['accueil']['hero'] }) {
           </span>
         </h1>
 
-        <p className="flex flex-col font-description text-lg leading-normal text-encre-2">
+        <p className="flex flex-col font-description text-fluide-corps leading-normal text-encre-2">
           <span>{sous1}</span>
           <span>{sous2}</span>
         </p>
@@ -83,7 +87,7 @@ export function Hero({ contenu }: { contenu: Contenu['accueil']['hero'] }) {
 
         {/* La mention et sa flèche manuscrite, calées à gauche du visuel. */}
         <div className="flex w-full max-w-[1000px] justify-center lg:justify-start lg:pl-16">
-          <span className="flex items-center gap-1.5 font-description text-[1.0625rem] text-encre-2">
+          <span className="flex items-center gap-1.5 font-description text-fluide-mention text-encre-2">
             {contenu.mention}
             <svg viewBox="0 0 66 34" aria-hidden className="mt-1.5 h-9 w-[4.5rem] overflow-visible">
               <path

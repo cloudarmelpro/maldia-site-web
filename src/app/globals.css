@@ -52,6 +52,28 @@
 
 }
 
+/* Échelle fluide, calée sur le titre du hero.
+
+   Le titre est en clamp(2.375rem, 4.9vw, 4.625rem) : il grandit avec la
+   fenêtre. Les textes qui l'entourent étaient figés en pixels, et le rapport
+   entre eux ne tenait donc qu'à une largeur.
+
+   Chaque jeton est une droite passant par (768 px, valeur actuelle) et
+   (1920 px, valeur haute) — le terme en rem est l'ordonnée à l'origine, le
+   terme en vw la pente. La forme `rem + vw` et non `vw` seul : en vw pur, la
+   valeur n'atteint son minimum que très tard et le texte reste figé sur toute
+   la plage des portables.
+
+   Le minimum est la valeur d'aujourd'hui : rien ne rétrécit à aucune largeur.
+   Le maximum est atteint à 1920 px, au-delà duquel agrandir encore n'aide plus
+   à lire. */
+@theme {
+  --text-fluide-corps: clamp(1.125rem, 1.0417rem + 0.1736vw, 1.25rem);
+  --text-fluide-mention: clamp(1.0625rem, 0.9792rem + 0.1736vw, 1.1875rem);
+  --text-fluide-bande: clamp(1.3125rem, 1.1875rem + 0.2604vw, 1.5rem);
+  --text-fluide-bouton: clamp(0.875rem, 0.8125rem + 0.1302vw, 0.96875rem);
+}
+
 /* L'entrée du hero est en CSS et non en JS : c'est l'élément le plus haut de la
    page. Animé par `motion`, il serait rendu à `opacity: 0` dans le HTML
    statique et n'apparaîtrait qu'à l'hydratation. `motion-safe:` porte déjà la

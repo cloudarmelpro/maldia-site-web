@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test'
 
 import { chemin, LANGUES, PAGES } from '@/content/langues'
 import { CONTENUS } from '@/content/contenus'
+import { sansPhotosDistantes } from './photos-distantes'
 
 // WEB-11 exige un menu de six entrees et un « Accueil » qui ramene toujours a la
 // page principale. Une classe Tailwind ne le prouve pas : il faut cliquer.
@@ -19,6 +20,10 @@ for (const langue of LANGUES) {
   const { navigation } = CONTENUS[langue].commun.enTete
 
   test.describe(`navigation ${langue}`, () => {
+    test.beforeEach(async ({ page }) => {
+      await sansPhotosDistantes(page)
+    })
+
     test('chaque entree du menu mene a sa page', async ({ page, viewport }) => {
       const largeur = viewport?.width ?? RUPTURE_MENU
 

@@ -40,7 +40,10 @@ export function BlogArticle({
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center motion-safe:animate-entree-hero">
             <Link
               href={chemin(langue, 'blog')}
-              className="inline-flex min-h-11 items-center gap-2 font-description text-[0.9375rem] text-encre-2 hover:text-primaire focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaire"
+              // min-h-12 et non min-h-11 : posee exactement a 44 px, la cible
+              // tombe sous le seuil au sous-pixel pres selon les metriques de
+              // la police chargee.
+              className="inline-flex min-h-12 items-center gap-2 font-description text-[0.9375rem] text-encre-2 hover:text-primaire focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaire"
             >
               <ArrowLeft aria-hidden className="size-4" />
               {blog.retour}

@@ -18,11 +18,23 @@ const DESTINATIONS: Record<Destination, string> = {
 
 type Variante = 'primaire' | 'contour' | 'inverse' | 'contour-clair'
 
+// La geometrie de l'appel suit la meme droite que l'echelle de texte : elle
+// croit de 768 a 1920 px, puis s'arrete.
+//
+// Le plancher de 2,8125rem vaut 45 px, et c'est un plancher dur : sous 768 px la
+// cible tactile doit tenir 44 px, et une borne posee exactement au seuil tombe
+// en dessous au sous-pixel pres. Le bouton ne peut donc pas etre rapetissi
+// davantage sur telephone — seule la plage haute reste reglable.
+const HAUTEUR_APPEL = 'min-h-[clamp(2.8125rem,2.7708rem+0.0868vw,2.875rem)]'
+
+const TAILLE_APPEL =
+  `${HAUTEUR_APPEL} min-w-11 px-[clamp(1rem,0.8333rem+0.3472vw,1.25rem)] text-fluide-bouton`
+
 // La transition est restreinte aux couleurs de surface : la liste
 // `transition-colors` de Tailwind inclut outline-color, et l'anneau de focus
 // mettrait la durée de la transition à devenir visible.
 const BASE =
-  'inline-flex min-h-[2.875rem] min-w-11 items-center justify-center rounded-pilule px-5 font-description text-[0.9375rem] font-normal whitespace-nowrap transition-[color,background-color,border-color] focus-visible:outline-2 focus-visible:outline-offset-2'
+  `inline-flex items-center justify-center rounded-xl font-description font-normal whitespace-nowrap transition-[color,background-color,border-color] focus-visible:outline-2 focus-visible:outline-offset-2 ${TAILLE_APPEL}`
 
 const VARIANTES: Record<Variante, string> = {
   primaire: 'bg-primaire text-fond hover:bg-primaire-2 focus-visible:outline-encre',
@@ -34,8 +46,10 @@ const VARIANTES: Record<Variante, string> = {
     'border-[1.5px] border-carte/35 text-sur-vif hover:bg-carte/15 focus-visible:outline-carte',
 }
 
+// Sans aplat, donc sans gouttiere horizontale : la pastille n'a pas de surface
+// a remplir, seulement une hauteur de cible a tenir.
 const PASTILLE =
-  'inline-flex min-h-[2.875rem] min-w-11 items-center gap-2.5 font-description text-[0.9375rem] font-normal whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2'
+  `inline-flex ${HAUTEUR_APPEL} min-w-11 items-center gap-2.5 font-description text-fluide-bouton font-normal whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2`
 
 export function Bouton({
   destination,

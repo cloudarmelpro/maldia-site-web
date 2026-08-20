@@ -119,7 +119,7 @@ export function EnTete({
             <Bouton
               destination="rendezVous"
               libelle={contenu.cta}
-              className="w-full rounded-[0.75rem]"
+              className="w-full"
             />
             <div className="flex flex-wrap items-center justify-between gap-4">
               {/* Décoratifs tant que les comptes ne sont pas fournis. */}

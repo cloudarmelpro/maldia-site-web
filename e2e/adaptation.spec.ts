@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test'
 
 import { identifiantsArticles } from '@/content/articles'
 import { chemin, cheminArticle, LANGUES, PAGES } from '@/content/langues'
+import { sansPhotosDistantes } from './photos-distantes'
 
 // WEB-9 demande « adapté au mobile ». Ces mesures sont ce que cette phrase veut dire
 // concrètement — et leur pendant grand écran, que le cahier ne nomme pas mais que
@@ -27,6 +28,10 @@ const CARACTERES_PAR_LIGNE_MAXIMUM = 90
 
 for (const adresse of CHEMINS) {
   test.describe(adresse, () => {
+    test.beforeEach(async ({ page }) => {
+      await sansPhotosDistantes(page)
+    })
+
     test('aucun débordement horizontal', async ({ page }) => {
       await page.goto(adresse)
 

@@ -49,3 +49,6 @@ next-env.d.ts
 /playwright-report/
 
 .vercel
+
+# Dossier de mesures et de captures, jamais versionne.
+.apercu/

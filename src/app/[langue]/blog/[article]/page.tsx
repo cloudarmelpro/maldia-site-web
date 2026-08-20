@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { articleParIdentifiant, ARTICLES } from '@/content/articles'
+import { articleParIdentifiant, ARTICLES, autresArticles } from '@/content/articles'
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
@@ -57,7 +57,13 @@ export default async function PageArticle({ params }: PageProps<'/[langue]/blog/
   return (
     <Gabarit langue={langue} page="blog" article={article.identifiant} contenu={contenu}>
       {(enTete) => (
-        <BlogArticle article={article} contenu={contenu} langue={langue} enTete={enTete} />
+        <BlogArticle
+          article={article}
+          autres={autresArticles(langue, article.identifiant)}
+          contenu={contenu}
+          langue={langue}
+          enTete={enTete}
+        />
       )}
     </Gabarit>
   )

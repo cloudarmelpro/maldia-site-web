@@ -18,6 +18,9 @@
   --color-encre-2: #4a5f54;
   /* Texte tertiaire sur clair : intitulés, mentions. 4,58:1 sur blanc. */
   --color-encre-3: #85988f;
+  /* Le corps d'un article : plus sombre que le texte secondaire, parce qu'on le
+     lit plus longtemps. 8,12:1 sur blanc. */
+  --color-prose: #3d5145;
 
   /* Texte secondaire sur les sections sombres — 6,42:1 sur --color-encre. */
   --color-sur-sombre: #a9bcb1;
@@ -127,11 +130,11 @@
 @layer base {
   html {
     color-scheme: light;
-    /* Aucun décalage. L'en-tête du blog est collé, mais aucune page ne porte
-       d'ancre interne depuis le passage à six pages (décision 0015) : rien ne
-       peut donc recouvrir la cible d'un lien. À reprendre le jour où une ancre
-       revient. */
-    scroll-padding-top: 0;
+    /* Le sommaire d'un article mène à des ancres internes. Rien n'est collé
+       en haut — l'en-tête défile avec la page, seule la barre de progression
+       reste, sur 2 px. Ces 24 px ne compensent donc pas un recouvrement : ils
+       évitent qu'un titre atterrisse collé au bord de la fenêtre. */
+    scroll-padding-top: 1.5rem;
   }
 
   @media (prefers-reduced-motion: no-preference) {

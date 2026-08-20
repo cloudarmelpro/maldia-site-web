@@ -118,6 +118,39 @@ une adresse publiée ne se change plus, l'hébergement ne redirigeant pas
 (décision 0013). Les articles gagnent en revanche une catégorie et une durée de
 lecture, que le design affiche.
 
+## La page d'article
+
+`Article Maldia.dc.html` couvre le détail d'un article. Son en-tête et sa
+clôture sont écartés comme ceux du blog : le site garde ceux de l'accueil.
+
+**La barre de progression de lecture est reprise.** Deux pixels de vert en haut
+de la fenêtre, dont la largeur suit la position dans la page. Le design la pose
+dans son en-tête collé ; ici l'en-tête défile avec la page, donc la barre est
+`fixed` en haut de la fenêtre — posée dans l'en-tête, elle disparaîtrait au
+premier défilement, c'est-à-dire au moment où elle sert.
+
+Elle est mesurée dans une `requestAnimationFrame` et ne se redessine qu'au-delà
+de 0,4 % de variation : l'événement de défilement se déclenche bien plus souvent
+qu'une image. Et elle est `aria-hidden` — annoncée, elle interromprait la lecture
+à chaque changement de valeur sans rien apprendre à personne.
+
+**Le corps d'un article devient une suite de blocs typés.** Le design pose un
+chapeau, des titres de section, une citation et une liste à puces ; une suite de
+paragraphes ne peut pas porter ça sans deviner le rôle d'une chaîne à sa
+position. `BlocArticle` est une union discriminée.
+
+**Le sommaire est déduit des blocs `titre`**, dans leur ordre. Écrit à côté du
+corps, il finirait par pointer vers une section renommée ou disparue. Les ancres
+sont numérotées par rang et non tirées du texte : un titre reformulé ne casse
+alors pas un lien déjà partagé vers `#section-2`.
+
+C'est la première page du site à porter des ancres internes. `scroll-padding-top`
+passe donc de 0 à 24 px — non pour compenser un recouvrement, rien n'étant collé,
+mais pour qu'un titre n'atterrisse pas au bord de la fenêtre.
+
+La carte d'article est extraite : l'index du blog et la section « dans la même
+série » la rendaient à l'identique.
+
 ## Ce qui reste à trancher
 
 **`contact@agencemaldia.com` et « Antananarivo, Madagascar » viennent du design.**

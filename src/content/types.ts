@@ -183,6 +183,23 @@ export type IdentifiantArticle =
   | 'travailler-avec-vos-outils'
 
 /**
+ * Un bloc du corps d'un article.
+ *
+ * Une union discriminée plutôt qu'une suite de paragraphes : le design pose un
+ * chapeau, des titres de section, une citation et une liste à puces. Sans type
+ * de bloc, il faudrait deviner le rôle d'une chaîne à sa position.
+ *
+ * Le sommaire est **déduit** des blocs `titre`, jamais écrit à côté : une
+ * section renommée sans son entrée de sommaire donnerait un lien mort.
+ */
+export type BlocArticle =
+  | { readonly type: 'chapeau'; readonly texte: string }
+  | { readonly type: 'titre'; readonly texte: string }
+  | { readonly type: 'paragraphe'; readonly texte: string }
+  | { readonly type: 'citation'; readonly texte: string }
+  | { readonly type: 'liste'; readonly items: readonly string[] }
+
+/**
  * Un article du blog (WEB-15).
  *
  * `date` est en ISO, donc triable et indépendante de la langue : son affichage
@@ -197,7 +214,9 @@ export type Article = {
   readonly duree: string
   readonly titre: string
   readonly resume: string
-  readonly corps: readonly string[]
+  /** Les trois étiquettes de la ligne de signature. */
+  readonly etiquettes: readonly [string, string, string]
+  readonly corps: readonly BlocArticle[]
 }
 
 export type Articles = readonly [Article, Article, Article]
@@ -381,6 +400,26 @@ export type Contenu<L extends Langue = Langue> = {
     readonly vide: string
     readonly retour: string
     readonly publieLe: string
+    /** « de lecture », accolé à la durée dans la ligne sous le titre. */
+    readonly deLecture: string
+    /** L'intitulé du sommaire d'un article. */
+    readonly sommaire: string
+    /** Qui signe les articles. Le même pour tous — il n'y a pas d'auteur nommé. */
+    readonly auteur: {
+      readonly nom: string
+      readonly lieu: string
+    }
+    /** Le bloc sombre qui ferme le corps d'un article. */
+    readonly appelArticle: {
+      readonly titre: string
+      readonly texte: string
+      readonly cta: LibelleRendezVous<L>
+    }
+    /** La section qui suit un article : les autres articles. */
+    readonly serie: {
+      readonly intitule: string
+      readonly titre: string
+    }
     /** L'onglet qui ne filtre rien. Les autres viennent des categories des articles. */
     readonly filtreTout: string
     /** La pastille citron de l'article mis en avant. */

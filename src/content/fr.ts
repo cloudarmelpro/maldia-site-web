@@ -440,6 +440,21 @@ export const fr: Contenu<'fr'> = {
     vide: 'Les premiers articles arrivent bientôt.',
     retour: 'Tous les articles',
     publieLe: 'Publié le',
+    deLecture: 'de lecture',
+    sommaire: 'Sommaire',
+    auteur: {
+      nom: 'Équipe Maldia',
+      lieu: 'Antananarivo',
+    },
+    appelArticle: {
+      titre: 'Vous voulez chiffrer un poste précis ?',
+      texte: 'Nous vous donnons une fourchette pendant l’appel, sans engagement.',
+      cta: 'Prendre rendez-vous',
+    },
+    serie: {
+      intitule: 'À lire',
+      titre: 'Dans la même série',
+    },
     filtreTout: 'Tout',
     aLaUne: 'À la une',
     suite: {

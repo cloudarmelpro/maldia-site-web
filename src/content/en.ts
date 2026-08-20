@@ -445,6 +445,21 @@ export const en: Contenu<'en'> = {
     vide: 'The first articles are on their way.',
     retour: 'All articles',
     publieLe: 'Published on',
+    deLecture: 'read',
+    sommaire: 'Contents',
+    auteur: {
+      nom: 'The Maldia team',
+      lieu: 'Antananarivo',
+    },
+    appelArticle: {
+      titre: 'Want a figure for a specific role?',
+      texte: 'We give you a range during the call, with no commitment.',
+      cta: 'Book a call',
+    },
+    serie: {
+      intitule: 'Further reading',
+      titre: 'In the same series',
+    },
     filtreTout: 'All',
     aLaUne: 'Featured',
     suite: {

@@ -16,9 +16,13 @@ const ALLURES: Record<Allure, string> = {
  * Une bande defilante. Entierement en CSS : aucun etat, aucun effet, donc aucun
  * composant client — et elle reste lisible sans JavaScript.
  *
- * La liste est rendue deux fois et l'animation translate de la moitie : c'est
- * ce qui rend la boucle invisible. Le second exemplaire est masque aux lecteurs
- * d'ecran, sinon chaque libelle serait annonce en double.
+ * **Passer la liste une seule fois.** C'est ce composant qui la double, et
+ * l'animation translate de la moitie : c'est ce qui rend la boucle invisible.
+ * Une liste deja doublee par l'appelant produit quatre exemplaires et des cles
+ * React repetees — React n'y garantit alors plus l'identite des enfants.
+ *
+ * Le second exemplaire est masque aux lecteurs d'ecran, sinon chaque libelle
+ * serait annonce en double.
  *
  * `motion-safe:` coupe le defilement quand le visiteur reduit le mouvement — une
  * bande qui defile sans fin est le pire cas pour un trouble vestibulaire.

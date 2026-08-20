@@ -109,7 +109,7 @@ export function Pourquoi({
             <div className="flex flex-col gap-5.5">
               <span className="etiquette tracking-[0.1em] text-encre-3">{marches.intitule}</span>
               <Defilement
-                items={[...marches.liste, ...marches.liste]}
+                items={marches.liste}
                 className={MASQUE_BANDE}
                 rendu={(marche) => (
                   <span className="flex items-center gap-[clamp(1.5rem,2.6vw,2.375rem)] pr-[clamp(1.5rem,2.6vw,2.375rem)] font-titre text-[clamp(1.25rem,1.9vw,1.75rem)] tracking-[-0.035em] whitespace-nowrap text-encre">

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { CONTENUS } from '@/content/contenus'
 import { LANGUES, PAGES } from '@/content/langues'
+import { OUTILS } from '@/content/outils'
 
 // La parite de STRUCTURE est tenue par les tuples de types.ts : une entree en
 // plus ou en moins dans une seule langue ne compile pas. Ce qu'aucun type ne
@@ -99,5 +100,24 @@ describe('WEB-14 — le bandeau des outils', () => {
     // un partenariat officiel.
     expect(CONTENUS.fr.commun.base.mention).toMatch(/partenaire/i)
     expect(CONTENUS.en.commun.base.mention).toMatch(/partner/i)
+  })
+})
+
+describe('les bandes defilantes', () => {
+  // `Defilement` rend chaque liste deux fois et cle sur la valeur. Un doublon
+  // dans la liste donne donc deux enfants de meme cle, et React n'y garantit
+  // plus l'identite des elements. La contrainte porte sur la donnee, pas sur le
+  // composant : c'est ici qu'elle se verifie.
+  it('aucun marche n est en double', () => {
+    for (const langue of LANGUES) {
+      const liste = CONTENUS[langue].commun.marches.liste
+      expect(new Set(liste).size, `${langue} : ${liste.join(', ')}`).toBe(liste.length)
+    }
+  })
+
+  it('aucun outil n est en double dans sa rangee', () => {
+    OUTILS.forEach((rangee, indice) => {
+      expect(new Set(rangee).size, `rangee ${indice} : ${rangee.join(', ')}`).toBe(rangee.length)
+    })
   })
 })

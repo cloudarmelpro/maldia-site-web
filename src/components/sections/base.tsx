@@ -71,7 +71,7 @@ export function Base({
                 {OUTILS.map((rangee, indice) => (
                   <Defilement
                     key={indice}
-                    items={[...rangee, ...rangee]}
+                    items={rangee}
                     allure={ALLURES[indice]}
                     rendu={(outil) => (
                       <span className="mr-2.5 grid h-11.5 place-items-center rounded-bloc border border-trait bg-white px-4.5 etiquette tracking-[0.06em] whitespace-nowrap normal-case text-encre-2">

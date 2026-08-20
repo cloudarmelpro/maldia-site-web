@@ -6,10 +6,6 @@ import { Defilement, MASQUE_BANDE } from '@/components/shared/defilement'
 import { Pilule } from '@/components/shared/pilule'
 import { BAS_COURT, GRILLE_INTITULE, Section } from '@/components/shared/section'
 
-// Les trois pastilles decoratives du design. Elles ne representent personne,
-// d'ou l'absence de tout libelle.
-const AVATARS = ['#e7c9a9', '#c9b7e8', '#b7c6e8']
-
 /**
  * WEB-12 — l'argumentaire chiffre, dans la mise en page du design.
  *
@@ -32,18 +28,6 @@ export function Pourquoi({
       <div className={GRILLE_INTITULE}>
         <Apparition className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
           <Pilule intitule={contenu.intitule} registre="clair" />
-          {/* Les pastilles restent en bas de la colonne d'intitule, comme dans
-              le design — au-dessus de 1000 px seulement, sinon elles se
-              retrouveraient collees au titre. */}
-          <span aria-hidden className="hidden pl-2 large:flex large:mt-[clamp(5rem,9vw,9.25rem)]">
-            {AVATARS.map((couleur) => (
-              <span
-                key={couleur}
-                className="-ml-2 size-8.5 rounded-pilule border-2 border-white"
-                style={{ background: couleur }}
-              />
-            ))}
-          </span>
         </Apparition>
 
         <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">

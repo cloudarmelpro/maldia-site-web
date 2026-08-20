@@ -88,23 +88,24 @@ Il n'avait jamais été vu parce que la console n'était inspectée que sur
 
 ## Le blog a son propre design
 
-`Blog Maldia.dc.html`, du même projet, couvre l'index du blog. Il en change deux
-choses structurelles.
+`Blog Maldia.dc.html`, du même projet, couvre l'index du blog.
 
-**L'en-tête y est clair et collé** — blanc translucide flouté, filet bas, pilule
-de navigation sur gris. C'est le seul de ses deux registres qui soit collé.
+**Son en-tête et sa clôture sont écartés, sur décision du client.** Le fichier
+propose un en-tête clair et collé — blanc translucide flouté, pilule de
+navigation sur gris — et une clôture courte sans colonnes Pages ni Contact. Le
+site garde ceux de l'accueil : une page sur six avec sa propre coquille se
+remarque, et le pied porte la navigation de repli.
 
-Cela a une conséquence qui n'est pas cosmétique : `position: sticky` et
-`backdrop-filter` créent chacun un bloc conteneur pour les descendants en
-`fixed`. Le panneau de menu mobile y serait réduit à la taille de l'en-tête. Il
-est donc rendu **à côté** de l'en-tête et non dedans, et l'en-tête est devenu un
-composant client pour porter l'état des deux.
+L'en-tête de l'accueil est transparent : il est fait pour se poser sur la photo
+du hero. Le blog lui met donc une bande nuit derrière, faute de quoi son texte
+blanc tomberait sur la première section blanche.
 
-**La clôture y est plus courte** : l'intitulé Contact, un titre, deux boutons, et
-la barre de langue. Pas de colonnes Pages ni Contact, pas de repères sociaux. Ce
-n'est pas un cul-de-sac — l'en-tête collé garde la navigation à portée sur toute
-la page, et c'est ce qui justifie d'alléger le pied. C'est la seule page du site
-dans ce cas.
+Le détour n'a pas été inutile pour autant. Écrire le registre clair a montré que
+le panneau de menu mobile était mal placé : `position` plus `z-index` créent un
+contexte d'empilement, et un panneau en `fixed` rendu **dans** l'en-tête y voit
+son z-index ne compter qu'à l'intérieur. Il est désormais rendu à côté, et
+l'en-tête porte l'état des deux. La barre de langue a été extraite au passage,
+et le pied la partage.
 
 **L'article le plus récent passe en vedette** et sort de la grille. Les onglets
 de filtre sont déduits des catégories **de la grille**, pas de tous les

@@ -448,13 +448,6 @@ export const fr: Contenu<'fr'> = {
         'Nous publions au rythme des dossiers réels : recrutement à distance, gestion d’équipe mixte, outils et méthodes.',
       cta: 'Nous écrire',
     },
-    appel: {
-      intitule: 'Contact',
-      titre: 'Un besoin d’équipe, ou une candidature ?',
-      description: 'Les entreprises réservent un appel. Les talents déposent leur CV.',
-      ctaPrincipal: 'Prendre rendez-vous',
-      ctaSecondaire: 'Déposer ma candidature',
-    },
   },
 
   contact: {

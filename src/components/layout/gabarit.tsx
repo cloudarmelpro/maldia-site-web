@@ -4,9 +4,7 @@ import { chemin, cheminArticle } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { EnTete } from '@/components/layout/en-tete'
-import type { RegistreEnTete } from '@/components/layout/en-tete'
 import { Pied } from '@/components/layout/pied'
-import { BlogAppel } from '@/components/sections/blog-appel'
 import { ContactBlocs } from '@/components/sections/contact-blocs'
 import { autreLangue } from '@/components/shared/autre-langue'
 import { RetourEnHaut } from '@/components/shared/retour-en-haut'
@@ -31,8 +29,6 @@ export function Gabarit({
   page,
   article,
   contenu,
-  registre,
-  cloture = 'complete',
   children,
 }: {
   langue: Langue
@@ -40,14 +36,6 @@ export function Gabarit({
   /** Renseigne sur une page d'article : l'identifiant est commun aux deux langues. */
   article?: string
   contenu: Contenu
-  /** Le registre de l'en-tete. Clair et colle sur le blog, sombre ailleurs. */
-  registre?: RegistreEnTete
-  /**
-   * La cloture. `complete` porte les deux cartes d'appel et le pied entier ;
-   * `blog` porte la version courte du design du blog, ou l'en-tete colle rend
-   * la navigation du pied superflue.
-   */
-  cloture?: 'complete' | 'blog'
   /** Le contenu de la page. Le premier element recoit `enTete`. */
   children: (enTete: ReactNode) => ReactNode
 }) {
@@ -60,35 +48,24 @@ export function Gabarit({
       page={page}
       contenu={contenu.commun.enTete}
       cheminAutreLangue={cheminAutreLangue}
-      registre={registre}
     />
   )
 
   return (
     <>
       <main>{children(enTete)}</main>
-      {cloture === 'blog' ? (
-        <BlogAppel
-          contenu={contenu.blog.appel}
-          langue={langue}
-          cheminAutreLangue={cheminAutreLangue}
-          changerDeLangue={contenu.commun.enTete.changerDeLangue}
-          copyright={contenu.commun.pied.copyright}
-        />
-      ) : (
-        <ContactBlocs
-          contenu={contenu.commun.contact}
-          pied={
-            <Pied
-              langue={langue}
-              page={page}
-              contenu={contenu.commun.pied}
-              cheminAutreLangue={cheminAutreLangue}
-              changerDeLangue={contenu.commun.enTete.changerDeLangue}
-            />
-          }
-        />
-      )}
+      <ContactBlocs
+        contenu={contenu.commun.contact}
+        pied={
+          <Pied
+            langue={langue}
+            page={page}
+            contenu={contenu.commun.pied}
+            cheminAutreLangue={cheminAutreLangue}
+            changerDeLangue={contenu.commun.enTete.changerDeLangue}
+          />
+        }
+      />
       <RetourEnHaut libelle={contenu.commun.retourEnHaut} />
     </>
   )

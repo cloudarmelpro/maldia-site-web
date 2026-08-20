@@ -391,14 +391,6 @@ export type Contenu<L extends Langue = Langue> = {
       readonly texte: string
       readonly cta: string
     }
-    /** Le bloc d'appel du design du blog : deux boutons, pas deux cartes. */
-    readonly appel: {
-      readonly intitule: string
-      readonly titre: string
-      readonly description: string
-      readonly ctaPrincipal: LibelleRendezVous<L>
-      readonly ctaSecondaire: LibelleCandidature<L>
-    }
   }
 
   /** WEB-7 — Contact, par le calendrier Cal.com. */

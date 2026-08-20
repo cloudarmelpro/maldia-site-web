@@ -13,74 +13,20 @@ import { classes } from '@/components/shared/classes'
 import { Lien } from '@/components/shared/lien'
 import { SelecteurLangue } from '@/components/shared/selecteur-langue'
 
-const FOCUS_CLAIR = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
-const FOCUS_SOMBRE = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
-
-/**
- * Les deux registres du design.
- *
- * `sombre` est posé sur la photo du hero, sans aplat : la navigation flotte sur
- * une pilule de verre pour rester lisible sur n'importe quelle zone de l'image.
- *
- * `clair` est collé en haut, sur un blanc translucide flouté, et se détache par
- * un filet bas. C'est celui du blog.
- */
-export type RegistreEnTete = 'sombre' | 'clair'
-
-type Registre = {
-  entete: string
-  marqueFond: string
-  marqueTexte: string
-  marqueLettre: string
-  nav: string
-  lienActif: string
-  lienInactif: string
-  puce: string
-  bascule: string
-  barre: string
-  focus: string
-}
-
-const REGISTRES: Record<RegistreEnTete, Registre> = {
-  sombre: {
-    entete: 'pt-6.5',
-    marqueFond: 'bg-white',
-    marqueTexte: 'text-white',
-    marqueLettre: 'text-encre',
-    nav: 'rounded-bloc bg-[rgb(12_24_19/0.58)] px-2.5 py-1.75 backdrop-blur-[10px]',
-    lienActif: 'rounded-liste text-white',
-    lienInactif: 'rounded-liste text-white/72 hover:text-white',
-    puce: 'bg-signal',
-    bascule: 'bg-[rgb(12_24_19/0.58)] backdrop-blur-[10px]',
-    barre: 'bg-white',
-    focus: FOCUS_SOMBRE,
-  },
-  clair: {
-    // Collé, translucide, flouté : le `backdrop-filter` crée un bloc conteneur,
-    // et c'est pour cela que le panneau mobile est un frère de l'en-tête et non
-    // un descendant — il y serait réduit à la taille de l'en-tête.
-    entete:
-      'sticky top-0 border-b border-trait-2 bg-white/90 py-4 backdrop-blur-[12px]',
-    marqueFond: 'bg-primaire',
-    marqueTexte: 'text-encre',
-    marqueLettre: 'text-white',
-    nav: 'rounded-pilule bg-fond-2 px-2 py-1.5',
-    lienActif: 'rounded-pilule bg-white text-encre',
-    lienInactif: 'rounded-pilule text-encre-2 hover:text-encre',
-    puce: 'bg-primaire',
-    bascule: 'bg-fond-2',
-    barre: 'bg-encre',
-    focus: FOCUS_CLAIR,
-  },
-}
+const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 
 /**
  * L'en-tête, et le panneau de navigation mobile qui l'accompagne.
  *
+ * Il est transparent : il se pose sur la photo du hero, ou sur l'aplat nuit
+ * qu'une page intérieure met derrière lui. Il n'est pas collé — il défile avec
+ * la page, comme dans le design.
+ *
  * Les deux vivent dans le même composant parce qu'ils partagent un état, mais
- * le panneau est rendu **à côté** de l'en-tête et non dedans : en registre
- * `clair`, l'en-tête porte `position: sticky` et un `backdrop-filter`, deux
- * propriétés qui créent un bloc conteneur pour les descendants en `fixed`.
+ * le panneau est rendu **à côté** de l'en-tête et non dedans. `position` plus
+ * `z-index` créent un contexte d'empilement, et un panneau en `fixed` placé
+ * dedans y voyait son z-index compter seulement à l'intérieur : la barre de
+ * pied du hero se peignait par-dessus et interceptait ses clics.
  *
  * `AnimatePresence` vient de `motion/react` et non de `motion/react-m` : c'est
  * la seule façon d'animer une sortie, un élément démonté n'ayant plus rien à
@@ -94,15 +40,12 @@ export function EnTete({
   page,
   contenu,
   cheminAutreLangue,
-  registre = 'sombre',
 }: {
   langue: Langue
   page: Page
   contenu: Contenu['commun']['enTete']
   cheminAutreLangue: string
-  registre?: RegistreEnTete
 }) {
-  const r = REGISTRES[registre]
   const autre = autreLangue(langue)
 
   const [ouvert, setOuvert] = useState(false)
@@ -131,29 +74,18 @@ export function EnTete({
     }
   }, [ouvert])
 
-  const marque = (sombre: boolean) => (
+  const marque = (
     <Lien
       href={chemin(langue)}
-      className={classes(
-        'inline-flex min-h-11 min-w-0 items-center gap-3',
-        sombre ? FOCUS_SOMBRE : r.focus,
-      )}
+      className={classes('inline-flex min-h-11 min-w-0 items-center gap-3', FOCUS)}
     >
       <span
         aria-hidden
-        className={classes(
-          'grid size-10 shrink-0 place-items-center rounded-bloc text-[1.1875rem] font-semibold',
-          sombre ? 'bg-white text-encre' : classes(r.marqueFond, r.marqueLettre),
-        )}
+        className="grid size-10 shrink-0 place-items-center rounded-bloc bg-white text-[1.1875rem] font-semibold text-encre"
       >
         {contenu.initiale}
       </span>
-      <span
-        className={classes(
-          'text-[1.3125rem] font-semibold tracking-[-0.045em]',
-          sombre ? 'text-white' : r.marqueTexte,
-        )}
-      >
+      <span className="text-[1.3125rem] font-semibold tracking-[-0.045em] text-white">
         {contenu.marque}
       </span>
     </Lien>
@@ -161,19 +93,13 @@ export function EnTete({
 
   return (
     <>
-      <header
-        className={classes(
-          'z-60 mx-auto flex w-full max-w-[87.5rem] items-center justify-between gap-6 px-[clamp(1.25rem,4vw,3.5rem)]',
-          registre === 'sombre' ? 'relative' : '',
-          r.entete,
-        )}
-      >
-        {marque(registre === 'sombre')}
+      <header className="relative z-60 mx-auto flex w-full max-w-[87.5rem] items-center justify-between gap-6 px-[clamp(1.25rem,4vw,3.5rem)] pt-6.5">
+        {marque}
 
         <div className="flex items-center gap-2.5">
           <nav
             aria-label={contenu.marque}
-            className={classes('hidden items-center gap-1 large:flex', r.nav)}
+            className="hidden items-center gap-1 rounded-bloc bg-[rgb(12_24_19/0.58)] px-2.5 py-1.75 backdrop-blur-[10px] large:flex"
           >
             {contenu.navigation.map((lien) => {
               const courante = lien.page === page
@@ -183,13 +109,13 @@ export function EnTete({
                   href={chemin(langue, lien.page)}
                   aria-current={courante ? 'page' : undefined}
                   className={classes(
-                    'inline-flex min-h-8 items-center gap-1.75 px-3.25 etiquette transition-[color,background-color]',
-                    r.focus,
-                    courante ? r.lienActif : r.lienInactif,
+                    'inline-flex min-h-8 items-center gap-1.75 rounded-liste px-3.25 etiquette transition-[color]',
+                    FOCUS,
+                    courante ? 'text-white' : 'text-white/72 hover:text-white',
                   )}
                 >
                   {courante ? (
-                    <span aria-hidden className={classes('size-1.25 shrink-0 rounded-pilule', r.puce)} />
+                    <span aria-hidden className="size-1.25 shrink-0 rounded-pilule bg-signal" />
                   ) : null}
                   {lien.libelle}
                 </Lien>
@@ -214,14 +140,13 @@ export function EnTete({
             aria-label={contenu.menu}
             onClick={() => setOuvert(true)}
             className={classes(
-              'inline-flex size-11 items-center justify-center rounded-bloc large:hidden',
-              r.bascule,
-              r.focus,
+              'inline-flex size-11 items-center justify-center rounded-bloc bg-[rgb(12_24_19/0.58)] backdrop-blur-[10px] large:hidden',
+              FOCUS,
             )}
           >
             <span aria-hidden className="flex flex-col gap-1.25">
-              <span className={classes('block h-[1.5px] w-4.5', r.barre)} />
-              <span className={classes('block h-[1.5px] w-4.5', r.barre)} />
+              <span className="block h-[1.5px] w-4.5 bg-white" />
+              <span className="block h-[1.5px] w-4.5 bg-white" />
             </span>
           </button>
         </div>
@@ -245,14 +170,14 @@ export function EnTete({
               }}
             >
               <div className="flex min-h-16 items-center justify-between">
-                {marque(true)}
+                {marque}
                 <button
                   type="button"
                   aria-label={contenu.fermerMenu}
                   onClick={() => setOuvert(false)}
                   className={classes(
                     'grid size-11 place-items-center rounded-bloc bg-white/12 text-2xl leading-none text-white',
-                    FOCUS_SOMBRE,
+                    FOCUS,
                   )}
                 >
                   <span aria-hidden>×</span>
@@ -270,7 +195,7 @@ export function EnTete({
                           aria-current={courante ? 'page' : undefined}
                           className={classes(
                             'flex min-h-13 items-center text-[clamp(1.875rem,8vw,2.5rem)] leading-[1.15] tracking-[-0.04em]',
-                            FOCUS_SOMBRE,
+                            FOCUS,
                             courante ? 'text-lime' : 'text-white',
                           )}
                         >
@@ -304,7 +229,7 @@ export function EnTete({
                     libelle={autre}
                     className={classes(
                       'inline-flex min-h-11 min-w-11 items-center justify-center etiquette text-sur-sombre hover:text-white',
-                      FOCUS_SOMBRE,
+                      FOCUS,
                     )}
                   />
                 </div>

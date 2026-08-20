@@ -453,13 +453,6 @@ export const en: Contenu<'en'> = {
         'We publish at the pace of real cases: remote recruitment, running a mixed team, tools and methods.',
       cta: 'Write to us',
     },
-    appel: {
-      intitule: 'Contact',
-      titre: 'A team need, or an application?',
-      description: 'Companies book a call. Talent uploads their résumé.',
-      ctaPrincipal: 'Book a call',
-      ctaSecondaire: 'Apply now',
-    },
   },
 
   contact: {

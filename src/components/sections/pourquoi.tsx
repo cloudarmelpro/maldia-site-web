@@ -4,7 +4,7 @@ import { Bouton } from '@/components/shared/bouton'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Defilement, MASQUE_BANDE } from '@/components/shared/defilement'
 import { Pilule } from '@/components/shared/pilule'
-import { GRILLE_INTITULE, Section } from '@/components/shared/section'
+import { BAS_COURT, GRILLE_INTITULE, Section } from '@/components/shared/section'
 
 // Les trois pastilles decoratives du design. Elles ne representent personne,
 // d'ou l'absence de tout libelle.
@@ -28,7 +28,7 @@ export function Pourquoi({
   titreId: string
 }) {
   return (
-    <Section titreId={titreId} fond="fond">
+    <Section titreId={titreId} fond="fond" bas={BAS_COURT}>
       <div className={GRILLE_INTITULE}>
         <Apparition className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
           <Pilule intitule={contenu.intitule} registre="clair" />

@@ -1,5 +1,14 @@
 import type { ReactNode } from 'react'
 
+import { classes } from '@/components/shared/classes'
+
+/** Les valeurs du design : 64 px au plancher, 7vw ensuite, 112 px au plafond. */
+const HAUT = 'pt-[clamp(4rem,7vw,7rem)]'
+const BAS = 'pb-[clamp(4rem,7vw,7rem)]'
+
+/** Le padding bas plus court que le design pose sur sa premiere section. */
+export const BAS_COURT = 'pb-[clamp(3.5rem,6vw,6rem)]'
+
 export type Fond = 'fond' | 'fond-2' | 'encre' | 'nuit'
 
 const FONDS: Record<Fond, string> = {
@@ -43,19 +52,25 @@ export const GRILLE_INTITULE =
 export function Section({
   titreId,
   fond = 'fond',
+  bas,
   className,
   children,
 }: {
   /** Doit etre l'id du titre rendu dans children : c'est lui que aria-labelledby vise. */
   titreId: string
   fond?: Fond
+  /**
+   * Classe de padding bas, quand le design en pose une autre que le haut. Deux
+   * de ses sections sont asymetriques ; les autres non.
+   */
+  bas?: string
   className?: string
   children: ReactNode
 }) {
   return (
     <section
       aria-labelledby={titreId}
-      className={`${FONDS[fond]} py-[clamp(4rem,7vw,7rem)]${className ? ` ${className}` : ''}`}
+      className={classes(FONDS[fond], HAUT, bas ?? BAS, className)}
     >
       <div className={CONTENEUR}>{children}</div>
     </section>

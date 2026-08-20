@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 
+import { classes } from '@/components/shared/classes'
+
 /** Les quatre allures du design, une par bande. */
 export type Allure = 'normale' | 'lente' | 'tres-lente' | 'inverse'
 
@@ -37,7 +39,7 @@ export function Defilement({
   rendu: (item: string) => ReactNode
 }) {
   return (
-    <div className={`overflow-hidden motion-reduce:overflow-x-auto${className ? ` ${className}` : ''}`}>
+    <div className={classes('overflow-hidden motion-reduce:overflow-x-auto', className)}>
       <div className={`flex w-max items-center ${ALLURES[allure]}`}>
         <ul className="flex w-max items-center">
           {items.map((item) => (

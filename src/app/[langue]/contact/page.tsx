@@ -4,10 +4,7 @@ import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
-import { Questions } from '@/components/sections/questions'
-import { TitrePage } from '@/components/sections/titre-page'
-import { Bouton } from '@/components/shared/bouton'
-import { CONTENEUR, GRILLE_INTITULE } from '@/components/shared/section'
+import { ContactPage } from '@/components/sections/contact-page'
 
 import { resoudre } from '../resoudre'
 
@@ -23,14 +20,15 @@ export async function generateMetadata({
 }
 
 /**
- * WEB-7 — contact.
+ * WEB-7 — contact, sur le design « Contact Maldia ».
  *
- * Aucun formulaire : le site n'a pas de serveur pour en recevoir un (WEB-10).
- * La mention le dit au visiteur plutot que de le laisser le decouvrir.
+ * Le design y met deux formulaires, dont un depot de CV. Ils ne sont pas
+ * construits : cette application est un export statique, il n'y a aucun serveur
+ * pour recevoir un envoi ni aucun stockage pour un fichier (WEB-10). Chaque
+ * onglet mene a la destination reelle. Voir decision 0019.
  *
- * Les deux voies reelles — le calendrier et la candidature — sont dans le bloc
- * d'appel que le gabarit rend au bas de chaque page. Les repeter ici en ferait
- * deux paires de cartes identiques a un ecran d'intervalle.
+ * L'en-tete et le pied sont ceux de l'accueil. L'en-tete etant transparent, la
+ * bande nuit lui rend son fond.
  */
 export default async function PageContact({ params }: PageProps<'/[langue]/contact'>) {
   const { langue, contenu } = resoudre((await params).langue)
@@ -39,39 +37,8 @@ export default async function PageContact({ params }: PageProps<'/[langue]/conta
     <Gabarit langue={langue} page="contact" contenu={contenu}>
       {(enTete) => (
         <>
-          <TitrePage
-            intitule={contenu.contact.entete.intitule}
-            titre={contenu.contact.entete.titre}
-            description={contenu.contact.entete.description}
-            mention={contenu.contact.entete.mention}
-            enTete={enTete}
-          >
-            <Bouton
-              destination="rendezVous"
-              libelle={contenu.contact.entete.cta}
-              variante="lime"
-              ornement="fleche"
-            />
-          </TitrePage>
-
-          <section
-            aria-labelledby="titre-sans-formulaire"
-            className="bg-fond pt-[clamp(3rem,5vw,4.5rem)]"
-          >
-            <div className={CONTENEUR}>
-              <div className={GRILLE_INTITULE}>
-                <span />
-                <p
-                  id="titre-sans-formulaire"
-                  className="max-w-[62ch] text-[0.90625rem] leading-[1.65] text-encre-2"
-                >
-                  {contenu.contact.mention}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <Questions contenu={contenu.accueil.questions} />
+          <div className="bg-nuit pb-6.5">{enTete}</div>
+          <ContactPage contenu={contenu} pied={contenu.commun.pied} />
         </>
       )}
     </Gabarit>

@@ -478,13 +478,127 @@ export const fr: Contenu<'fr'> = {
     },
     entete: {
       intitule: 'Contact',
-      titre: 'Parlons-en.',
-      description:
-        'Pour les entreprises, le rendez-vous est le moyen de contact principal : il se réserve directement dans notre calendrier. Pour les talents, tout passe par la candidature en ligne.',
+      titre: 'Dites-nous ce dont vous avez besoin.',
+      description: 'Un appel de 30 minutes suffit à savoir si le service correspond.',
       cta: 'Prendre rendez-vous',
       mention: '30 minutes · via Cal.com',
     },
+
+    reservation: {
+      intitule: 'Réservation',
+      titre: 'Choisissez votre créneau maintenant.',
+      description: 'Le calendrier est celui de notre équipe. Ce que vous réservez est confirmé.',
+      evenement: 'Appel de découverte · 30 min',
+      fuseau: 'Fuseau UTC+3',
+      emplacement: {
+        titre: 'Emplacement du calendrier Cal.com',
+        texte: 'L’intégration s’affiche ici sur le site en ligne',
+      },
+      mention: 'Aucun paiement · Aucun engagement',
+      cta: 'Ouvrir dans Cal.com',
+    },
+
+    onglets: ['Je cherche du personnel', 'Je cherche un poste'],
+
+    voies: [
+      {
+        intitule: 'Entreprises',
+        mention: 'Aucuns frais de recrutement',
+        titre: 'Décrivez le poste à pourvoir',
+        champs: [
+          { type: 'texte', nom: 'nom', libelle: 'Nom et prénom', exemple: 'Marie Tremblay' },
+          {
+            type: 'courriel',
+            nom: 'courriel',
+            libelle: 'Courriel professionnel',
+            exemple: 'marie@entreprise.com',
+          },
+          {
+            type: 'texte',
+            nom: 'entreprise',
+            libelle: 'Entreprise',
+            exemple: 'Nom de l’entreprise',
+          },
+          {
+            type: 'choix',
+            nom: 'profil',
+            libelle: 'Profil recherché',
+            options: [
+              'Développement web',
+              'Design et UI',
+              'Vidéo et montage',
+              'Community management',
+              'Support et administration',
+              'Comptabilité et données',
+              'Je ne sais pas encore',
+            ],
+          },
+          {
+            type: 'zone',
+            nom: 'besoin',
+            libelle: 'Votre besoin, en quelques lignes',
+            exemple: 'Missions, niveau attendu, outils déjà en place, échéance souhaitée.',
+          },
+        ],
+        envoyer: 'Envoyer la demande',
+        note: 'Réponse sous un jour ouvré. Aucun engagement.',
+      },
+      {
+        intitule: 'Talents',
+        mention: 'PDF, DOC, DOCX',
+        titre: 'Déposez votre candidature',
+        champs: [
+          { type: 'texte', nom: 'nom', libelle: 'Nom et prénom', exemple: 'Votre nom' },
+          { type: 'courriel', nom: 'courriel', libelle: 'Courriel', exemple: 'vous@courriel.com' },
+          {
+            type: 'choix',
+            nom: 'domaine',
+            libelle: 'Domaine',
+            options: [
+              'Développement web',
+              'Design et UI',
+              'Vidéo et montage',
+              'Community management',
+              'Support et administration',
+              'Comptabilité et données',
+              'Autre',
+            ],
+          },
+          {
+            type: 'choix',
+            nom: 'francais',
+            libelle: 'Niveau de français',
+            options: ['Courant', 'Professionnel', 'Intermédiaire'],
+          },
+          {
+            type: 'fichier',
+            nom: 'cv',
+            libelle: 'Votre CV',
+            titre: 'Glissez votre fichier ici',
+            precision: 'PDF, DOC, DOCX · 5 Mo maximum',
+          },
+        ],
+        envoyer: 'Envoyer ma candidature',
+        note: 'Confirmation dès réception de votre candidature.',
+      },
+    ],
+
+    calendrier: {
+      intitule: 'Rendez-vous direct · Cal.com',
+      titre: 'Réservez un créneau dans notre calendrier',
+      texte:
+        'Trente minutes, sans échange de courriels. Le créneau s’ajoute directement à notre calendrier.',
+      creneaux: ['Lun – Ven', '09h – 17h', 'UTC+3', 'Cal.com'],
+      cta: 'Ouvrir le calendrier',
+    },
+
+    coordonnees: {
+      courriel: 'Courriel',
+      bureau: 'Bureau',
+      marches: 'Marchés',
+    },
+
     mention:
-      'Ce site ne comporte pas de formulaire de contact et ne conserve aucune donnée : le rendez-vous passe par Cal.com, la candidature par notre application de CV.',
+      'Le rendez-vous passe par Cal.com et la candidature par notre application de CV : ce site ne conserve aucune donnée.',
   },
 }

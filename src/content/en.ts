@@ -472,9 +472,9 @@ export const en: Contenu<'en'> = {
 
   contact: {
     meta: {
-      titre: 'Contact — Book a call | Agence Maldia',
+      titre: 'Tell us what you need.',
       description:
-        'Book a 30-minute call with Agence Maldia through Cal.com, or apply if you are talent based in Madagascar.',
+        'A thirty-minute call is enough to know if the service fits.',
       openGraph: {
         titre: 'Contact Agence Maldia',
         description: 'A 30-minute call for companies, an online form for talent in Madagascar.',
@@ -482,13 +482,122 @@ export const en: Contenu<'en'> = {
     },
     entete: {
       intitule: 'Contact',
-      titre: 'Let’s talk.',
-      description:
-        'For companies, booking a call is the main way to reach us: it goes straight into our calendar. For talent, everything goes through the online application.',
+      titre: 'Tell us what you need.',
+      description: 'A thirty-minute call is enough to know if the service fits.',
       cta: 'Book a call',
       mention: '30 minutes · via Cal.com',
     },
+
+    reservation: {
+      intitule: 'Booking',
+      titre: 'Pick your slot right now.',
+      description: 'The calendar is our team’s own. What you book is confirmed.',
+      evenement: 'Discovery call · 30 min',
+      fuseau: 'Time zone UTC+3',
+      emplacement: {
+        titre: 'Cal.com calendar goes here',
+        texte: 'The embed appears here on the live site',
+      },
+      mention: 'No payment · No commitment',
+      cta: 'Open in Cal.com',
+    },
+
+    onglets: ['I am looking for staff', 'I am looking for a role'],
+
+    voies: [
+      {
+        intitule: 'Companies',
+        mention: 'No recruitment fees',
+        titre: 'Describe the role to fill',
+        champs: [
+          { type: 'texte', nom: 'nom', libelle: 'Full name', exemple: 'Marie Tremblay' },
+          {
+            type: 'courriel',
+            nom: 'courriel',
+            libelle: 'Work email',
+            exemple: 'marie@company.com',
+          },
+          { type: 'texte', nom: 'entreprise', libelle: 'Company', exemple: 'Company name' },
+          {
+            type: 'choix',
+            nom: 'profil',
+            libelle: 'Profile needed',
+            options: [
+              'Web development',
+              'Design and UI',
+              'Video and editing',
+              'Community management',
+              'Support and administration',
+              'Accounting and data',
+              'Not sure yet',
+            ],
+          },
+          {
+            type: 'zone',
+            nom: 'besoin',
+            libelle: 'Your need, in a few lines',
+            exemple: 'Tasks, expected level, tools already in place, target date.',
+          },
+        ],
+        envoyer: 'Send the request',
+        note: 'Answer within one working day. No commitment.',
+      },
+      {
+        intitule: 'Talent',
+        mention: 'PDF, DOC, DOCX',
+        titre: 'Upload your application',
+        champs: [
+          { type: 'texte', nom: 'nom', libelle: 'Full name', exemple: 'Your name' },
+          { type: 'courriel', nom: 'courriel', libelle: 'Email', exemple: 'you@email.com' },
+          {
+            type: 'choix',
+            nom: 'domaine',
+            libelle: 'Field',
+            options: [
+              'Web development',
+              'Design and UI',
+              'Video and editing',
+              'Community management',
+              'Support and administration',
+              'Accounting and data',
+              'Other',
+            ],
+          },
+          {
+            type: 'choix',
+            nom: 'francais',
+            libelle: 'Level of French',
+            options: ['Fluent', 'Professional', 'Intermediate'],
+          },
+          {
+            type: 'fichier',
+            nom: 'cv',
+            libelle: 'Your résumé',
+            titre: 'Drop your file here',
+            precision: 'PDF, DOC, DOCX · 5 MB maximum',
+          },
+        ],
+        envoyer: 'Send my application',
+        note: 'Confirmation as soon as your application is received.',
+      },
+    ],
+
+    calendrier: {
+      intitule: 'Direct booking · Cal.com',
+      titre: 'Book a slot in our calendar',
+      texte:
+        'Thirty minutes, with no email back and forth. The slot lands straight in our calendar.',
+      creneaux: ['Mon – Fri', '9am – 5pm', 'UTC+3', 'Cal.com'],
+      cta: 'Open the calendar',
+    },
+
+    coordonnees: {
+      courriel: 'Email',
+      bureau: 'Office',
+      marches: 'Markets',
+    },
+
     mention:
-      'This site has no contact form and stores no data: booking goes through Cal.com, applications through our résumé application.',
+      'Booking goes through Cal.com and applications through our résumé application: this site stores no data.',
   },
 }

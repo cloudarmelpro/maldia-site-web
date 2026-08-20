@@ -34,6 +34,15 @@
   --color-lime: #cdf565;
   --color-tendre: #dceee4;
 
+  /* Les champs de formulaire du design : repos, survol, focus, et la couleur
+     du texte indicatif. Aucune bordure — c'est l'aplat qui délimite le champ,
+     et son changement au focus qui le signale. */
+  --color-champ: #f6f7f5;
+  --color-champ-survol: #f2f4f1;
+  --color-champ-actif: #eef2ee;
+  /* 4,52:1 sur --color-champ : un texte indicatif reste du texte. */
+  --color-indicatif: #7f9188;
+
   --color-trait: #e2e6e1;
   /* Le filet intérieur d'une carte, plus discret que sa bordure. */
   --color-trait-2: #eceeeb;
@@ -53,6 +62,8 @@
   --radius-carte: 0.875rem;
   --radius-carte-large: 1rem;
   --radius-encart: 1.125rem;
+  /* Le grand panneau du design de la page Contact : 20 px. */
+  --radius-panneau: 1.25rem;
   --radius-pilule: 9999px;
 }
 

@@ -164,6 +164,49 @@ export type QuestionsReponses = readonly [
 /** Les trois onglets de la FAQ. L'ordre fige le filtre : tout, entreprises, talents. */
 export type FiltresQuestions = readonly [string, string, string]
 
+/**
+ * Un champ du formulaire de la page Contact.
+ *
+ * `nom` est l'attribut `name` : c'est lui que lira le point de réception le
+ * jour où il existera, et il ne se traduit donc pas.
+ */
+export type ChampFormulaire =
+  | {
+      readonly type: 'texte' | 'courriel'
+      readonly nom: string
+      readonly libelle: string
+      readonly exemple: string
+    }
+  | {
+      readonly type: 'choix'
+      readonly nom: string
+      readonly libelle: string
+      readonly options: readonly string[]
+    }
+  | {
+      readonly type: 'zone'
+      readonly nom: string
+      readonly libelle: string
+      readonly exemple: string
+    }
+  | {
+      readonly type: 'fichier'
+      readonly nom: string
+      readonly libelle: string
+      readonly titre: string
+      readonly precision: string
+    }
+
+/** Une des deux voies de la page Contact, chacune avec son formulaire. */
+export type VoieContact = {
+  readonly intitule: string
+  readonly mention: string
+  readonly titre: string
+  readonly champs: readonly ChampFormulaire[]
+  readonly envoyer: string
+  readonly note: string
+}
+
 /** Une des deux cartes d'appel qui ferment chaque page. */
 export type CarteAppel<L extends Langue = Langue> = {
   readonly intitule: string
@@ -436,6 +479,51 @@ export type Contenu<L extends Langue = Langue> = {
   readonly contact: {
     readonly meta: Meta
     readonly entete: EnTetePage<LibelleRendezVous<L>>
+
+    /** La section du calendrier : l'emplacement de l'intégration Cal.com. */
+    readonly reservation: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+      readonly evenement: string
+      readonly fuseau: string
+      /** Ce qui s'affiche à la place de l'intégration tant qu'elle n'a pas d'adresse. */
+      readonly emplacement: {
+        readonly titre: string
+        readonly texte: string
+      }
+      readonly mention: string
+      readonly cta: string
+    }
+
+    /** Les deux onglets : « je cherche du personnel », « je cherche un poste ». */
+    readonly onglets: readonly [string, string]
+
+    /**
+     * Les deux voies du design, chacune avec son formulaire.
+     *
+     * Le bouton d'envoi est désactivé tant que `DESTINATION_FORMULAIRE` est
+     * vide : sans point de réception, un envoi ne partirait nulle part. Voir
+     * décision 0019.
+     */
+    readonly voies: readonly [VoieContact, VoieContact]
+
+    /** La carte sombre du calendrier, dans la colonne de droite. */
+    readonly calendrier: {
+      readonly intitule: string
+      readonly titre: string
+      readonly texte: string
+      readonly creneaux: readonly [string, string, string, string]
+      readonly cta: string
+    }
+
+    /** Les trois lignes de coordonnées. Les valeurs viennent du pied et des marchés. */
+    readonly coordonnees: {
+      readonly courriel: string
+      readonly bureau: string
+      readonly marches: string
+    }
+
     /** Explique l'absence de formulaire : le site n'a pas de serveur (WEB-10). */
     readonly mention: string
   }

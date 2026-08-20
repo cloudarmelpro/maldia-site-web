@@ -13,7 +13,7 @@ import { MESURE_PROSE, Section } from '@/components/shared/section'
  */
 export function Faq({ contenu }: { contenu: Contenu['accueil']['faq'] }) {
   return (
-    <Section titreId="titre-faq" fond="fond-2" bloc dessous="fond">
+    <Section titreId="titre-faq" fond="fond-2" bloc dessous="vif">
       <Apparition>
         <EnTeteSection
           titreId="titre-faq"

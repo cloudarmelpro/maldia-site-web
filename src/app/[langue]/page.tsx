@@ -27,10 +27,13 @@ export async function generateMetadata({ params }: PageProps<'/[langue]'>): Prom
 /**
  * WEB-2 — l'accueil.
  *
- * Le retour client fixe ce qu'elle doit rendre lisible en quelques secondes :
- * les deux parcours et leurs deux appels. L'argumentaire chiffre vient apres
- * eux, pas avant — un visiteur qui ne sait pas encore de quel cote il est n'a
- * rien a faire d'une reduction de cout.
+ * Les deux parcours ferment la page, juste avant la FAQ : la page argumente
+ * d'abord, puis demande de choisir un cote. Le hero porte deja les deux appels
+ * (WEB-2), donc rien n'oblige a trancher en haut de page.
+ *
+ * L'ordre des sections fixe la chaine des `dessous` : l'arrondi haut d'un bloc
+ * decouvre la couleur de celui qui le precede. Deplacer une section sans
+ * reprendre cette chaine laisse une bande blanche dans l'arrondi.
  */
 export default async function Page({ params }: PageProps<'/[langue]'>) {
   const { langue, contenu } = resoudre((await params).langue)
@@ -39,14 +42,10 @@ export default async function Page({ params }: PageProps<'/[langue]'>) {
     <Gabarit langue={langue} page="accueil" contenu={contenu}>
       <Hero contenu={contenu.accueil.hero} />
       <Marches contenu={contenu.commun.marches} titreId="titre-marches" />
-      <Parcours contenu={contenu.accueil.parcours} langue={langue} />
-      <Argumentaire
-        contenu={contenu.commun.argumentaire}
-        titreId="titre-argumentaire"
-        dessous="vif"
-      />
+      <Argumentaire contenu={contenu.commun.argumentaire} titreId="titre-argumentaire" />
       <Compteur contenu={contenu.commun.compteur} langue={langue} titreId="titre-compteur" />
       <BandeauOutils contenu={contenu.commun.outils} titreId="titre-outils" />
+      <Parcours contenu={contenu.accueil.parcours} langue={langue} />
       <Faq contenu={contenu.accueil.faq} />
       <Cloture contenu={contenu.commun.cloture} />
     </Gabarit>

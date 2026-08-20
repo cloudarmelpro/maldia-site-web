@@ -1,5 +1,12 @@
 # 0014 — Structure des adresses et découpage des pages
 
+> **Partiellement remplacée par la décision 0015.** Le site n'a plus une seule
+> page par langue mais six : le choix « une page par langue » et le rejet de
+> « une page par section » ci-dessous ne valent plus. Ce qui reste en vigueur :
+> les segments `/fr/` et `/en/` symétriques, les règles de réciprocité
+> `hreflang`, le rôle du routeur de langue à la racine, et le français comme
+> langue par défaut.
+
 **Statut :** ARRÊTÉE, à confirmer par le client avant la mise en ligne
 **Date :** 18 août 2026
 

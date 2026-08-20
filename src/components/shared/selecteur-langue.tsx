@@ -1,43 +1,29 @@
-'use client'
-
 import Link from 'next/link'
-import { useSyncExternalStore } from 'react'
 
-import { cheminDeLangue } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 
-function souscrireAncre(notifier: () => void) {
-  window.addEventListener('hashchange', notifier)
-  return () => window.removeEventListener('hashchange', notifier)
-}
-
-function lireAncre() {
-  return window.location.hash
-}
-
-// Rendu serveur : le href reste le chemin nu — l'autre langue demeure
-// atteignable sans JavaScript, le script ne fait qu'enrichir.
-function lireAncreServeur() {
-  return ''
-}
-
-type Props = {
+/**
+ * Mène à la même page dans l'autre langue (WEB-8).
+ *
+ * Plus aucun état, donc plus aucun JavaScript : la navigation se fait par
+ * pages et non par ancres depuis le retour client, et l'adresse cible est
+ * connue à la compilation. C'est `Gabarit` qui la calcule — le composant ne
+ * devine pas où il se trouve.
+ */
+export function SelecteurLangue({
+  langue,
+  vers,
+  libelle,
+  className,
+}: {
   /** La langue de destination — pas la langue courante. */
   langue: Langue
+  vers: string
   libelle: string
   className?: string
-}
-
-/** Mène à l'autre langue en conservant l'ancre courante (décision 0014). */
-export function SelecteurLangue({ langue, libelle, className }: Props) {
-  const ancre = useSyncExternalStore(souscrireAncre, lireAncre, lireAncreServeur)
+}) {
   return (
-    <Link
-      href={`${cheminDeLangue(langue)}${ancre}`}
-      hrefLang={langue}
-      lang={langue}
-      className={className}
-    >
+    <Link href={vers} hrefLang={langue} lang={langue} className={className}>
       {libelle}
     </Link>
   )

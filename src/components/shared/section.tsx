@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react'
 
-import type { Ancre } from '@/content/langues'
-
 export type Fond = 'fond' | 'fond-2' | 'tendre' | 'vif' | 'sombre'
 
 const FONDS: Record<Fond, string> = {
@@ -28,8 +26,6 @@ export const CONTENEUR =
   'mx-auto w-full max-w-[1180px] px-[clamp(1.25rem,2.8vw,2.5rem)]'
 
 type SectionProps = {
-  /** Ancre de navigation (décision 0014) — absente pour les sections hors navigation. */
-  ancre?: Ancre
   /** Doit être l'id du titre rendu dans children : c'est lui que aria-labelledby vise. */
   titreId: string
   fond?: Fond
@@ -45,7 +41,6 @@ type SectionProps = {
 }
 
 export function Section({
-  ancre,
   titreId,
   fond = 'fond',
   bloc = false,
@@ -55,7 +50,6 @@ export function Section({
 }: SectionProps) {
   const contenu = (
     <section
-      id={ancre}
       aria-labelledby={titreId}
       className={`${FONDS[fond]} py-20 lg:py-[4.875rem]${bloc ? ' rounded-t-bloc' : ''}${className ? ` ${className}` : ''}`}
     >

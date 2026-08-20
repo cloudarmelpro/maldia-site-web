@@ -1,11 +1,11 @@
 import Image from 'next/image'
 
+import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
 import { Carte } from '@/components/shared/carte'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { CONTENEUR, MESURE_PROSE } from '@/components/shared/section'
-import { PHOTOS } from '@/content/photos'
 import { Visuel } from '@/components/shared/visuel'
 
 // Le seul dégradé de fond de la maquette. Il ne devient pas un jeton : trois
@@ -16,33 +16,45 @@ const TITRE_CARTE = 'text-[1.4375rem] font-semibold tracking-[-0.015em] text-enc
 const CORPS_CARTE = 'font-description text-[0.97rem] leading-[1.6] text-encre-2'
 
 /**
- * WEB-3 — pour les talents à Madagascar, dans le bloc dégradé de la maquette :
- * deux cartes hautes à gauche, une pile de deux cartes puis les critères à
- * droite. La quatrième carte porte l'ancre « à propos » (WEB-6).
+ * WEB-3 — ce qu'il faut savoir avant de candidater, dans le bloc dégradé de la
+ * maquette : une carte haute à gauche, une pile de deux à droite, puis les
+ * critères du formulaire sur toute la largeur.
  *
- * Le fond est clair : `text-encre-3` et non `text-encre-2` pour la description,
- * qui tomberait sous 4,5:1 sur cette teinte.
+ * L'enveloppe est `bg-fond-2` et non `bg-fond` : l'arrondi haut du bloc laisse
+ * voir la couleur du parent, et cette section suit toujours les opportunités,
+ * qui sont sur ce registre.
+ *
+ * Le fond est clair : `text-encre-3` et non `text-encre-2` pour la description
+ * de section, qui tomberait sous 4,5:1 sur cette teinte.
  */
-export function Talents({ contenu }: { contenu: Contenu['talents'] }) {
-  const [distance, marches, recrutement, aPropos] = contenu.cartes
+export function PourLesTalents({
+  cartes,
+  criteres,
+}: {
+  cartes: Contenu['talents']['cartes']
+  criteres: Contenu['talents']['criteres']
+}) {
+  const [distance, marches, recrutement] = cartes.liste
 
   return (
-    <div className="bg-fond">
+    <div className="bg-fond-2">
       <section
-        aria-labelledby="titre-talents"
+        aria-labelledby="titre-pour-les-talents"
         className={`rounded-t-bloc ${FOND} py-20 lg:py-[4.875rem]`}
       >
         <div className={CONTENEUR}>
           <Apparition>
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
               <h2
-                id="titre-talents"
-                className="max-w-[12ch] font-titre text-[2.125rem] leading-[1.05] font-normal text-balance text-encre sm:text-[2.75rem] lg:text-[3.375rem]"
+                id="titre-pour-les-talents"
+                className="max-w-[20ch] font-titre text-[2.125rem] leading-[1.05] font-normal text-balance text-encre sm:text-[2.75rem] lg:text-[3.375rem]"
               >
-                {contenu.titre}
+                {cartes.titre}
               </h2>
-              <p className={`${MESURE_PROSE} font-description text-[1.0625rem] leading-[1.55] text-encre-3`}>
-                {contenu.description}
+              <p
+                className={`${MESURE_PROSE} font-description text-[1.0625rem] leading-[1.55] text-encre-3`}
+              >
+                {cartes.description}
               </p>
             </div>
           </Apparition>
@@ -53,11 +65,7 @@ export function Talents({ contenu }: { contenu: Contenu['talents'] }) {
           <div className="mt-15 grid items-start gap-7.5 [&>*]:min-w-0 lg:grid-cols-2">
             <Apparition>
               <Carte className="rounded-carte-large p-3.5 pb-10">
-                <Visuel
-                  ratio="carre"
-                  photo={PHOTOS.travailADistance}
-                  arrondi="rounded-[1.25rem]"
-                />
+                <Visuel ratio="carre" photo={PHOTOS.travailADistance} arrondi="rounded-[1.25rem]" />
                 <div className="flex flex-col gap-4 px-7 pt-8">
                   <h3 className={TITRE_CARTE}>{distance.titre}</h3>
                   <p className={CORPS_CARTE}>{distance.description}</p>
@@ -70,11 +78,7 @@ export function Talents({ contenu }: { contenu: Contenu['talents'] }) {
                 <Carte className="flex flex-col gap-4 rounded-carte-large p-9">
                   <h3 className={TITRE_CARTE}>{marches.titre}</h3>
                   <p className={CORPS_CARTE}>{marches.description}</p>
-                  <Visuel
-                    ratio="bandeau"
-                    photo={PHOTOS.marches}
-                    arrondi="mt-3.5 rounded-[1rem]"
-                  />
+                  <Visuel ratio="bandeau" photo={PHOTOS.marches} arrondi="mt-3.5 rounded-[1rem]" />
                 </Carte>
               </Apparition>
 
@@ -95,7 +99,10 @@ export function Talents({ contenu }: { contenu: Contenu['talents'] }) {
                         >
                           {jalon.libelle}
                         </span>
-                        <span aria-hidden className="w-full border-t-[1.5px] border-dashed border-trait" />
+                        <span
+                          aria-hidden
+                          className="w-full border-t-[1.5px] border-dashed border-trait"
+                        />
                         <span
                           aria-hidden
                           className={`-mt-[1.3125rem] size-3.5 rounded-full border-2 bg-carte ${
@@ -110,39 +117,32 @@ export function Talents({ contenu }: { contenu: Contenu['talents'] }) {
               </Apparition>
             </div>
 
-            <Apparition delai={delaiDeGrille(3)}>
-              <Carte as="article" ancre="a-propos" aria-labelledby="titre-a-propos" className="scroll-mt-8 rounded-carte-large p-3.5 pb-10">
-                <Visuel
-                  ratio="bandeau"
-                  photo={PHOTOS.aPropos}
-                  arrondi="rounded-[1.25rem]"
-                />
-                <div className="flex flex-col gap-4 px-7 pt-8">
-                  <h3 id="titre-a-propos" className={TITRE_CARTE}>{aPropos.titre}</h3>
-                  <p className={CORPS_CARTE}>{aPropos.description}</p>
-                </div>
-              </Carte>
-            </Apparition>
-
-            <Apparition delai={delaiDeGrille(4)}>
+            <Apparition delai={delaiDeGrille(3)} className="lg:col-span-2">
               <Carte className="flex flex-col gap-5 rounded-carte-large p-9">
-                <h3 className={TITRE_CARTE}>{contenu.criteres.titre}</h3>
-                <p className={CORPS_CARTE}>{contenu.criteres.description}</p>
+                <h3 className={TITRE_CARTE}>{criteres.titre}</h3>
+                {/* La carte occupe les deux colonnes : sans plafond, ce paragraphe
+                    atteint 101 caractères par ligne à 1280 px et au-delà. */}
+                <p className={`${MESURE_PROSE} ${CORPS_CARTE}`}>{criteres.description}</p>
                 <span aria-hidden className="my-1.5 h-px bg-trait" />
                 <ul className="grid grid-cols-3 gap-3.5 sm:grid-cols-5">
-                  {contenu.criteres.liste.map((critere, indice) => (
-                    <li key={critere.libelle} className="flex min-w-0 flex-col items-center text-center">
+                  {criteres.liste.map((critere, indice) => (
+                    <li
+                      key={critere.libelle}
+                      className="flex min-w-0 flex-col items-center text-center"
+                    >
                       {/* alt vide : le libellé du critère suit immédiatement. */}
                       <span className="relative aspect-square w-full overflow-hidden rounded-[1rem] bg-fond-2">
                         <Image
                           src={PHOTOS.criteres[indice]}
                           alt=""
                           fill
-                          sizes="(max-width: 640px) 33vw, 120px"
+                          sizes="(max-width: 640px) 33vw, 160px"
                           className="object-cover"
                         />
                       </span>
-                      <span className="mt-2.5 text-sm font-semibold text-encre">{critere.libelle}</span>
+                      <span className="mt-2.5 text-sm font-semibold text-encre">
+                        {critere.libelle}
+                      </span>
                       <span className="text-[0.8125rem] text-encre-2">{critere.precision}</span>
                     </li>
                   ))}

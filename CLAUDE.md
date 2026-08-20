@@ -2,7 +2,7 @@
 
 # site-web — la vitrine d'Agence Maldia
 
-`agencemaldia.com` · **exigences `WEB-1` à `WEB-10`** dans `docs/cahier-site-web.MD`
+`agencemaldia.com` · **exigences `WEB-1` à `WEB-15`** dans `docs/cahier-site-web.MD`
 
 Agence Maldia connecte des talents basés à Madagascar avec des entreprises
 internationales — Québec et Canada francophone, France, Belgique, Suisse,

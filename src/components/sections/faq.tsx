@@ -11,9 +11,9 @@ import { MESURE_PROSE, Section } from '@/components/shared/section'
  * Les réponses sont construites ici, dans le Server Component : seule
  * l'ouverture passe la frontière client, pas les textes ni leur mise en forme.
  */
-export function Faq({ contenu }: { contenu: Contenu['faq'] }) {
+export function Faq({ contenu }: { contenu: Contenu['accueil']['faq'] }) {
   return (
-    <Section ancre="faq" titreId="titre-faq" fond="fond-2">
+    <Section titreId="titre-faq" fond="fond-2" bloc dessous="fond">
       <Apparition>
         <EnTeteSection
           titreId="titre-faq"

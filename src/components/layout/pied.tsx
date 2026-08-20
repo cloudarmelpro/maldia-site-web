@@ -1,5 +1,7 @@
-import { NOMS_LANGUES } from '@/content/langues'
-import type { Langue } from '@/content/langues'
+import Link from 'next/link'
+
+import { chemin, NOMS_LANGUES } from '@/content/langues'
+import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { autreLangue } from '@/components/shared/autre-langue'
 import { Bouton } from '@/components/shared/bouton'
@@ -32,11 +34,16 @@ const CLASSES_LIEN =
  */
 export function Pied({
   langue,
+  page,
   contenu,
+  cheminAutreLangue,
   changerDeLangue,
 }: {
   langue: Langue
-  contenu: Contenu['pied']
+  page: Page
+  contenu: Contenu['commun']['pied']
+  /** La même page dans l'autre langue — calculée par le gabarit. */
+  cheminAutreLangue: string
   /** Nom accessible du groupe de langues (WEB-8). */
   changerDeLangue: string
 }) {
@@ -49,15 +56,16 @@ export function Pied({
           <nav>
             <ul className="flex flex-wrap gap-x-3 gap-y-1">
               {contenu.navigation.map((lien) => (
-                <li key={lien.ancre}>
+                <li key={lien.page}>
                   {/* min-w-11 : les libellés courts sont rendus plus étroits que
                       44 px — la hauteur seule ne tient pas la cible tactile. */}
-                  <a
-                    href={`#${lien.ancre}`}
+                  <Link
+                    href={chemin(langue, lien.page)}
+                    aria-current={lien.page === page ? 'page' : undefined}
                     className={`inline-flex min-h-11 min-w-11 items-center px-1 font-description text-[1.0625rem] font-normal text-sur-vif ${CLASSES_LIEN}`}
                   >
                     {lien.libelle}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -95,6 +103,7 @@ export function Pied({
             <span aria-hidden className="h-4 w-px bg-carte/35" />
             <SelecteurLangue
               langue={autre}
+              vers={cheminAutreLangue}
               libelle={NOMS_LANGUES[autre]}
               className={`inline-flex min-h-12 min-w-11 items-center font-description text-base font-normal text-sur-vif underline-offset-4 hover:underline ${CLASSES_LIEN}`}
             />

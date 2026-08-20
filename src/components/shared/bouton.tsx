@@ -1,4 +1,5 @@
-import type { Ancre } from '@/content/langues'
+import Link from 'next/link'
+
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 
 /**
@@ -33,6 +34,9 @@ const VARIANTES: Record<Variante, string> = {
     'border-[1.5px] border-carte/35 text-sur-vif hover:bg-carte/15 focus-visible:outline-carte',
 }
 
+const PASTILLE =
+  'inline-flex min-h-[2.875rem] min-w-11 items-center gap-2.5 font-description text-[0.9375rem] font-normal whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2'
+
 export function Bouton({
   destination,
   libelle,
@@ -58,6 +62,35 @@ export function Bouton({
   )
 }
 
+/**
+ * Le même bouton, mais vers une autre page du site (WEB-11). Il ne passe pas
+ * par les constantes de `liens.ts` : une adresse interne est produite par
+ * `chemin()`, il n'y a rien à y protéger.
+ */
+export function BoutonPage({
+  vers,
+  libelle,
+  variante = 'primaire',
+  className,
+  'aria-label': nomAccessible,
+}: {
+  vers: string
+  libelle: string
+  variante?: Variante
+  className?: string
+  'aria-label'?: string
+}) {
+  return (
+    <Link
+      href={vers}
+      aria-label={nomAccessible}
+      className={`${BASE} ${VARIANTES[variante]}${className ? ` ${className}` : ''}`}
+    >
+      {libelle}
+    </Link>
+  )
+}
+
 /** Le second appel de la maquette : pas un aplat, une pastille verte et un libellé. */
 export function LienPastille({
   destination,
@@ -74,41 +107,52 @@ export function LienPastille({
     <a
       href={DESTINATIONS[destination]}
       aria-label={nomAccessible}
-      className={`inline-flex min-h-[2.875rem] min-w-11 items-center gap-2.5 font-description text-[0.9375rem] font-normal whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 ${
+      className={`${PASTILLE} ${
         surSombre
           ? 'text-sur-vif focus-visible:outline-carte'
           : 'text-encre focus-visible:outline-primaire'
       }`}
     >
-      <span
-        aria-hidden
-        className={`size-2.5 shrink-0 rounded-full bg-signal ${
-          surSombre
-            ? 'shadow-[0_0_0_4px_rgb(255_255_255/0.2)]'
-            : 'shadow-[0_0_0_4px_rgb(34_197_94/0.18)]'
-        }`}
-      />
+      <Point surSombre={surSombre} />
       {libelle}
     </a>
   )
 }
 
-/**
- * La même pastille, mais vers une section de la page et non vers une
- * destination sortante. Elle ne passe donc pas par les constantes de
- * `liens.ts` — il n'y a rien à y protéger.
- */
-export function LienPastilleAncre({ ancre, libelle }: { ancre: Ancre; libelle: string }) {
+/** La même pastille, vers une autre page du site. */
+export function LienPastillePage({
+  vers,
+  libelle,
+  surSombre = false,
+}: {
+  vers: string
+  libelle: string
+  surSombre?: boolean
+}) {
   return (
-    <a
-      href={`#${ancre}`}
-      className="inline-flex min-h-[2.875rem] min-w-11 items-center gap-2.5 font-description text-[0.9375rem] font-normal whitespace-nowrap text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaire"
+    <Link
+      href={vers}
+      className={`${PASTILLE} ${
+        surSombre
+          ? 'text-sur-vif focus-visible:outline-carte'
+          : 'text-encre focus-visible:outline-primaire'
+      }`}
     >
-      <span
-        aria-hidden
-        className="size-2.5 shrink-0 rounded-full bg-signal shadow-[0_0_0_4px_rgb(34_197_94/0.18)]"
-      />
+      <Point surSombre={surSombre} />
       {libelle}
-    </a>
+    </Link>
+  )
+}
+
+function Point({ surSombre }: { surSombre: boolean }) {
+  return (
+    <span
+      aria-hidden
+      className={`size-2.5 shrink-0 rounded-full bg-signal ${
+        surSombre
+          ? 'shadow-[0_0_0_4px_rgb(255_255_255/0.2)]'
+          : 'shadow-[0_0_0_4px_rgb(34_197_94/0.18)]'
+      }`}
+    />
   )
 }

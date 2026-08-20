@@ -1,13 +1,22 @@
 import { expect, test } from '@playwright/test'
 
+import { identifiantsArticles } from '@/content/articles'
+import { chemin, cheminArticle, LANGUES, PAGES } from '@/content/langues'
+
 // WEB-9 demande « adapté au mobile ». Ces mesures sont ce que cette phrase veut dire
 // concrètement — et leur pendant grand écran, que le cahier ne nomme pas mais que
 // l'audience entreprise juge.
 //
-// Les pages se listent ici à la main tant qu'il n'y a pas de sitemap. Quand il
-// existera, cette liste doit en venir — sinon une page ajoutée échappe au contrôle
-// sans que rien ne le signale.
-const PAGES = ['/fr/', '/en/']
+// La liste vient de `PAGES` et non d'une énumération à la main : une page ajoutée
+// au menu entre d'elle-même dans le contrôle. Sans ça, elle y échapperait sans que
+// rien ne le signale.
+//
+// Un seul article par langue : les six partagent le même gabarit, et les mesurer
+// tous multiplierait la durée de la suite sans rien mesurer de neuf.
+const CHEMINS = [
+  ...LANGUES.flatMap((langue) => PAGES.map((page) => chemin(langue, page))),
+  ...LANGUES.map((langue) => cheminArticle(langue, identifiantsArticles(langue)[0])),
+]
 
 const CIBLE_TACTILE_MINIMALE = 44
 
@@ -16,10 +25,10 @@ const CIBLE_TACTILE_MINIMALE = 44
 // laisser à la direction artistique la marge du choix.
 const CARACTERES_PAR_LIGNE_MAXIMUM = 90
 
-for (const chemin of PAGES) {
-  test.describe(chemin, () => {
+for (const adresse of CHEMINS) {
+  test.describe(adresse, () => {
     test('aucun débordement horizontal', async ({ page }) => {
-      await page.goto(chemin)
+      await page.goto(adresse)
 
       const { documentWidth, viewportWidth } = await page.evaluate(() => ({
         documentWidth: document.documentElement.scrollWidth,
@@ -36,7 +45,7 @@ for (const chemin of PAGES) {
     test('les cibles tactiles font au moins 44 px', async ({ page, viewport }) => {
       test.skip(!viewport || viewport.width >= 768, 'ne vaut que sous 768 px')
 
-      await page.goto(chemin)
+      await page.goto(adresse)
 
       const trop_petites = await page.evaluate((minimum) => {
         const interactifs = document.querySelectorAll(
@@ -65,7 +74,7 @@ for (const chemin of PAGES) {
     // police qui decide, et une largeur de 900 px est confortable en 20 px, illisible
     // en 14 px.
     test('les lignes de texte ne dépassent pas 90 caractères', async ({ page }) => {
-      await page.goto(chemin)
+      await page.goto(adresse)
 
       const trop_longues = await page.evaluate((maximum) => {
         // La largeur du « 0 » dans la police calculée : c'est la definition de l'unité

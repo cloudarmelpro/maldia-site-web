@@ -1,67 +1,54 @@
-import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 
-import { en } from '@/content/en'
-import { fr } from '@/content/fr'
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
-import type { Contenu } from '@/content/types'
-import { EnTete } from '@/components/layout/en-tete'
-import { Pied } from '@/components/layout/pied'
-import { RetourEnHaut } from '@/components/shared/retour-en-haut'
+import { metadonnees } from '@/content/metadonnees'
+import { Gabarit } from '@/components/layout/gabarit'
+import { Argumentaire } from '@/components/sections/argumentaire'
+import { BandeauOutils } from '@/components/sections/bandeau-outils'
 import { Cloture } from '@/components/sections/cloture'
-import { Commencer } from '@/components/sections/commencer'
-import { Deroulement } from '@/components/sections/deroulement'
-import { Entreprises } from '@/components/sections/entreprises'
+import { Compteur } from '@/components/sections/compteur'
 import { Faq } from '@/components/sections/faq'
 import { Hero } from '@/components/sections/hero'
 import { Marches } from '@/components/sections/marches'
-import { Opportunites } from '@/components/sections/opportunites'
-import { Profils } from '@/components/sections/profils'
-import { Talents } from '@/components/sections/talents'
+import { Parcours } from '@/components/sections/parcours'
 
-const CONTENUS: Record<Langue, Contenu> = { fr, en }
+import { resoudre } from './resoudre'
 
 export function generateStaticParams(): Array<{ langue: Langue }> {
   return LANGUES.map((langue) => ({ langue }))
 }
 
-function estLangue(valeur: string): valeur is Langue {
-  return (LANGUES as readonly string[]).includes(valeur)
+export async function generateMetadata({ params }: PageProps<'/[langue]'>): Promise<Metadata> {
+  const { langue, contenu } = resoudre((await params).langue)
+  return metadonnees(langue, { page: 'accueil' }, contenu.accueil.meta)
 }
 
-// L'ordre des sections est celui de la maquette « Landing Page.dc.html », que
-// le client a réécrite avec le contenu du cahier.
+/**
+ * WEB-2 — l'accueil.
+ *
+ * Le retour client fixe ce qu'elle doit rendre lisible en quelques secondes :
+ * les deux parcours et leurs deux appels. L'argumentaire chiffre vient apres
+ * eux, pas avant — un visiteur qui ne sait pas encore de quel cote il est n'a
+ * rien a faire d'une reduction de cout.
+ */
 export default async function Page({ params }: PageProps<'/[langue]'>) {
-  const { langue } = await params
-  if (!estLangue(langue)) notFound()
-
-  const contenu = CONTENUS[langue]
+  const { langue, contenu } = resoudre((await params).langue)
 
   return (
-    <>
-      <EnTete
-        langue={langue}
-        contenu={contenu.enTete}
-        changerDeLangue={contenu.enTete.changerDeLangue}
+    <Gabarit langue={langue} page="accueil" contenu={contenu}>
+      <Hero contenu={contenu.accueil.hero} />
+      <Marches contenu={contenu.commun.marches} titreId="titre-marches" />
+      <Parcours contenu={contenu.accueil.parcours} langue={langue} />
+      <Argumentaire
+        contenu={contenu.commun.argumentaire}
+        titreId="titre-argumentaire"
+        dessous="vif"
       />
-      <main>
-        <Hero contenu={contenu.hero} />
-        <Marches contenu={contenu.marches} />
-        <Opportunites contenu={contenu.opportunites} />
-        <Entreprises contenu={contenu.entreprises} />
-        <Deroulement contenu={contenu.deroulement} />
-        <Talents contenu={contenu.talents} />
-        <Commencer contenu={contenu.commencer} />
-        <Profils contenu={contenu.profils} />
-        <Faq contenu={contenu.faq} />
-        <Cloture contenu={contenu.cloture} />
-      </main>
-      <Pied
-        langue={langue}
-        contenu={contenu.pied}
-        changerDeLangue={contenu.enTete.changerDeLangue}
-      />
-      <RetourEnHaut libelle={contenu.retourEnHaut} />
-    </>
+      <Compteur contenu={contenu.commun.compteur} langue={langue} titreId="titre-compteur" />
+      <BandeauOutils contenu={contenu.commun.outils} titreId="titre-outils" />
+      <Faq contenu={contenu.accueil.faq} />
+      <Cloture contenu={contenu.commun.cloture} />
+    </Gabarit>
   )
 }

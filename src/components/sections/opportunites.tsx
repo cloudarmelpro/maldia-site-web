@@ -8,9 +8,9 @@ import { PHOTOS } from '@/content/photos'
 import { Visuel } from '@/components/shared/visuel'
 
 /** WEB-1 et WEB-3 — les trois façons de travailler avec Maldia. */
-export function Opportunites({ contenu }: { contenu: Contenu['opportunites'] }) {
+export function Opportunites({ contenu }: { contenu: Contenu['talents']['opportunites'] }) {
   return (
-    <Section ancre="talents" titreId="titre-opportunites" fond="fond-2" bloc dessous="fond">
+    <Section titreId="titre-opportunites" fond="fond-2" bloc dessous="fond">
       <Apparition>
         <EnTeteSection
           titreId="titre-opportunites"

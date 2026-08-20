@@ -7,16 +7,16 @@ import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { Section } from '@/components/shared/section'
 
 /**
- * WEB-4 — le staff augmentation, dans le bloc teinté de la maquette : une carte
- * claire à tuiles de domaines, une carte sombre qui porte l'appel.
+ * WEB-4 et WEB-5 — les domaines couverts, dans le bloc teinté de la maquette :
+ * une carte claire à tuiles de domaines, une carte sombre qui porte l'appel.
  */
-export function Entreprises({ contenu }: { contenu: Contenu['entreprises'] }) {
+export function Domaines({ contenu }: { contenu: Contenu['services']['domaines'] }) {
   const rangees: readonly (readonly string[])[] = [contenu.tuiles.rangee1, contenu.tuiles.rangee2]
 
   return (
-    <Section titreId="titre-entreprises" ancre="entreprises" fond="tendre" bloc dessous="fond-2">
+    <Section titreId="titre-domaines" fond="tendre" bloc dessous="fond">
       <Apparition>
-        <EnTeteSection titreId="titre-entreprises" titre={contenu.titre} fond="tendre" />
+        <EnTeteSection titreId="titre-domaines" titre={contenu.titre} fond="tendre" />
       </Apparition>
 
       <div className="mt-16 grid gap-[2.125rem] [&>*]:min-w-0 lg:grid-cols-2">

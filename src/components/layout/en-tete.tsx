@@ -1,5 +1,7 @@
-import { cheminDeLangue } from '@/content/langues'
-import type { Langue } from '@/content/langues'
+import Link from 'next/link'
+
+import { chemin } from '@/content/langues'
+import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { MenuMobile } from '@/components/layout/menu-mobile'
 import { autreLangue } from '@/components/shared/autre-langue'
@@ -14,7 +16,6 @@ const CLASSES_FOCUS =
 // outline-color et retarderait l'anneau de focus.
 const CLASSES_LIEN = `transition-[color,background-color] hover:text-encre ${CLASSES_FOCUS}`
 
-
 /**
  * L'en-tête n'est pas collé : il défile avec la page.
  *
@@ -23,21 +24,29 @@ const CLASSES_LIEN = `transition-[color,background-color] hover:text-encre ${CLA
  * le `visible` est recalculé en `auto` : l'enveloppe devient un conteneur de
  * défilement et le `sticky` s'y accroche au lieu de la fenêtre. Le rendu de la
  * maquette est donc un en-tête qui s'en va — c'est celui-là qu'on reproduit.
+ *
+ * La navigation porte les six pages (WEB-11). La page courante est marquée
+ * `aria-current="page"` : sans elle, rien ne dit où l'on se trouve à qui
+ * n'accède pas à la couleur.
  */
 export function EnTete({
   langue,
+  page,
   contenu,
+  cheminAutreLangue,
   changerDeLangue,
 }: {
   langue: Langue
-  contenu: Contenu['enTete']
+  page: Page
+  contenu: Contenu['commun']['enTete']
+  cheminAutreLangue: string
   changerDeLangue: string
 }) {
   const autre = autreLangue(langue)
 
   const marque = (
-    <a
-      href={cheminDeLangue(langue)}
+    <Link
+      href={chemin(langue)}
       className={`inline-flex min-h-11 min-w-0 items-center gap-3 font-titre text-[1.6875rem] font-medium tracking-[-0.045em] text-encre ${CLASSES_FOCUS}`}
     >
       <span
@@ -47,7 +56,7 @@ export function EnTete({
         {contenu.initiale}
       </span>
       {contenu.marque}
-    </a>
+    </Link>
   )
 
   return (
@@ -55,24 +64,28 @@ export function EnTete({
     // pour les descendants en `fixed`, et le panneau mobile s'y trouvait réduit
     // à la hauteur de l'en-tête au lieu de couvrir la fenêtre. Le flou n'avait
     // de toute façon rien à flouter — l'en-tête n'est pas collé.
-        <header className="relative z-[60] bg-fond">
+    <header className="relative z-[60] bg-fond">
       <div className="mx-auto flex h-20 w-full max-w-[1260px] items-center justify-between gap-[clamp(1.25rem,2.8vw,2.5rem)] px-[clamp(1.25rem,2.8vw,2.5rem)]">
         {marque}
 
         <nav className="hidden lg:block">
-          {/* Resserre par rapport a la maquette, qui espace les cinq liens de
-              clamp(20px, 2.6vw, 44px). */}
           <ul className="flex items-center gap-[clamp(0.5rem,0.85vw,1.0625rem)]">
-            {contenu.navigation.map((lien) => (
-              <li key={lien.ancre}>
-                <a
-                  href={`#${lien.ancre}`}
-                  className={`inline-flex min-h-11 items-center rounded-pilule font-description text-[1.0625rem] font-normal whitespace-nowrap text-encre hover:text-primaire ${CLASSES_LIEN}`}
-                >
-                  {lien.libelle}
-                </a>
-              </li>
-            ))}
+            {contenu.navigation.map((lien) => {
+              const courante = lien.page === page
+              return (
+                <li key={lien.page}>
+                  <Link
+                    href={chemin(langue, lien.page)}
+                    aria-current={courante ? 'page' : undefined}
+                    className={`inline-flex min-h-11 items-center rounded-pilule font-description text-[1.0625rem] font-normal whitespace-nowrap hover:text-primaire ${
+                      courante ? 'text-primaire' : 'text-encre'
+                    } ${CLASSES_LIEN}`}
+                  >
+                    {lien.libelle}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </nav>
 
@@ -83,18 +96,22 @@ export function EnTete({
         <MenuMobile libelle={contenu.menu} marque={marque} className="lg:hidden">
           <nav className="mt-10">
             <ul className="flex flex-col gap-1">
-              {contenu.navigation.map((lien, indice) => (
-                <li key={lien.ancre}>
-                  <a
-                    href={`#${lien.ancre}`}
-                    className={`flex min-h-12 items-center text-[2rem] leading-tight tracking-[-0.03em] ${
-                      indice === 0 ? 'text-primaire' : 'text-encre'
-                    } ${CLASSES_FOCUS}`}
-                  >
-                    {lien.libelle}
-                  </a>
-                </li>
-              ))}
+              {contenu.navigation.map((lien) => {
+                const courante = lien.page === page
+                return (
+                  <li key={lien.page}>
+                    <Link
+                      href={chemin(langue, lien.page)}
+                      aria-current={courante ? 'page' : undefined}
+                      className={`flex min-h-12 items-center text-[2rem] leading-tight tracking-[-0.03em] ${
+                        courante ? 'text-primaire' : 'text-encre'
+                      } ${CLASSES_FOCUS}`}
+                    >
+                      {lien.libelle}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </nav>
 
@@ -125,6 +142,7 @@ export function EnTete({
                 </span>
                 <SelecteurLangue
                   langue={autre}
+                  vers={cheminAutreLangue}
                   libelle={autre}
                   className={`inline-flex min-h-11 min-w-11 items-center justify-center font-description text-sm text-encre-2 uppercase ${CLASSES_LIEN}`}
                 />

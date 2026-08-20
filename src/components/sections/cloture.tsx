@@ -12,7 +12,7 @@ import { Defilement } from '@/components/shared/defilement'
  * et de sens alternés. `motion-safe` coupe leur défilement : une bande sans fin
  * est le pire cas pour un trouble vestibulaire.
  */
-export function Cloture({ contenu }: { contenu: Contenu['cloture'] }) {
+export function Cloture({ contenu }: { contenu: Contenu['commun']['cloture'] }) {
   const tuiles = contenu.tuiles
   const rangees = [
     { cle: 'a', items: tuiles, sens: 'gauche' as const },
@@ -39,11 +39,11 @@ export function Cloture({ contenu }: { contenu: Contenu['cloture'] }) {
             </p>
             <div className="mt-1.5 flex flex-wrap items-center justify-center gap-7">
               <Bouton
-                destination="candidature"
+                destination="rendezVous"
                 libelle={contenu.ctaPrincipal}
                 variante="inverse"
               />
-              <LienPastille destination="rendezVous" libelle={contenu.ctaSecondaire} surSombre />
+              <LienPastille destination="candidature" libelle={contenu.ctaSecondaire} surSombre />
             </div>
           </div>
         </Apparition>

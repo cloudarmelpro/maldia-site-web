@@ -13,6 +13,8 @@
  * adresse Unsplash reste servie. Les photos définitives iront dans `public/`.
  */
 
+import type { IdentifiantArticle } from './types'
+
 const BASE = 'https://images.unsplash.com/photo-'
 
 /** `w` cadre le poids servi ; `q=80` est le palier au-delà duquel l'œil ne voit plus la différence. */
@@ -28,7 +30,6 @@ export const PHOTOS = {
     photo('1531482615713-2afd69097998', 900),
     photo('1556761175-b413da4baf72', 900),
   ],
-
 
   /** Une par categorie de WEB-5, dans l'ordre du cahier. */
   profils: [
@@ -53,6 +54,16 @@ export const PHOTOS = {
     photo('1434626881859-194d67b2b86f', 300),
     photo('1506784983877-45594efa4cbe', 300),
   ],
+
+  /**
+   * Une par article du blog (WEB-15), designee par identifiant et non par
+   * position : un article insere ailleurs dans la liste ne decale rien.
+   */
+  blog: {
+    'staff-augmentation': photo('1499750310107-5fef28a66643', 1200),
+    'preparer-sa-candidature': photo('1486312338219-ce68d2c6f44d', 1200),
+    'travailler-avec-vos-outils': photo('1522202176988-66273c2fd55f', 1200),
+  } satisfies Record<IdentifiantArticle, string>,
 
   travailADistance: photo('1588196749597-9ff075ee6b5b', 1000),
   marches: photo('1524758631624-e2822e304c36', 1000),

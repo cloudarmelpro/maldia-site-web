@@ -4,13 +4,20 @@ import { Section } from '@/components/shared/section'
 
 /** WEB-1 — les marchés desservis, dans la bande défilante de la maquette.
     Du texte et non des drapeaux : deux des sept ne sont pas des pays. */
-export function Marches({ contenu }: { contenu: Contenu['marches'] }) {
+export function Marches({
+  contenu,
+  titreId,
+}: {
+  contenu: Contenu['commun']['marches']
+  /** Plusieurs pages portent cette section : l'id doit rester unique par page. */
+  titreId: string
+}) {
   return (
-    <Section titreId="titre-marches" className="!pt-[4.375rem] !pb-[4.875rem]">
+    <Section titreId={titreId} className="!pt-[4.375rem] !pb-[4.875rem]">
       {/* Le crénage négatif du @layer base vise les titres d'affichage ; celui-ci
           est une phrase, il reprend l'espacement normal. */}
       <h2
-        id="titre-marches"
+        id={titreId}
         className="text-center font-description text-lg font-normal tracking-normal text-encre-3 [word-spacing:normal]"
       >
         {contenu.titre}

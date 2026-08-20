@@ -1,18 +1,14 @@
-import type { Metadata } from 'next'
 import { Bricolage_Grotesque, IBM_Plex_Mono, Outfit } from 'next/font/google'
-import { notFound } from 'next/navigation'
 
-import { en } from '@/content/en'
-import { fr } from '@/content/fr'
-import { cheminDeLangue, LANGUES, SITE_URL } from '@/content/langues'
+import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
-import type { Contenu } from '@/content/types'
 
 import '../globals.css'
+import { resoudre } from './resoudre'
 
 // Les noms des variables sont un invariant avec le bloc `@theme inline` de
 // globals.css : toute autre valeur casse la typographie sans erreur.
-// La police des titres de la maquette de référence. Variable : une seule
+// La police des titres de la maquette de reference. Variable : une seule
 // requete couvre toutes les graisses.
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -35,60 +31,21 @@ const plexMono = IBM_Plex_Mono({
   variable: '--font-plex-mono',
 })
 
-const CONTENUS: Record<Langue, Contenu> = { fr, en }
-
-const LOCALES_OPEN_GRAPH: { readonly [L in Langue]: string } = {
-  fr: 'fr_FR',
-  en: 'en_US',
-}
-
-function estLangue(valeur: string): valeur is Langue {
-  return (LANGUES as readonly string[]).includes(valeur)
-}
-
-// Sans elle, la route dynamique fait échouer l'export statique.
-export function generateStaticParams() {
+// Sans elle, la route dynamique fait echouer l'export statique.
+export function generateStaticParams(): Array<{ langue: Langue }> {
   return LANGUES.map((langue) => ({ langue }))
 }
 
-// S'exécute à la compilation, une fois par langue de generateStaticParams —
-// c'est le generateMetadata statique, pas le dynamique côté serveur que
-// l'export interdit.
-export async function generateMetadata({ params }: LayoutProps<'/[langue]'>): Promise<Metadata> {
-  const { langue } = await params
-  if (!estLangue(langue)) notFound()
-
-  const { meta } = CONTENUS[langue]
-  const chemin = cheminDeLangue(langue)
-
-  return {
-    metadataBase: new URL(SITE_URL),
-    title: meta.titre,
-    description: meta.description,
-    alternates: {
-      canonical: chemin,
-      // Réciprocité hreflang : chaque page déclare toutes les variantes, y
-      // compris elle-même, à l'identique dans les deux langues ; x-default est
-      // le routeur de langue à la racine (public/index.html).
-      languages: {
-        fr: cheminDeLangue('fr'),
-        en: cheminDeLangue('en'),
-        'x-default': '/',
-      },
-    },
-    openGraph: {
-      type: 'website',
-      url: chemin,
-      locale: LOCALES_OPEN_GRAPH[langue],
-      title: meta.openGraph.titre,
-      description: meta.openGraph.description,
-    },
-  }
-}
-
+/**
+ * Le layout racine ne declare aucune metadonnee.
+ *
+ * Depuis le passage a six pages (WEB-11), le canonique et le bloc `hreflang`
+ * dependent de la page et non de la langue seule : declares ici, ils
+ * designeraient la racine de langue depuis `/fr/services/`. Chaque page les
+ * produit par `metadonnees()`.
+ */
 export default async function LayoutRacine({ children, params }: LayoutProps<'/[langue]'>) {
-  const { langue } = await params
-  if (!estLangue(langue)) notFound()
+  const { langue } = resoudre((await params).langue)
 
   return (
     <html lang={langue} className={`${bricolage.variable} ${outfit.variable} ${plexMono.variable}`}>

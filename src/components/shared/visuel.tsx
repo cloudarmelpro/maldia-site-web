@@ -26,15 +26,29 @@ export function Visuel({
   arrondi = 'rounded-[1.125rem]',
   /** Ce que le navigateur doit réserver — évite de télécharger une image trop large. */
   tailles = '(max-width: 768px) 100vw, 33vw',
+  prioritaire = false,
 }: {
   photo: string
   ratio?: Ratio
   arrondi?: string
   tailles?: string
+  /**
+   * À poser sur la seule image au-dessus de la ligne de flottaison. Chargée
+   * paresseusement, c'est elle qui fixe le LCP de la page ; sur deux images, la
+   * priorité ne veut plus rien dire et la file de téléchargement se dégrade.
+   */
+  prioritaire?: boolean
 }) {
   return (
     <div className={`relative w-full overflow-hidden ${RATIOS[ratio]} ${arrondi} bg-fond-2`}>
-      <Image src={photo} alt="" fill sizes={tailles} className="object-cover" />
+      <Image
+        src={photo}
+        alt=""
+        fill
+        sizes={tailles}
+        priority={prioritaire}
+        className="object-cover"
+      />
     </div>
   )
 }

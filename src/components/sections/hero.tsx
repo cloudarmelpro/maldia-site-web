@@ -14,7 +14,7 @@ const AVATARS = ['#E7C9A9', '#C9B7E8', '#F0C3B0', '#B7C6E8']
  * Animé par `motion`, il serait rendu à `opacity: 0` dans le HTML statique et
  * n'apparaîtrait qu'à l'hydratation.
  */
-export function Hero({ contenu }: { contenu: Contenu['hero'] }) {
+export function Hero({ contenu }: { contenu: Contenu['accueil']['hero'] }) {
   const [titre1, titre2] = contenu.titre
   const [sous1, sous2] = contenu.sousTitre
 
@@ -111,6 +111,7 @@ export function Hero({ contenu }: { contenu: Contenu['hero'] }) {
             photo={PHOTOS.hero}
             arrondi="rounded-[1.625rem]"
             tailles="(max-width: 1024px) 100vw, 1000px"
+            prioritaire
           />
         </div>
       </div>

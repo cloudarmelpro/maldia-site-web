@@ -10,7 +10,10 @@ import type { ReactNode } from 'react'
  *
  * `motion-safe:` coupe le défilement quand le visiteur réduit le mouvement —
  * une bande qui défile sans fin est le pire cas pour un trouble vestibulaire.
- * Sans animation, la liste reste simplement posée.
+ *
+ * Immobile, la liste dépasse du cadre et la fin serait perdue : `motion-reduce`
+ * rend alors la bande défilable à la main. Sans ça, réduire le mouvement
+ * masquerait du contenu au lieu de seulement l'arrêter.
  */
 export function Defilement({
   items,
@@ -30,7 +33,7 @@ export function Defilement({
 
   return (
     <div
-      className={`overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]${className ? ` ${className}` : ''}`}
+      className={`overflow-hidden motion-reduce:overflow-x-auto [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]${className ? ` ${className}` : ''}`}
     >
       <div className={`flex w-max items-center ${animation}`}>
         <ul className="flex w-max items-center">

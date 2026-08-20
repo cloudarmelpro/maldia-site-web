@@ -15,7 +15,7 @@ import { Section } from '@/components/shared/section'
  * `auto-fit` plutôt qu'un nombre de colonnes fixe : la grille se replie d'
  * elle-même sans point de rupture à maintenir.
  */
-export function Deroulement({ contenu }: { contenu: Contenu['deroulement'] }) {
+export function Deroulement({ contenu }: { contenu: Contenu['services']['deroulement'] }) {
   return (
     <Section titreId="titre-deroulement">
       <Apparition>

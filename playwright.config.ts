@@ -25,7 +25,15 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
 
-  use: { baseURL: 'http://localhost:3000' },
+  // `next dev` compile chaque route a la premiere requete. Avec sept projets en
+  // parallele, la premiere visite d'une page peut depasser largement le delai par
+  // defaut de 30 s — et l'echec ressemble alors a un bug de la page.
+  timeout: 120_000,
+
+  use: {
+    baseURL: 'http://localhost:3000',
+    navigationTimeout: 60_000,
+  },
 
   projects: ECRANS.map(({ nom, largeur, hauteur }) => ({
     name: nom,

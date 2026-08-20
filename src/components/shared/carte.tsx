@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react'
 
-import type { Ancre } from '@/content/langues'
-
 // `text-encre` est délibéré : sur les fonds `vif` et `sombre`, la Section pose
 // une couleur de texte claire — illisible sur la surface blanche de la carte.
 //
@@ -13,9 +11,6 @@ const CLASSES = 'rounded-carte bg-carte text-encre'
 type CarteProps = {
   /** `li` pour une carte de grille dans un `ul`/`ol`, `article` pour un contenu autonome. */
   as?: 'div' | 'article' | 'li'
-  /** Ancre de navigation, quand la carte est elle-même une cible (décision 0014). */
-  ancre?: Ancre
-  /** Nomme la région quand la carte porte une ancre : sans nom, ce n'est pas un repère. */
   'aria-labelledby'?: string
   className?: string
   children: ReactNode
@@ -23,14 +18,12 @@ type CarteProps = {
 
 export function Carte({
   as: Balise = 'div',
-  ancre,
   'aria-labelledby': nommePar,
   className,
   children,
 }: CarteProps) {
   return (
     <Balise
-      id={ancre}
       aria-labelledby={nommePar}
       className={`${CLASSES}${className ? ` ${className}` : ''}`}
     >

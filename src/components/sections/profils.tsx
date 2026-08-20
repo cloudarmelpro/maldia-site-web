@@ -21,7 +21,7 @@ import { Section } from '@/components/shared/section'
  */
 const AMPLITUDES = [46, 96, 22] as const
 
-export function Profils({ contenu }: { contenu: Contenu['profils'] }) {
+export function Profils({ contenu }: { contenu: Contenu['talents']['profils'] }) {
   // Trois colonnes remplies en serpentin : l'ordre de lecture reste celui du
   // contenu, colonne par colonne.
   const colonnes = AMPLITUDES.map((amplitude, colonne) => ({
@@ -34,7 +34,7 @@ export function Profils({ contenu }: { contenu: Contenu['profils'] }) {
   }))
 
   return (
-    <Section ancre="profils" titreId="titre-profils" fond="fond-2" bloc dessous="vif">
+    <Section titreId="titre-profils" fond="fond-2" bloc dessous="tendre">
       <Apparition>
         <EnTeteSection titreId="titre-profils" titre={contenu.titre} fond="fond-2" />
       </Apparition>

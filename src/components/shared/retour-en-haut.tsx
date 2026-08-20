@@ -7,6 +7,13 @@ import { useEffect, useState } from 'react'
 // pouce fait plus vite.
 const SEUIL_FACTEUR = 1
 
+// `behavior: 'smooth'` ignore la preference systeme, contrairement a la regle
+// CSS equivalente. Lue au clic et non montee en etat : elle peut changer entre
+// deux clics, et aucun rendu n'en depend.
+function comportementDefilement(): ScrollBehavior {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+}
+
 /**
  * Le retour en haut, dans le registre sombre du design.
  *
@@ -30,7 +37,7 @@ export function RetourEnHaut({ libelle }: { libelle: string }) {
     <button
       type="button"
       aria-label={libelle}
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      onClick={() => window.scrollTo({ top: 0, behavior: comportementDefilement() })}
       className={`fixed right-[clamp(1.25rem,4vw,3.5rem)] bottom-6 z-50 grid size-11 place-items-center rounded-bloc border border-white/22 bg-encre text-white transition-opacity duration-[220ms] hover:bg-primaire focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre ${
         visible ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}

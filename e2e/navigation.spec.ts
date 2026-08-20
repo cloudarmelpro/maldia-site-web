@@ -42,6 +42,17 @@ for (const langue of LANGUES) {
         // Une page servie est une page qui a un titre : sans ce controle, une
         // redirection vers une coquille vide passerait.
         await expect(page.locator('h1')).toHaveCount(1)
+
+        // Et une page servie est une page qu'on decouvre par le haut. Un
+        // `scroll-behavior: smooth` sur `html` faisait atterrir dans le pied :
+        // l'App Router remet en haut, l'animation part de l'ancienne position
+        // pendant que la nouvelle page grandit, et finit au bas du document.
+        // Rien dans le HTML ne le montre — il faut naviguer pour le voir.
+        await expect
+          .poll(() => page.evaluate(() => Math.round(window.scrollY)), {
+            message: `${lien.page} : la navigation n'arrive pas en haut de la page`,
+          })
+          .toBe(0)
       }
     })
 

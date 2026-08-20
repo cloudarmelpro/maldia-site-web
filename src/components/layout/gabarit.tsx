@@ -4,6 +4,7 @@ import { chemin, cheminArticle } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { EnTete } from '@/components/layout/en-tete'
+import { BarreProgression } from '@/components/shared/barre-progression'
 import { Pied } from '@/components/layout/pied'
 import { ContactBlocs } from '@/components/sections/contact-blocs'
 import { autreLangue } from '@/components/shared/autre-langue'
@@ -53,6 +54,10 @@ export function Gabarit({
 
   return (
     <>
+      {/* Avant `main` et non dedans : elle est `fixed`, et la sortir de l'arbre
+          de contenu evite qu'un `transform` pose plus bas ne cree un contexte
+          qui la recalerait sur son parent au lieu de la fenetre. */}
+      <BarreProgression />
       <main>{children(enTete)}</main>
       <ContactBlocs
         contenu={contenu.commun.contact}

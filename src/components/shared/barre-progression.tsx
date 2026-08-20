@@ -7,7 +7,8 @@ import { useEffect, useRef, useState } from 'react'
 const PAS_MINIMAL = 0.004
 
 /**
- * La barre de progression de lecture du design de l'article.
+ * La barre de progression de defilement, venue du design de l'article et posee
+ * par le gabarit sur toutes les pages.
  *
  * `fixed` en haut de la fenetre et non dans l'en-tete : l'en-tete du site n'est
  * pas colle, il defile avec la page. Posee dedans, la barre disparaitrait au

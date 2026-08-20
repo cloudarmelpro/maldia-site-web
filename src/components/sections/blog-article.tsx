@@ -8,7 +8,6 @@ import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
 import { CarteArticle } from '@/components/sections/carte-article'
 import { Apparition } from '@/components/shared/apparition'
-import { BarreProgression } from '@/components/shared/barre-progression'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -63,7 +62,6 @@ export function BlogArticle({
   return (
     <>
       <div className="bg-nuit pb-6.5">{enTete}</div>
-      <BarreProgression />
 
       <article className="bg-fond pt-[clamp(2.125rem,3.6vw,3.5rem)] pb-[clamp(3.5rem,6vw,6rem)]">
         <div className={CONTENEUR}>

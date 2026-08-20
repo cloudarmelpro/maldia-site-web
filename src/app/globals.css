@@ -147,11 +147,14 @@
     scroll-padding-top: 1.5rem;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
+  /* Pas de `scroll-behavior: smooth` sur `html`. L'App Router remet la page en
+     haut apres une navigation ; l'animation part alors de l'ancienne position
+     pendant que la nouvelle page grandit, et finit au bas du document — on
+     arrive dans le pied au lieu du titre. Mesure : 2077 px sur une page qui en
+     defile 2077.
+
+     Les ancres internes sautent donc sans animation. Le retour en haut, lui,
+     defile en douceur : il le fait en JS, ou la hauteur ne bouge pas. */
 
   body {
     background-color: var(--color-fond);

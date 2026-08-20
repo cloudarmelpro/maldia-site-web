@@ -405,21 +405,56 @@ export const en: Contenu<'en'> = {
     },
     entete: {
       intitule: 'About',
-      titre: 'Between Madagascar and French-speaking markets.',
-      description:
-        'Agence Maldia connects talent from Madagascar with international companies looking to strengthen their teams.',
-      cta: 'Book a call',
-      mention: 'Antananarivo, Madagascar',
+      titre: 'An agency between Madagascar and French-speaking markets.',
+      description: 'Staff augmentation, not one-off placement.',
     },
-    paragraphes: [
-      'We recruit in Madagascar and work with companies established in Quebec and French-speaking Canada, France, Belgium, Switzerland, Luxembourg and Monaco.',
-      'Our role comes down to three things. We recruit and shortlist talent. We present the company with the profiles that match its request. Then we support the collaboration over time. The talent stays in Madagascar and works remotely, within the client’s team.',
-      'The service works for both sides. Someone in Madagascar finds a professional opportunity without leaving the country. A company finds French-speaking reinforcement, with no recruitment fees and no change to its tools.',
+    chapeau:
+      'Agence Maldia builds remote teams for French-speaking companies, with talent based in Madagascar. We search, shortlist and support; the company chooses and keeps control of how it works.',
+    principes: [
+      {
+        intitule: 'Commitment',
+        titre: 'No recruitment fees',
+        texte: 'The search is our share of the risk. A company that hires no one pays nothing.',
+      },
+      {
+        intitule: 'Method',
+        titre: 'The client’s tools',
+        texte:
+          'The talent joins the working environment already in place. We impose no tool of our own.',
+      },
+      {
+        intitule: 'Candour',
+        titre: 'Limits, stated upfront',
+        texte: 'A rare profile takes longer, and we say so before starting the search.',
+      },
     ],
+    fonctionnement: {
+      intitule: 'How it works',
+      titre: 'Two sides, one point of contact.',
+      description: 'We stay responsible for follow-up on both sides.',
+      cotes: [
+        {
+          lieu: 'Antananarivo',
+          titre: 'In Madagascar',
+          texte:
+            'We recruit, assess and support talent on the ground. More than {nombre} candidates are in our database, across every professional field we cover.',
+          valeur: '{nombre}+',
+          legende: 'candidates in our database',
+        },
+        {
+          lieu: 'Canada · Europe',
+          titre: 'In French-speaking markets',
+          texte:
+            'Our talent works with companies in French-speaking Canada and Europe, in French, on agreed hours and with the tools already in place at the client.',
+          valeur: 'FR',
+          legende: 'working language',
+        },
+      ],
+    },
     reperes: {
-      marches: 'markets served',
-      domaines: 'profile fields',
-      langues: 'working languages',
+      intitule: 'Key figures',
+      titre: 'What we claim, in numbers.',
+      description: 'The same figures as on the Services page.',
     },
   },
 

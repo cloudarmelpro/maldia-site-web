@@ -1,7 +1,7 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
-import { delaiDeGrille } from '@/components/shared/decalage'
+import { CartesArguments } from '@/components/shared/cartes-arguments'
 import { Defilement, MASQUE_BANDE } from '@/components/shared/defilement'
 import { Pilule } from '@/components/shared/pilule'
 import { BAS_COURT, GRILLE_INTITULE, Section } from '@/components/shared/section'
@@ -61,31 +61,7 @@ export function Pourquoi({
             </div>
           </Apparition>
 
-          <ul className="grid grid-cols-2 gap-1 duo:grid-cols-3 voies:grid-cols-6">
-            {contenu.liste.map((carte, indice) => (
-              <li key={carte.chiffre + carte.ligne1} className="min-w-0">
-                <Apparition delai={delaiDeGrille(indice)} className="h-full">
-                  <div className="grid h-full min-h-[clamp(11.875rem,16vw,14.125rem)] min-w-0 grid-rows-[auto_1fr_auto_auto] rounded-carte border border-[#e6e9e5] bg-fond-2 p-[clamp(1.125rem,1.5vw,1.375rem)]">
-                    <span className="flex flex-col gap-0.75 etiquette text-[0.6875rem] tracking-[0.09em] text-encre-2">
-                      <span>{carte.ligne1}</span>
-                      <span>{carte.ligne2}</span>
-                    </span>
-                    <span />
-                    <strong
-                      className={`font-titre text-[clamp(1.875rem,2.5vw,2.5rem)] leading-[0.92] tracking-[-0.05em] ${
-                        carte.accent ? 'text-primaire' : 'text-encre'
-                      }`}
-                    >
-                      {carte.chiffre}
-                    </strong>
-                    <span className="mt-1.75 text-[0.78125rem] leading-[1.45] text-encre-2">
-                      {carte.description}
-                    </span>
-                  </div>
-                </Apparition>
-              </li>
-            ))}
-          </ul>
+          <CartesArguments liste={contenu.liste} />
 
           <Apparition>
             <div className="flex flex-col items-stretch gap-5.5 rounded-encart bg-encre p-[clamp(1.625rem,3vw,2.5rem)] large:flex-row large:items-center large:gap-10">

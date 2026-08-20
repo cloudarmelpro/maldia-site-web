@@ -399,21 +399,58 @@ export const fr: Contenu<'fr'> = {
     },
     entete: {
       intitule: 'À propos',
-      titre: 'Entre Madagascar et les marchés francophones.',
-      description:
-        'Agence Maldia connecte les talents de Madagascar avec des entreprises internationales qui souhaitent renforcer leurs équipes.',
-      cta: 'Prendre rendez-vous',
-      mention: 'Antananarivo, Madagascar',
+      titre: 'Une agence entre Madagascar et les marchés francophones.',
+      description: 'Du staff augmentation, pas du placement ponctuel.',
     },
-    paragraphes: [
-      'Nous recrutons à Madagascar et nous travaillons avec des entreprises établies au Québec et au Canada francophone, en France, en Belgique, en Suisse, au Luxembourg et à Monaco.',
-      'Notre rôle tient en trois gestes. Nous recrutons et présélectionnons les talents. Nous présentons à l’entreprise les profils qui correspondent à son besoin. Puis nous accompagnons la collaboration dans la durée. Le talent reste à Madagascar et travaille à distance, dans l’équipe du client.',
-      'Le service s’adresse aux deux côtés. Une personne à Madagascar y trouve une opportunité professionnelle sans quitter le pays. Une entreprise y trouve un renfort francophone, sans frais de recrutement et sans rien changer à ses outils.',
+    chapeau:
+      'Agence Maldia constitue des équipes à distance pour des entreprises francophones, avec des talents basés à Madagascar. Nous cherchons, présélectionnons et accompagnons ; l’entreprise choisit et garde la main sur son organisation.',
+    principes: [
+      {
+        intitule: 'Engagement',
+        titre: 'Pas de frais de recrutement',
+        texte:
+          'La recherche est notre part du risque. Une entreprise qui n’engage personne ne paie rien.',
+      },
+      {
+        intitule: 'Méthode',
+        titre: 'Les outils du client',
+        texte:
+          'Le talent rejoint l’environnement de travail existant. Nous n’imposons aucun outil.',
+      },
+      {
+        intitule: 'Franchise',
+        titre: 'Les limites, dites d’avance',
+        texte:
+          'Un profil rare demande plus de temps, et nous le disons avant de lancer la recherche.',
+      },
     ],
+    fonctionnement: {
+      intitule: 'Fonctionnement',
+      titre: 'Deux côtés, un seul interlocuteur.',
+      description: 'Nous restons responsables du suivi des deux côtés.',
+      cotes: [
+        {
+          lieu: 'Antananarivo',
+          titre: 'À Madagascar',
+          texte:
+            'Nous recrutons, évaluons et accompagnons les talents sur place. Plus de {nombre} candidats sont présents dans notre base de données, dans tous les domaines professionnels que nous couvrons.',
+          valeur: '{nombre}+',
+          legende: 'candidats dans notre base',
+        },
+        {
+          lieu: 'Canada · Europe',
+          titre: 'Sur les marchés francophones',
+          texte:
+            'Nos talents travaillent avec des entreprises au Canada francophone et en Europe, en français, aux horaires convenus et avec les outils déjà en place chez le client.',
+          valeur: 'FR',
+          legende: 'langue de travail',
+        },
+      ],
+    },
     reperes: {
-      marches: 'marchés desservis',
-      domaines: 'domaines de profils',
-      langues: 'langues de travail',
+      intitule: 'Repères',
+      titre: 'Ce que nous annonçons, chiffré.',
+      description: 'Les mêmes chiffres que sur la page Services.',
     },
   },
 

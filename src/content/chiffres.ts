@@ -10,7 +10,7 @@ import type { Langue } from './langues'
  *
  * Les autres chiffres du retour client — 14 jours, 50 %, 25 % — vivent dans
  * les phrases que le client a écrites, donc dans `fr.ts` et `en.ts`.
- * `tests/chiffres.spec.ts` vérifie qu'ils paraissent dans les deux langues :
+ * `tests/contenu.spec.ts` vérifie qu'ils paraissent dans les deux langues :
  * sans ça, une correction sur une seule passerait inaperçue.
  */
 export const NOMBRE_CANDIDATS = 500
@@ -24,4 +24,16 @@ const LOCALES: Record<Langue, string> = {
 
 export function nombreFormate(valeur: number, langue: Langue): string {
   return new Intl.NumberFormat(LOCALES[langue]).format(valeur)
+}
+
+/**
+ * Le jeton que portent les chaînes où le nombre de candidats s'insère.
+ *
+ * Une phrase qui cite le nombre le citerait aussi en anglais, et les deux
+ * divergeraient à la première mise à jour. Le jeton garde le nombre ici.
+ */
+const JETON_NOMBRE = '{nombre}'
+
+export function avecNombre(texte: string, langue: Langue): string {
+  return texte.replaceAll(JETON_NOMBRE, nombreFormate(NOMBRE_CANDIDATS, langue))
 }

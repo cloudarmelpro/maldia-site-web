@@ -119,6 +119,28 @@ export type Etape = {
 
 export type Etapes = readonly [Etape, Etape, Etape, Etape, Etape]
 
+/** WEB-6 — un principe de la page À propos. Son rang est calculé, jamais recopié. */
+export type Principe = {
+  readonly intitule: string
+  readonly titre: string
+  readonly texte: string
+}
+
+/**
+ * WEB-6 — un côté du fonctionnement : Madagascar d'abord, les marchés ensuite.
+ *
+ * `texte` et `valeur` peuvent porter le jeton `{nombre}`, remplacé au rendu par
+ * `NOMBRE_CANDIDATS`. Le nombre de candidats ne s'écrit qu'à un seul endroit
+ * (WEB-13) : l'inscrire ici le ferait diverger entre les deux langues.
+ */
+export type Cote = {
+  readonly lieu: string
+  readonly titre: string
+  readonly texte: string
+  readonly valeur: string
+  readonly legende: string
+}
+
 /** Une catégorie de profils recrutés (WEB-5), telle que le sélecteur l'affiche. */
 export type Profil = {
   readonly nom: string
@@ -424,13 +446,27 @@ export type Contenu<L extends Langue = Langue> = {
   /** WEB-6 — À propos. */
   readonly aPropos: {
     readonly meta: Meta
-    readonly entete: EnTetePage<LibelleRendezVous<L>>
-    readonly paragraphes: readonly [string, string, string]
-    /** Les chiffres sont comptés à partir des listes, pas recopiés. */
+    /**
+     * Pas d'`EnTetePage` ici : le design pose le `h1` dans la première section
+     * claire et non dans une bande sombre, donc sans bouton ni mention.
+     */
+    readonly entete: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+    }
+    readonly chapeau: string
+    readonly principes: readonly [Principe, Principe, Principe]
+    readonly fonctionnement: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+      readonly cotes: readonly [Cote, Cote]
+    }
     readonly reperes: {
-      readonly marches: string
-      readonly domaines: string
-      readonly langues: string
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
     }
   }
 

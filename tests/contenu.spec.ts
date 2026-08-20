@@ -58,6 +58,42 @@ describe('WEB-8 — parite des deux langues', () => {
     for (const liste of autres) expect(liste).toEqual(premiere)
   })
 
+  // WEB-13 — le nombre de candidats ne s'ecrit qu'une fois, dans chiffres.ts. Le
+  // contenu ne porte qu'un jeton, et `avecNombre` le remplace au rendu. Un jeton
+  // pose ailleurs partirait tel quel a l'ecran : « Plus de {nombre} candidats ».
+  it('le jeton du compteur ne parait que la ou il est remplace', () => {
+    const ATTENDUS = [
+      'aPropos.fonctionnement.cotes[0].texte',
+      'aPropos.fonctionnement.cotes[0].valeur',
+    ]
+
+    for (const langue of LANGUES) {
+      const porteurs: string[] = []
+
+      const parcourir = (valeur: unknown, chemin: string) => {
+        if (typeof valeur === 'string') {
+          if (valeur.includes('{nombre}')) porteurs.push(chemin)
+          return
+        }
+        if (Array.isArray(valeur)) {
+          valeur.forEach((element, indice) => parcourir(element, `${chemin}[${indice}]`))
+          return
+        }
+        if (valeur && typeof valeur === 'object') {
+          for (const [cle, sous] of Object.entries(valeur)) {
+            parcourir(sous, chemin === '' ? cle : `${chemin}.${cle}`)
+          }
+        }
+      }
+
+      parcourir(CONTENUS[langue], '')
+
+      expect(porteurs.sort(), `${langue} : le jeton {nombre} n'est pas au bon endroit`).toEqual(
+        ATTENDUS,
+      )
+    }
+  })
+
   it('les six questions designent le meme cote dans les deux langues', () => {
     // `cote` pilote le filtre : divergent, un onglet montrerait un nombre
     // d'entrees different selon la langue.

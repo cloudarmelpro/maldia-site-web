@@ -61,7 +61,7 @@ describe('WEB-12 — les chiffres du retour client', () => {
   it('chaque langue porte les trois chiffres de l argumentaire', () => {
     for (const langue of LANGUES) {
       const texte = CONTENUS[langue].commun.argumentaire.liste
-        .map((argument) => `${argument.chiffre ?? ''} ${argument.description}`)
+        .map((argument) => `${argument.reperage} ${argument.description}`)
         .join(' ')
 
       for (const chiffre of CHIFFRES_ATTENDUS[langue]) {

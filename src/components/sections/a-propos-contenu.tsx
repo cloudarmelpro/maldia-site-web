@@ -31,7 +31,7 @@ export function AProposContenu({ contenu }: { contenu: Contenu }) {
           <div className="flex flex-col gap-6">
             <h2
               id="titre-a-propos"
-              className="max-w-[24ch] font-titre text-[2rem] leading-[1.08] font-normal text-balance text-encre sm:text-[2.5rem]"
+              className="max-w-[24ch] font-titre font-normal text-[2rem] leading-[1.08] text-balance text-encre sm:text-[2.5rem]"
             >
               {aPropos.titre}
             </h2>
@@ -67,7 +67,7 @@ export function AProposContenu({ contenu }: { contenu: Contenu }) {
                   key={repere.libelle}
                   className="flex min-w-0 items-baseline gap-4 rounded-avis bg-carte px-7 py-5"
                 >
-                  <span className="font-titre text-[2.25rem] leading-none font-normal tracking-[-0.05em] text-primaire">
+                  <span className="font-titre font-normal text-[2.25rem] leading-none tracking-[-0.04em] text-primaire">
                     {repere.valeur}
                   </span>
                   <span className="font-description text-[1.0625rem] text-encre-2">

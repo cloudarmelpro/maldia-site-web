@@ -40,7 +40,7 @@ export function EnTeteSection({
       {/* Le crénage négatif vient du @layer base : il ne vaut que pour h1 et h2. */}
       <h2
         id={titreId}
-        className={`font-titre text-[2.125rem] leading-[1.05] font-normal text-balance sm:text-[2.75rem] lg:text-[3.375rem] ${TITRES[fond]}`}
+        className={`font-titre font-normal text-[2.125rem] leading-[1.05] text-balance sm:text-[2.75rem] lg:text-[3.375rem] ${TITRES[fond]}`}
       >
         {titre}
       </h2>

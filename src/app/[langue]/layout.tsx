@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, IBM_Plex_Mono, Outfit } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
@@ -6,29 +6,20 @@ import type { Langue } from '@/content/langues'
 import '../globals.css'
 import { resoudre } from './resoudre'
 
-// Les noms des variables sont un invariant avec le bloc `@theme inline` de
-// globals.css : toute autre valeur casse la typographie sans erreur.
-// La police des titres de la maquette de reference. Variable : une seule
-// requete couvre toutes les graisses.
-const bricolage = Bricolage_Grotesque({
+/**
+ * DM Sans, et elle seule.
+ *
+ * Une police pour tout le site : titres, corps, libelles, chiffres. Le nom de
+ * la variable est un invariant avec le bloc `@theme inline` de globals.css —
+ * toute autre valeur casse la typographie sans erreur de compilation.
+ *
+ * Variable : une seule requete couvre toutes les graisses, de 100 a 1000. La
+ * graisse de reference du site est Light (300), posee sur `body`.
+ */
+const dmSans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-bricolage',
-})
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-outfit',
-})
-
-// Reservee aux etiquettes techniques des blocs visuels de la maquette. Un seul
-// poids : elle ne porte jamais de texte courant.
-const plexMono = IBM_Plex_Mono({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-plex-mono',
+  variable: '--font-dm-sans',
 })
 
 // Sans elle, la route dynamique fait echouer l'export statique.
@@ -48,7 +39,7 @@ export default async function LayoutRacine({ children, params }: LayoutProps<'/[
   const { langue } = resoudre((await params).langue)
 
   return (
-    <html lang={langue} className={`${bricolage.variable} ${outfit.variable} ${plexMono.variable}`}>
+    <html lang={langue} className={dmSans.variable}>
       <body>{children}</body>
     </html>
   )

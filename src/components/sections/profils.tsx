@@ -64,7 +64,7 @@ export function Profils({ contenu }: { contenu: Contenu['talents']['profils'] })
                     className="size-11 shrink-0 rounded-full bg-trait object-cover"
                   />
                   <span className="flex min-w-0 flex-col">
-                    <span className="font-description text-[1.0625rem] font-semibold text-encre">
+                    <span className="font-description text-[1.0625rem] font-medium text-encre">
                       {profil.nom}
                     </span>
                     <span className="font-description text-[0.9375rem] text-encre-2">{profil.precision}</span>

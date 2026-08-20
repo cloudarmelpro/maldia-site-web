@@ -36,33 +36,26 @@ export const fr: Contenu<'fr'> = {
       description:
         'Un renfort francophone, sans frais de recrutement et sans rien changer à vos outils.',
       liste: [
+        { reperage: '0', description: 'Aucuns frais de recrutement.' },
         {
-          chiffre: '0',
-          titre: 'Frais de recrutement',
-          description: 'Aucuns frais de recrutement.',
-        },
-        {
-          chiffre: '14 jours',
-          titre: 'En moyenne',
+          reperage: '14 jours',
           description: 'Trouvez votre prochain talent en 14 jours en moyenne.',
         },
         {
-          chiffre: 'jusqu’à 50 %',
-          titre: 'Sur les postes confiés',
+          reperage: 'jusqu’à 50 %',
           description: 'Réduisez jusqu’à 50 % le coût des postes confiés à Maldia.',
         },
         {
-          chiffre: 'environ 25 %',
-          titre: 'Sur la masse salariale',
+          reperage: 'environ 25 %',
           description:
             'Selon les postes confiés, réduisez jusqu’à environ 25 % votre masse salariale totale.',
         },
         {
-          titre: 'Talents francophones',
+          reperage: 'Talents francophones',
           description: 'Nos talents travaillent en français, avec vos équipes et avec vos clients.',
         },
         {
-          titre: 'Vos outils, sans changement',
+          reperage: 'Vos outils, sans changement',
           description: 'Nous nous adaptons aux outils déjà utilisés par l’entreprise.',
         },
       ],

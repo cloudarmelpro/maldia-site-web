@@ -33,10 +33,10 @@ export function ContactVoies({ contenu }: { contenu: Contenu['contact'] }) {
             <li key={voie.intitule} className="min-w-0">
               <Apparition delai={delaiDeGrille(indice)} className="h-full">
                 <Carte className="flex h-full min-w-0 flex-col gap-5 rounded-offre p-8 pb-10">
-                  <h3 className="self-start rounded-pilule bg-primaire px-3.5 py-1.5 text-[0.6875rem] font-bold tracking-[0.07em] text-carte uppercase">
+                  <h3 className="self-start rounded-pilule bg-primaire px-3.5 py-1.5 text-[0.6875rem] font-semibold tracking-[0.07em] text-carte uppercase">
                     {voie.intitule}
                   </h3>
-                  <p className="font-titre text-[1.875rem] leading-[1.1] font-normal tracking-[-0.03em] text-encre">
+                  <p className="font-titre font-normal text-[1.875rem] leading-[1.1] tracking-[-0.035em] text-encre">
                     {voie.titre}
                   </p>
                   <p className="font-description text-[0.97rem] leading-[1.6] text-encre-2">
@@ -48,7 +48,7 @@ export function ContactVoies({ contenu }: { contenu: Contenu['contact'] }) {
                       <li key={etape} className="flex min-w-0 items-start gap-3">
                         <span
                           aria-hidden
-                          className="grid size-6 shrink-0 place-items-center rounded-full bg-tendre font-mono text-[0.75rem] font-medium text-primaire-2"
+                          className="grid size-6 shrink-0 place-items-center rounded-full bg-tendre text-[0.75rem] font-normal text-primaire-2"
                         >
                           {rang + 1}
                         </span>

@@ -47,11 +47,11 @@ export function EnTete({
   const marque = (
     <Link
       href={chemin(langue)}
-      className={`inline-flex min-h-11 min-w-0 items-center gap-3 font-titre text-[1.6875rem] font-medium tracking-[-0.045em] text-encre ${CLASSES_FOCUS}`}
+      className={`inline-flex min-h-11 min-w-0 items-center gap-3 font-titre text-[1.6875rem] font-normal tracking-[-0.035em] text-encre ${CLASSES_FOCUS}`}
     >
       <span
         aria-hidden
-        className="grid size-11 shrink-0 place-items-center rounded-marque bg-primaire text-[1.375rem] font-semibold text-carte"
+        className="grid size-11 shrink-0 place-items-center rounded-marque bg-primaire text-[1.375rem] font-medium text-carte"
       >
         {contenu.initiale}
       </span>
@@ -77,9 +77,9 @@ export function EnTete({
                   <Link
                     href={chemin(langue, lien.page)}
                     aria-current={courante ? 'page' : undefined}
-                    className={`inline-flex min-h-11 items-center rounded-pilule font-description text-[1.0625rem] font-normal whitespace-nowrap hover:text-primaire ${
-                      courante ? 'text-primaire' : 'text-encre'
-                    } ${CLASSES_LIEN}`}
+                    className={`inline-flex min-h-11 items-center rounded-pilule font-description text-[1.0625rem] whitespace-nowrap hover:text-primaire ${
+ courante ? 'text-primaire' : 'text-encre'
+ } ${CLASSES_LIEN}`}
                   >
                     {lien.libelle}
                   </Link>
@@ -104,8 +104,8 @@ export function EnTete({
                       href={chemin(langue, lien.page)}
                       aria-current={courante ? 'page' : undefined}
                       className={`flex min-h-12 items-center text-[2rem] leading-tight tracking-[-0.03em] ${
-                        courante ? 'text-primaire' : 'text-encre'
-                      } ${CLASSES_FOCUS}`}
+ courante ? 'text-primaire' : 'text-encre'
+ } ${CLASSES_FOCUS}`}
                     >
                       {lien.libelle}
                     </Link>
@@ -136,7 +136,7 @@ export function EnTete({
               <div role="group" aria-label={changerDeLangue} className="flex items-center gap-2.5">
                 <span
                   aria-current="true"
-                  className="font-description text-sm font-semibold text-encre uppercase"
+                  className="font-description text-sm font-medium text-encre uppercase"
                 >
                   {langue}
                 </span>

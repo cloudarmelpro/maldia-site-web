@@ -59,7 +59,7 @@ export function BlogListe({
                     <p className="font-description text-[0.8125rem] tracking-[0.04em] text-encre-2 uppercase">
                       {contenu.publieLe} <time dateTime={article.date}>{dateFormatee(article.date, langue)}</time>
                     </p>
-                    <h3 className="font-titre text-[1.375rem] leading-[1.15] font-medium tracking-[-0.03em] text-encre">
+                    <h3 className="font-titre text-[1.375rem] leading-[1.15] font-normal tracking-[-0.025em] text-encre">
                       <Link
                         href={cheminArticle(langue, article.identifiant)}
                         className="hover:text-primaire after:absolute after:inset-0 after:rounded-carte focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaire"
@@ -72,7 +72,7 @@ export function BlogListe({
                     </p>
                     <p
                       aria-hidden
-                      className="mt-auto pt-4 font-description text-[0.9375rem] font-medium text-primaire"
+                      className="mt-auto pt-4 font-description text-[0.9375rem] font-normal text-primaire"
                     >
                       {contenu.lire}
                     </p>

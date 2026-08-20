@@ -12,7 +12,7 @@ import { Visuel } from '@/components/shared/visuel'
 // arrêts pour un seul usage, au seul endroit qui les rend.
 const FOND = 'bg-[linear-gradient(150deg,#DCEEE4_20%,#E7F2EB_55%,#C9DAD1)]'
 
-const TITRE_CARTE = 'text-[1.4375rem] font-semibold tracking-[-0.015em] text-encre'
+const TITRE_CARTE = 'text-[1.4375rem] font-medium tracking-[-0.02em] text-encre'
 const CORPS_CARTE = 'font-description text-[0.97rem] leading-[1.6] text-encre-2'
 
 /**
@@ -47,7 +47,7 @@ export function PourLesTalents({
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
               <h2
                 id="titre-pour-les-talents"
-                className="max-w-[20ch] font-titre text-[2.125rem] leading-[1.05] font-normal text-balance text-encre sm:text-[2.75rem] lg:text-[3.375rem]"
+                className="max-w-[20ch] font-titre font-normal text-[2.125rem] leading-[1.05] text-balance text-encre sm:text-[2.75rem] lg:text-[3.375rem]"
               >
                 {cartes.titre}
               </h2>
@@ -93,9 +93,9 @@ export function PourLesTalents({
                         className="flex min-w-0 flex-1 flex-col items-center gap-3.5"
                       >
                         <span
-                          className={`rounded-pilule px-4 py-2.5 text-center text-[0.9375rem] font-medium ${
-                            indice === 0 ? 'bg-tendre text-primaire-2' : 'text-encre-2'
-                          }`}
+                          className={`rounded-pilule px-4 py-2.5 text-center text-[0.9375rem] font-normal ${
+ indice === 0 ? 'bg-tendre text-primaire-2' : 'text-encre-2'
+ }`}
                         >
                           {jalon.libelle}
                         </span>
@@ -106,8 +106,8 @@ export function PourLesTalents({
                         <span
                           aria-hidden
                           className={`-mt-[1.3125rem] size-3.5 rounded-full border-2 bg-carte ${
-                            indice === 0 ? 'border-primaire' : 'border-encre-2'
-                          }`}
+ indice === 0 ? 'border-primaire' : 'border-encre-2'
+ }`}
                         />
                         <span className="text-sm text-encre-2">{jalon.precision}</span>
                       </li>
@@ -140,7 +140,7 @@ export function PourLesTalents({
                           className="object-cover"
                         />
                       </span>
-                      <span className="mt-2.5 text-sm font-semibold text-encre">
+                      <span className="mt-2.5 text-sm font-medium text-encre">
                         {critere.libelle}
                       </span>
                       <span className="text-[0.8125rem] text-encre-2">{critere.precision}</span>

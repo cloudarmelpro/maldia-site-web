@@ -56,7 +56,7 @@ function EntreeFaq({ question, reponse }: EntreeAccordeon) {
     >
       <summary
         onClick={basculer}
-        className="flex min-h-11 cursor-pointer list-none items-center gap-5 px-8 py-6 text-lg font-semibold text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaire [&::-webkit-details-marker]:hidden"
+        className="flex min-h-11 cursor-pointer list-none items-center gap-5 px-8 py-6 text-lg font-medium text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaire [&::-webkit-details-marker]:hidden"
       >
         {question}
         {/* La croix de la maquette : un « + » qui pivote en « × ». La classe
@@ -69,8 +69,8 @@ function EntreeFaq({ question, reponse }: EntreeAccordeon) {
           animate={monte ? { rotate: ouvert ? 135 : 0 } : undefined}
           transition={transition}
           className={`ml-auto shrink-0 text-[1.375rem] leading-none text-encre${
-            monte ? '' : ' group-open:rotate-[135deg]'
-          }`}
+ monte ? '' : ' group-open:rotate-[135deg]'
+ }`}
         >
           +
         </m.span>

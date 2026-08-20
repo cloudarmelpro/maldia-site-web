@@ -34,7 +34,7 @@ const TAILLE_APPEL =
 // `transition-colors` de Tailwind inclut outline-color, et l'anneau de focus
 // mettrait la durée de la transition à devenir visible.
 const BASE =
-  `inline-flex items-center justify-center rounded-xl font-description font-normal whitespace-nowrap transition-[color,background-color,border-color] focus-visible:outline-2 focus-visible:outline-offset-2 ${TAILLE_APPEL}`
+  `inline-flex items-center justify-center rounded-xl font-description  whitespace-nowrap transition-[color,background-color,border-color] focus-visible:outline-2 focus-visible:outline-offset-2 ${TAILLE_APPEL}`
 
 const VARIANTES: Record<Variante, string> = {
   primaire: 'bg-primaire text-fond hover:bg-primaire-2 focus-visible:outline-encre',
@@ -49,7 +49,7 @@ const VARIANTES: Record<Variante, string> = {
 // Sans aplat, donc sans gouttiere horizontale : la pastille n'a pas de surface
 // a remplir, seulement une hauteur de cible a tenir.
 const PASTILLE =
-  `inline-flex ${HAUTEUR_APPEL} min-w-11 items-center gap-2.5 font-description text-fluide-bouton font-normal whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2`
+  `inline-flex ${HAUTEUR_APPEL} min-w-11 items-center gap-2.5 font-description text-fluide-bouton  whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2`
 
 export function Bouton({
   destination,
@@ -122,10 +122,10 @@ export function LienPastille({
       href={DESTINATIONS[destination]}
       aria-label={nomAccessible}
       className={`${PASTILLE} ${
-        surSombre
-          ? 'text-sur-vif focus-visible:outline-carte'
-          : 'text-encre focus-visible:outline-primaire'
-      }`}
+ surSombre
+ ? 'text-sur-vif focus-visible:outline-carte'
+ : 'text-encre focus-visible:outline-primaire'
+ }`}
     >
       <Point surSombre={surSombre} />
       {libelle}
@@ -147,10 +147,10 @@ export function LienPastillePage({
     <Link
       href={vers}
       className={`${PASTILLE} ${
-        surSombre
-          ? 'text-sur-vif focus-visible:outline-carte'
-          : 'text-encre focus-visible:outline-primaire'
-      }`}
+ surSombre
+ ? 'text-sur-vif focus-visible:outline-carte'
+ : 'text-encre focus-visible:outline-primaire'
+ }`}
     >
       <Point surSombre={surSombre} />
       {libelle}
@@ -163,10 +163,10 @@ function Point({ surSombre }: { surSombre: boolean }) {
     <span
       aria-hidden
       className={`size-2.5 shrink-0 rounded-full bg-signal ${
-        surSombre
-          ? 'shadow-[0_0_0_4px_rgb(255_255_255/0.2)]'
-          : 'shadow-[0_0_0_4px_rgb(34_197_94/0.18)]'
-      }`}
+ surSombre
+ ? 'shadow-[0_0_0_4px_rgb(255_255_255/0.2)]'
+ : 'shadow-[0_0_0_4px_rgb(34_197_94/0.18)]'
+ }`}
     />
   )
 }

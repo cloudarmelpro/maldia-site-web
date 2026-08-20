@@ -18,7 +18,7 @@ export function Marches({
           est une phrase, il reprend l'espacement normal. */}
       <h2
         id={titreId}
-        className="text-center font-description text-fluide-corps font-normal tracking-normal text-encre-2 [word-spacing:normal]"
+        className="text-center font-description text-fluide-corps tracking-normal text-encre-2 [word-spacing:normal]"
       >
         {contenu.titre}
       </h2>
@@ -26,7 +26,7 @@ export function Marches({
         items={contenu.liste}
         className="mt-14"
         rendu={(marche) => (
-          <span className="block px-[clamp(1.75rem,1.5833rem+0.3472vw,2rem)] font-description text-fluide-bande font-normal whitespace-nowrap text-encre-2">
+          <span className="block px-[clamp(1.75rem,1.5833rem+0.3472vw,2rem)] font-description text-fluide-bande whitespace-nowrap text-encre-2">
             {marche}
           </span>
         )}

@@ -37,8 +37,8 @@ export function RetourEnHaut({ libelle }: { libelle: string }) {
       tabIndex={visible ? 0 : -1}
       onClick={() => window.scrollTo({ top: 0, behavior: reduit ? 'auto' : 'smooth' })}
       className={`fixed right-7 bottom-7 z-[80] grid size-12 place-items-center rounded-full bg-primaire text-carte transition-[opacity,transform] duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre ${
-        visible ? 'opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
-      }`}
+ visible ? 'opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
+ }`}
     >
       <svg viewBox="0 0 24 24" aria-hidden className="size-5">
         <path

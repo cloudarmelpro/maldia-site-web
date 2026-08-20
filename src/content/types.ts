@@ -83,14 +83,16 @@ export type Marches = readonly [string, string, string, string, string, string, 
 /**
  * WEB-12 — un message commercial du retour client.
  *
- * `chiffre` est le repère qu'on lit d'abord ; `description` reprend la phrase
- * du client, au mot près. Les deux langues portent les mêmes chiffres —
- * `tests/chiffres.spec.ts` échoue si une seule est corrigée.
+ * Deux niveaux et pas trois : le repère qu'on lit d'abord, puis la phrase du
+ * client au mot près. `reperage` porte un chiffre quand l'argument en a un, et
+ * la promesse en trois mots quand il n'en a pas — deux des six ne se chiffrent
+ * pas, et leur inventer un nombre serait pire que la colonne vide.
+ *
+ * Les deux langues portent les mêmes chiffres : `tests/contenu.spec.ts` échoue
+ * si une seule est corrigée.
  */
 export type ArgumentCommercial = {
-  /** Absent quand l'argument n'est pas chiffré. */
-  readonly chiffre?: string
-  readonly titre: string
+  readonly reperage: string
   readonly description: string
 }
 

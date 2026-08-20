@@ -117,19 +117,16 @@
   }
 }
 
-/* Les variables --font-bricolage, --font-outfit et --font-plex-mono sont posées
-   par next/font dans app/[langue]/layout.tsx — invariant entre les trois.
-   Bricolage Grotesque pour les titres, Outfit pour le corps : c'est le couple
-   de la maquette de référence. Le crénage négatif du bloc `base` ci-dessous
-   fait autant que la police elle-même dans son allure. */
+/* La variable --font-dm-sans est posée par next/font dans
+   app/[langue]/layout.tsx — invariant entre les deux fichiers.
+
+   Une seule police pour tout le site. Les trois jetons restent distincts parce
+   que les composants les citent par rôle : le jour où une seconde police
+   revient, elle se branche ici et nulle part ailleurs. */
 @theme inline {
-  --font-titre: var(--font-bricolage, sans-serif);
-  /* Bricolage porte tout : titres, libellés, boutons, navigation, listes. */
-  --font-corps: var(--font-bricolage, sans-serif);
-  /* Outfit ne garde que les paragraphes descriptifs — c'est là que Bricolage,
-     dessinée pour les grandes tailles, se lit le moins bien. */
-  --font-description: var(--font-outfit, sans-serif);
-  --font-mono: var(--font-plex-mono, ui-monospace, monospace);
+  --font-titre: var(--font-dm-sans, sans-serif);
+  --font-corps: var(--font-dm-sans, sans-serif);
+  --font-description: var(--font-dm-sans, sans-serif);
 }
 
 @layer base {
@@ -150,17 +147,21 @@
     background-color: var(--color-fond);
     color: var(--color-encre);
     font-family: var(--font-corps);
+    /* Light, et c'est la graisse de reference du site : tout ce qui ne declare
+       rien herite d'elle. Les graisses superieures ne servent qu'a marquer une
+       hierarchie, jamais a poser du texte courant. */
+    font-weight: 300;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Le crénage négatif de la maquette ne vaut que pour les grandes tailles :
-     appliqué au petit texte, il le rendrait illisible. Les valeurs sont celles
-     converties en em pour suivre la taille. Les h2 partagent la valeur du h1 :
-     la référence les distingue, le client les veut identiques. Le resserrement
-     des mots vient en plus — la référence n'en pose pas. */
+  /* Le crénage négatif ne vaut que pour les grandes tailles : appliqué au petit
+     texte, il le rendrait illisible. En em, il suit donc la taille. Le
+     resserrement des mots vient en plus de celui des lettres.
+
+     Les h2 partagent la valeur du h1 : le client les veut identiques. */
   h1,
   h2 {
-    letter-spacing: -0.075em;
-    word-spacing: -0.04em;
+    letter-spacing: -0.05em;
+    word-spacing: -0.03em;
   }
 }

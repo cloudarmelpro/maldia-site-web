@@ -45,7 +45,7 @@ export function BandeauOutils({
               items={rangee}
               sens={SENS[indice]}
               rendu={(outil) => (
-                <span className="mr-3.5 grid h-[3.375rem] min-w-[3.375rem] place-items-center rounded-[0.9375rem] bg-fond-2 px-5 font-description text-[0.9375rem] font-medium whitespace-nowrap text-encre-2">
+                <span className="mr-3.5 grid h-[3.375rem] min-w-[3.375rem] place-items-center rounded-[0.9375rem] bg-fond-2 px-5 font-description text-[0.9375rem] font-normal whitespace-nowrap text-encre-2">
                   {outil}
                 </span>
               )}

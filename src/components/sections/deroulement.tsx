@@ -36,16 +36,16 @@ export function Deroulement({ contenu }: { contenu: Contenu['services']['deroule
                 <p className="flex items-center gap-3">
                   <span
                     aria-hidden
-                    className="grid size-[2.375rem] shrink-0 place-items-center rounded-[0.75rem] bg-primaire font-mono text-sm font-medium text-carte"
+                    className="grid size-[2.375rem] shrink-0 place-items-center rounded-[0.75rem] bg-primaire text-sm font-normal text-carte"
                   >
                     {etape.numero}
                   </span>
                   <span aria-hidden className="h-px flex-1 border-t-[1.5px] border-dashed border-trait" />
-                  <span className="shrink-0 text-[0.78125rem] font-semibold tracking-[0.06em] text-encre-2 uppercase">
+                  <span className="shrink-0 text-[0.78125rem] font-medium tracking-[0.06em] text-encre-2 uppercase">
                     {etape.cote}
                   </span>
                 </p>
-                <h3 className="font-titre text-[1.3125rem] leading-tight font-medium tracking-[-0.02em] text-encre">
+                <h3 className="font-titre text-[1.3125rem] leading-tight font-normal tracking-[-0.02em] text-encre">
                   {etape.titre}
                 </h3>
                 <p className="font-description text-[0.9375rem] leading-[1.6] text-encre-2">

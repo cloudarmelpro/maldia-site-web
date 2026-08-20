@@ -57,7 +57,7 @@ export function BlogArticle({
             {/* Le crénage négatif vient du @layer base : il ne vaut que pour h1 et h2. */}
             <h1
               id="titre-page"
-              className="font-titre text-[2.125rem] leading-[1.06] font-normal text-balance text-encre sm:text-[2.75rem] lg:text-[3.375rem]"
+              className="font-titre font-normal text-[2.125rem] leading-[1.06] text-balance text-encre sm:text-[2.75rem] lg:text-[3.375rem]"
             >
               {article.titre}
             </h1>
@@ -96,7 +96,7 @@ export function BlogArticle({
           <div className="mx-auto mt-16 flex max-w-[900px] flex-col items-center gap-6 rounded-carte-large bg-carte px-8 py-11 text-center">
             <h2
               id="titre-appel-article"
-              className="max-w-[24ch] font-titre text-[1.75rem] leading-[1.12] font-normal text-balance text-encre sm:text-[2.125rem]"
+              className="max-w-[24ch] font-titre font-normal text-[1.75rem] leading-[1.12] text-balance text-encre sm:text-[2.125rem]"
             >
               {blog.appelArticle}
             </h2>

@@ -28,7 +28,7 @@ export function Domaines({ contenu }: { contenu: Contenu['services']['domaines']
                   {rangee.map((outil) => (
                     <li
                       key={outil}
-                      className="grid h-[3.875rem] min-w-[3.875rem] place-items-center rounded-[0.9375rem] bg-fond-2 px-4.5 text-[0.9375rem] font-semibold whitespace-nowrap text-encre-2"
+                      className="grid h-[3.875rem] min-w-[3.875rem] place-items-center rounded-[0.9375rem] bg-fond-2 px-4.5 text-[0.9375rem] font-medium whitespace-nowrap text-encre-2"
                     >
                       {outil}
                     </li>
@@ -36,7 +36,7 @@ export function Domaines({ contenu }: { contenu: Contenu['services']['domaines']
                 </ul>
               ))}
             </div>
-            <h3 className="max-w-[12ch] text-center text-[2rem] leading-[1.1] font-semibold tracking-[-0.03em] text-encre">
+            <h3 className="max-w-[12ch] text-center text-[2rem] leading-[1.1] font-medium tracking-[-0.03em] text-encre">
               {contenu.titreGauche}
             </h3>
           </Carte>
@@ -44,7 +44,7 @@ export function Domaines({ contenu }: { contenu: Contenu['services']['domaines']
 
         <Apparition delai={delaiDeGrille(1)} className="h-full">
           <div className="flex h-full min-h-[31.25rem] flex-col gap-7 rounded-carte-large bg-sombre p-12 text-sur-sombre">
-            <h3 className="max-w-[20ch] text-[1.9375rem] leading-[1.15] font-semibold tracking-[-0.03em]">
+            <h3 className="max-w-[20ch] text-[1.9375rem] leading-[1.15] font-medium tracking-[-0.03em]">
               {contenu.titreSombre}
             </h3>
             <Bouton

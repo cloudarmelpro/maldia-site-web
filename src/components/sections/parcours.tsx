@@ -37,12 +37,12 @@ export function Parcours({
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-4.5 text-center">
           <h2
             id="titre-parcours"
-            className="flex flex-col font-titre text-[2.125rem] leading-[1.06] font-normal text-sur-vif sm:text-[2.375rem] lg:text-[2.875rem]"
+            className="flex flex-col font-titre font-normal text-[2.125rem] leading-[1.06] text-sur-vif sm:text-[2.375rem] lg:text-[2.875rem]"
           >
             <span>{titre1}</span>
             <span>{titre2}</span>
           </h2>
-          <p className="flex flex-col font-description leading-normal font-normal text-sur-vif">
+          <p className="flex flex-col font-description leading-normal text-sur-vif">
             <span>{sous1}</span>
             <span>{sous2}</span>
           </p>
@@ -59,16 +59,16 @@ export function Parcours({
             <li key={entree.intitule} className="min-w-0">
               <Apparition delai={delaiDeGrille(indice)} className="h-full">
                 <Carte className="flex h-full min-w-0 flex-col gap-5 rounded-offre p-8 pb-11">
-                  <h3 className="self-start rounded-pilule bg-primaire px-3.5 py-1.5 text-[0.6875rem] font-bold tracking-[0.07em] text-carte uppercase">
+                  <h3 className="self-start rounded-pilule bg-primaire px-3.5 py-1.5 text-[0.6875rem] font-semibold tracking-[0.07em] text-carte uppercase">
                     {entree.intitule}
                   </h3>
                   <p className="flex flex-wrap items-baseline gap-2">
-                    <strong className="font-titre text-[2.75rem] leading-none font-normal tracking-[-0.04em] text-encre">
+                    <strong className="font-titre font-normal text-[2.75rem] leading-none tracking-[-0.045em] text-encre">
                       {entree.action}
                     </strong>
                     <span className="text-[0.9375rem] text-encre-2">{entree.unite}</span>
                   </p>
-                  <p className="font-description text-sm leading-normal font-normal text-encre-2">
+                  <p className="font-description text-sm leading-normal text-encre-2">
                     {entree.description}
                   </p>
                   <span aria-hidden className="h-px bg-trait" />
@@ -88,7 +88,7 @@ export function Parcours({
                     ))}
                   </ul>
                   <p className="flex flex-wrap items-baseline gap-2 font-description text-sm">
-                    <strong className="font-semibold text-encre">
+                    <strong className="font-medium text-encre">
                       {entree.libelleSupplement}
                     </strong>
                     <span className="text-encre-2">{entree.supplement}</span>
@@ -126,12 +126,12 @@ export function Parcours({
       <Apparition delai={delaiDeGrille(2)}>
         <div className="mx-auto mt-[2.875rem] flex max-w-[1024px] flex-wrap items-center gap-7 rounded-offre bg-vif-encart p-9">
           <div className="flex min-w-0 flex-1 basis-72 flex-col gap-2.5">
-            <h3 className="text-2xl leading-tight font-bold tracking-[-0.02em] text-sur-vif">
+            <h3 className="text-2xl leading-tight font-semibold tracking-[-0.02em] text-sur-vif">
               {contenu.encart.titre}
             </h3>
             {/* La maquette plafonne ce paragraphe à 58ch ; en rem, la contrainte
                 ne dépend pas de la taille de police de l'élément. */}
-            <p className="max-w-[34rem] font-description text-sm leading-normal font-normal text-sur-vif">
+            <p className="max-w-[34rem] font-description text-sm leading-normal text-sur-vif">
               {contenu.encart.description}
             </p>
           </div>

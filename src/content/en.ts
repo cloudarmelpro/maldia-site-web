@@ -41,33 +41,26 @@ export const en: Contenu<'en'> = {
       description:
         'French-speaking reinforcement, with no recruitment fees and no change to your tools.',
       liste: [
+        { reperage: '0', description: 'No recruitment fees.' },
         {
-          chiffre: '0',
-          titre: 'Recruitment fees',
-          description: 'No recruitment fees.',
-        },
-        {
-          chiffre: '14 days',
-          titre: 'On average',
+          reperage: '14 days',
           description: 'Find your next talent in 14 days on average.',
         },
         {
-          chiffre: 'up to 50%',
-          titre: 'On the roles you entrust',
+          reperage: 'up to 50%',
           description: 'Cut the cost of the roles you entrust to Maldia by up to 50%.',
         },
         {
-          chiffre: 'around 25%',
-          titre: 'On total payroll',
+          reperage: 'around 25%',
           description:
             'Depending on the roles you entrust, cut your total payroll by up to around 25%.',
         },
         {
-          titre: 'French-speaking talent',
+          reperage: 'French-speaking talent',
           description: 'Our talent works in French, with your teams and with your clients.',
         },
         {
-          titre: 'Your tools, unchanged',
+          reperage: 'Your tools, unchanged',
           description: 'We adapt to the tools the company already uses.',
         },
       ],

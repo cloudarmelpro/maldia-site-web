@@ -62,7 +62,7 @@ export function Pied({
                   <Link
                     href={chemin(langue, lien.page)}
                     aria-current={lien.page === page ? 'page' : undefined}
-                    className={`inline-flex min-h-11 min-w-11 items-center px-1 font-description text-[1.0625rem] font-normal text-sur-vif ${CLASSES_LIEN}`}
+                    className={`inline-flex min-h-11 min-w-11 items-center px-1 font-description text-[1.0625rem] text-sur-vif ${CLASSES_LIEN}`}
                   >
                     {lien.libelle}
                   </Link>
@@ -96,7 +96,7 @@ export function Pied({
           <div role="group" aria-label={changerDeLangue} className="flex items-center gap-3">
             <span
               aria-current="true"
-              className="inline-flex min-h-12 min-w-11 items-center font-description text-base font-normal text-sur-vif"
+              className="inline-flex min-h-12 min-w-11 items-center font-description text-base text-sur-vif"
             >
               {NOMS_LANGUES[langue]}
             </span>
@@ -105,10 +105,10 @@ export function Pied({
               langue={autre}
               vers={cheminAutreLangue}
               libelle={NOMS_LANGUES[autre]}
-              className={`inline-flex min-h-12 min-w-11 items-center font-description text-base font-normal text-sur-vif underline-offset-4 hover:underline ${CLASSES_LIEN}`}
+              className={`inline-flex min-h-12 min-w-11 items-center font-description text-base text-sur-vif underline-offset-4 hover:underline ${CLASSES_LIEN}`}
             />
           </div>
-          <p className="font-description text-base font-normal text-sur-vif">{contenu.copyright}</p>
+          <p className="font-description text-base text-sur-vif">{contenu.copyright}</p>
         </div>
       </div>
     </footer>

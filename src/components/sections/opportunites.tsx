@@ -29,7 +29,7 @@ export function Opportunites({ contenu }: { contenu: Contenu['talents']['opportu
                   photo={PHOTOS.opportunites[indice]}
                 />
                 <div className="flex flex-col gap-3.5 px-5 pt-7">
-                  <h3 className="font-titre text-[1.3125rem] font-medium tracking-[-0.03em] text-encre">
+                  <h3 className="font-titre text-[1.3125rem] font-normal tracking-[-0.02em] text-encre">
                     {opportunite.titre}
                   </h3>
                   <p className="font-description text-[0.97rem] leading-[1.55] text-encre-2">{opportunite.description}</p>

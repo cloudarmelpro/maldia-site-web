@@ -38,14 +38,14 @@ export function Hero({ contenu }: { contenu: Contenu['accueil']['hero'] }) {
           <span aria-hidden className="hidden h-5 w-px shrink-0 bg-trait sm:block" />
           <span className="text-left font-description text-fluide-bouton leading-[1.35] text-encre-2 sm:leading-normal">
             {contenu.pastille.avant}
-            <strong className="font-semibold text-encre">{contenu.pastille.misEnAvant}</strong>
+            <strong className="font-medium text-encre">{contenu.pastille.misEnAvant}</strong>
             {contenu.pastille.apres}
           </span>
         </p>
 
         <h1
           id="titre-hero"
-          className="flex flex-col items-center font-titre text-[clamp(2.375rem,4.9vw,4.625rem)] leading-[1.04] font-normal text-encre"
+          className="flex flex-col items-center font-titre font-normal text-[clamp(2.375rem,4.9vw,4.625rem)] leading-[1.04] text-encre"
         >
           <span>{titre1}</span>
           <span className="relative">

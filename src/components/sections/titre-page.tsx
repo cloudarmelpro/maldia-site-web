@@ -31,7 +31,7 @@ export function TitrePage({
           {/* Le crénage négatif vient du @layer base : il ne vaut que pour h1 et h2. */}
           <h1
             id="titre-page"
-            className="font-titre text-[2.375rem] leading-[1.04] font-normal text-balance text-encre sm:text-[3rem] lg:text-[3.75rem]"
+            className="font-titre font-normal text-[2.375rem] leading-[1.04] text-balance text-encre sm:text-[3rem] lg:text-[3.75rem]"
           >
             {titre}
           </h1>

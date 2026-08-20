@@ -36,10 +36,10 @@ export function Compteur({
             id={titreId}
             className="flex flex-col items-center gap-1 font-titre font-normal text-encre"
           >
-            <span className="font-description text-[1.0625rem] font-normal tracking-normal text-encre-3 [word-spacing:normal]">
+            <span className="font-description text-[1.0625rem] tracking-normal text-encre-3 [word-spacing:normal]">
               {contenu.prefixe}
             </span>
-            <span className="text-[4rem] leading-[0.95] tracking-[-0.05em] text-primaire sm:text-[5.5rem] lg:text-[6.5rem]">
+            <span className="text-[4rem] leading-[0.95] tracking-[-0.055em] text-primaire sm:text-[5.5rem] lg:text-[6.5rem]">
               {nombreFormate(NOMBRE_CANDIDATS, langue)}
             </span>
             <span className="max-w-[22ch] text-[1.625rem] leading-[1.15] text-balance sm:text-[2rem]">

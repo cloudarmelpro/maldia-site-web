@@ -30,7 +30,7 @@ export function Cloture({ contenu }: { contenu: Contenu['commun']['cloture'] }) 
           <div className="flex flex-col items-center gap-6.5 text-center">
             <h2
               id="titre-cloture"
-              className="max-w-[20ch] font-titre text-[2.375rem] leading-[1.06] font-normal text-balance sm:text-[3rem] lg:text-[4.375rem]"
+              className="max-w-[20ch] font-titre font-normal text-[2.375rem] leading-[1.06] text-balance sm:text-[3rem] lg:text-[4.375rem]"
             >
               {contenu.titre}
             </h2>
@@ -58,7 +58,7 @@ export function Cloture({ contenu }: { contenu: Contenu['commun']['cloture'] }) 
               items={rangee.items}
               sens={rangee.sens}
               rendu={(tuile) => (
-                <span className="mr-4 grid h-[4.625rem] min-w-[4.625rem] place-items-center rounded-[1.125rem] bg-carte/15 px-5 text-[0.9375rem] font-semibold whitespace-nowrap text-sur-vif">
+                <span className="mr-4 grid h-[4.625rem] min-w-[4.625rem] place-items-center rounded-[1.125rem] bg-carte/15 px-5 text-[0.9375rem] font-medium whitespace-nowrap text-sur-vif">
                   {tuile}
                 </span>
               )}

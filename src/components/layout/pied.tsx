@@ -1,10 +1,9 @@
 
-import { chemin, NOMS_LANGUES } from '@/content/langues'
+import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
-import { autreLangue } from '@/components/shared/autre-langue'
 import { Facebook, Instagram, Linkedin } from '@/components/shared/icones-reseaux'
-import { SelecteurLangue } from '@/components/shared/selecteur-langue'
+import { BarreBas } from '@/components/layout/barre-bas'
 import { Lien } from '@/components/shared/lien'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
@@ -37,8 +36,6 @@ export function Pied({
   cheminAutreLangue: string
   changerDeLangue: string
 }) {
-  const autre = autreLangue(langue)
-
   return (
     <footer className="mt-[clamp(3.5rem,6vw,6rem)]">
       <div className="flex flex-col gap-7 border-t border-white/16 pt-[clamp(1.75rem,2.8vw,2.5rem)] large:flex-row large:justify-between large:gap-[clamp(2rem,4vw,4.5rem)]">
@@ -105,24 +102,12 @@ export function Pied({
         </div>
       </div>
 
-      <div className="mt-[clamp(1.75rem,2.8vw,2.5rem)] flex flex-col gap-3.5 border-t border-white/16 pt-5.5 large:flex-row large:items-center large:justify-between large:gap-6">
-        <div role="group" aria-label={changerDeLangue} className="flex items-center gap-2.5">
-          <span
-            aria-current="true"
-            className="inline-flex min-h-11 items-center etiquette text-white"
-          >
-            {NOMS_LANGUES[langue]}
-          </span>
-          <span aria-hidden className="block h-3 w-px bg-white/30" />
-          <SelecteurLangue
-            langue={autre}
-            vers={cheminAutreLangue}
-            libelle={NOMS_LANGUES[autre]}
-            className={`inline-flex min-h-11 min-w-11 items-center etiquette text-sur-sombre transition-[color] hover:text-white ${FOCUS}`}
-          />
-        </div>
-        <span className="etiquette text-sur-sombre">{contenu.copyright}</span>
-      </div>
+      <BarreBas
+        langue={langue}
+        cheminAutreLangue={cheminAutreLangue}
+        changerDeLangue={changerDeLangue}
+        copyright={contenu.copyright}
+      />
     </footer>
   )
 }

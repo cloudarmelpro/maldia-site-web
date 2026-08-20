@@ -86,6 +86,37 @@ Il n'avait jamais été vu parce que la console n'était inspectée que sur
 `next dev`, où la route existe. Tout lien interne passe désormais par
 `components/shared/lien.tsx`, seul endroit où `prefetch` est décidé.
 
+## Le blog a son propre design
+
+`Blog Maldia.dc.html`, du même projet, couvre l'index du blog. Il en change deux
+choses structurelles.
+
+**L'en-tête y est clair et collé** — blanc translucide flouté, filet bas, pilule
+de navigation sur gris. C'est le seul de ses deux registres qui soit collé.
+
+Cela a une conséquence qui n'est pas cosmétique : `position: sticky` et
+`backdrop-filter` créent chacun un bloc conteneur pour les descendants en
+`fixed`. Le panneau de menu mobile y serait réduit à la taille de l'en-tête. Il
+est donc rendu **à côté** de l'en-tête et non dedans, et l'en-tête est devenu un
+composant client pour porter l'état des deux.
+
+**La clôture y est plus courte** : l'intitulé Contact, un titre, deux boutons, et
+la barre de langue. Pas de colonnes Pages ni Contact, pas de repères sociaux. Ce
+n'est pas un cul-de-sac — l'en-tête collé garde la navigation à portée sur toute
+la page, et c'est ce qui justifie d'alléger le pied. C'est la seule page du site
+dans ce cas.
+
+**L'article le plus récent passe en vedette** et sort de la grille. Les onglets
+de filtre sont déduits des catégories **de la grille**, pas de tous les
+articles : sinon filtrer sur la catégorie de la vedette laisserait une grille
+vide. Un onglet ne peut donc jamais ne rien renvoyer.
+
+Le design liste six articles de démonstration ; le dépôt en a trois, déjà publiés
+avec leurs adresses dans le sitemap. Les identifiants n'ont pas été touchés :
+une adresse publiée ne se change plus, l'hébergement ne redirigeant pas
+(décision 0013). Les articles gagnent en revanche une catégorie et une durée de
+lecture, que le design affiche.
+
 ## Ce qui reste à trancher
 
 **`contact@agencemaldia.com` et « Antananarivo, Madagascar » viennent du design.**

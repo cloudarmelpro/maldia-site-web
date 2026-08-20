@@ -191,6 +191,10 @@ export type IdentifiantArticle =
 export type Article = {
   readonly identifiant: IdentifiantArticle
   readonly date: string
+  /** La categorie sert de filtre sur l'index : les onglets en sont deduits. */
+  readonly categorie: string
+  /** Duree de lecture, telle que le design l'affiche a cote de la categorie. */
+  readonly duree: string
   readonly titre: string
   readonly resume: string
   readonly corps: readonly string[]
@@ -377,6 +381,24 @@ export type Contenu<L extends Langue = Langue> = {
     readonly vide: string
     readonly retour: string
     readonly publieLe: string
+    /** L'onglet qui ne filtre rien. Les autres viennent des categories des articles. */
+    readonly filtreTout: string
+    /** La pastille citron de l'article mis en avant. */
+    readonly aLaUne: string
+    /** Le bloc en pointilles qui ferme la liste. */
+    readonly suite: {
+      readonly titre: string
+      readonly texte: string
+      readonly cta: string
+    }
+    /** Le bloc d'appel du design du blog : deux boutons, pas deux cartes. */
+    readonly appel: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+      readonly ctaPrincipal: LibelleRendezVous<L>
+      readonly ctaSecondaire: LibelleCandidature<L>
+    }
   }
 
   /** WEB-7 — Contact, par le calendrier Cal.com. */

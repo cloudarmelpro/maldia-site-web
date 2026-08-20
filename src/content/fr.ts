@@ -421,7 +421,7 @@ export const fr: Contenu<'fr'> = {
     meta: {
       titre: 'Blog — Agence Maldia',
       description:
-        'Ce que nous apprenons du recrutement à Madagascar et du travail à distance avec des équipes francophones.',
+        'Ce que nous apprenons en plaçant des talents malgaches dans des équipes francophones : recrutement à distance, méthode, outils.',
       openGraph: {
         titre: 'Le blog d’Agence Maldia',
         description:
@@ -430,9 +430,9 @@ export const fr: Contenu<'fr'> = {
     },
     entete: {
       intitule: 'Blog',
-      titre: 'Ce que nous apprenons en chemin.',
+      titre: 'Recruter et travailler à distance, sans détour.',
       description:
-        'Le recrutement à Madagascar et le travail à distance avec des équipes francophones, vus de l’intérieur.',
+        'Ce que nous apprenons en plaçant des talents malgaches dans des équipes francophones.',
       cta: 'Prendre rendez-vous',
       mention: 'Textes provisoires, à remplacer',
     },
@@ -440,6 +440,21 @@ export const fr: Contenu<'fr'> = {
     vide: 'Les premiers articles arrivent bientôt.',
     retour: 'Tous les articles',
     publieLe: 'Publié le',
+    filtreTout: 'Tout',
+    aLaUne: 'À la une',
+    suite: {
+      titre: 'D’autres articles arrivent.',
+      texte:
+        'Nous publions au rythme des dossiers réels : recrutement à distance, gestion d’équipe mixte, outils et méthodes.',
+      cta: 'Nous écrire',
+    },
+    appel: {
+      intitule: 'Contact',
+      titre: 'Un besoin d’équipe, ou une candidature ?',
+      description: 'Les entreprises réservent un appel. Les talents déposent leur CV.',
+      ctaPrincipal: 'Prendre rendez-vous',
+      ctaSecondaire: 'Déposer ma candidature',
+    },
   },
 
   contact: {

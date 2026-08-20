@@ -19,6 +19,8 @@ const articlesFr: Articles = [
   {
     identifiant: 'staff-augmentation',
     date: '2026-08-04',
+    categorie: 'Méthode',
+    duree: '6 min',
     titre: 'Le staff augmentation, en clair',
     resume:
       'Ni sous-traitance, ni agence de placement : une personne qui rejoint votre équipe, à distance, avec vos outils et vos méthodes.',
@@ -34,6 +36,8 @@ const articlesFr: Articles = [
   {
     identifiant: 'preparer-sa-candidature',
     date: '2026-07-14',
+    categorie: 'Talents',
+    duree: '5 min',
     titre: 'Préparer sa candidature chez Maldia',
     resume:
       'Ce que le formulaire demande, ce que nous regardons, et ce qui se passe après l’envoi.',
@@ -49,6 +53,8 @@ const articlesFr: Articles = [
   {
     identifiant: 'travailler-avec-vos-outils',
     date: '2026-06-23',
+    categorie: 'Outils',
+    duree: '5 min',
     titre: 'Travailler avec vos outils, pas avec les nôtres',
     resume:
       'Pourquoi nous n’imposons aucun outil à nos clients, et ce que cela demande à nos talents.',
@@ -67,6 +73,8 @@ const articlesEn: Articles = [
   {
     identifiant: 'staff-augmentation',
     date: '2026-08-04',
+    categorie: 'Method',
+    duree: '6 min',
     titre: 'Staff augmentation, in plain terms',
     resume:
       'Neither outsourcing nor a placement agency: a person joining your team remotely, with your tools and your methods.',
@@ -82,6 +90,8 @@ const articlesEn: Articles = [
   {
     identifiant: 'preparer-sa-candidature',
     date: '2026-07-14',
+    categorie: 'Talent',
+    duree: '5 min',
     titre: 'Preparing your application to Maldia',
     resume:
       'What the form asks for, what we look at, and what happens after you send it.',
@@ -97,6 +107,8 @@ const articlesEn: Articles = [
   {
     identifiant: 'travailler-avec-vos-outils',
     date: '2026-06-23',
+    categorie: 'Tools',
+    duree: '5 min',
     titre: 'Working with your tools, not ours',
     resume:
       'Why we impose no tools on our clients, and what that asks of our talent.',
@@ -123,6 +135,16 @@ export function articlesTriees(langue: Langue) {
 
 export function articleParIdentifiant(langue: Langue, identifiant: string) {
   return ARTICLES[langue].find((article) => article.identifiant === identifiant)
+}
+
+/**
+ * Les categories presentes, dans l'ordre d'apparition.
+ *
+ * Les onglets de filtre de l'index en viennent, et non d'une liste ecrite a la
+ * main : un onglet ne peut donc jamais renvoyer une liste vide.
+ */
+export function categoriesArticles(langue: Langue): readonly string[] {
+  return [...new Set(articlesTriees(langue).map((article) => article.categorie))]
 }
 
 /** Les identifiants, dans l'ordre d'affichage — pour generateStaticParams et le sitemap. */

@@ -127,8 +127,10 @@
 @layer base {
   html {
     color-scheme: light;
-    /* Aucun décalage : l'en-tête n'est pas collé, donc rien ne recouvre la
-       cible d'une ancre. */
+    /* Aucun décalage. L'en-tête du blog est collé, mais aucune page ne porte
+       d'ancre interne depuis le passage à six pages (décision 0015) : rien ne
+       peut donc recouvrir la cible d'un lien. À reprendre le jour où une ancre
+       revient. */
     scroll-padding-top: 0;
   }
 

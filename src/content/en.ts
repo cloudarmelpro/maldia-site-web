@@ -427,7 +427,7 @@ export const en: Contenu<'en'> = {
     meta: {
       titre: 'Blog — Agence Maldia',
       description:
-        'What we learn from recruiting in Madagascar and working remotely with French-speaking teams.',
+        'What we learn placing Malagasy talent inside French-speaking teams: remote recruitment, method, tools.',
       openGraph: {
         titre: 'The Agence Maldia blog',
         description:
@@ -436,9 +436,8 @@ export const en: Contenu<'en'> = {
     },
     entete: {
       intitule: 'Blog',
-      titre: 'What we learn along the way.',
-      description:
-        'Recruiting in Madagascar and working remotely with French-speaking teams, seen from the inside.',
+      titre: 'Recruiting and working remotely, no detours.',
+      description: 'What we learn placing Malagasy talent inside French-speaking teams.',
       cta: 'Book a call',
       mention: 'Placeholder texts, to be replaced',
     },
@@ -446,6 +445,21 @@ export const en: Contenu<'en'> = {
     vide: 'The first articles are on their way.',
     retour: 'All articles',
     publieLe: 'Published on',
+    filtreTout: 'All',
+    aLaUne: 'Featured',
+    suite: {
+      titre: 'More articles are coming.',
+      texte:
+        'We publish at the pace of real cases: remote recruitment, running a mixed team, tools and methods.',
+      cta: 'Write to us',
+    },
+    appel: {
+      intitule: 'Contact',
+      titre: 'A team need, or an application?',
+      description: 'Companies book a call. Talent uploads their résumé.',
+      ctaPrincipal: 'Book a call',
+      ctaSecondaire: 'Apply now',
+    },
   },
 
   contact: {

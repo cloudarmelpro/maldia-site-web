@@ -1,10 +1,11 @@
 # 0017 — DM Sans, en Light, et elle seule
 
-> **Remplacée par la décision 0018.** La refonte du 20 août 2026 abandonne
-> DM Sans pour **Archivo** et **IBM Plex Mono**. Ce qui reste vrai de ce
-> fichier : le principe de deux graisses seulement, le fait que les trois jetons
-> de police désignent des rôles et non des familles, et la raison pour laquelle
-> le crénage se règle par taille. Les valeurs, elles, ne valent plus.
+> **Rétablie par la décision 0022.** La refonte du 20 août 2026 avait abandonné
+> DM Sans pour **Archivo** et **IBM Plex Mono** (décision 0018) ; le fichier de
+> design mis à jour le 21 août revient à DM Sans seule. Le choix de ce fichier
+> vaut donc de nouveau. Une différence : le site ne porte plus **qu'une** graisse,
+> 300, et non deux — seule la marque monte à 400. Voir 0022 pour les valeurs
+> mesurées.
 
 **Tranchée par le client** le 20 août 2026 : « on change tout le font à DM Sans,
 c'est décidé », graisse Light.

@@ -43,11 +43,11 @@ export function Pied({
           <span className="inline-flex items-center gap-3">
             <span
               aria-hidden
-              className="grid size-9.5 shrink-0 place-items-center rounded-marque bg-white text-lg font-semibold text-encre"
+              className="grid size-9.5 shrink-0 place-items-center rounded-marque bg-white text-lg font-normal text-encre"
             >
               M
             </span>
-            <span className="text-[1.1875rem] font-semibold tracking-[-0.045em] text-white">
+            <span className="text-[1.1875rem] font-normal tracking-[-0.045em] text-white">
               Agence Maldia
             </span>
           </span>

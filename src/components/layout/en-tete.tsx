@@ -81,11 +81,11 @@ export function EnTete({
     >
       <span
         aria-hidden
-        className="grid size-10 shrink-0 place-items-center rounded-bloc bg-white text-[1.1875rem] font-semibold text-encre"
+        className="grid size-10 shrink-0 place-items-center rounded-bloc bg-white text-[1.1875rem] font-normal text-encre"
       >
         {contenu.initiale}
       </span>
-      <span className="text-[1.3125rem] font-semibold tracking-[-0.045em] text-white">
+      <span className="text-[1.3125rem] font-normal tracking-[-0.045em] text-white">
         {contenu.marque}
       </span>
     </Lien>

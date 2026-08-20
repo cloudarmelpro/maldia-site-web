@@ -17,10 +17,15 @@ clair/sombre qui donne le rythme. Le geste des blocs arrondis disparaît.
 les sections sombres et l'encre — le blanc, un gris `#f4f5f3`, le vert
 `#177e4f`, et un accent **citron `#cdf565`** qui n'existait pas.
 
-**Les polices.** **Archivo** pour tout le texte lu, **IBM Plex Mono** pour les
+**Les polices.** ~~**Archivo** pour tout le texte lu, **IBM Plex Mono** pour les
 étiquettes en capitales espacées — intitulés de section, libellés de bouton,
 métadonnées. Deux graisses, 400 et 500, et le poids ne marque donc que le
-registre. Cela remplace DM Sans (décision 0017).
+registre. Cela remplace DM Sans (décision 0017).~~
+
+> **Ce paragraphe seul est remplacé par la décision 0022.** Le fichier de design
+> mis à jour le 21 août 2026 revient à **DM Sans seule**, en graisse 300 partout,
+> la marque exceptée à 400. Tout le reste de cette décision — palette, grille,
+> rythme des bandes, rayons — reste en vigueur.
 
 **La grille.** Chaque section porte une colonne d'intitulé de 190 px à gauche et
 son contenu à droite, au-delà de 1000 px. En dessous, l'intitulé passe au-dessus.

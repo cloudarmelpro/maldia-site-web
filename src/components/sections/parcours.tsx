@@ -106,7 +106,7 @@ export function Parcours({
 
                   {voie.supplement ? (
                     <span className="flex flex-wrap items-baseline gap-2 etiquette-fine tracking-[0.08em]">
-                      <strong className="font-normal text-encre">{voie.libelleSupplement}</strong>
+                      <strong className="text-encre">{voie.libelleSupplement}</strong>
                       <span className="text-encre-3">{voie.supplement}</span>
                     </span>
                   ) : null}

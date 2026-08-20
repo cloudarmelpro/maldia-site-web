@@ -145,7 +145,7 @@ function Champ({ champ }: { champ: ChampFormulaire }) {
             <Upload className="size-4.25" />
           </span>
           <span className="flex min-w-0 flex-col gap-0.75">
-            <span className="text-[0.875rem] font-medium text-encre">{champ.titre}</span>
+            <span className="text-[0.875rem] text-encre">{champ.titre}</span>
             <span className="etiquette-fine text-[0.625rem] tracking-[0.07em] text-encre-3">
               {champ.precision}
             </span>

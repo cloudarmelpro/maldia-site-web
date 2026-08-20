@@ -1,4 +1,4 @@
-import { Archivo, IBM_Plex_Mono } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
@@ -7,29 +7,20 @@ import '../globals.css'
 import { resoudre } from './resoudre'
 
 /**
- * Les deux polices du design, et leurs deux roles.
+ * La police unique du design. Elle porte tout : titres, texte lu, etiquettes.
  *
- * Archivo porte tout le texte lu — titres et corps. Variable de 300 a 700 : une
- * seule requete couvre les deux graisses que le design emploie, 400 et 500.
+ * `axes: ['opsz']` demande l'axe de taille optique, que le design appelle
+ * (`opsz@9..40`). Sans lui la police se figerait sur un seul dessin, et le
+ * titre a 104 px porterait celui concu pour du texte a 14 px.
  *
- * IBM Plex Mono ne porte que les etiquettes en capitales espacees. Deux graisses
- * suffisent, et les demander explicitement evite de telecharger une variable
- * entiere pour un role aussi etroit.
- *
- * Les noms des variables sont un invariant avec le bloc `@theme inline` de
+ * Le nom de la variable est un invariant avec le bloc `@theme inline` de
  * globals.css : toute autre valeur casse la typographie sans erreur.
  */
-const archivo = Archivo({
+const dmSans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-archivo',
-})
-
-const plexMono = IBM_Plex_Mono({
-  weight: ['400', '500'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mono-plex',
+  axes: ['opsz'],
+  variable: '--font-dm-sans',
 })
 
 // Sans elle, la route dynamique fait echouer l'export statique.
@@ -46,7 +37,7 @@ export default async function LayoutRacine({ children, params }: LayoutProps<'/[
   const { langue } = resoudre((await params).langue)
 
   return (
-    <html lang={langue} className={`${archivo.variable} ${plexMono.variable}`}>
+    <html lang={langue} className={dmSans.variable}>
       <body>{children}</body>
     </html>
   )

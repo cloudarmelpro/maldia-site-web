@@ -58,7 +58,7 @@ export function CarteArticle({
             {article.duree}
           </span>
         </span>
-        <span className="block font-titre text-[1.0625rem] leading-[1.25] font-medium tracking-[-0.03em] text-encre">
+        <span className="block font-titre text-[1.0625rem] leading-[1.25] tracking-[-0.03em] text-encre">
           {article.titre}
         </span>
         <span className="block text-[0.8125rem] leading-[1.5] text-encre-2">{article.resume}</span>

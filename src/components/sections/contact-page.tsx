@@ -79,7 +79,7 @@ export function ContactPage({ contenu, pied }: { contenu: Contenu; pied: Contenu
                         <CalendarDays className="size-4" />
                       </span>
                       <span className="flex flex-col">
-                        <strong className="text-[0.875rem] font-semibold tracking-[-0.015em] text-encre">
+                        <strong className="text-[0.875rem] tracking-[-0.015em] text-encre">
                           {contact.reservation.evenement}
                         </strong>
                         {adresseCal ? (
@@ -105,7 +105,7 @@ export function ContactPage({ contenu, pied }: { contenu: Contenu; pied: Contenu
                       >
                         <CalendarDays className="size-4.75" />
                       </span>
-                      <strong className="text-[0.9375rem] font-semibold tracking-[-0.02em] text-encre">
+                      <strong className="text-[0.9375rem] tracking-[-0.02em] text-encre">
                         {contact.reservation.emplacement.titre}
                       </strong>
                       <span className="etiquette-fine text-[0.65625rem] leading-[1.6] tracking-[0.06em] text-encre-3">
@@ -263,7 +263,7 @@ export function ContactPage({ contenu, pied }: { contenu: Contenu; pied: Contenu
                             <span className="etiquette-fine text-[0.625rem] tracking-[0.08em] text-encre-3">
                               {ligne.libelle}
                             </span>
-                            <span className="text-[0.875rem] font-medium text-encre">
+                            <span className="text-[0.875rem] text-encre">
                               {ligne.valeur}
                             </span>
                           </span>

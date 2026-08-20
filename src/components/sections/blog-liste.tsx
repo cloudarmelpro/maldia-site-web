@@ -127,7 +127,7 @@ export function BlogListe({
                           {vedette.categorie} · {vedette.duree}
                         </span>
                       </span>
-                      <span className="block max-w-[26ch] font-titre text-[clamp(1.3125rem,1.9vw,1.875rem)] leading-[1.14] font-medium tracking-[-0.04em] text-encre">
+                      <span className="block max-w-[26ch] font-titre text-[clamp(1.3125rem,1.9vw,1.875rem)] leading-[1.14] tracking-[-0.04em] text-encre">
                         {vedette.titre}
                       </span>
                       <span className="block max-w-[44ch] text-[0.875rem] leading-[1.6] text-encre-2">

@@ -104,7 +104,7 @@ export function BlogArticle({
                   {/* Décoratif : les articles ne sont pas signés par une personne. */}
                   <span aria-hidden className="size-8.5 shrink-0 rounded-pilule bg-[#dfe6e0]" />
                   <span className="flex flex-col">
-                    <strong className="text-[0.84375rem] font-semibold tracking-[-0.01em] text-encre">
+                    <strong className="text-[0.84375rem] tracking-[-0.01em] text-encre">
                       {blog.auteur.nom}
                     </strong>
                     <span className="etiquette-fine text-[0.625rem] tracking-[0.07em] text-encre-3">
@@ -172,7 +172,7 @@ export function BlogArticle({
                       return (
                         <p
                           key={position}
-                          className="font-titre text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.5] font-medium tracking-[-0.02em] text-encre"
+                          className="font-titre text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.5] tracking-[-0.02em] text-encre"
                         >
                           {bloc.texte}
                         </p>
@@ -194,7 +194,7 @@ export function BlogArticle({
                     if (bloc.type === 'citation') {
                       return (
                         <figure key={position} className="border-l-2 border-primaire pl-4.5">
-                          <blockquote className="font-titre text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.45] font-medium tracking-[-0.025em] text-encre">
+                          <blockquote className="font-titre text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.45] tracking-[-0.025em] text-encre">
                             {bloc.texte}
                           </blockquote>
                         </figure>

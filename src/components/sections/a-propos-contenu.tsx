@@ -46,7 +46,7 @@ export function AProposContenu({ contenu }: { contenu: Contenu['aPropos'] }) {
             </Apparition>
 
             <Apparition>
-              <p className="max-w-[62ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.5] font-medium tracking-[-0.02em] text-encre">
+              <p className="max-w-[62ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.5] tracking-[-0.02em] text-encre">
                 {contenu.chapeau}
               </p>
             </Apparition>

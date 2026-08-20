@@ -98,7 +98,7 @@ export function ContactBlocs({
                         >
                           {entree.carte.intitule}
                         </span>
-                        <span className="text-[1.0625rem] font-medium tracking-[-0.025em] text-encre">
+                        <span className="text-[1.0625rem] tracking-[-0.025em] text-encre">
                           {entree.carte.titre}
                         </span>
                         <span

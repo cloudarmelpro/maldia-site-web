@@ -126,16 +126,15 @@
   }
 }
 
-/* Les variables --font-archivo et --font-mono-plex sont posées par next/font
-   dans app/[langue]/layout.tsx — invariant entre les deux fichiers.
+/* La variable --font-dm-sans est posée par next/font dans
+   app/[langue]/layout.tsx — invariant entre les deux fichiers.
 
-   Archivo porte tout le texte lu. IBM Plex Mono ne porte que les étiquettes en
-   capitales espacées : intitulés de section, libellés de bouton, métadonnées.
-   C'est un rôle, pas un ornement — elle ne prend jamais une phrase. */
+   Une seule police porte tout : texte lu, titres et étiquettes. Le design a
+   retiré le monospace des étiquettes ; ce qui les distingue reste les capitales
+   et l'espacement des lettres, plus la famille. */
 @theme inline {
-  --font-titre: var(--font-archivo, sans-serif);
-  --font-corps: var(--font-archivo, sans-serif);
-  --font-etiquette: var(--font-mono-plex, ui-monospace, monospace);
+  --font-titre: var(--font-dm-sans, sans-serif);
+  --font-corps: var(--font-dm-sans, sans-serif);
 }
 
 @layer base {
@@ -158,24 +157,31 @@
     background-color: var(--color-fond);
     color: var(--color-encre);
     font-family: var(--font-corps);
+    /* Le design pose 300 sur le corps, pas seulement sur les titres. Sans cette
+       ligne, tout ce qui n'est ni titre ni `strong` retombe a 400 et le site
+       porte deux graisses la ou le design n'en veut qu'une. */
+    font-weight: 300;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Le design pose 500 sur tous ses titres et 400 sur le texte courant. Deux
-     graisses, et le poids ne marque donc que le registre — jamais l'emphase. */
+  /* Le design ne pose qu'une graisse, 300, sur tout le texte lu — titres et
+     `strong` compris. Le poids ne marque donc plus rien : ni registre, ni
+     emphase. Seule la marque `Agence Maldia` monte a 400.
+
+     Sans cette regle, les navigateurs mettraient les titres et `strong` en gras
+     par defaut, et l'ecart de graisse reviendrait par la porte de l'UA. */
   h1,
   h2,
   h3,
   strong {
-    font-weight: 500;
+    font-weight: 300;
   }
 }
 
-/* L'étiquette en capitales du design : Plex Mono, corps réduit, lettres
-   espacées. Elle revient à plus de cinquante endroits — écrite à la main,
-   chaque occurrence serait une occasion de divergence. */
+/* L'étiquette en capitales du design : corps réduit, lettres espacées. Elle
+   revient a beaucoup d'endroits — écrite à la main, chaque occurrence serait
+   une occasion de divergence. */
 @utility etiquette {
-  font-family: var(--font-etiquette);
   font-size: 0.71875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -183,7 +189,6 @@
 
 /* La même, au corps des métadonnées de carte. */
 @utility etiquette-fine {
-  font-family: var(--font-etiquette);
   font-size: 0.65625rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;

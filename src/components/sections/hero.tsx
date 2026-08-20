@@ -103,7 +103,7 @@ export function Hero({
                   <span className="etiquette-fine text-[0.65625rem] tracking-[0.12em] text-encre-2">
                     {contenu.carteAppel.intitule}
                   </span>
-                  <span className="text-[1.0625rem] font-medium tracking-[-0.02em] text-encre">
+                  <span className="text-[1.0625rem] tracking-[-0.02em] text-encre">
                     {contenu.carteAppel.titre}
                   </span>
                   <span className="etiquette-fine text-[0.65625rem] tracking-[0.08em] text-encre-2">
@@ -140,7 +140,7 @@ export function Hero({
               >
                 <span
                   aria-hidden
-                  className={`grid size-6.5 shrink-0 place-items-center rounded-etiquette font-[family-name:var(--font-etiquette)] text-[0.6875rem] text-encre ${
+                  className={`grid size-6.5 shrink-0 place-items-center rounded-etiquette text-[0.6875rem] text-encre ${
                     badge === premier ? 'bg-lime' : 'bg-white'
                   }`}
                 >

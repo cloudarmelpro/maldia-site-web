@@ -7,17 +7,22 @@ import { sansPhotosDistantes } from './photos-distantes'
 // WEB-11 exige un menu de six entrees et un « Accueil » qui ramene toujours a la
 // page principale. Une classe Tailwind ne le prouve pas : il faut cliquer.
 //
-// Le menu de bureau et le panneau mobile sont deux arbres differents. Sous 1024 px
-// c'est le second qui est visible, et c'est celui-la qu'il faut ouvrir.
-const RUPTURE_MENU = 1024
+// Le menu de bureau et le panneau mobile sont deux arbres differents. Sous
+// 1000 px c'est le second qui est visible, et c'est celui-la qu'il faut ouvrir.
+// La valeur est celle du design, pas un point de rupture de Tailwind.
+const RUPTURE_MENU = 1000
 
-async function ouvrirLeMenuSiMobile(page: import('@playwright/test').Page, largeur: number) {
+async function ouvrirLeMenuSiMobile(
+  page: import('@playwright/test').Page,
+  largeur: number,
+  nomDuBouton: string,
+) {
   if (largeur >= RUPTURE_MENU) return
-  await page.getByRole('button', { name: 'Menu', exact: true }).first().click()
+  await page.getByRole('button', { name: nomDuBouton, exact: true }).first().click()
 }
 
 for (const langue of LANGUES) {
-  const { navigation } = CONTENUS[langue].commun.enTete
+  const { navigation, menu } = CONTENUS[langue].commun.enTete
 
   test.describe(`navigation ${langue}`, () => {
     test.beforeEach(async ({ page }) => {
@@ -29,7 +34,7 @@ for (const langue of LANGUES) {
 
       for (const lien of navigation) {
         await page.goto(chemin(langue, 'accueil'))
-        await ouvrirLeMenuSiMobile(page, largeur)
+        await ouvrirLeMenuSiMobile(page, largeur, menu)
 
         await page.getByRole('link', { name: lien.libelle, exact: true }).first().click()
         await page.waitForURL(`**${chemin(langue, lien.page)}`)
@@ -46,7 +51,7 @@ for (const langue of LANGUES) {
     }) => {
       const largeur = viewport?.width ?? RUPTURE_MENU
       await page.goto(chemin(langue, 'services'))
-      await ouvrirLeMenuSiMobile(page, largeur)
+      await ouvrirLeMenuSiMobile(page, largeur, menu)
 
       const courante = page.locator('header a[aria-current="page"]')
       await expect(courante.first()).toHaveText(
@@ -60,7 +65,7 @@ for (const langue of LANGUES) {
 
       for (const page_cible of PAGES) {
         await page.goto(chemin(langue, page_cible))
-        await ouvrirLeMenuSiMobile(page, largeur)
+        await ouvrirLeMenuSiMobile(page, largeur, menu)
 
         // Le pied porte l'endonyme, le panneau mobile le code de langue.
         const selecteur = page.locator(`a[hreflang="${autre}"]`).first()

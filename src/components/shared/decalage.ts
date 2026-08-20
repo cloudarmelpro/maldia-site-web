@@ -1,13 +1,14 @@
-// Module sans "use client" : exportées depuis apparition.tsx, ces valeurs
-// deviendraient des références client — incallables depuis un Server Component.
+// Module sans "use client" : exportees depuis apparition.tsx, ces valeurs
+// deviendraient des references client — incallables depuis un Server Component.
 
-export const PAS_DECALAGE_MS = 60
+/** Valeur du design : 70 ms entre deux elements d'une meme grille. */
+export const PAS_DECALAGE_MS = 70
 
-// Au-delà, le décalage fait attendre le lecteur : les éléments suivants d'une
-// grille arrivent tous avec le dernier décalé.
+// Au-dela, le decalage fait attendre le lecteur : les elements suivants d'une
+// grille arrivent tous avec le dernier decale. C'est le plafond du design.
 const DERNIER_INDICE_DECALE = 5
 
-/** Décalage d'un élément de grille : indice × PAS_DECALAGE_MS, plafonné. */
+/** Decalage d'un element de grille : indice x PAS_DECALAGE_MS, plafonne. */
 export function delaiDeGrille(indice: number): number {
   return Math.min(indice, DERNIER_INDICE_DECALE) * PAS_DECALAGE_MS
 }

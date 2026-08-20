@@ -1,52 +1,49 @@
-import { MESURE_PROSE } from '@/components/shared/section'
-import type { Fond } from '@/components/shared/section'
+import type { ReactNode } from 'react'
 
-const TITRES: Record<Fond, string> = {
-  fond: 'text-encre',
-  'fond-2': 'text-encre',
-  tendre: 'text-encre',
-  vif: 'text-sur-vif',
-  sombre: 'text-sur-sombre',
-}
-
-// Sur les fonds teintés, --color-encre-2 tombe sous 4,5:1 : c'est le gris plus
-// sombre de la maquette qui prend le relais. Sur `vif`, pas de teinte adoucie
-// du tout — le blanc n'y tient le seuil qu'à pleine opacité.
-const DESCRIPTIONS: Record<Fond, string> = {
-  fond: 'text-encre-2',
-  'fond-2': 'text-encre-2',
-  tendre: 'text-encre-3',
-  vif: 'text-sur-vif',
-  sombre: 'text-sur-sombre/80',
-}
-
-type EnTeteSectionProps = {
-  /** Même valeur que le titreId de la Section englobante : aria-labelledby vise ce titre. */
-  titreId: string
-  titre: string
-  description?: string
-  /** Doit répéter le fond de la Section englobante : c'est lui qui règle les couleurs. */
-  fond?: Fond
-}
-
+/**
+ * L'en-tete de section du design : le titre a gauche, une phrase courte alignee
+ * a droite, sur la meme ligne de base.
+ *
+ * Au-dessus de 1000 px les deux se posent cote a cote, le paragraphe cale sur
+ * le bas du titre. En dessous ils s'empilent et le paragraphe reprend
+ * l'alignement a gauche — aligne a droite dans une colonne etroite, il se
+ * lirait comme une erreur.
+ */
 export function EnTeteSection({
   titreId,
   titre,
   description,
-  fond = 'fond',
-}: EnTeteSectionProps) {
+  sombre = false,
+  children,
+}: {
+  titreId: string
+  titre: ReactNode
+  description?: string
+  /** Sur les sections `encre` et `nuit` : la description change de gris. */
+  sombre?: boolean
+  /** Un appel a la place de la description — la page Profils en met un. */
+  children?: ReactNode
+}) {
   return (
-    <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
-      {/* Le crénage négatif vient du @layer base : il ne vaut que pour h1 et h2. */}
+    <div className="flex flex-col items-start gap-5 large:flex-row large:items-end large:justify-between large:gap-[clamp(1.5rem,3vw,3rem)]">
       <h2
         id={titreId}
-        className={`font-titre font-normal text-[2.125rem] leading-[1.05] text-balance sm:text-[2.75rem] lg:text-[3.375rem] ${TITRES[fond]}`}
+        className={`max-w-[22ch] font-titre text-[clamp(1.75rem,2.8vw,2.75rem)] leading-[1.1] tracking-[-0.045em] ${
+          sombre ? 'text-white' : 'text-encre'
+        }`}
       >
         {titre}
       </h2>
       {description ? (
-        <p className={`${MESURE_PROSE} font-description leading-relaxed ${DESCRIPTIONS[fond]}`}>{description}</p>
+        <p
+          className={`max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] large:text-right ${
+            sombre ? 'text-sur-sombre' : 'text-encre-2'
+          }`}
+        >
+          {description}
+        </p>
       ) : null}
+      {children}
     </div>
   )
 }

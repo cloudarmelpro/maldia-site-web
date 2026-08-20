@@ -1,100 +1,95 @@
 @import "tailwindcss";
 
-/* Palette reprise de la maquette « Refonte Wizerd UI ». Les noms de jetons
-   sont inchangés : les seize sections adoptent la nouvelle identité sans être
-   réécrites. Les valeurs, elles, viennent toutes du fichier de design. */
+/* Palette du design « Hero Maldia v2 », valeurs reprises telles quelles.
+
+   Le registre a changé de sens : le site n'est plus clair avec des blocs verts,
+   il est clair avec des sections sombres qui l'ouvrent et le ferment. D'où deux
+   familles de texte distinctes — sur clair et sur sombre. */
 @theme {
-  --color-fond: #ffffff;
-  /* leads : --color-surface */
-  --color-fond-2: #f3f5f2;
-  /* leads : --color-encre */
+  /* Le fond du hero, plus sombre que les sections sombres. */
+  --color-nuit: #0b1712;
   --color-encre: #0f1d17;
+  --color-fond: #ffffff;
+  --color-fond-2: #f4f5f3;
+  /* Le fond des pilules d'intitulé, sur blanc. */
+  --color-pilule: #f1f4f2;
 
-  /* leads : --color-texte2. 6,87:1 sur blanc, 6,27:1 sur --color-fond-2. */
+  /* Texte secondaire sur clair — 6,87:1 sur blanc. */
   --color-encre-2: #4a5f54;
-  /* Le texte secondaire des fonds teintés : 7,49:1 sur --color-tendre. */
-  --color-encre-3: #3a4d43;
+  /* Texte tertiaire sur clair : intitulés, mentions. 4,58:1 sur blanc. */
+  --color-encre-3: #85988f;
 
-  /* leads : --color-ligne */
-  --color-trait: #e3ebe4;
-  /* leads : --color-emeraude — 5,08:1 avec du blanc, aplat de bouton compris. */
+  /* Texte secondaire sur les sections sombres — 6,42:1 sur --color-encre. */
+  --color-sur-sombre: #a9bcb1;
+  /* Intitulés sur sombre. 5,17:1 sur --color-encre. */
+  --color-sur-sombre-2: #8fa79a;
+  /* Texte sur l'aplat citron. 8,12:1 — c'est lui qui rend le citron utilisable. */
+  --color-sur-lime: #3d5145;
+
   --color-primaire: #177e4f;
-  --color-primaire-2: #12603c;
-
-  /* leads : --color-lueur. Décorative uniquement — 1,43:1 sur blanc, elle ne
-     porte que le dégradé du trait sous le titre du hero, qui est aria-hidden. */
-  --color-accent: #9be8c0;
-
-  /* leads : --color-sapin */
-  --color-sombre: #14402f;
-  --color-sur-sombre: #ffffff;
-  --color-vif: #177e4f;
-  --color-sur-vif: #ffffff;
-  /* Plus clair que le bloc, comme dans la maquette, mais pas au point de perdre
-     le seuil : 4,65:1 avec du blanc, contre 5,08 pour le bloc. */
-  --color-vif-encart: #188553;
+  /* L'accent du design : il ne porte jamais de texte clair, seulement --color-encre. */
+  --color-lime: #cdf565;
   --color-tendre: #dceee4;
-  --color-carte: #ffffff;
-  /* La pastille « disponible » de la maquette. Sur un site vert, elle ne se lit
-     plus comme un signal distinct — le libellé qui la suit porte le sens. */
-  --color-signal: #22c55e;
 
-  /* Les quatre rayons de cartes de la maquette : 22, 24, 26 et 30 px. */
-  --radius-offre: 1.375rem;
-  --radius-avis: 1.5rem;
-  --radius-carte: 1.625rem;
-  --radius-carte-large: 1.875rem;
-  /* Le geste signature de la maquette : chaque bloc monte sur le précédent. */
-  --radius-bloc: 2.5rem;
+  --color-trait: #e2e6e1;
+  /* Le filet intérieur d'une carte, plus discret que sa bordure. */
+  --color-trait-2: #eceeeb;
+  /* Le filet d'un bouton à contour sur blanc. */
+  --color-trait-3: #d5dcd7;
+  /* La puce inactive d'une liste, et les points de séparation d'une bande. */
+  --color-trait-4: #cdd6cf;
+
+  /* La pastille de la page courante dans la navigation du hero. */
+  --color-signal: #4ade80;
+
+  /* Les rayons du design : 8, 10, 11, 12, 14, 16 et 18 px. */
+  --radius-etiquette: 0.5rem;
+  --radius-liste: 0.625rem;
+  --radius-marque: 0.6875rem;
+  --radius-bloc: 0.75rem;
+  --radius-carte: 0.875rem;
+  --radius-carte-large: 1rem;
+  --radius-encart: 1.125rem;
   --radius-pilule: 9999px;
-  /* Le rayon de la pastille du logo, valeur de la maquette. */
-  --radius-marque: 0.8125rem;
-
 }
 
-/* Échelle fluide, calée sur le titre du hero.
+/* Les points de rupture du design, nommés par ce qu'ils déclenchent.
 
-   Le titre est en clamp(2.375rem, 4.9vw, 4.625rem) : il grandit avec la
-   fenêtre. Les textes qui l'entourent étaient figés en pixels, et le rapport
-   entre eux ne tenait donc qu'à une largeur.
-
-   Chaque jeton est une droite passant par (768 px, valeur actuelle) et
-   (1920 px, valeur haute) — le terme en rem est l'ordonnée à l'origine, le
-   terme en vw la pente. La forme `rem + vw` et non `vw` seul : en vw pur, la
-   valeur n'atteint son minimum que très tard et le texte reste figé sur toute
-   la plage des portables.
-
-   Le minimum est la valeur d'aujourd'hui : rien ne rétrécit à aucune largeur.
-   Le maximum est atteint à 1920 px, au-delà duquel agrandir encore n'aide plus
-   à lire. */
+   Ceux de Tailwind ne tombent pas aux mêmes largeurs — `lg` vaut 1024 px là où
+   le design bascule à 1000. Vingt-quatre pixels d'écart suffisent à décaler la
+   colonne d'intitulé sur un portable de 1000 px de large. */
 @theme {
-  --text-fluide-corps: clamp(1.125rem, 1.0417rem + 0.1736vw, 1.25rem);
-  --text-fluide-mention: clamp(1.0625rem, 0.9792rem + 0.1736vw, 1.1875rem);
-  --text-fluide-bande: clamp(1.3125rem, 1.1875rem + 0.2604vw, 1.5rem);
-  --text-fluide-bouton: clamp(0.875rem, 0.8125rem + 0.1302vw, 0.96875rem);
+  /* Deux colonnes de cartes. */
+  --breakpoint-duo: 38.75rem;
+  /* Les deux cartes d'appel côte à côte. */
+  --breakpoint-paire: 47.5rem;
+  /* Les deux voies de parcours, et les six cartes de l'argumentaire. */
+  --breakpoint-voies: 51.25rem;
+  /* Les cinq étapes passent en frise défilante. */
+  --breakpoint-frise: 56.25rem;
+  /* La colonne d'intitulé de 190 px apparaît à gauche du contenu. */
+  --breakpoint-large: 62.5rem;
 }
 
-/* L'entrée du hero est en CSS et non en JS : c'est l'élément le plus haut de la
-   page. Animé par `motion`, il serait rendu à `opacity: 0` dans le HTML
-   statique et n'apparaîtrait qu'à l'hydratation. `motion-safe:` porte déjà la
-   préférence de mouvement réduit — sans elle, la règle ne s'applique pas et le
-   contenu reste simplement visible.
+/* Trois animations, toutes en `transform` : rien d'autre ne se compose sur le
+   GPU, et animer une géométrie ferait recalculer la mise en page à chaque image.
 
-   Les deux défilements servent les bandes de la maquette. Ils translatent la
-   moitié d'une liste doublée : c'est ce qui rend la boucle invisible. */
+   `derive` est la dérive lente de la photo du hero. Les deux défilements
+   translatent la moitié d'une liste doublée : c'est ce qui rend la boucle
+   invisible. */
 @theme {
-  --animate-entree-hero: entree-hero 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-derive: derive 26s ease-in-out infinite alternate;
   --animate-defilement: defilement 34s linear infinite;
-  --animate-defilement-inverse: defilement-inverse 30s linear infinite;
+  --animate-defilement-lent: defilement 38s linear infinite;
+  --animate-defilement-tres-lent: defilement 42s linear infinite;
+  --animate-defilement-inverse: defilement-inverse 34s linear infinite;
 
-  @keyframes entree-hero {
+  @keyframes derive {
     from {
-      opacity: 0;
-      transform: translateY(16px);
+      transform: scale(1.04);
     }
     to {
-      opacity: 1;
-      transform: none;
+      transform: scale(1.14);
     }
   }
 
@@ -117,23 +112,23 @@
   }
 }
 
-/* La variable --font-dm-sans est posée par next/font dans
-   app/[langue]/layout.tsx — invariant entre les deux fichiers.
+/* Les variables --font-archivo et --font-mono-plex sont posées par next/font
+   dans app/[langue]/layout.tsx — invariant entre les deux fichiers.
 
-   Une seule police pour tout le site. Les trois jetons restent distincts parce
-   que les composants les citent par rôle : le jour où une seconde police
-   revient, elle se branche ici et nulle part ailleurs. */
+   Archivo porte tout le texte lu. IBM Plex Mono ne porte que les étiquettes en
+   capitales espacées : intitulés de section, libellés de bouton, métadonnées.
+   C'est un rôle, pas un ornement — elle ne prend jamais une phrase. */
 @theme inline {
-  --font-titre: var(--font-dm-sans, sans-serif);
-  --font-corps: var(--font-dm-sans, sans-serif);
-  --font-description: var(--font-dm-sans, sans-serif);
+  --font-titre: var(--font-archivo, sans-serif);
+  --font-corps: var(--font-archivo, sans-serif);
+  --font-etiquette: var(--font-mono-plex, ui-monospace, monospace);
 }
 
 @layer base {
   html {
     color-scheme: light;
-    /* Aucun décalage : l'en-tête n'est pas collé (voir en-tete.tsx), donc
-       rien ne recouvre la cible d'une ancre. */
+    /* Aucun décalage : l'en-tête n'est pas collé, donc rien ne recouvre la
+       cible d'une ancre. */
     scroll-padding-top: 0;
   }
 
@@ -147,21 +142,33 @@
     background-color: var(--color-fond);
     color: var(--color-encre);
     font-family: var(--font-corps);
-    /* Light, et c'est la graisse de reference du site : tout ce qui ne declare
-       rien herite d'elle. Les graisses superieures ne servent qu'a marquer une
-       hierarchie, jamais a poser du texte courant. */
-    font-weight: 300;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Le crénage négatif ne vaut que pour les grandes tailles : appliqué au petit
-     texte, il le rendrait illisible. En em, il suit donc la taille. Le
-     resserrement des mots vient en plus de celui des lettres.
-
-     Les h2 partagent la valeur du h1 : le client les veut identiques. */
+  /* Le design pose 500 sur tous ses titres et 400 sur le texte courant. Deux
+     graisses, et le poids ne marque donc que le registre — jamais l'emphase. */
   h1,
-  h2 {
-    letter-spacing: -0.05em;
-    word-spacing: -0.03em;
+  h2,
+  h3,
+  strong {
+    font-weight: 500;
   }
+}
+
+/* L'étiquette en capitales du design : Plex Mono, corps réduit, lettres
+   espacées. Elle revient à plus de cinquante endroits — écrite à la main,
+   chaque occurrence serait une occasion de divergence. */
+@utility etiquette {
+  font-family: var(--font-etiquette);
+  font-size: 0.71875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* La même, au corps des métadonnées de carte. */
+@utility etiquette-fine {
+  font-family: var(--font-etiquette);
+  font-size: 0.65625rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }

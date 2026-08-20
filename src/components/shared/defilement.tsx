@@ -1,41 +1,44 @@
 import type { ReactNode } from 'react'
 
+/** Les quatre allures du design, une par bande. */
+export type Allure = 'normale' | 'lente' | 'tres-lente' | 'inverse'
+
+const ALLURES: Record<Allure, string> = {
+  normale: 'motion-safe:animate-defilement',
+  lente: 'motion-safe:animate-defilement-lent',
+  'tres-lente': 'motion-safe:animate-defilement-tres-lent',
+  inverse: 'motion-safe:animate-defilement-inverse',
+}
+
 /**
- * La bande défilante de la maquette. Entièrement en CSS : aucun état, aucun
- * effet, donc aucun composant client — et elle reste lisible sans JavaScript.
+ * Une bande defilante. Entierement en CSS : aucun etat, aucun effet, donc aucun
+ * composant client — et elle reste lisible sans JavaScript.
  *
- * La liste est rendue deux fois et l'animation translate de la moitié : c'est
- * ce qui rend la boucle invisible. Le second exemplaire est masqué aux lecteurs
- * d'écran, sinon chaque libellé serait annoncé en double.
+ * La liste est rendue deux fois et l'animation translate de la moitie : c'est
+ * ce qui rend la boucle invisible. Le second exemplaire est masque aux lecteurs
+ * d'ecran, sinon chaque libelle serait annonce en double.
  *
- * `motion-safe:` coupe le défilement quand le visiteur réduit le mouvement —
- * une bande qui défile sans fin est le pire cas pour un trouble vestibulaire.
+ * `motion-safe:` coupe le defilement quand le visiteur reduit le mouvement — une
+ * bande qui defile sans fin est le pire cas pour un trouble vestibulaire.
  *
- * Immobile, la liste dépasse du cadre et la fin serait perdue : `motion-reduce`
- * rend alors la bande défilable à la main. Sans ça, réduire le mouvement
- * masquerait du contenu au lieu de seulement l'arrêter.
+ * Immobile, la liste depasse du cadre et la fin serait perdue : `motion-reduce`
+ * rend alors la bande defilable a la main. Sans ca, reduire le mouvement
+ * masquerait du contenu au lieu de seulement l'arreter.
  */
 export function Defilement({
   items,
-  sens = 'gauche',
+  allure = 'normale',
   className,
   rendu,
 }: {
   items: readonly string[]
-  sens?: 'gauche' | 'droite'
+  allure?: Allure
   className?: string
   rendu: (item: string) => ReactNode
 }) {
-  const animation =
-    sens === 'gauche'
-      ? 'motion-safe:animate-defilement'
-      : 'motion-safe:animate-defilement-inverse'
-
   return (
-    <div
-      className={`overflow-hidden motion-reduce:overflow-x-auto [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]${className ? ` ${className}` : ''}`}
-    >
-      <div className={`flex w-max items-center ${animation}`}>
+    <div className={`overflow-hidden motion-reduce:overflow-x-auto${className ? ` ${className}` : ''}`}>
+      <div className={`flex w-max items-center ${ALLURES[allure]}`}>
         <ul className="flex w-max items-center">
           {items.map((item) => (
             <li key={item} className="flex-none">
@@ -54,3 +57,7 @@ export function Defilement({
     </div>
   )
 }
+
+/** Le masque en degrade du design : les bandes s'effacent sur les deux bords. */
+export const MASQUE_BANDE =
+  '[mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)]'

@@ -4,9 +4,7 @@ import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
-import { Cloture } from '@/components/sections/cloture'
-import { Opportunites } from '@/components/sections/opportunites'
-import { PourLesTalents } from '@/components/sections/pour-les-talents'
+import { Parcours } from '@/components/sections/parcours'
 import { Profils } from '@/components/sections/profils'
 import { TitrePage } from '@/components/sections/titre-page'
 import { Bouton } from '@/components/shared/bouton'
@@ -32,17 +30,30 @@ export async function generateMetadata({
  */
 export default async function PageTalents({ params }: PageProps<'/[langue]/talents'>) {
   const { langue, contenu } = resoudre((await params).langue)
-  const { entete, opportunites, cartes, criteres, profils } = contenu.talents
+  const { commun, talents } = contenu
 
   return (
     <Gabarit langue={langue} page="talents" contenu={contenu}>
-      <TitrePage titre={entete.titre} description={entete.description} mention={entete.mention}>
-        <Bouton destination="candidature" libelle={entete.cta} />
-      </TitrePage>
-      <Opportunites contenu={opportunites} />
-      <PourLesTalents cartes={cartes} criteres={criteres} />
-      <Profils contenu={profils} />
-      <Cloture contenu={contenu.commun.cloture} />
+      {(enTete) => (
+        <>
+          <TitrePage
+            intitule={talents.entete.intitule}
+            titre={talents.entete.titre}
+            description={talents.entete.description}
+            mention={talents.entete.mention}
+            enTete={enTete}
+          >
+            <Bouton
+              destination="candidature"
+              libelle={talents.entete.cta}
+              variante="lime"
+              ornement="fleche-montante"
+            />
+          </TitrePage>
+          <Parcours contenu={commun.parcours} titreId="titre-parcours" />
+          <Profils contenu={commun.profils} titreId="titre-profils" />
+        </>
+      )}
     </Gabarit>
   )
 }

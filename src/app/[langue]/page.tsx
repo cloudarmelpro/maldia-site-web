@@ -4,14 +4,13 @@ import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
-import { Argumentaire } from '@/components/sections/argumentaire'
-import { BandeauOutils } from '@/components/sections/bandeau-outils'
-import { Cloture } from '@/components/sections/cloture'
-import { Compteur } from '@/components/sections/compteur'
-import { Faq } from '@/components/sections/faq'
+import { Base } from '@/components/sections/base'
 import { Hero } from '@/components/sections/hero'
-import { Marches } from '@/components/sections/marches'
+import { Methode } from '@/components/sections/methode'
 import { Parcours } from '@/components/sections/parcours'
+import { Pourquoi } from '@/components/sections/pourquoi'
+import { Profils } from '@/components/sections/profils'
+import { Questions } from '@/components/sections/questions'
 
 import { resoudre } from './resoudre'
 
@@ -25,29 +24,38 @@ export async function generateMetadata({ params }: PageProps<'/[langue]'>): Prom
 }
 
 /**
- * WEB-2 — l'accueil.
+ * WEB-2 — l'accueil, dans l'ordre du design « Hero Maldia v2 ».
  *
- * Les deux parcours ferment la page, juste avant la FAQ : la page argumente
- * d'abord, puis demande de choisir un cote. Le hero porte deja les deux appels
- * (WEB-2), donc rien n'oblige a trancher en haut de page.
- *
- * L'ordre des sections fixe la chaine des `dessous` : l'arrondi haut d'un bloc
- * decouvre la couleur de celui qui le precede. Deplacer une section sans
- * reprendre cette chaine laisse une bande blanche dans l'arrondi.
+ * Le hero porte les deux appels : celui des entreprises et celui des talents. Le
+ * reste de la page argumente, puis « Parcours » redemande de choisir un cote.
  */
 export default async function Page({ params }: PageProps<'/[langue]'>) {
   const { langue, contenu } = resoudre((await params).langue)
+  const { commun, accueil } = contenu
 
   return (
     <Gabarit langue={langue} page="accueil" contenu={contenu}>
-      <Hero contenu={contenu.accueil.hero} />
-      <Marches contenu={contenu.commun.marches} titreId="titre-marches" />
-      <Argumentaire contenu={contenu.commun.argumentaire} titreId="titre-argumentaire" />
-      <Compteur contenu={contenu.commun.compteur} langue={langue} titreId="titre-compteur" />
-      <BandeauOutils contenu={contenu.commun.outils} titreId="titre-outils" />
-      <Parcours contenu={contenu.accueil.parcours} langue={langue} />
-      <Faq contenu={contenu.accueil.faq} />
-      <Cloture contenu={contenu.commun.cloture} />
+      {(enTete) => (
+        <>
+          <Hero
+            contenu={accueil.hero}
+            courriel={commun.pied.courriel}
+            lieu={commun.pied.lieu}
+            marches={commun.marches.resume}
+            enTete={enTete}
+          />
+          <Pourquoi
+            contenu={commun.pourquoi}
+            marches={commun.marches}
+            titreId="titre-pourquoi"
+          />
+          <Profils contenu={commun.profils} titreId="titre-profils" />
+          <Methode contenu={commun.methode} titreId="titre-methode" />
+          <Parcours contenu={commun.parcours} titreId="titre-parcours" />
+          <Base contenu={commun.base} langue={langue} titreId="titre-base" />
+          <Questions contenu={accueil.questions} />
+        </>
+      )}
     </Gabarit>
   )
 }

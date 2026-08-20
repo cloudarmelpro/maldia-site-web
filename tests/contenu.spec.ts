@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 
 import { CONTENUS } from '@/content/contenus'
 import { LANGUES, PAGES } from '@/content/langues'
-import type { Langue } from '@/content/langues'
 
 // La parite de STRUCTURE est tenue par les tuples de types.ts : une entree en
 // plus ou en moins dans une seule langue ne compile pas. Ce qu'aucun type ne
@@ -40,42 +39,57 @@ describe('WEB-8 — parite des deux langues', () => {
     }
   })
 
-  it('les libelles de navigation diffèrent entre eux dans chaque langue', () => {
+  it('les libelles de navigation different entre eux dans chaque langue', () => {
     for (const langue of LANGUES) {
       const libelles = CONTENUS[langue].commun.enTete.navigation.map((lien) => lien.libelle)
-      expect(new Set(libelles).size, `${langue} : deux entrées de menu portent le même libellé`).toBe(
+      expect(new Set(libelles).size, `${langue} : deux entrees de menu portent le meme libelle`).toBe(
         libelles.length,
       )
     }
   })
+
+  it('les cinq etapes designent le meme cote dans les deux langues', () => {
+    // `cote` pilote la couleur de la pastille. Divergent, il colorerait des
+    // etapes differentes selon la langue.
+    const [premiere, ...autres] = LANGUES.map((langue) =>
+      CONTENUS[langue].commun.methode.liste.map((etape) => etape.cote),
+    )
+    for (const liste of autres) expect(liste).toEqual(premiere)
+  })
+
+  it('les six questions designent le meme cote dans les deux langues', () => {
+    // `cote` pilote le filtre : divergent, un onglet montrerait un nombre
+    // d'entrees different selon la langue.
+    const [premiere, ...autres] = LANGUES.map((langue) =>
+      CONTENUS[langue].accueil.questions.liste.map((entree) => entree.cote),
+    )
+    for (const liste of autres) expect(liste).toEqual(premiere)
+  })
 })
 
 describe('WEB-12 — les chiffres du retour client', () => {
-  // Ils vivent dans les phrases que le client a ecrites, donc en double. Une
+  // Ils vivent dans les repères que le design chiffre, donc en double. Une
   // correction faite d'un seul cote passerait inapercue sans ce test.
-  const CHIFFRES_ATTENDUS: Record<Langue, readonly string[]> = {
-    fr: ['14', '50', '25'],
-    en: ['14', '50', '25'],
-  }
+  const CHIFFRES_ATTENDUS = ['14', '50', '25']
 
   it('chaque langue porte les trois chiffres de l argumentaire', () => {
     for (const langue of LANGUES) {
-      const texte = CONTENUS[langue].commun.argumentaire.liste
-        .map((argument) => `${argument.reperage} ${argument.description}`)
+      const texte = CONTENUS[langue].commun.pourquoi.liste
+        .map((carte) => `${carte.chiffre} ${carte.description}`)
         .join(' ')
 
-      for (const chiffre of CHIFFRES_ATTENDUS[langue]) {
-        expect(texte, `${langue} : le chiffre ${chiffre} manque à l'argumentaire`).toContain(chiffre)
+      for (const chiffre of CHIFFRES_ATTENDUS) {
+        expect(texte, `${langue} : le chiffre ${chiffre} manque a l'argumentaire`).toContain(chiffre)
       }
     }
   })
 
   it('le delai est presente comme une moyenne et non comme une garantie', () => {
     // Exigence explicite du retour client.
-    expect(CONTENUS.fr.commun.argumentaire.mention).toMatch(/moyenne/i)
-    expect(CONTENUS.fr.commun.argumentaire.mention).toMatch(/garantie/i)
-    expect(CONTENUS.en.commun.argumentaire.mention).toMatch(/average/i)
-    expect(CONTENUS.en.commun.argumentaire.mention).toMatch(/guarantee/i)
+    expect(CONTENUS.fr.commun.pourquoi.encart.texte).toMatch(/moyenne/i)
+    expect(CONTENUS.fr.commun.pourquoi.encart.texte).toMatch(/garantie/i)
+    expect(CONTENUS.en.commun.pourquoi.encart.texte).toMatch(/average/i)
+    expect(CONTENUS.en.commun.pourquoi.encart.texte).toMatch(/guarantee/i)
   })
 })
 
@@ -83,7 +97,7 @@ describe('WEB-14 — le bandeau des outils', () => {
   it('dit qu aucun partenariat n est sous-entendu', () => {
     // Le retour client l'exige : citer une marque ne doit pas laisser croire a
     // un partenariat officiel.
-    expect(CONTENUS.fr.commun.outils.mention).toMatch(/partenaire/i)
-    expect(CONTENUS.en.commun.outils.mention).toMatch(/partner/i)
+    expect(CONTENUS.fr.commun.base.mention).toMatch(/partenaire/i)
+    expect(CONTENUS.en.commun.base.mention).toMatch(/partner/i)
   })
 })

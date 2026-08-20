@@ -1,36 +1,28 @@
-import Link from 'next/link'
 
 import { chemin, NOMS_LANGUES } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { autreLangue } from '@/components/shared/autre-langue'
-import { Bouton } from '@/components/shared/bouton'
 import { Facebook, Instagram, Linkedin } from '@/components/shared/icones-reseaux'
-import { CONTENEUR } from '@/components/shared/section'
 import { SelecteurLangue } from '@/components/shared/selecteur-langue'
+import { Lien } from '@/components/shared/lien'
 
-// transition-[color] et non transition-colors : cette dernière couvre
-// outline-color et retarderait l'anneau de focus.
-const RESEAUX = [
-  { cle: 'facebook', Icone: Facebook },
-  { cle: 'linkedin', Icone: Linkedin },
-  { cle: 'instagram', Icone: Instagram },
-] as const
+const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 
-const CLASSES_LIEN =
-  'transition-[color] hover:text-sur-vif focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-carte'
+const RESEAUX = [Linkedin, Facebook, Instagram] as const
 
 /**
- * Le pied prolonge le bloc de clôture : même aplat, sans coupure — c'est ainsi
- * que la maquette les enchaîne.
+ * Le pied du design : dans la meme bande sombre que le bloc d'appel, separe
+ * seulement par un filet.
+ *
+ * Les reperes sociaux ne sont pas des liens. Le design leur donne `href="#rdv"`,
+ * c'est-a-dire nulle part, et les comptes ne sont pas fournis : un lien qui ne
+ * mene nulle part vaut moins qu'un repere visuel. Ils redeviendront des liens
+ * quand les adresses arriveront.
  *
  * C'est ici que vit le choix de langue (WEB-8), et nulle part ailleurs : les
- * deux langues sont montrées côte à côte, la courante marquée `aria-current`.
- * Une seule des deux est un lien — l'autre mènerait à la page qu'on regarde.
- *
- * Les liens sociaux de la maquette ne mènent nulle part (`href="#"`). Ici ils
- * n'existent pas comme liens : ce sont des repères visuels, `aria-hidden`. Un
- * lien qui ne va nulle part est pire qu'un lien absent.
+ * deux langues sont montrees cote a cote, la courante marquee `aria-current`.
+ * Une seule des deux est un lien — l'autre menerait a la page qu'on regarde.
  */
 export function Pied({
   langue,
@@ -42,74 +34,94 @@ export function Pied({
   langue: Langue
   page: Page
   contenu: Contenu['commun']['pied']
-  /** La même page dans l'autre langue — calculée par le gabarit. */
   cheminAutreLangue: string
-  /** Nom accessible du groupe de langues (WEB-8). */
   changerDeLangue: string
 }) {
   const autre = autreLangue(langue)
 
   return (
-    <footer className="bg-vif text-sur-vif">
-      <div className={`${CONTENEUR} pt-20 pb-12`}>
-        <div className="flex flex-wrap items-center gap-10">
-          <nav>
-            <ul className="flex flex-wrap gap-x-3 gap-y-1">
-              {contenu.navigation.map((lien) => (
-                <li key={lien.page}>
-                  {/* min-w-11 : les libellés courts sont rendus plus étroits que
-                      44 px — la hauteur seule ne tient pas la cible tactile. */}
-                  <Link
-                    href={chemin(langue, lien.page)}
-                    aria-current={lien.page === page ? 'page' : undefined}
-                    className={`inline-flex min-h-11 min-w-11 items-center px-1 font-description text-[1.0625rem] text-sur-vif ${CLASSES_LIEN}`}
-                  >
-                    {lien.libelle}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="ml-auto flex flex-wrap items-center gap-3.5">
-            <Bouton
-              destination="candidature"
-              libelle={contenu.ctaSecondaire}
-              variante="contour-clair"
-            />
-            {/* Décoratifs tant que les comptes ne sont pas fournis : des liens
-                qui ne mènent nulle part vaudraient moins que pas de liens. */}
-            <span aria-hidden className="flex gap-3.5">
-              {RESEAUX.map(({ cle, Icone }) => (
-                <span
-                  key={cle}
-                  className="grid size-11 place-items-center rounded-full border-[1.5px] border-carte/35"
-                >
-                  <Icone className="size-4.5" />
-                </span>
-              ))}
-            </span>
-          </div>
-        </div>
-
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-carte/25 pt-6.5">
-          <div role="group" aria-label={changerDeLangue} className="flex items-center gap-3">
+    <footer className="mt-[clamp(3.5rem,6vw,6rem)]">
+      <div className="flex flex-col gap-7 border-t border-white/16 pt-[clamp(1.75rem,2.8vw,2.5rem)] large:flex-row large:justify-between large:gap-[clamp(2rem,4vw,4.5rem)]">
+        <div className="flex min-w-0 flex-col gap-3.5">
+          <span className="inline-flex items-center gap-3">
             <span
-              aria-current="true"
-              className="inline-flex min-h-12 min-w-11 items-center font-description text-base text-sur-vif"
+              aria-hidden
+              className="grid size-9.5 shrink-0 place-items-center rounded-marque bg-white text-lg font-semibold text-encre"
             >
-              {NOMS_LANGUES[langue]}
+              M
             </span>
-            <span aria-hidden className="h-4 w-px bg-carte/35" />
-            <SelecteurLangue
-              langue={autre}
-              vers={cheminAutreLangue}
-              libelle={NOMS_LANGUES[autre]}
-              className={`inline-flex min-h-12 min-w-11 items-center font-description text-base text-sur-vif underline-offset-4 hover:underline ${CLASSES_LIEN}`}
-            />
-          </div>
-          <p className="font-description text-base text-sur-vif">{contenu.copyright}</p>
+            <span className="text-[1.1875rem] font-semibold tracking-[-0.045em] text-white">
+              Agence Maldia
+            </span>
+          </span>
+          <span className="max-w-[34ch] text-[0.84375rem] leading-[1.55] text-sur-sombre">
+            {contenu.description}
+          </span>
         </div>
+
+        <nav aria-label={contenu.titrePages} className="flex min-w-0 flex-col gap-3">
+          <span className="etiquette-fine text-[0.65625rem] tracking-[0.1em] text-sur-sombre-2">
+            {contenu.titrePages}
+          </span>
+          <ul className="flex flex-wrap gap-x-5.5 gap-y-2.5">
+            {contenu.navigation.map((lien) => (
+              <li key={lien.page}>
+                {/* min-w-11 : les libelles courts sont rendus plus etroits que
+                    44 px — la hauteur seule ne tient pas la cible tactile. */}
+                <Lien
+                  href={chemin(langue, lien.page)}
+                  aria-current={lien.page === page ? 'page' : undefined}
+                  className={`inline-flex min-h-11 min-w-11 items-center etiquette tracking-[0.07em] text-white transition-[color] hover:text-lime ${FOCUS}`}
+                >
+                  {lien.libelle}
+                </Lien>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="flex min-w-0 flex-col gap-3">
+          <span className="etiquette-fine text-[0.65625rem] tracking-[0.1em] text-sur-sombre-2">
+            {contenu.titreContact}
+          </span>
+          <a
+            href={`mailto:${contenu.courriel}`}
+            className={`inline-flex min-h-11 items-center etiquette tracking-[0.07em] text-white transition-[color] hover:text-lime ${FOCUS}`}
+          >
+            {contenu.courriel}
+          </a>
+          <span className="etiquette tracking-[0.07em] text-sur-sombre">{contenu.lieu}</span>
+          {/* Reperes visuels, pas des liens : voir le commentaire du composant. */}
+          <span aria-hidden className="mt-1.5 flex gap-2">
+            {RESEAUX.map((Icone, indice) => (
+              <span
+                key={indice}
+                className="grid size-9.5 place-items-center rounded-marque border border-white/22 text-white"
+              >
+                <Icone className="size-4" />
+              </span>
+            ))}
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-[clamp(1.75rem,2.8vw,2.5rem)] flex flex-col gap-3.5 border-t border-white/16 pt-5.5 large:flex-row large:items-center large:justify-between large:gap-6">
+        <div role="group" aria-label={changerDeLangue} className="flex items-center gap-2.5">
+          <span
+            aria-current="true"
+            className="inline-flex min-h-11 items-center etiquette text-white"
+          >
+            {NOMS_LANGUES[langue]}
+          </span>
+          <span aria-hidden className="block h-3 w-px bg-white/30" />
+          <SelecteurLangue
+            langue={autre}
+            vers={cheminAutreLangue}
+            libelle={NOMS_LANGUES[autre]}
+            className={`inline-flex min-h-11 min-w-11 items-center etiquette text-sur-sombre transition-[color] hover:text-white ${FOCUS}`}
+          />
+        </div>
+        <span className="etiquette text-sur-sombre">{contenu.copyright}</span>
       </div>
     </footer>
   )

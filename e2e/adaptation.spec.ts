@@ -89,7 +89,14 @@ for (const adresse of CHEMINS) {
 
         const fautifs: string[] = []
 
+        // Un conteneur n'a pas de longueur de ligne : son texte vit dans ses
+        // enfants, qui ont leur propre largeur. Mesurer la boite du parent
+        // signalait la FAQ, dont chaque reponse est deja plafonnee a 62ch.
+        const BLOCS = 'p, div, ul, ol, li, h1, h2, h3, h4, h5, h6, section, article'
+
         for (const el of document.querySelectorAll('p, li, blockquote')) {
+          if (el.querySelector(BLOCS)) continue
+
           const texte = (el.textContent ?? '').trim()
           if (texte.length < 60) continue // trop court pour former une ligne pleine
 

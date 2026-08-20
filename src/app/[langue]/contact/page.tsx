@@ -4,9 +4,10 @@ import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
-import { Cloture } from '@/components/sections/cloture'
-import { ContactVoies } from '@/components/sections/contact-voies'
+import { Questions } from '@/components/sections/questions'
 import { TitrePage } from '@/components/sections/titre-page'
+import { Bouton } from '@/components/shared/bouton'
+import { CONTENEUR, GRILLE_INTITULE } from '@/components/shared/section'
 
 import { resoudre } from '../resoudre'
 
@@ -25,16 +26,54 @@ export async function generateMetadata({
  * WEB-7 — contact.
  *
  * Aucun formulaire : le site n'a pas de serveur pour en recevoir un (WEB-10).
- * Le rendez-vous passe par Cal.com, la candidature par l'application de CV.
+ * La mention le dit au visiteur plutot que de le laisser le decouvrir.
+ *
+ * Les deux voies reelles — le calendrier et la candidature — sont dans le bloc
+ * d'appel que le gabarit rend au bas de chaque page. Les repeter ici en ferait
+ * deux paires de cartes identiques a un ecran d'intervalle.
  */
 export default async function PageContact({ params }: PageProps<'/[langue]/contact'>) {
   const { langue, contenu } = resoudre((await params).langue)
 
   return (
     <Gabarit langue={langue} page="contact" contenu={contenu}>
-      <TitrePage titre={contenu.contact.titre} description={contenu.contact.description} />
-      <ContactVoies contenu={contenu.contact} />
-      <Cloture contenu={contenu.commun.cloture} />
+      {(enTete) => (
+        <>
+          <TitrePage
+            intitule={contenu.contact.entete.intitule}
+            titre={contenu.contact.entete.titre}
+            description={contenu.contact.entete.description}
+            mention={contenu.contact.entete.mention}
+            enTete={enTete}
+          >
+            <Bouton
+              destination="rendezVous"
+              libelle={contenu.contact.entete.cta}
+              variante="lime"
+              ornement="fleche"
+            />
+          </TitrePage>
+
+          <section
+            aria-labelledby="titre-sans-formulaire"
+            className="bg-fond pt-[clamp(3rem,5vw,4.5rem)]"
+          >
+            <div className={CONTENEUR}>
+              <div className={GRILLE_INTITULE}>
+                <span />
+                <p
+                  id="titre-sans-formulaire"
+                  className="max-w-[62ch] text-[0.90625rem] leading-[1.65] text-encre-2"
+                >
+                  {contenu.contact.mention}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <Questions contenu={contenu.accueil.questions} />
+        </>
+      )}
     </Gabarit>
   )
 }

@@ -56,7 +56,9 @@ export default async function PageArticle({ params }: PageProps<'/[langue]/blog/
 
   return (
     <Gabarit langue={langue} page="blog" article={article.identifiant} contenu={contenu}>
-      <BlogArticle article={article} contenu={contenu} langue={langue} />
+      {(enTete) => (
+        <BlogArticle article={article} contenu={contenu} langue={langue} enTete={enTete} />
+      )}
     </Gabarit>
   )
 }

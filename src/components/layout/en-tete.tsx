@@ -1,152 +1,149 @@
-import Link from 'next/link'
 
 import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { MenuMobile } from '@/components/layout/menu-mobile'
 import { autreLangue } from '@/components/shared/autre-langue'
-import { Facebook, Instagram, Linkedin } from '@/components/shared/icones-reseaux'
-import { SelecteurLangue } from '@/components/shared/selecteur-langue'
 import { Bouton } from '@/components/shared/bouton'
+import { SelecteurLangue } from '@/components/shared/selecteur-langue'
+import { Lien } from '@/components/shared/lien'
 
-const CLASSES_FOCUS =
-  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaire'
-
-// transition-[color] et non transition-colors : cette dernière couvre
-// outline-color et retarderait l'anneau de focus.
-const CLASSES_LIEN = `transition-[color,background-color] hover:text-encre ${CLASSES_FOCUS}`
+const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 
 /**
- * L'en-tête n'est pas collé : il défile avec la page.
+ * L'en-tete du design : pose sur la photo du hero, sans aplat.
  *
- * La maquette le déclare `position: sticky`, mais son enveloppe porte
- * `overflow-x: hidden`. En CSS, quand un axe vaut `hidden` et l'autre `visible`,
- * le `visible` est recalculé en `auto` : l'enveloppe devient un conteneur de
- * défilement et le `sticky` s'y accroche au lieu de la fenêtre. Le rendu de la
- * maquette est donc un en-tête qui s'en va — c'est celui-là qu'on reproduit.
+ * Il n'est pas colle — il defile avec la page, comme dans le design. La
+ * navigation flotte donc sur une pilule de verre pour rester lisible sur
+ * n'importe quelle zone de la photo.
  *
- * La navigation porte les six pages (WEB-11). La page courante est marquée
- * `aria-current="page"` : sans elle, rien ne dit où l'on se trouve à qui
- * n'accède pas à la couleur.
+ * La page courante porte `aria-current="page"` et une puce : sans elle, rien ne
+ * dit ou l'on se trouve a qui n'accede pas a la couleur.
  */
 export function EnTete({
   langue,
   page,
   contenu,
   cheminAutreLangue,
-  changerDeLangue,
 }: {
   langue: Langue
   page: Page
   contenu: Contenu['commun']['enTete']
   cheminAutreLangue: string
-  changerDeLangue: string
 }) {
   const autre = autreLangue(langue)
 
   const marque = (
-    <Link
+    <Lien
       href={chemin(langue)}
-      className={`inline-flex min-h-11 min-w-0 items-center gap-3 font-titre text-[1.6875rem] font-normal tracking-[-0.035em] text-encre ${CLASSES_FOCUS}`}
+      className={`inline-flex min-h-11 min-w-0 items-center gap-3 ${FOCUS}`}
     >
       <span
         aria-hidden
-        className="grid size-11 shrink-0 place-items-center rounded-marque bg-primaire text-[1.375rem] font-medium text-carte"
+        className="grid size-10.5 shrink-0 place-items-center rounded-bloc bg-white text-xl font-semibold text-encre"
       >
         {contenu.initiale}
       </span>
-      {contenu.marque}
-    </Link>
+      <span className="text-[1.3125rem] font-semibold tracking-[-0.045em] text-white">
+        {contenu.marque}
+      </span>
+    </Lien>
   )
 
   return (
-    // Fond plein, sans `backdrop-filter` : la propriété crée un bloc conteneur
-    // pour les descendants en `fixed`, et le panneau mobile s'y trouvait réduit
-    // à la hauteur de l'en-tête au lieu de couvrir la fenêtre. Le flou n'avait
-    // de toute façon rien à flouter — l'en-tête n'est pas collé.
-    <header className="relative z-[60] bg-fond">
-      <div className="mx-auto flex h-20 w-full max-w-[1260px] items-center justify-between gap-[clamp(1.25rem,2.8vw,2.5rem)] px-[clamp(1.25rem,2.8vw,2.5rem)]">
-        {marque}
+    // z-60 et non le z-3 du design : `position` + `z-index` creent un contexte
+    // d'empilement, et le panneau mobile en `fixed z-90` est un descendant. Son
+    // z-index ne compte donc que dans ce contexte — a z-3, la barre de pied du
+    // hero, au meme niveau mais plus loin dans le DOM, se peignait par-dessus
+    // et interceptait les clics du panneau.
+    <header className="relative z-60 mx-auto flex w-full max-w-[87.5rem] items-center justify-between gap-6 px-[clamp(1.25rem,4vw,3.5rem)] pt-6.5">
+      {marque}
 
-        <nav className="hidden lg:block">
-          <ul className="flex items-center gap-[clamp(0.5rem,0.85vw,1.0625rem)]">
-            {contenu.navigation.map((lien) => {
-              const courante = lien.page === page
-              return (
-                <li key={lien.page}>
-                  <Link
-                    href={chemin(langue, lien.page)}
-                    aria-current={courante ? 'page' : undefined}
-                    className={`inline-flex min-h-11 items-center rounded-pilule font-description text-[1.0625rem] whitespace-nowrap hover:text-primaire ${
- courante ? 'text-primaire' : 'text-encre'
- } ${CLASSES_LIEN}`}
-                  >
-                    {lien.libelle}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
+      <div className="flex items-center gap-2.5">
+        <nav
+          aria-label={contenu.marque}
+          className="hidden items-center gap-1 rounded-bloc bg-[rgb(12_24_19/0.58)] px-2.5 py-1.75 backdrop-blur-[10px] large:flex"
+        >
+          {contenu.navigation.map((lien) => {
+            const courante = lien.page === page
+            return (
+              <Lien
+                key={lien.page}
+                href={chemin(langue, lien.page)}
+                aria-current={courante ? 'page' : undefined}
+                className={`inline-flex min-h-8 items-center gap-1.75 rounded-liste px-3.25 etiquette transition-[color] ${FOCUS} ${
+                  courante ? 'text-white' : 'text-white/72 hover:text-white'
+                }`}
+              >
+                {courante ? (
+                  <span aria-hidden className="size-1.25 shrink-0 rounded-pilule bg-signal" />
+                ) : null}
+                {lien.libelle}
+              </Lien>
+            )
+          })}
         </nav>
 
-        <div className="hidden lg:flex">
-          <Bouton destination="rendezVous" libelle={contenu.cta} variante="contour" />
+        <div className="hidden large:flex">
+          <Bouton
+            destination="rendezVous"
+            libelle={contenu.cta}
+            variante="encre"
+            taille="compacte"
+            ornement="etoile"
+            className="min-h-11"
+          />
         </div>
 
-        <MenuMobile libelle={contenu.menu} marque={marque} className="lg:hidden">
-          <nav className="mt-10">
-            <ul className="flex flex-col gap-1">
+        <MenuMobile
+          ouvrir={contenu.menu}
+          fermer={contenu.fermerMenu}
+          marque={marque}
+          className="large:hidden"
+        >
+          <nav aria-label={contenu.marque} className="mt-11">
+            <ul className="flex flex-col gap-1.5">
               {contenu.navigation.map((lien) => {
                 const courante = lien.page === page
                 return (
                   <li key={lien.page}>
-                    <Link
+                    <Lien
                       href={chemin(langue, lien.page)}
                       aria-current={courante ? 'page' : undefined}
-                      className={`flex min-h-12 items-center text-[2rem] leading-tight tracking-[-0.03em] ${
- courante ? 'text-primaire' : 'text-encre'
- } ${CLASSES_FOCUS}`}
+                      className={`flex min-h-13 items-center text-[clamp(1.875rem,8vw,2.5rem)] leading-[1.15] tracking-[-0.04em] ${FOCUS} ${
+                        courante ? 'text-lime' : 'text-white'
+                      }`}
                     >
                       {lien.libelle}
-                    </Link>
+                    </Lien>
                   </li>
                 )
               })}
             </ul>
           </nav>
 
-          <div className="mt-auto flex flex-col gap-6 border-t border-trait pt-7">
+          <div className="mt-auto flex flex-col gap-3 border-t border-white/16 pt-6.5">
             <Bouton
               destination="rendezVous"
               libelle={contenu.cta}
-              className="w-full"
+              variante="blanc"
+              className="min-h-12 w-full"
             />
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              {/* Décoratifs tant que les comptes ne sont pas fournis. */}
-              <span aria-hidden className="flex gap-3">
-                {[Facebook, Instagram, Linkedin].map((Icone, indice) => (
-                  <span
-                    key={indice}
-                    className="grid size-10 place-items-center rounded-full border border-trait text-encre-2"
-                  >
-                    <Icone className="size-4" />
-                  </span>
-                ))}
+            <div
+              role="group"
+              aria-label={contenu.changerDeLangue}
+              className="flex items-center justify-center gap-2.5 pt-1"
+            >
+              <span aria-current="true" className="etiquette text-white">
+                {langue}
               </span>
-              <div role="group" aria-label={changerDeLangue} className="flex items-center gap-2.5">
-                <span
-                  aria-current="true"
-                  className="font-description text-sm font-medium text-encre uppercase"
-                >
-                  {langue}
-                </span>
-                <SelecteurLangue
-                  langue={autre}
-                  vers={cheminAutreLangue}
-                  libelle={autre}
-                  className={`inline-flex min-h-11 min-w-11 items-center justify-center font-description text-sm text-encre-2 uppercase ${CLASSES_LIEN}`}
-                />
-              </div>
+              <span aria-hidden className="block h-3 w-px bg-white/30" />
+              <SelecteurLangue
+                langue={autre}
+                vers={cheminAutreLangue}
+                libelle={autre}
+                className={`inline-flex min-h-11 min-w-11 items-center justify-center etiquette text-sur-sombre hover:text-white ${FOCUS}`}
+              />
             </div>
           </div>
         </MenuMobile>

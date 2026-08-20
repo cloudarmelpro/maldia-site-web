@@ -1,6 +1,6 @@
-import Link from 'next/link'
 
 import type { Langue } from '@/content/langues'
+import { Lien } from '@/components/shared/lien'
 
 /**
  * Mène à la même page dans l'autre langue (WEB-8).
@@ -23,8 +23,8 @@ export function SelecteurLangue({
   className?: string
 }) {
   return (
-    <Link href={vers} hrefLang={langue} lang={langue} className={className}>
+    <Lien href={vers} hrefLang={langue} lang={langue} className={className}>
       {libelle}
-    </Link>
+    </Lien>
   )
 }

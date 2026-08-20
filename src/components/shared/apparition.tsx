@@ -4,11 +4,15 @@ import { LazyMotion, domAnimation, useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 import type { ReactNode } from 'react'
 
-// 450 ms et 22 px : la maquette monte a 700 ms, le depot plafonnait a 300.
-// Le client demande une entree ample ; 450 ms la donne sans que l'attente se
-// remarque a la lecture. La courbe est celle de la maquette.
-const DUREE_SECONDES = 0.45
-const COURBE = [0.22, 0.7, 0.3, 1] as const
+// Les valeurs du design : 580 ms, 20 px, et la courbe de sa transition.
+const DUREE_SECONDES = 0.58
+const COURBE = [0.22, 1, 0.36, 1] as const
+const DEPLACEMENT = 20
+
+// Le design declenche a 12 % de visibilite, avec une marge basse de 6 % : un
+// element n'apparait donc pas des que son premier pixel entre dans la fenetre.
+const PROPORTION_VISIBLE = 0.12
+const MARGE_BASSE = '0px 0px -6% 0px'
 
 type ApparitionProps = {
   /** En millisecondes — delaiDeGrille(indice) pour les grilles. */
@@ -18,10 +22,12 @@ type ApparitionProps = {
 }
 
 /**
- * Entrée au défilement. Le contenu est rendu à opacity: 0 dans le HTML
- * statique : réservé au contenu sous la ligne de flottaison — jamais le hero
- * ni les deux entrées (WEB-2). Mouvement réduit : durée et délai nuls, le même
- * arbre est rendu — le mouvement est coupé, pas raccourci.
+ * Entree au defilement.
+ *
+ * Le contenu est rendu a `opacity: 0` dans le HTML statique : reserve au
+ * contenu sous la ligne de flottaison — jamais le hero ni les deux appels
+ * (WEB-2). Mouvement reduit : duree et delai nuls, le meme arbre est rendu — le
+ * mouvement est coupe, pas raccourci.
  */
 export function Apparition({ delai = 0, className, children }: ApparitionProps) {
   const reduit = useReducedMotion() ?? false
@@ -29,9 +35,9 @@ export function Apparition({ delai = 0, className, children }: ApparitionProps) 
   return (
     <LazyMotion features={domAnimation} strict>
       <m.div
-        initial={{ opacity: 0, y: 22 }}
+        initial={{ opacity: 0, y: DEPLACEMENT }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: PROPORTION_VISIBLE, margin: MARGE_BASSE }}
         transition={
           reduit
             ? { duration: 0, delay: 0 }

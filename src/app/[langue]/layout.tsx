@@ -1,4 +1,4 @@
-import { DM_Sans } from 'next/font/google'
+import { Archivo, IBM_Plex_Mono } from 'next/font/google'
 
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
@@ -7,19 +7,29 @@ import '../globals.css'
 import { resoudre } from './resoudre'
 
 /**
- * DM Sans, et elle seule.
+ * Les deux polices du design, et leurs deux roles.
  *
- * Une police pour tout le site : titres, corps, libelles, chiffres. Le nom de
- * la variable est un invariant avec le bloc `@theme inline` de globals.css —
- * toute autre valeur casse la typographie sans erreur de compilation.
+ * Archivo porte tout le texte lu — titres et corps. Variable de 300 a 700 : une
+ * seule requete couvre les deux graisses que le design emploie, 400 et 500.
  *
- * Variable : une seule requete couvre toutes les graisses, de 100 a 1000. La
- * graisse de reference du site est Light (300), posee sur `body`.
+ * IBM Plex Mono ne porte que les etiquettes en capitales espacees. Deux graisses
+ * suffisent, et les demander explicitement evite de telecharger une variable
+ * entiere pour un role aussi etroit.
+ *
+ * Les noms des variables sont un invariant avec le bloc `@theme inline` de
+ * globals.css : toute autre valeur casse la typographie sans erreur.
  */
-const dmSans = DM_Sans({
+const archivo = Archivo({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-dm-sans',
+  variable: '--font-archivo',
+})
+
+const plexMono = IBM_Plex_Mono({
+  weight: ['400', '500'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono-plex',
 })
 
 // Sans elle, la route dynamique fait echouer l'export statique.
@@ -28,18 +38,15 @@ export function generateStaticParams(): Array<{ langue: Langue }> {
 }
 
 /**
- * Le layout racine ne declare aucune metadonnee.
- *
- * Depuis le passage a six pages (WEB-11), le canonique et le bloc `hreflang`
- * dependent de la page et non de la langue seule : declares ici, ils
- * designeraient la racine de langue depuis `/fr/services/`. Chaque page les
- * produit par `metadonnees()`.
+ * Le layout racine ne declare aucune metadonnee : le canonique et le bloc
+ * `hreflang` dependent de la page et non de la langue seule (WEB-11). Chaque
+ * page les produit par `metadonnees()`.
  */
 export default async function LayoutRacine({ children, params }: LayoutProps<'/[langue]'>) {
   const { langue } = resoudre((await params).langue)
 
   return (
-    <html lang={langue} className={dmSans.variable}>
+    <html lang={langue} className={`${archivo.variable} ${plexMono.variable}`}>
       <body>{children}</body>
     </html>
   )

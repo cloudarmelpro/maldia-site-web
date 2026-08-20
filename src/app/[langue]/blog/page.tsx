@@ -6,7 +6,6 @@ import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
 import { BlogListe } from '@/components/sections/blog-liste'
-import { Cloture } from '@/components/sections/cloture'
 import { TitrePage } from '@/components/sections/titre-page'
 
 import { resoudre } from '../resoudre'
@@ -26,9 +25,18 @@ export default async function PageBlog({ params }: PageProps<'/[langue]/blog'>) 
 
   return (
     <Gabarit langue={langue} page="blog" contenu={contenu}>
-      <TitrePage titre={contenu.blog.titre} description={contenu.blog.description} />
-      <BlogListe contenu={contenu.blog} articles={articlesTriees(langue)} langue={langue} />
-      <Cloture contenu={contenu.commun.cloture} />
+      {(enTete) => (
+        <>
+          <TitrePage
+            intitule={contenu.blog.entete.intitule}
+            titre={contenu.blog.entete.titre}
+            description={contenu.blog.entete.description}
+            mention={contenu.blog.entete.mention}
+            enTete={enTete}
+          />
+          <BlogListe contenu={contenu.blog} articles={articlesTriees(langue)} langue={langue} />
+        </>
+      )}
     </Gabarit>
   )
 }

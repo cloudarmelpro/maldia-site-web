@@ -1,83 +1,83 @@
+import Image from 'next/image'
+
 import { LANGUES } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Bouton } from '@/components/shared/bouton'
-import { Carte } from '@/components/shared/carte'
 import { delaiDeGrille } from '@/components/shared/decalage'
-import { MESURE_PROSE, Section } from '@/components/shared/section'
-import { Visuel } from '@/components/shared/visuel'
+import { Pilule } from '@/components/shared/pilule'
+import { GRILLE_INTITULE, Section } from '@/components/shared/section'
 
 /**
- * WEB-6 — À propos.
+ * WEB-6 — a propos.
  *
- * Les trois repères sont **comptés** à partir des listes qu'ils résument, pas
- * recopiés : un marché ajouté au cahier fait bouger le chiffre tout seul. Un
- * nombre écrit à la main deviendrait faux en silence.
+ * Les trois reperes sont **comptes** a partir des listes qu'ils resument, pas
+ * recopies : un marche ajoute au cahier fait bouger le chiffre tout seul. Un
+ * nombre ecrit a la main deviendrait faux en silence.
  */
 export function AProposContenu({ contenu }: { contenu: Contenu }) {
   const { aPropos } = contenu
 
   const reperes = [
     { valeur: contenu.commun.marches.liste.length, libelle: aPropos.reperes.marches },
-    { valeur: contenu.talents.profils.liste.length, libelle: aPropos.reperes.domaines },
+    { valeur: contenu.commun.profils.liste.length, libelle: aPropos.reperes.domaines },
     { valeur: LANGUES.length, libelle: aPropos.reperes.langues },
   ]
 
   return (
-    <Section titreId="titre-a-propos" fond="fond-2" bloc dessous="fond">
-      <div className="grid items-start gap-12 [&>*]:min-w-0 lg:grid-cols-[1fr_0.85fr]">
+    <Section titreId="titre-a-propos" fond="fond">
+      <div className={GRILLE_INTITULE}>
         <Apparition>
-          <div className="flex flex-col gap-6">
-            <h2
-              id="titre-a-propos"
-              className="max-w-[24ch] font-titre font-normal text-[2rem] leading-[1.08] text-balance text-encre sm:text-[2.5rem]"
-            >
-              {aPropos.titre}
-            </h2>
-            {aPropos.paragraphes.map((paragraphe) => (
-              <p
-                key={paragraphe}
-                className={`${MESURE_PROSE} font-description text-[1.0625rem] leading-[1.65] text-encre-2`}
-              >
-                {paragraphe}
-              </p>
-            ))}
-            <div className="mt-2">
-              <Bouton destination="rendezVous" libelle={aPropos.cta} />
-            </div>
-          </div>
+          <Pilule intitule={aPropos.entete.intitule} registre="clair" />
         </Apparition>
 
-        <Apparition delai={delaiDeGrille(1)}>
-          <div className="flex flex-col gap-7.5">
-            <Carte className="rounded-carte-large p-3.5">
-              <Visuel
-                ratio="carre"
-                photo={PHOTOS.aPropos}
-                arrondi="rounded-[1.25rem]"
-                tailles="(max-width: 1024px) 100vw, 420px"
-                prioritaire
-              />
-            </Carte>
-
-            <ul className="flex flex-col gap-3.5">
-              {reperes.map((repere) => (
-                <li
-                  key={repere.libelle}
-                  className="flex min-w-0 items-baseline gap-4 rounded-avis bg-carte px-7 py-5"
+        <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">
+          <Apparition>
+            <h2 id="titre-a-propos" className="sr-only">
+              {aPropos.entete.titre}
+            </h2>
+            <div className="flex flex-col gap-5">
+              {aPropos.paragraphes.map((paragraphe) => (
+                <p
+                  key={paragraphe}
+                  className="max-w-[62ch] text-[clamp(0.9375rem,1.15vw,1.0625rem)] leading-[1.65] text-encre-2"
                 >
-                  <span className="font-titre font-normal text-[2.25rem] leading-none tracking-[-0.04em] text-primaire">
-                    {repere.valeur}
-                  </span>
-                  <span className="font-description text-[1.0625rem] text-encre-2">
-                    {repere.libelle}
-                  </span>
+                  {paragraphe}
+                </p>
+              ))}
+            </div>
+          </Apparition>
+
+          <div className="grid grid-cols-1 gap-[clamp(1.125rem,1.8vw,1.625rem)] voies:grid-cols-[minmax(0,1fr)_minmax(0,42%)]">
+            <ul className="flex flex-col gap-1">
+              {reperes.map((repere, indice) => (
+                <li key={repere.libelle} className="min-w-0">
+                  <Apparition delai={delaiDeGrille(indice)}>
+                    <div className="flex min-w-0 items-baseline gap-4 rounded-carte border border-trait bg-fond-2 px-6 py-5">
+                      <span className="font-titre text-[2.25rem] leading-none tracking-[-0.05em] text-primaire">
+                        {repere.valeur}
+                      </span>
+                      <span className="etiquette text-encre-2">{repere.libelle}</span>
+                    </div>
+                  </Apparition>
                 </li>
               ))}
             </ul>
+
+            <Apparition delai={delaiDeGrille(1)}>
+              {/* alt vide : les paragraphes voisins portent l'information. */}
+              <div className="relative min-h-70 overflow-hidden rounded-carte bg-fond-2">
+                <Image
+                  src={PHOTOS.aPropos}
+                  alt=""
+                  fill
+                  sizes="(max-width: 820px) 100vw, 42vw"
+                  className="object-cover"
+                />
+              </div>
+            </Apparition>
           </div>
-        </Apparition>
+        </div>
       </div>
     </Section>
   )

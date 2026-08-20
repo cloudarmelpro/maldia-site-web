@@ -144,7 +144,13 @@ export type Cote = {
 /** Une catégorie de profils recrutés (WEB-5), telle que le sélecteur l'affiche. */
 export type Profil = {
   readonly nom: string
+  /** La famille du design : Technique, Creation, Marketing, Operations. */
+  readonly famille: string
   readonly description: string
+  /** La version courte de `description`, pour les cartes de frise. */
+  readonly resume: string
+  /** Les outils sur une seule ligne, pour le pied des cartes de frise. */
+  readonly outils: string
   readonly etiquettes: readonly [string, string, string, string]
 }
 
@@ -434,13 +440,69 @@ export type Contenu<L extends Langue = Langue> = {
   /** WEB-4 — la page destinée aux entreprises. */
   readonly services: {
     readonly meta: Meta
-    readonly entete: EnTetePage<LibelleRendezVous<L>>
+    /**
+     * Pas d'`EnTetePage` ici : le design pose le `h1` dans la première section
+     * claire et non dans une bande sombre, donc sans bouton.
+     */
+    readonly entete: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+      /** Sous l'argumentaire chiffré : le délai annoncé est une moyenne. */
+      readonly mention: string
+    }
+    /**
+     * Les postes confiés, dans les cartes de frise du design. Les six familles
+     * viennent de `commun.profils.liste` — seul l'habillage est propre à cette
+     * page.
+     */
+    readonly postes: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+      readonly encart: {
+        readonly titre: string
+        readonly texte: string
+        readonly cta: LibelleRendezVous<L>
+      }
+    }
   }
 
   /** WEB-3 et WEB-5 — la page destinée aux candidats à Madagascar. */
   readonly talents: {
     readonly meta: Meta
-    readonly entete: EnTetePage<LibelleCandidature<L>>
+    /**
+     * Pas d'`EnTetePage` ici, comme sur À propos : le design pose le `h1` dans
+     * la première section claire et non dans une bande sombre. L'appel vit dans
+     * l'encart qui suit les principes, donc sans `cta` ni mention.
+     */
+    readonly entete: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+    }
+    readonly principes: readonly [Principe, Principe, Principe]
+    readonly encart: {
+      readonly titre: string
+      readonly texte: string
+      readonly cta: LibelleCandidature<L>
+    }
+    /**
+     * L'en-tête seul : les profils affichés viennent de `commun.profils.liste`,
+     * que la page Services rend aussi. Écrits ici, les deux divergeraient.
+     */
+    readonly domaines: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+    }
+    readonly deroule: {
+      readonly intitule: string
+      readonly titre: string
+      readonly description: string
+      /** `cote: 'client'` désigne le candidat ici — c'est ce côté que le design met en citron. */
+      readonly liste: readonly [Etape, Etape, Etape, Etape]
+    }
   }
 
   /** WEB-6 — À propos. */

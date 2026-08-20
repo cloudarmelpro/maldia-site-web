@@ -49,12 +49,14 @@ describe('WEB-8 — parite des deux langues', () => {
     }
   })
 
-  it('les cinq etapes designent le meme cote dans les deux langues', () => {
+  it('les etapes designent le meme cote dans les deux langues', () => {
     // `cote` pilote la couleur de la pastille. Divergent, il colorerait des
-    // etapes differentes selon la langue.
-    const [premiere, ...autres] = LANGUES.map((langue) =>
-      CONTENUS[langue].commun.methode.liste.map((etape) => etape.cote),
-    )
+    // etapes differentes selon la langue. La methode et le deroule de Talents
+    // partagent le type `Etape` et la meme pastille.
+    const [premiere, ...autres] = LANGUES.map((langue) => [
+      ...CONTENUS[langue].commun.methode.liste.map((etape) => etape.cote),
+      ...CONTENUS[langue].talents.deroule.liste.map((etape) => etape.cote),
+    ])
     for (const liste of autres) expect(liste).toEqual(premiere)
   })
 

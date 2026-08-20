@@ -99,36 +99,54 @@ export const en: Contenu<'en'> = {
       liste: [
         {
           nom: 'Web development',
+          famille: 'Technical',
+          resume: 'Integration, business applications, maintenance.',
+          outils: 'React · Vue · Node · Python',
           description:
             'Integration, business applications and maintenance. Your repositories, your code reviews, your environments — the talent joins your workflow as it stands.',
           etiquettes: ['React · Vue · Nuxt', 'Node · Python', 'GitHub · GitLab', 'WordPress · Shopify'],
         },
         {
           nom: 'Design and UI',
+          famille: 'Creative',
+          resume: 'Interfaces, identity, variations.',
+          outils: 'Figma · Photoshop · Illustrator',
           description:
             'Interfaces, identity and variations. The talent works in your Figma files and follows your existing system rather than imposing another one.',
           etiquettes: ['Figma', 'Design system', 'Photoshop · Illustrator', 'Canva'],
         },
         {
           nom: 'Video and editing',
+          famille: 'Creative',
+          resume: 'Editing, subtitling, social formats.',
+          outils: 'Premiere · After Effects · CapCut',
           description:
             'Editing, subtitling and variations for social channels. Delivered in the format you ask for, in your templates and your brand.',
           etiquettes: ['Premiere Pro', 'After Effects', 'CapCut', 'FR subtitling'],
         },
         {
           nom: 'Community management',
+          famille: 'Marketing',
+          resume: 'Posting, engagement, moderation in French.',
+          outils: 'Meta Business Suite · Buffer',
           description:
             'Publishing, moderation and community work in French. The talent keeps your editorial calendar and answers in your brand’s voice.',
           etiquettes: ['Meta Business Suite', 'Buffer', 'Canva', 'FR copywriting'],
         },
         {
           nom: 'Support and administration',
+          famille: 'Operations',
+          resume: 'Requests, data entry, case follow-up.',
+          outils: 'Notion · Trello · HubSpot',
           description:
             'Handling requests, data entry and case tracking. On your ticketing tool and your procedures, with a regular check-in.',
           etiquettes: ['FR customer service', 'Notion · Trello', 'HubSpot · Salesforce', 'Google Workspace'],
         },
         {
           nom: 'Accounting and data',
+          famille: 'Operations',
+          resume: 'Data entry, reconciliation, tracking sheets.',
+          outils: 'Excel · Sheets · Analytics',
           description:
             'Entry, reconciliation and tracking sheets. The talent feeds your files and your dashboards without changing your habits.',
           etiquettes: ['Bookkeeping', 'Excel · Sheets', 'Google Analytics', 'Reporting'],
@@ -363,11 +381,19 @@ export const en: Contenu<'en'> = {
     },
     entete: {
       intitule: 'Services',
-      titre: 'Reinforcement, with no recruitment fees.',
-      description:
-        'You describe the role. Maldia searches, shortlists and handles follow-up. You keep your tools, your methods and the final say.',
-      cta: 'Book a call',
-      mention: 'A 30-minute call, no commitment',
+      titre: 'Team reinforcement, with no recruitment fees.',
+      description: 'For companies in French-speaking Canada and Europe.',
+      mention: 'The 14-day timeline is an average, not a guarantee.',
+    },
+    postes: {
+      intitule: 'Profiles',
+      titre: 'The roles our clients entrust to us.',
+      description: 'Six profile families, all French-speaking.',
+      encart: {
+        titre: 'Want a quote for a specific role?',
+        texte: 'A thirty-minute call is enough. We give you a range, with no commitment.',
+        cta: 'Book a call',
+      },
     },
   },
 
@@ -384,11 +410,68 @@ export const en: Contenu<'en'> = {
     },
     entete: {
       intitule: 'Talent',
-      titre: 'Working remotely, from Madagascar.',
-      description:
-        'You are looking for a remote professional opportunity. Upload your résumé: if your profile matches a request, we get in touch.',
+      titre: 'Work remotely with French-speaking companies.',
+      description: 'For people based in Madagascar, in every field.',
+    },
+    principes: [
+      {
+        intitule: 'Setting',
+        titre: 'Remote work',
+        texte: 'From Madagascar, with companies in French-speaking Canada and Europe.',
+      },
+      {
+        intitule: 'Roles',
+        titre: 'Every field',
+        texte: 'Development, design, video, community management, support, accounting.',
+      },
+      {
+        intitule: 'Follow-up',
+        titre: 'An application we keep',
+        texte:
+          'Your application stays in our database and we get back to you when a role matches.',
+      },
+    ],
+    encart: {
+      titre: 'Your application, in one go.',
+      texte:
+        'A short form with a direct résumé upload. You receive a confirmation as soon as it arrives.',
       cta: 'Apply now',
-      mention: 'Short form, entirely online',
+    },
+    domaines: {
+      intitule: 'Fields',
+      titre: 'The profiles we recruit.',
+      description: 'If your field is not listed, upload your résumé all the same.',
+    },
+    deroule: {
+      intitule: 'Steps',
+      titre: 'Four steps, from résumé to role.',
+      description: 'Candidates are never charged a fee, at any point.',
+      liste: [
+        {
+          cote: 'client',
+          acteur: 'You',
+          titre: 'You upload your résumé',
+          description: 'A short form, entirely online. PDF, DOC or DOCX.',
+        },
+        {
+          cote: 'maldia',
+          acteur: 'Maldia',
+          titre: 'We review the application',
+          description: 'An interview, with French and English assessed separately.',
+        },
+        {
+          cote: 'maldia',
+          acteur: 'Maldia',
+          titre: 'We present you',
+          description: 'To our clients, for the roles that match your profile.',
+        },
+        {
+          cote: 'client',
+          acteur: 'You',
+          titre: 'You start',
+          description: 'Remotely from Madagascar, with the client’s tools.',
+        },
+      ],
     },
   },
 

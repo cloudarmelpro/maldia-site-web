@@ -12,17 +12,30 @@ import { delaiDeGrille } from '@/components/shared/decalage'
  *
  * `accent` marque un chiffre sur deux. C'est un rythme visuel du design, pas
  * une hierarchie de sens : les six messages pesent pareil.
+ *
+ * Deux dispositions, parce que le design en pose deux : la grille qui finit sur
+ * une seule rangee, et la frise defilante de la page Services.
  */
+export type DispositionArguments = 'grille' | 'frise'
+
+const DISPOSITIONS: Record<DispositionArguments, string> = {
+  grille: 'grid-cols-2 duo:grid-cols-3 voies:grid-cols-6',
+  frise:
+    'grid-cols-1 duo:grid-cols-2 frise:auto-cols-[minmax(12.5rem,1fr)] frise:grid-flow-col frise:grid-cols-none frise:overflow-x-auto frise:pb-1',
+}
+
 export function CartesArguments({
   liste,
   sombre = false,
+  disposition = 'grille',
 }: {
   liste: ArgumentsCommerciaux
   /** Sur la bande `encre` : fond translucide, chiffres blancs et lime. */
   sombre?: boolean
+  disposition?: DispositionArguments
 }) {
   return (
-    <ul className="grid grid-cols-2 gap-1 duo:grid-cols-3 voies:grid-cols-6">
+    <ul className={classes('grid min-w-0 gap-1', DISPOSITIONS[disposition])}>
       {liste.map((carte, indice) => (
         <li key={carte.chiffre + carte.ligne1} className="min-w-0">
           <Apparition delai={delaiDeGrille(indice)} className="h-full">

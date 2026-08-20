@@ -1,10 +1,11 @@
-import { ArrowRight, ArrowUpRight, CalendarDays, FileText } from 'lucide-react'
+import { ArrowUpRight, CalendarDays, FileText } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
 import { delaiDeGrille } from '@/components/shared/decalage'
+import { Fleche } from '@/components/shared/fleche'
 import { Pilule } from '@/components/shared/pilule'
 import { CONTENEUR, GRILLE_INTITULE } from '@/components/shared/section'
 
@@ -65,7 +66,7 @@ export function ContactBlocs({
                   Icone: CalendarDays,
                   fondIcone: 'bg-pilule',
                   intitule: 'text-encre-2',
-                  Fleche: ArrowRight,
+                  marque: <Fleche />,
                   bordFleche: 'border-trait',
                 },
                 {
@@ -75,7 +76,7 @@ export function ContactBlocs({
                   Icone: FileText,
                   fondIcone: 'bg-encre/10',
                   intitule: 'text-sur-lime',
-                  Fleche: ArrowUpRight,
+                  marque: <ArrowUpRight className="size-3.5" />,
                   bordFleche: 'border-encre/25',
                 },
               ].map((entree, indice) => (
@@ -110,7 +111,7 @@ export function ContactBlocs({
                         aria-hidden
                         className={`ml-auto grid size-7.5 shrink-0 place-items-center rounded-pilule border text-encre ${entree.bordFleche}`}
                       >
-                        <entree.Fleche className="size-3.5" />
+                        {entree.marque}
                       </span>
                     </a>
                   </Apparition>

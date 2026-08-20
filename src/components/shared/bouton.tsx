@@ -1,7 +1,8 @@
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
+import { Fleche } from '@/components/shared/fleche'
 import { Lien } from '@/components/shared/lien'
 
 /**
@@ -54,7 +55,7 @@ const BASE =
 export type Ornement = 'fleche' | 'fleche-montante' | 'etoile' | 'aucun'
 
 function Marque({ ornement, couleur }: { ornement: Ornement; couleur?: string }) {
-  if (ornement === 'fleche') return <ArrowRight aria-hidden className="size-3.5 shrink-0" />
+  if (ornement === 'fleche') return <Fleche />
   if (ornement === 'fleche-montante')
     return <ArrowUpRight aria-hidden className="size-3.5 shrink-0" />
   if (ornement === 'etoile')

@@ -19,10 +19,16 @@ import { DECALAGE_CONTENU, GRILLE_INTITULE, Section } from '@/components/shared/
 export function Methode({
   contenu,
   titreId,
+  avecAppel = true,
 }: {
   contenu: Contenu['commun']['methode']
   /** Deux pages portent cette section : l'id doit rester unique par page. */
   titreId: string
+  /**
+   * La conclusion et ses deux appels. Le design de la page Services ne les met
+   * pas ici — son appel suit, dans l'encart de la section des postes.
+   */
+  avecAppel?: boolean
 }) {
   return (
     <Section titreId={titreId} fond="encre">
@@ -77,28 +83,30 @@ export function Methode({
         ))}
       </ol>
 
-      <Apparition>
-        <div
-          className={`mt-[clamp(1.75rem,2.8vw,2.5rem)] flex flex-col items-start gap-5 large:flex-row large:items-center large:justify-between large:gap-10 ${DECALAGE_CONTENU}`}
-        >
-          <p className="max-w-[44ch] font-titre text-[clamp(1rem,1.35vw,1.25rem)] leading-[1.35] tracking-[-0.02em] text-white">
-            {contenu.conclusion}
-          </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Bouton
-              destination="rendezVous"
-              libelle={contenu.ctaPrincipal}
-              variante="lime"
-              ornement="fleche"
-            />
-            <Bouton
-              destination="candidature"
-              libelle={contenu.ctaSecondaire}
-              variante="contour-clair"
-            />
+      {avecAppel ? (
+        <Apparition>
+          <div
+            className={`mt-[clamp(1.75rem,2.8vw,2.5rem)] flex flex-col items-start gap-5 large:flex-row large:items-center large:justify-between large:gap-10 ${DECALAGE_CONTENU}`}
+          >
+            <p className="max-w-[44ch] font-titre text-[clamp(1rem,1.35vw,1.25rem)] leading-[1.35] tracking-[-0.02em] text-white">
+              {contenu.conclusion}
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <Bouton
+                destination="rendezVous"
+                libelle={contenu.ctaPrincipal}
+                variante="lime"
+                ornement="fleche"
+              />
+              <Bouton
+                destination="candidature"
+                libelle={contenu.ctaSecondaire}
+                variante="contour-clair"
+              />
+            </div>
           </div>
-        </div>
-      </Apparition>
+        </Apparition>
+      ) : null}
     </Section>
   )
 }

@@ -91,36 +91,54 @@ export const fr: Contenu<'fr'> = {
       liste: [
         {
           nom: 'Développement web',
+          famille: 'Technique',
+          resume: 'Intégration, applications métier, maintenance.',
+          outils: 'React · Vue · Node · Python',
           description:
             'Intégration, applications métier et maintenance. Vos dépôts, vos revues de code, vos environnements — le talent rejoint votre chaîne de travail telle qu’elle est.',
           etiquettes: ['React · Vue · Nuxt', 'Node · Python', 'GitHub · GitLab', 'WordPress · Shopify'],
         },
         {
           nom: 'Design et UI',
+          famille: 'Création',
+          resume: 'Interfaces, identité, déclinaisons.',
+          outils: 'Figma · Photoshop · Illustrator',
           description:
             'Interfaces, identité et déclinaisons. Le talent travaille dans vos fichiers Figma et suit votre système existant plutôt que d’en imposer un autre.',
           etiquettes: ['Figma', 'Design system', 'Photoshop · Illustrator', 'Canva'],
         },
         {
           nom: 'Vidéo et montage',
+          famille: 'Création',
+          resume: 'Montage, sous-titrage, formats réseaux.',
+          outils: 'Premiere · After Effects · CapCut',
           description:
             'Montage, sous-titrage et déclinaisons pour les réseaux. Livraison au format demandé, dans vos gabarits et votre charte.',
           etiquettes: ['Premiere Pro', 'After Effects', 'CapCut', 'Sous-titrage FR'],
         },
         {
           nom: 'Community management',
+          famille: 'Marketing',
+          resume: 'Publication, animation, modération en français.',
+          outils: 'Meta Business Suite · Buffer',
           description:
             'Publication, animation et modération en français. Le talent tient votre calendrier éditorial et répond avec le ton de votre marque.',
           etiquettes: ['Meta Business Suite', 'Buffer', 'Canva', 'Rédaction FR'],
         },
         {
           nom: 'Support et administration',
+          famille: 'Opérations',
+          resume: 'Demandes, saisie, suivi de dossiers.',
+          outils: 'Notion · Trello · HubSpot',
           description:
             'Traitement des demandes, saisie et suivi de dossiers. Sur votre outil de ticket et vos procédures, avec un point de suivi régulier.',
           etiquettes: ['Service client FR', 'Notion · Trello', 'HubSpot · Salesforce', 'Google Workspace'],
         },
         {
           nom: 'Comptabilité et données',
+          famille: 'Opérations',
+          resume: 'Saisie, rapprochements, tableaux de suivi.',
+          outils: 'Excel · Sheets · Analytics',
           description:
             'Saisie, rapprochements et tableaux de suivi. Le talent alimente vos fichiers et vos tableaux de bord sans changer vos habitudes.',
           etiquettes: ['Saisie comptable', 'Excel · Sheets', 'Google Analytics', 'Reporting'],
@@ -357,11 +375,20 @@ export const fr: Contenu<'fr'> = {
     },
     entete: {
       intitule: 'Services',
-      titre: 'Le renfort, sans frais de recrutement.',
-      description:
-        'Vous décrivez le poste. Maldia cherche, présélectionne et assure le suivi. Vous gardez vos outils, vos méthodes et la décision finale.',
-      cta: 'Prendre rendez-vous',
-      mention: 'Appel de 30 minutes, sans engagement',
+      titre: 'Le renfort d’équipe, sans frais de recrutement.',
+      description: 'Pour les entreprises du Canada francophone et d’Europe.',
+      mention: 'Le délai de 14 jours est une moyenne, pas une garantie.',
+    },
+    postes: {
+      intitule: 'Profils',
+      titre: 'Les postes que nos clients nous confient.',
+      description: 'Six familles de profils, tous francophones.',
+      encart: {
+        titre: 'Vous voulez chiffrer un poste précis ?',
+        texte:
+          'Un appel de trente minutes suffit. Nous vous donnons une fourchette, sans engagement.',
+        cta: 'Prendre rendez-vous',
+      },
     },
   },
 
@@ -378,11 +405,68 @@ export const fr: Contenu<'fr'> = {
     },
     entete: {
       intitule: 'Talents',
-      titre: 'Travailler à distance, depuis Madagascar.',
-      description:
-        'Vous cherchez une opportunité professionnelle à distance. Déposez votre CV : si votre profil correspond à un besoin, nous vous contactons.',
+      titre: 'Travaillez à distance avec des entreprises francophones.',
+      description: 'Pour les personnes basées à Madagascar, dans tous les domaines.',
+    },
+    principes: [
+      {
+        intitule: 'Cadre',
+        titre: 'Travail à distance',
+        texte: 'Depuis Madagascar, avec des entreprises du Canada francophone et d’Europe.',
+      },
+      {
+        intitule: 'Métiers',
+        titre: 'Tous les domaines',
+        texte: 'Développement, design, vidéo, community management, support, comptabilité.',
+      },
+      {
+        intitule: 'Suivi',
+        titre: 'Un dossier suivi',
+        texte:
+          'Votre candidature reste dans notre base et nous vous recontactons quand un poste correspond.',
+      },
+    ],
+    encart: {
+      titre: 'Votre candidature, en une fois.',
+      texte:
+        'Formulaire court avec dépôt direct du CV. Vous recevez une confirmation dès réception.',
       cta: 'Déposer ma candidature',
-      mention: 'Formulaire court, entièrement en ligne',
+    },
+    domaines: {
+      intitule: 'Domaines',
+      titre: 'Les profils que nous recrutons.',
+      description: 'Si votre métier n’est pas listé, déposez tout de même votre CV.',
+    },
+    deroule: {
+      intitule: 'Déroulé',
+      titre: 'Quatre étapes, du CV au poste.',
+      description: 'Aucun frais n’est demandé aux candidats, à aucun moment.',
+      liste: [
+        {
+          cote: 'client',
+          acteur: 'Vous',
+          titre: 'Vous déposez votre CV',
+          description: 'Formulaire court, entièrement en ligne. PDF, DOC ou DOCX.',
+        },
+        {
+          cote: 'maldia',
+          acteur: 'Maldia',
+          titre: 'Nous étudions le dossier',
+          description: 'Entretien, évaluation du français et de l’anglais séparément.',
+        },
+        {
+          cote: 'maldia',
+          acteur: 'Maldia',
+          titre: 'Nous vous présentons',
+          description: 'À nos clients, pour les postes qui correspondent à votre profil.',
+        },
+        {
+          cote: 'client',
+          acteur: 'Vous',
+          titre: 'Vous commencez',
+          description: 'À distance depuis Madagascar, avec les outils du client.',
+        },
+      ],
     },
   },
 

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { ArrowLeft } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { dateFormatee } from '@/content/dates'
@@ -13,6 +12,7 @@ import { BarreProgression } from '@/components/shared/barre-progression'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
+import { Fleche } from '@/components/shared/fleche'
 import { Lien } from '@/components/shared/lien'
 import { Pilule } from '@/components/shared/pilule'
 import { CONTENEUR, GRILLE_INTITULE, Section } from '@/components/shared/section'
@@ -74,7 +74,7 @@ export function BlogArticle({
               FOCUS,
             )}
           >
-            <ArrowLeft aria-hidden className="size-3.5" />
+            <Fleche sens="gauche" />
             {blog.retour}
           </Lien>
 

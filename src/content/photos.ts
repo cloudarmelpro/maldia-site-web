@@ -55,4 +55,17 @@ export const PHOTOS = {
 
   /** La photo de la page A propos. */
   aPropos: photo('1497366754035-f200968a6e72', 1200),
+
+  /**
+   * La bande de la page Talents. Le design y pose la meme image que le hero de
+   * l'accueil ; elle est servie a la largeur de la bande et non a celle du hero.
+   */
+  talents: photo('1522071820081-009f0129c71c', 1200),
+
+  /**
+   * La bande de la page Services. C'est celle que son design designe, et c'est
+   * aussi la derniere du selecteur de profils : les deux ne paraissent jamais
+   * sur la meme page. A separer quand les photos definitives arriveront.
+   */
+  services: photo('1454165804606-c3d57bc86b40', 1200),
 } as const

@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 
 import { cheminArticle } from '@/content/langues'
@@ -13,6 +12,7 @@ import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
+import { Fleche } from '@/components/shared/fleche'
 import { Lien } from '@/components/shared/lien'
 import { Pilule } from '@/components/shared/pilule'
 import { CONTENEUR, DECALAGE_CONTENU, GRILLE_INTITULE } from '@/components/shared/section'
@@ -135,7 +135,7 @@ export function BlogListe({
                       </span>
                       <span className="mt-auto inline-flex items-center gap-2.25 etiquette text-[0.6875rem] text-encre">
                         {contenu.lire}
-                        <ArrowRight aria-hidden className="size-3.5" />
+                        <Fleche />
                       </span>
                     </span>
                   </Lien>

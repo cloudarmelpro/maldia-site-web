@@ -1,10 +1,11 @@
 import Image from 'next/image'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { PhotoHero } from '@/components/sections/photo-hero'
+import { Fleche } from '@/components/shared/fleche'
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 
 // Le decalage qui aligne le contenu du hero sur la colonne de contenu des
@@ -113,7 +114,7 @@ export function Hero({
                   aria-hidden
                   className="ml-auto grid size-7.5 shrink-0 place-items-center rounded-etiquette border border-trait text-encre"
                 >
-                  <ArrowRight className="size-3.5" />
+                  <Fleche />
                 </span>
               </a>
 

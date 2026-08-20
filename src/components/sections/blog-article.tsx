@@ -148,8 +148,12 @@ export function BlogArticle({
                           <li key={titre.position}>
                             <a
                               href={`#${ancre(rang)}`}
+                              // 44 px sous 768 px, 24 au-dessus. Le plancher
+                              // tactile ne vaut que pour le doigt ; a la
+                              // souris, 24 px est le minimum des WCAG, et
+                              // 44 espaçait les entrees de 53 px.
                               className={classes(
-                                'flex min-h-11 items-center text-[0.8125rem] leading-[1.4] text-encre-2 transition-[color] hover:text-primaire',
+                                'flex min-h-11 items-center text-[0.8125rem] leading-[1.4] text-encre-2 transition-[color] hover:text-primaire md:min-h-6',
                                 FOCUS,
                               )}
                             >

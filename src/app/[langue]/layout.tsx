@@ -1,4 +1,4 @@
-import { DM_Sans } from 'next/font/google'
+import { Jost } from 'next/font/google'
 
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
@@ -9,18 +9,18 @@ import { resoudre } from './resoudre'
 /**
  * La police unique du design. Elle porte tout : titres, texte lu, etiquettes.
  *
- * `axes: ['opsz']` demande l'axe de taille optique, que le design appelle
- * (`opsz@9..40`). Sans lui la police se figerait sur un seul dessin, et le
- * titre a 104 px porterait celui concu pour du texte a 14 px.
+ * Variable de 200 a 700 : le design emploie 200 pour les tres grands chiffres,
+ * 300 pour le texte lu, 400 pour les titres, et interpole la graisse d'une
+ * question de la FAQ de 300 a 600 a l'ouverture. Une fonte a graisses fixes ne
+ * saurait pas faire cette derniere.
  *
  * Le nom de la variable est un invariant avec le bloc `@theme inline` de
  * globals.css : toute autre valeur casse la typographie sans erreur.
  */
-const dmSans = DM_Sans({
+const jost = Jost({
   subsets: ['latin'],
   display: 'swap',
-  axes: ['opsz'],
-  variable: '--font-dm-sans',
+  variable: '--font-jost',
 })
 
 // Sans elle, la route dynamique fait echouer l'export statique.
@@ -37,7 +37,7 @@ export default async function LayoutRacine({ children, params }: LayoutProps<'/[
   const { langue } = resoudre((await params).langue)
 
   return (
-    <html lang={langue} className={dmSans.variable}>
+    <html lang={langue} className={jost.variable}>
       <body>{children}</body>
     </html>
   )

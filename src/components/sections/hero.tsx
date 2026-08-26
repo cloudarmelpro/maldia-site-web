@@ -12,7 +12,7 @@ import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/lien
 // sections suivantes : la largeur de la colonne d'intitule plus sa gouttiere.
 const DECALAGE = 'large:pl-[calc(11.875rem+clamp(1.75rem,2.8vw,2.75rem))]'
 
-const CONTENEUR = 'mx-auto w-full max-w-[87.5rem] px-[clamp(1.25rem,4vw,3.5rem)]'
+const CONTENEUR = 'mx-auto w-full max-w-[67.5rem] px-[clamp(1.25rem,4vw,3.5rem)]'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 

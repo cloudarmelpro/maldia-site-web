@@ -23,12 +23,16 @@ const FONDS: Record<Fond, string> = {
 }
 
 /**
- * La gouttiere de page du design : 1400 px de large, marges de 20 a 56 px.
+ * La gouttiere de page du design : 1080 px de large, marges de 20 a 56 px.
+ *
+ * La gouttiere est POSEE DANS la boite, pas autour : `max-width` et `padding`
+ * sur le meme element. Poser la gouttiere sur la section puis plafonner
+ * l'interieur a 1080 px decalerait la colonne au-dela de 1512 px de fenetre.
  *
  * Un seul endroit : une largeur qui diverge d'un bloc a l'autre ne se voit
- * qu'a l'usage.
+ * qu'a l'usage. L'en-tete, les sections et le pied partagent celui-ci.
  */
-export const CONTENEUR = 'mx-auto w-full max-w-[87.5rem] px-[clamp(1.25rem,4vw,3.5rem)]'
+export const CONTENEUR = 'mx-auto w-full max-w-[67.5rem] px-[clamp(1.25rem,4vw,3.5rem)]'
 
 /**
  * Le decalage qui aligne un bloc sur la colonne de contenu, quand il n'est pas

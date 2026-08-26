@@ -30,6 +30,8 @@
   --color-sur-lime: #3d5145;
 
   --color-primaire: #177e4f;
+  /* Le survol des surfaces vertes. */
+  --color-primaire-fonce: #0a5c39;
   /* L'accent du design : il ne porte jamais de texte clair, seulement --color-encre. */
   --color-lime: #cdf565;
   --color-tendre: #dceee4;
@@ -126,15 +128,14 @@
   }
 }
 
-/* La variable --font-dm-sans est posée par next/font dans
+/* La variable --font-jost est posée par next/font dans
    app/[langue]/layout.tsx — invariant entre les deux fichiers.
 
-   Une seule police porte tout : texte lu, titres et étiquettes. Le design a
-   retiré le monospace des étiquettes ; ce qui les distingue reste les capitales
-   et l'espacement des lettres, plus la famille. */
+   Une seule police porte tout : texte lu, titres et étiquettes. Ce qui
+   distingue une étiquette reste ses capitales et l'espacement de ses lettres. */
 @theme inline {
-  --font-titre: var(--font-dm-sans, sans-serif);
-  --font-corps: var(--font-dm-sans, sans-serif);
+  --font-titre: var(--font-jost, sans-serif);
+  --font-corps: var(--font-jost, sans-serif);
 }
 
 @layer base {
@@ -167,9 +168,9 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Le design ne pose qu'une graisse, 300, sur tout le texte lu — titres et
-     `strong` compris. Le poids ne marque donc plus rien : ni registre, ni
-     emphase. Seule la marque `Agence Maldia` monte a 400.
+  /* Deux graisses, et deux seulement : 300 pour le texte lu, 400 pour les
+     titres et les intitules. Les tres grands chiffres descendent a 200 la ou le
+     design le demande, sur la carte elle-meme.
 
      Sans cette regle, les navigateurs mettraient les titres et `strong` en gras
      par defaut, et l'ecart de graisse reviendrait par la porte de l'UA. */
@@ -177,7 +178,7 @@
   h2,
   h3,
   strong {
-    font-weight: 300;
+    font-weight: 400;
   }
 }
 

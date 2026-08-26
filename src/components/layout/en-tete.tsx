@@ -93,7 +93,7 @@ export function EnTete({
 
   return (
     <>
-      <header className="relative z-60 mx-auto flex w-full max-w-[87.5rem] items-center justify-between gap-6 px-[clamp(1.25rem,4vw,3.5rem)] pt-6.5">
+      <header className="relative z-60 mx-auto flex w-full max-w-[67.5rem] items-center justify-between gap-6 px-[clamp(1.25rem,4vw,3.5rem)] pt-6.5">
         {marque}
 
         <div className="flex items-center gap-2.5">

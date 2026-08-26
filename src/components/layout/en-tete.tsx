@@ -109,14 +109,11 @@ export function EnTete({
                   href={chemin(langue, lien.page)}
                   aria-current={courante ? 'page' : undefined}
                   className={classes(
-                    'inline-flex min-h-8 items-center gap-1.75 rounded-liste px-3.25 etiquette transition-[color]',
+                    'inline-flex min-h-8 items-center rounded-liste px-3.25 etiquette transition-[color]',
                     FOCUS,
                     courante ? 'text-white' : 'text-white/72 hover:text-white',
                   )}
                 >
-                  {courante ? (
-                    <span aria-hidden className="size-1.25 shrink-0 rounded-pilule bg-signal" />
-                  ) : null}
                   {lien.libelle}
                 </Lien>
               )

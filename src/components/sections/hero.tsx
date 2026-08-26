@@ -20,9 +20,14 @@ const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi
  * Le hero du design : une photo pleine fenetre, l'en-tete pose dessus, le titre
  * cale en bas, et une barre de coordonnees qui ferme la section.
  *
- * `min-h-[min(100vh,900px)]` — la fenetre, mais jamais plus de 900 px : sur un
- * grand moniteur, une hauteur de fenetre entiere laisserait le titre seul au
- * milieu de la photo.
+ * `min-h-svh` — la fenetre entiere, sans plafond. Le design posait
+ * `min(100vh, 900px)` ; au-dela de 900 px de haut, la section suivante entrait
+ * dans l'ecran avec le hero — 540 px de debord sur un moniteur 1440.
+ *
+ * `svh` et non `vh` : sur telephone, `100vh` vaut la fenetre SANS la barre
+ * d'adresse, donc le bas du hero se retrouve sous le pli au chargement. `svh`
+ * prend la plus petite fenetre, celle barres visibles. `dvh` la ferait changer
+ * de hauteur pendant le defilement, et la page sauterait.
  *
  * Rien n'est anime au defilement ici. C'est l'element le plus haut de la page :
  * rendu a `opacity: 0` dans le HTML statique, il n'apparaitrait qu'a
@@ -48,7 +53,7 @@ export function Hero({
   return (
     <section
       aria-labelledby="titre-hero"
-      className="relative flex min-h-[min(100vh,900px)] flex-col overflow-hidden bg-nuit"
+      className="relative flex min-h-svh flex-col overflow-hidden bg-nuit"
     >
       <PhotoHero
         photo={PHOTOS.hero}

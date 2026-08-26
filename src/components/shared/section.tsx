@@ -2,9 +2,13 @@ import type { ReactNode } from 'react'
 
 import { classes } from '@/components/shared/classes'
 
-/** Les valeurs du design : 64 px au plancher, 7vw ensuite, 112 px au plafond. */
-const HAUT = 'pt-[clamp(4rem,7vw,7rem)]'
-const BAS = 'pb-[clamp(4rem,7vw,7rem)]'
+/**
+ * Les valeurs du design. Exportees parce qu'une section qui fait deborder un
+ * bloc hors de la gouttiere doit batir son `<section>` elle-meme, et recopier
+ * ces valeurs les ferait diverger.
+ */
+export const HAUT = 'pt-[clamp(4rem,7vw,7rem)]'
+export const BAS = 'pb-[clamp(4rem,7vw,7rem)]'
 
 /** Le padding bas plus court que le design pose sur sa premiere section. */
 export const BAS_COURT = 'pb-[clamp(3.5rem,6vw,6rem)]'

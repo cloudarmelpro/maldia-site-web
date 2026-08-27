@@ -1,14 +1,13 @@
 'use client'
 
-import { AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'motion/react'
-import * as m from 'motion/react-m'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
+import { useFondSurvole } from '@/components/layout/fond-survole'
+import { PanneauNavigation } from '@/components/layout/panneau-navigation'
 import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { FOCUS_SUIVEUR } from '@/components/shared/focus'
-import { Revelation } from '@/components/shared/revelation'
 import { autreLangue } from '@/components/shared/autre-langue'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -19,33 +18,6 @@ import { SelecteurLangue } from '@/components/shared/selecteur-langue'
 
 /** Le fond et l'encre suivent la section survolee, sur la meme duree. */
 const TRANSITION = 'transition-[background,color] duration-[260ms]'
-
-/** Le decalage entre deux entrees du menu, a l'ouverture du panneau. */
-const PAS_MENU = 0.06
-
-/** Repli avant la premiere mesure, accorde au `min-h-18` de la barre. */
-const HAUTEUR_INITIALE = 72
-
-/** Le point sonde, juste sous le bord bas de l'en-tete. */
-const SONDE = 6
-
-const SEUIL_DEFILEMENT = 8
-
-const SEUIL_LUMINANCE = 150
-
-/**
- * Le fond est-il assez clair pour que l'encre passe au vert ?
- *
- * `getComputedStyle` rend `rgb(...)` ou `rgba(...)` pour un aplat ; tout autre
- * espace — l'`oklab` d'un `color-mix` — retombe sur sombre, l'encre blanche
- * etant le repli sur, y compris sur le vert de marque.
- */
-function estClair(couleur: string): boolean {
-  const composantes = couleur.startsWith('rgb') ? couleur.match(/[\d.]+/g) : null
-  if (!composantes || composantes.length < 3) return false
-  const [rouge, vert, bleu] = composantes.map(Number)
-  return 0.299 * rouge + 0.587 * vert + 0.114 * bleu > SEUIL_LUMINANCE
-}
 
 /**
  * L'en-tete, et le panneau de navigation mobile qui l'accompagne.
@@ -86,109 +58,10 @@ export function EnTete({
 }) {
   const autre = autreLangue(langue)
 
+  const { barre, hauteur, clair } = useFondSurvole()
   const [ouvert, setOuvert] = useState(false)
-  const [clair, setClair] = useState(false)
-  const [hauteur, setHauteur] = useState(HAUTEUR_INITIALE)
   const bascule = useRef<HTMLButtonElement>(null)
   const panneau = useRef<HTMLDivElement>(null)
-  const barre = useRef<HTMLElement>(null)
-  const mesuree = useRef(HAUTEUR_INITIALE)
-  const image = useRef<number | null>(null)
-  const reduit = useReducedMotion() ?? false
-
-  useEffect(() => {
-    const element = barre.current
-    if (!element) return
-
-    /*
-     * Le fond, sa taille et sa position changent a chaque pixel defile : ils
-     * sont ecrits sur le noeud plutot que passes en etat, pour ne pas
-     * reconcilier l'en-tete entier a chaque image. Seule la bascule d'encre,
-     * rare, passe par React.
-     */
-    const mesurer = () => {
-      image.current = null
-      const defile = window.scrollY > SEUIL_DEFILEMENT
-      const survolee = document
-        .elementsFromPoint(Math.round(window.innerWidth / 2), mesuree.current + SONDE)
-        // Une section qui contient l'en-tete lui rendrait son propre fond.
-        .find((noeud) => noeud.matches('section') && !noeud.contains(element))
-
-      if (!survolee) return
-
-      const style = getComputedStyle(survolee)
-      const motif = style.backgroundImage
-      const boite = survolee.getBoundingClientRect()
-
-      // `background` est un raccourci : il efface taille et position, qui se
-      // reposent donc apres lui, recalees sur la boite de la section pour que
-      // la jointure d'un degrade reste invisible.
-      element.style.background = defile
-        ? motif === 'none'
-          ? style.backgroundColor
-          : `${motif}, ${style.backgroundColor}`
-        : 'transparent'
-      element.style.backgroundSize = `${Math.round(boite.width)}px ${Math.round(boite.height)}px`
-      element.style.backgroundPosition = `${Math.round(boite.left)}px ${Math.round(boite.top)}px`
-
-      setClair(defile && estClair(style.backgroundColor))
-    }
-
-    const surDefilement = () => {
-      if (image.current === null) image.current = requestAnimationFrame(mesurer)
-    }
-
-    const observateur = new ResizeObserver(() => {
-      const valeur = Math.round(element.getBoundingClientRect().height)
-      if (!valeur) return
-
-      // Publiee a CHAQUE mesure, y compris la premiere, et avant le garde
-      // d'egalite. La hauteur reelle vaut justement `HAUTEUR_INITIALE` tant que
-      // la navigation ne passe pas a la ligne : compare a `mesuree`, ce cas —
-      // le plus frequent de tous — sortait avant la publication, et la variable
-      // n'etait jamais posee. `scroll-padding-top` ne tenait alors que par son
-      // repli, egal par coincidence.
-      document.documentElement.style.setProperty('--hauteur-en-tete', `${valeur}px`)
-
-      if (valeur === mesuree.current) return
-      mesuree.current = valeur
-      setHauteur(valeur)
-      surDefilement()
-    })
-    observateur.observe(element)
-
-    mesurer()
-    window.addEventListener('scroll', surDefilement, { passive: true })
-    window.addEventListener('resize', surDefilement, { passive: true })
-
-    return () => {
-      observateur.disconnect()
-      window.removeEventListener('scroll', surDefilement)
-      window.removeEventListener('resize', surDefilement)
-      if (image.current !== null) cancelAnimationFrame(image.current)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!ouvert) return
-
-    const surTouche = (evenement: KeyboardEvent) => {
-      if (evenement.key === 'Escape') setOuvert(false)
-    }
-    // La ref est copiée maintenant : au nettoyage, `bascule.current` pourrait
-    // déjà pointer ailleurs, et le focus ne reviendrait nulle part.
-    const boutonBascule = bascule.current
-    const debordementPrecedent = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', surTouche)
-    panneau.current?.querySelector<HTMLElement>('a, button')?.focus()
-
-    return () => {
-      document.body.style.overflow = debordementPrecedent
-      window.removeEventListener('keydown', surTouche)
-      boutonBascule?.focus()
-    }
-  }, [ouvert])
 
   const marque = (
     <Lien
@@ -308,123 +181,17 @@ export function EnTete({
         </div>
       </header>
 
-      <LazyMotion features={domAnimation} strict>
-        <AnimatePresence>
-          {ouvert ? (
-            <m.div
-              ref={panneau}
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: reduit ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-0 z-90 flex flex-col overflow-y-auto bg-primaire px-[clamp(1.25rem,4vw,3.5rem)] pt-4 pb-8.5 text-white"
-              onClick={(evenement) => {
-                // Suivre un lien referme le panneau, sinon la page défilerait dessous.
-                if (evenement.target instanceof Element && evenement.target.closest('a')) {
-                  setOuvert(false)
-                }
-              }}
-            >
-              <div className="flex min-h-16 items-center justify-between">
-                {marque}
-                <button
-                  type="button"
-                  aria-label={contenu.fermerMenu}
-                  onClick={() => setOuvert(false)}
-                  className={classes(
-                    // Voile sombre et non blanc : sur le vert, un voile blanc
-                    // eclaircit l'aplat et fait passer l'encre sous le seuil.
-                    'grid size-11 place-items-center rounded-bloc bg-voile/26 text-2xl leading-none text-white',
-                    FOCUS_SUIVEUR,
-                  )}
-                >
-                  <span aria-hidden>×</span>
-                </button>
-              </div>
-
-              <nav aria-label={contenu.marque} className="mt-11">
-                <ul className="flex flex-col gap-1.5">
-                  {contenu.navigation.map((lien, indice) => {
-                    const courante = lien.page === page
-                    return (
-                      <li key={lien.page}>
-                        <Lien
-                          href={chemin(langue, lien.page)}
-                          aria-current={courante ? 'page' : undefined}
-                          className={classes(
-                            'flex min-h-13 items-center gap-3 text-[clamp(1.375rem,5.2vw,1.75rem)] leading-[1.15] tracking-[-0.04em] text-white',
-                            FOCUS_SUIVEUR,
-                          )}
-                        >
-                          {/* La page courante se marque par la puce et non par
-                              une encre plus pale : sur le vert, le vert clair ne
-                              tient que 2,6 : 1, et un blanc voile passerait sous
-                              le seuil a ce corps. La puce est toujours rendue,
-                              pour que les entrees restent alignees. */}
-                          <span
-                            aria-hidden
-                            className={classes(
-                              'size-1.5 shrink-0 rounded-pilule',
-                              courante ? 'bg-white' : 'bg-transparent',
-                            )}
-                          />
-                          {/* Le panneau se monte a l'ouverture : la revelation joue
-                              des l'arrivee de GSAP, sans point de defilement a
-                              attendre. */}
-                          <Revelation
-                            balise="span"
-                            desLeMontage
-                            delai={indice * PAS_MENU}
-                            className="block"
-                          >
-                            {lien.libelle}
-                          </Revelation>
-                        </Lien>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </nav>
-
-              <div className="mt-auto flex flex-col gap-3 border-t border-white/16 pt-6.5">
-                <Bouton
-                  destination="rendezVous"
-                  libelle={contenu.cta}
-                  variante="blanc"
-                  className="min-h-12 w-full"
-                />
-                <div
-                  role="group"
-                  aria-label={contenu.changerDeLangue}
-                  className="flex items-center justify-center gap-2.5 pt-1"
-                >
-                  {/* La langue en cours se marque par un voile SOMBRE : les
-                      deux libelles sont en blanc plein, seul un fond les
-                      distingue, et un voile blanc eclaircirait l'aplat. */}
-                  <span
-                    aria-current="true"
-                    className="rounded-etiquette bg-voile/26 px-2.5 py-1 etiquette text-white"
-                  >
-                    {langue}
-                  </span>
-                  <span aria-hidden className="block h-3 w-px bg-white/30" />
-                  <SelecteurLangue
-                    langue={autre}
-                    vers={cheminAutreLangue}
-                    libelle={autre}
-                    // Blanc plein, et non voile : mesure sur le vert du
-                    // panneau, `text-white/65` tombait a 2,98 : 1 a ce corps.
-                    className={classes(
-                      'inline-flex min-h-11 min-w-11 items-center justify-center etiquette text-white',
-                      FOCUS_SUIVEUR,
-                    )}
-                  />
-                </div>
-              </div>
-            </m.div>
-          ) : null}
-        </AnimatePresence>
-      </LazyMotion>
+      <PanneauNavigation
+        langue={langue}
+        page={page}
+        contenu={contenu}
+        cheminAutreLangue={cheminAutreLangue}
+        ouvert={ouvert}
+        setOuvert={setOuvert}
+        panneau={panneau}
+        bascule={bascule}
+        marque={marque}
+      />
     </>
   )
 }

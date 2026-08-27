@@ -236,6 +236,16 @@
   background-image: linear-gradient(168deg, #ffffff 0%, #f5f7f4 58%, #eef2ee 100%);
 }
 
+/* Le fond de la carte claire des deux parcours : un blanc que deux halos
+   radiaux teintent, l'un vert en haut a gauche, l'autre blanc en bas a droite.
+   Un aplat uni a la place se voit — la carte fait plus de 500 px de large. */
+@utility halo-voie {
+  background-image:
+    radial-gradient(76% 86% at 20% 26%, rgb(23 126 79 / 0.09) 0%, rgb(23 126 79 / 0) 64%),
+    radial-gradient(64% 78% at 84% 74%, rgb(255 255 255 / 0.08) 0%, rgb(255 255 255 / 0) 62%);
+  background-color: #ffffff;
+}
+
 @utility carte-sombre {
   background-image: linear-gradient(
     168deg,

@@ -33,7 +33,7 @@ const VARIANTES: Record<Variante, string> = {
   voile: 'bg-voile/26 text-white hover:bg-voile/36 focus-visible:outline-white',
   blanc: 'bg-white text-encre hover:-translate-y-0.5 focus-visible:outline-white',
   contour:
-    'border border-trait-4 bg-white text-encre hover:bg-encre hover:text-white focus-visible:outline-encre',
+    'text-encre shadow-[inset_0_0_0_1px_var(--color-trait-4)] hover:-translate-y-0.5 focus-visible:outline-encre',
   'contour-clair':
     'border border-white/28 text-white hover:bg-white/12 focus-visible:outline-white',
 }

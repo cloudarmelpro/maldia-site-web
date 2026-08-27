@@ -55,7 +55,7 @@ export function Parcours({
                 delai={delaiDeGrille(indice)}
                 className={classes(
                   'flex h-full min-w-0 flex-col rounded-carte-large',
-                  vert ? 'bg-primaire' : 'bg-primaire/5',
+                  vert ? 'bg-primaire' : 'halo-voie',
                 )}
               >
                 <div className="flex flex-1 flex-col gap-4.5 p-[clamp(1.375rem,2.2vw,2rem)]">
@@ -133,7 +133,7 @@ export function Parcours({
                     libelle={voie.cta}
                     variante={vert ? 'blanc' : 'contour'}
                     ornement="fleche"
-                    className="mt-auto self-start"
+                    className="mt-auto self-start px-5.5"
                     aria-label={`${voie.cta} — ${voie.pour}`}
                   />
                 </div>

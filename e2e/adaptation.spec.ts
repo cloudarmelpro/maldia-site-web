@@ -120,5 +120,33 @@ for (const adresse of CHEMINS) {
       expect(trop_longues, trop_longues.join(' | ')).toEqual([])
     })
 
+    // Une bande defilante translate la MOITIE de ses copies. L'autre moitie doit
+    // donc couvrir la fenetre a elle seule : sinon un vide parait a droite en fin
+    // de cycle, et il grandit avec l'ecran. Deux copies tenaient a 1280 px et
+    // laissaient un trou a 1920 — un defaut que rien dans le HTML ne montre.
+    test('les bandes defilantes ne laissent pas de vide', async ({ page }) => {
+      await page.goto(adresse)
+
+      const trop_courtes = await page.evaluate(() => {
+        const fautives: string[] = []
+
+        for (const bande of document.querySelectorAll('[data-defilement]')) {
+          const piste = bande.firstElementChild
+          if (!piste) continue
+
+          const cadre = Math.round(bande.getBoundingClientRect().width)
+          const moitie = Math.round(piste.getBoundingClientRect().width / 2)
+          if (cadre === 0 || moitie === 0) continue
+
+          if (moitie < cadre) {
+            const texte = (bande.textContent ?? '').trim().slice(0, 24)
+            fautives.push(`« ${texte}… » — moitie de ${moitie} px pour un cadre de ${cadre} px`)
+          }
+        }
+        return fautives
+      })
+
+      expect(trop_courtes, trop_courtes.join(' | ')).toEqual([])
+    })
   })
 }

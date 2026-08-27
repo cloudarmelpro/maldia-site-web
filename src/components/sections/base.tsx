@@ -12,6 +12,14 @@ import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
 // Une allure par rangee, le sens s'inversant au milieu : ce sont les valeurs du
 // design. `Defilement` n'expose pas de reprise inverse a la duree mediane, donc
 // la rangee du milieu porte l'inverse rapide.
+/**
+ * L'animation fait defiler la moitie des copies : l'autre moitie doit couvrir
+ * la fenetre a elle seule, sinon un vide parait a droite en fin de cycle. Trois
+ * copies par moitie tiennent les rangees actuelles jusqu'au plus grand ecran de
+ * la suite d'essais, qui le verifie.
+ */
+const COPIES = 6
+
 const ALLURES: readonly Allure[] = ['lente', 'inverse', 'tres-lente']
 
 /**
@@ -88,6 +96,7 @@ export function Base({
               key={indice}
               items={rangee}
               allure={ALLURES[indice]}
+              copies={COPIES}
               rendu={(outil) => (
                 <span className="mr-[0.5625rem] grid h-10 place-items-center rounded-marque bg-voile/22 px-[1.0625rem] text-[0.78125rem] tracking-[0.06em] whitespace-nowrap text-white">
                   {outil}

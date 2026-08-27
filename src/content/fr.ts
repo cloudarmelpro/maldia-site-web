@@ -380,6 +380,8 @@ export const fr: Contenu<'fr'> = {
       description: 'Pour les entreprises du Canada francophone et d’Europe.',
       mention: 'Le délai de 14 jours est une moyenne, pas une garantie.',
     },
+    /** L'intitulé de la bande des six chiffres. */
+    obtenez: 'Ce que vous obtenez',
     postes: {
       intitule: 'Profils',
       titre: 'Les postes que nos clients nous confient.',

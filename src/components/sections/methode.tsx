@@ -20,7 +20,6 @@ export function Methode({
   contenu,
   titreId,
   avecAppel = true,
-  clair = false,
 }: {
   contenu: Contenu['commun']['methode']
   /** Deux pages portent cette section : l'id doit rester unique par page. */
@@ -30,40 +29,28 @@ export function Methode({
    * pas ici — son appel suit, dans l'encart de la section des postes.
    */
   avecAppel?: boolean
-  /**
-   * Sur fond clair. Le bloc d'appel qui ferme chaque page est vert et coiffe
-   * d'arrondis de 28 px : quand cette section le precede en vert elle aussi,
-   * la coiffe ne se lit plus que comme deux encoches blanches aux angles.
-   */
-  clair?: boolean
 }) {
   return (
     <section
       aria-labelledby={titreId}
-      className={classes(clair ? 'bg-fond-2 text-encre' : 'bg-primaire text-white', HAUT, BAS)}
+      className={classes('bg-primaire text-white', HAUT, BAS)}
     >
       <div className={CONTENEUR}>
         <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
           <Apparition>
-            <Pilule intitule={contenu.intitule} registre={clair ? 'clair' : 'sombre'} />
+            <Pilule intitule={contenu.intitule} registre="sombre" />
           </Apparition>
 
           <Apparition registre="texte">
             <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
               <h2
                 id={titreId}
-                className={classes(
-                  'max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em]',
-                  clair ? 'text-encre' : 'text-white',
-                )}
+                className="max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-white"
               >
                 {contenu.titre}
               </h2>
               <p
-                className={classes(
-                  'max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6]',
-                  clair ? 'text-encre-2' : 'text-white',
-                )}
+                className="max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white"
               >
                 {contenu.description}
               </p>
@@ -78,30 +65,18 @@ export function Methode({
                   conteneur intermediaire annulerait la transformation. */}
               <Apparition
                 delai={delaiDeGrille(indice)}
-                className={classes(
-                  'flex h-full min-h-[clamp(12.25rem,16vw,14.125rem)] min-w-0 flex-col rounded-carte p-[clamp(1rem,1.4vw,1.25rem)]',
-                  clair ? 'bg-primaire/5' : 'bg-voile/26',
-                )}
+                className="flex h-full min-h-[clamp(12.25rem,16vw,14.125rem)] min-w-0 flex-col rounded-carte p-[clamp(1rem,1.4vw,1.25rem)] bg-voile/26"
               >
                 <span className="flex items-center justify-between gap-3">
                   <span
-                    className={classes(
-                      'etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case',
-                      clair ? 'text-encre-2' : 'text-white',
-                    )}
+                    className="etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case text-white"
                   >
                     {String(indice + 1).padStart(2, '0')}
                   </span>
                   <span
                     className={classes(
                       'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.625rem] tracking-[0.07em] whitespace-nowrap',
-                      etape.cote === 'client'
-                        ? clair
-                          ? 'bg-primaire text-white'
-                          : 'bg-white text-encre'
-                        : clair
-                          ? 'bg-white text-encre-2'
-                          : 'bg-voile/34 text-white',
+                      etape.cote === 'client' ? 'bg-white text-encre' : 'bg-voile/34 text-white',
                     )}
                   >
                     {etape.acteur}
@@ -109,18 +84,12 @@ export function Methode({
                 </span>
                 <span className="mt-[1.625rem] flex flex-col gap-2.25">
                   <strong
-                    className={classes(
-                      'font-titre text-[clamp(1.0625rem,1.35vw,1.25rem)] leading-[1.2] tracking-[-0.03em]',
-                      clair ? 'text-encre' : 'text-white',
-                    )}
+                    className="font-titre text-[clamp(1.0625rem,1.35vw,1.25rem)] leading-[1.2] tracking-[-0.03em] text-white"
                   >
                     {etape.titre}
                   </strong>
                   <span
-                    className={classes(
-                      'text-[0.78125rem] leading-[1.45]',
-                      clair ? 'text-prose' : 'text-white',
-                    )}
+                className="text-[0.78125rem] leading-[1.45] text-white"
                   >
                     {etape.description}
                   </span>

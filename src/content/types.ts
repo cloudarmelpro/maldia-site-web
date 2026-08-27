@@ -442,6 +442,8 @@ export type Contenu<L extends Langue = Langue> = {
   /** WEB-4 — la page destinée aux entreprises. */
   readonly services: {
     readonly meta: Meta
+    /** L'intitulé de la bande des six chiffres, sur cette page seule. */
+    readonly obtenez: string
     /**
      * Pas d'`EnTetePage` ici : le design pose le `h1` dans la première section
      * claire et non dans une bande sombre, donc sans bouton.

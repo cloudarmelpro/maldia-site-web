@@ -386,6 +386,8 @@ export const en: Contenu<'en'> = {
       description: 'For companies in French-speaking Canada and Europe.',
       mention: 'The 14-day timeline is an average, not a guarantee.',
     },
+    /** L'intitulé de la bande des six chiffres. */
+    obtenez: 'What you get',
     postes: {
       intitule: 'Profiles',
       titre: 'The roles our clients entrust to us.',

@@ -78,7 +78,7 @@ export function ServicesSelecteur({ contenu }: { contenu: Contenu['commun']['pro
         })}
       </ul>
 
-      <div className="flex min-w-0 grow basis-[25rem] flex-col overflow-hidden rounded-panneau bg-primaire/5">
+      <div className="flex min-w-0 grow basis-[25rem] flex-col overflow-hidden rounded-panneau bg-white">
         {/* alt vide : le nom et la description du poste suivent immediatement,
             une alternative les repeterait. */}
         <div className="relative h-55 min-w-0 shrink-0">

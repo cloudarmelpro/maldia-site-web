@@ -77,9 +77,14 @@ est verte elle aussi, la coiffe ne se lit plus que comme deux encoches blanches
 aux angles** — mesuré sur Services, dont le design fait finir la page par la
 méthode.
 
-`Methode` gagne donc un registre clair, employé sur Services, dont le défaut
-laisse l'accueil inchangé. **Règle à tenir : la section qui précède le bloc
-Contact doit être claire.** Les cinq autres pages la respectent déjà.
+**Règle à tenir : la section qui précède le bloc Contact ne doit pas être
+verte.** Les cinq autres pages la respectent déjà.
+
+Le prototype résout ce cas par une **bande sombre**, `#0f1d17` réveillée par deux
+halos radiaux, l'un vert à gauche et l'autre blanc à droite (utilitaire
+`bande-encre`). C'est le seul fond sombre du nouveau système, et il n'est pas un
+reste de l'ancienne charte : il existe pour que la coiffe se lise. Services le
+porte sur sa méthode, où le design le pose.
 
 ## Ce qui reste ouvert
 

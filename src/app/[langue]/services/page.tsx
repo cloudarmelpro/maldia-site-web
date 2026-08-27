@@ -4,7 +4,7 @@ import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
-import { Methode } from '@/components/sections/methode'
+import { ServicesMethode } from '@/components/sections/services-methode'
 import { ServicesChiffres } from '@/components/sections/services-chiffres'
 import { ServicesHero } from '@/components/sections/services-hero'
 import { ServicesPostes } from '@/components/sections/services-postes'
@@ -38,9 +38,9 @@ export default async function PageServices({ params }: PageProps<'/[langue]/serv
   return (
     <Gabarit langue={langue} page="services" contenu={contenu}>
       <ServicesHero contenu={services.entete} marches={commun.marches.liste} />
-      <ServicesChiffres intitule={commun.pourquoi.intitule} liste={commun.pourquoi.liste} />
+      <ServicesChiffres intitule={services.obtenez} liste={commun.pourquoi.liste} />
       <ServicesPostes contenu={services.postes} profils={commun.profils} />
-      <Methode contenu={commun.methode} titreId="titre-methode" avecAppel={false} clair />
+      <ServicesMethode contenu={commun.methode} />
     </Gabarit>
   )
 }

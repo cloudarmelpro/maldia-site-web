@@ -3,7 +3,7 @@
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { CustomEase } from 'gsap/CustomEase'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import { Logo } from '@/components/shared/logo'
 
@@ -28,13 +28,17 @@ const DUREE_SORTIE = 0.7
  */
 const ECHEANCE_S = 2.5
 
-const EVENEMENT = 'maldia:page-prete'
-
 /**
  * Vrai des que le voile s'est retire. Necessaire parce qu'un composant monte
- * APRES le retrait n'entendrait jamais l'evenement et resterait invisible.
+ * APRES le retrait n'entendrait jamais le signal et resterait invisible.
+ *
+ * **Remis a faux a chaque montage du voile.** Cet etat vit au niveau du module,
+ * donc il survit a une navigation cote client : laisse a vrai, la page suivante
+ * monterait un voile que plus rien ne libererait.
  */
 let prete = false
+
+const abonnes = new Set<() => void>()
 
 /**
  * S'abonne au retrait du voile, ou rappelle tout de suite s'il est deja parti.
@@ -46,8 +50,10 @@ export function quandPagePrete(rappel: () => void) {
     return () => {}
   }
 
-  document.addEventListener(EVENEMENT, rappel, { once: true })
-  return () => document.removeEventListener(EVENEMENT, rappel)
+  abonnes.add(rappel)
+  return () => {
+    abonnes.delete(rappel)
+  }
 }
 
 /**
@@ -70,24 +76,41 @@ export function quandPagePrete(rappel: () => void) {
  */
 export function Chargement() {
   const voile = useRef<HTMLDivElement>(null)
+  const [parti, setParti] = useState(false)
 
   useGSAP(
     () => {
       const element = voile.current
       if (!element) return
 
+      // Ce voile-ci est neuf : la page repart couverte, quoi qu'ait laisse la
+      // precedente. L'effet de `Chargement` s'execute avant ceux de `main`,
+      // donc aucune revelation ne lit encore l'ancienne valeur.
+      prete = false
+      let libere = false
+
       const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
       const liberer = () => {
-        if (prete) return
+        // Garde LOCALE a cette instance, et non l'etat de module : c'est ce qui
+        // empeche un voile de rester en place parce que le precedent est deja
+        // parti.
+        if (libere) return
+        libere = true
         prete = true
-        document.dispatchEvent(new Event(EVENEMENT))
+
+        for (const rappel of [...abonnes]) rappel()
+        abonnes.clear()
 
         gsap.to(element, {
           yPercent: -100,
           duration: reduit ? 0 : DUREE_SORTIE,
           ease: COURBE,
-          onComplete: () => element.remove(),
+          // Le retrait passe par un rendu React et jamais par `element.remove()`.
+          // Ce noeud est rendu par React : le lui arracher laisse sa trace des
+          // enfants fausse, et la prochaine insertion echoue sur un
+          // `insertBefore` dont le repere n'est plus un enfant du parent.
+          onComplete: () => setParti(true),
         })
       }
 
@@ -103,6 +126,8 @@ export function Chargement() {
     },
     { scope: voile },
   )
+
+  if (parti) return null
 
   return (
     <div ref={voile} aria-hidden className="fixed inset-0 z-90 grid place-items-center bg-primaire">

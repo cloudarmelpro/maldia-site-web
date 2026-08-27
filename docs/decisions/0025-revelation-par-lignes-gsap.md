@@ -119,6 +119,51 @@ trop cher sans un nombre.
 accepté parce que chacune fait ce que l'autre ne sait pas faire, et la frontière
 est nette : du texte lu, ou pas.
 
+## Deux pièges trouvés après coup, et la règle qu'ils donnent
+
+### `NotFoundError` sur `insertBefore`
+
+Signalé par le client :
+
+> Failed to execute 'insertBefore' on 'Node': The node before which the new node
+> is to be inserted is not a child of this node.
+
+Cause : le voile se retirait par `element.remove()`. **Ce nœud est rendu par
+React.** Le lui arracher laisse sa trace des enfants fausse ; le voile étant le
+*premier* enfant du gabarit, l'insertion suivante d'un frère prend pour repère un
+nœud qui n'est plus là — et c'est mot pour mot l'erreur.
+
+Le retrait passe désormais par un rendu React : `setParti(true)`, puis
+`return null`.
+
+**La règle : ne jamais retirer ni déplacer un nœud que React a rendu.**
+Le seul autre endroit qui touche au DOM est `SplitText`, et il remet tout en
+place — `revert()` au démontage, avant que React ne retire l'hôte.
+
+### Le voile bloqué après une navigation
+
+`prete` vit au niveau du module, donc il **survit à une navigation côté client**.
+La page suivante montait un voile dont la libération tombait aussitôt sur
+`if (prete) return` : plus rien ne le retirait, et la page restait derrière un
+écran vert.
+
+Deux corrections, et il fallait les deux : une garde **locale à l'instance** pour
+que le retrait ne dépende jamais de l'état laissé par la page précédente, et
+`prete = false` au montage pour que les révélations ne lisent pas une valeur
+périmée. L'effet du voile s'exécute avant ceux de `main`, donc l'ordre tient.
+
+### Ce que l'instrumentation ne sait pas mesurer
+
+Trois outils ont menti au cours de ce travail, et il faut le savoir avant de
+diagnostiquer une animation : un `IntersectionObserver` créé depuis le monde
+isolé de l'extension ne reçoit jamais ses rappels ; `window.scrollTo()` appelé de
+là ne réveille pas les observateurs de la page ; et **`requestAnimationFrame` est
+bridé quand la fenêtre n'est pas au premier plan**, ce qui fait paraître bloquée
+une animation GSAP qui se déroule normalement.
+
+**Ce qui reste fiable : la capture d'écran et l'état d'arrivée.** Le reste se
+vérifie à l'œil, dans une fenêtre au premier plan.
+
 ## Ce qui a été volontairement laissé de côté
 
 **Les titres de cartes** — `carte-article`, `blog-liste`, `profils`,

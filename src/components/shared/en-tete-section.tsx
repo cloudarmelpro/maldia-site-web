@@ -53,7 +53,9 @@ export function EnTeteSection({
           delai={DELAI_DESCRIPTION}
           className={classes(
             'max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6]',
-            sombre ? 'text-white/94' : 'text-encre-2',
+            // Blanc plein et non voile : `text-white/94` sur le vert mesure
+            // 4,44 : 1, sous le seuil AA de 4,5. Le blanc plein vaut 5,08.
+            sombre ? 'text-white' : 'text-encre-2',
           )}
         >
           {description}

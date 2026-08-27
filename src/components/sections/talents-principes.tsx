@@ -1,5 +1,5 @@
 import type { Contenu } from '@/content/types'
-import { IntituleSection } from '@/components/shared/intitule-section'
+import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -23,9 +23,7 @@ export function TalentsPrincipes({
   return (
     <section className={classes('bg-fond', HAUT, BAS)}>
       <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
-        <Apparition className="w-fit self-start">
-          <IntituleSection intitule={intitule} />
-        </Apparition>
+        <TeteSection intitule={intitule} />
 
         <ul className="grid grid-cols-[repeat(auto-fit,minmax(14.375rem,1fr))] gap-1.5">
           {principes.map((principe, indice) => (

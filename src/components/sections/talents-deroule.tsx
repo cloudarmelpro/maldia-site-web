@@ -1,9 +1,7 @@
 import type { Contenu } from '@/content/types'
+import { TeteSection } from '@/components/shared/tete-section'
 import { CarteEtape } from '@/components/shared/carte-etape'
-import { IntituleSection } from '@/components/shared/intitule-section'
-import { Apparition } from '@/components/shared/apparition'
 import { classes } from '@/components/shared/classes'
-import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { BAS, CONTENEUR } from '@/components/shared/section'
 
 const TITRE_ID = 'titre-deroule'
@@ -20,11 +18,8 @@ export function TalentsDeroule({ contenu }: { contenu: Contenu['talents']['derou
   return (
     <section aria-labelledby={TITRE_ID} className={classes('bg-fond', BAS)}>
       <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
-        <Apparition className="w-fit self-start">
-          <IntituleSection intitule={contenu.intitule} />
-        </Apparition>
-
-        <EnTeteSection
+        <TeteSection
+          intitule={contenu.intitule}
           titreId={TITRE_ID}
           titre={contenu.titre}
           description={contenu.description}

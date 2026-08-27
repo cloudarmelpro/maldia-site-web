@@ -1,6 +1,6 @@
 import type { Contenu } from '@/content/types'
+import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
-import { IntituleSection } from '@/components/shared/intitule-section'
 import { Revelation } from '@/components/shared/revelation'
 import { Section } from '@/components/shared/section'
 import { SelecteurProfils } from '@/components/shared/selecteur-profils'
@@ -29,9 +29,7 @@ export function Profils({
   return (
     <Section titreId={titreId}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-        <Apparition className="w-fit self-start">
-          <IntituleSection intitule={contenu.intitule} />
-        </Apparition>
+        <TeteSection intitule={contenu.intitule} />
 
         <Revelation
           balise="h2"

@@ -1,7 +1,7 @@
 import type { Contenu } from '@/content/types'
+import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
 import { Revelation } from '@/components/shared/revelation'
-import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
 import { classes } from '@/components/shared/classes'
@@ -29,9 +29,7 @@ export function Pourquoi({
   return (
     <Section titreId={titreId} bas={BAS_COURT}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-        <Apparition className="w-fit self-start">
-          <IntituleSection intitule={contenu.intitule} />
-        </Apparition>
+        <TeteSection intitule={contenu.intitule} />
 
         <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">
           {/* Revelation et non Apparition : le fondu de bloc porterait sur le

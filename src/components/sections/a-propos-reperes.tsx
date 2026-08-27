@@ -1,8 +1,6 @@
 import type { Contenu } from '@/content/types'
-import { IntituleSection } from '@/components/shared/intitule-section'
-import { Apparition } from '@/components/shared/apparition'
+import { TeteSection } from '@/components/shared/tete-section'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
-import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { Section } from '@/components/shared/section'
 
 /**
@@ -26,11 +24,8 @@ export function AProposReperes({
   return (
     <Section titreId="titre-reperes">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-        <Apparition className="w-fit self-start">
-          <IntituleSection intitule={contenu.intitule} />
-        </Apparition>
-
-        <EnTeteSection
+        <TeteSection
+          intitule={contenu.intitule}
           titreId="titre-reperes"
           titre={contenu.titre}
           description={contenu.description}

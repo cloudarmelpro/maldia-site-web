@@ -1,5 +1,5 @@
 import type { Contenu } from '@/content/types'
-import { Revelation } from '@/components/shared/revelation'
+import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
@@ -30,18 +30,11 @@ export function Parcours({
           <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
-          <Revelation
-            balise="h2"
-            id={titreId}
-            className="max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-encre"
-          >
-            {contenu.titre}
-          </Revelation>
-          <Revelation delai={0.12} className="max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] text-encre-2">
-            {contenu.description}
-          </Revelation>
-        </div>
+        <EnTeteSection
+          titreId={titreId}
+          titre={contenu.titre}
+          description={contenu.description}
+        />
       </div>
 
       <ul className="mt-[clamp(2.125rem,3.6vw,3.5rem)] grid grid-cols-[repeat(auto-fit,minmax(18.75rem,1fr))] gap-[clamp(0.875rem,1.4vw,1.25rem)]">

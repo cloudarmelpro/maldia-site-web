@@ -3,8 +3,8 @@
 import { useState } from 'react'
 
 import type { CoteQuestion, Contenu } from '@/content/types'
+import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { FOCUS } from '@/components/shared/focus'
-import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Section } from '@/components/shared/section'
@@ -49,18 +49,11 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
         </Apparition>
 
         <div className="flex flex-col gap-[clamp(1.75rem,3vw,2.75rem)]">
-          <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
-            <Revelation
-              balise="h2"
-              id="titre-questions"
-              className="max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-encre"
-            >
-              {contenu.titre}
-            </Revelation>
-            <Revelation delai={0.12} className="max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] text-encre-2">
-              {contenu.description}
-            </Revelation>
-          </div>
+          <EnTeteSection
+            titreId="titre-questions"
+            titre={contenu.titre}
+            description={contenu.description}
+          />
 
           <Apparition>
             <div role="group" aria-label={contenu.titre} className="flex flex-wrap gap-2">

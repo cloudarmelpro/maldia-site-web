@@ -1,7 +1,7 @@
 import { avecNombre } from '@/content/chiffres'
 import type { Langue } from '@/content/langues'
 import type { Contenu } from '@/content/types'
-import { IntituleSection } from '@/components/shared/intitule-section'
+import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -36,9 +36,7 @@ export function AProposFonctionnement({
       className={classes('rounded-coiffe bg-primaire', HAUT, BAS)}
     >
       <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
-        <Apparition className="w-fit self-start">
-          <IntituleSection intitule={contenu.intitule} registre="vert" />
-        </Apparition>
+        <TeteSection intitule={contenu.intitule} registre="vert" />
 
         {/* La marge haute negative resserre le titre sous son intitule, sans
             toucher a l'ecart que la colonne pose partout ailleurs. */}

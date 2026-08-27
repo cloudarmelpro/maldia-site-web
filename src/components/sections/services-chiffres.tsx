@@ -1,9 +1,7 @@
 import type { Contenu } from '@/content/types'
-import { Apparition } from '@/components/shared/apparition'
+import { TeteSection } from '@/components/shared/tete-section'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
-import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { Section } from '@/components/shared/section'
-import { IntituleSection } from '@/components/shared/intitule-section'
 
 const TITRE_ID = 'titre-engagements'
 
@@ -28,11 +26,12 @@ export function ServicesChiffres({
   return (
     <Section titreId={TITRE_ID}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-        <Apparition className="w-fit self-start">
-          <IntituleSection intitule={intitule} />
-        </Apparition>
-
-        <EnTeteSection titreId={TITRE_ID} titre={entete.titre} description={entete.description} />
+        <TeteSection
+          intitule={intitule}
+          titreId={TITRE_ID}
+          titre={entete.titre}
+          description={entete.description}
+        />
 
         <CartesArguments liste={liste} />
       </div>

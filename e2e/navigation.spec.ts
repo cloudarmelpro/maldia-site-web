@@ -70,16 +70,17 @@ for (const langue of LANGUES) {
       )
     })
 
-    test('le changement de langue reste sur la meme page', async ({ page, viewport }) => {
-      const largeur = viewport?.width ?? RUPTURE_MENU
+    test('le changement de langue reste sur la meme page', async ({ page }) => {
       const autre = langue === 'fr' ? 'en' : 'fr'
 
       for (const page_cible of PAGES) {
         await page.goto(chemin(langue, page_cible))
-        await ouvrirLeMenuSiMobile(page, largeur, menu)
 
-        // Le pied porte l'endonyme, le panneau mobile le code de langue.
-        const selecteur = page.locator(`a[hreflang="${autre}"]`).first()
+        // Celui de la barre, a toutes les largeurs : depuis la refonte, changer
+        // de langue ne demande plus d'ouvrir le menu. Le pied et le panneau en
+        // portent chacun un second, qui mene au meme endroit.
+        const selecteur = page.locator(`header a[hreflang="${autre}"]`)
+        await expect(selecteur).toBeVisible()
         await selecteur.click()
         await page.waitForURL(`**${chemin(autre, page_cible)}`)
       }

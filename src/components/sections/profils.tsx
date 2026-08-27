@@ -7,8 +7,9 @@ import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
-import { Pilule } from '@/components/shared/pilule'
-import { GRILLE_INTITULE, Section } from '@/components/shared/section'
+import { classes } from '@/components/shared/classes'
+import { Fleche } from '@/components/shared/fleche'
+import { Section } from '@/components/shared/section'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
@@ -22,6 +23,8 @@ const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi
  *
  * Les boutons portent `aria-pressed` : ce sont des bascules, pas des liens, et
  * rien d'autre ne dirait au clavier lequel est actif.
+ *
+ * La fiche change sans transition : l'oeil suit la selection, pas un fondu.
  */
 export function Profils({
   contenu,
@@ -36,36 +39,30 @@ export function Profils({
   const photo = PHOTOS.profils[choisi] ?? PHOTOS.profils[0]
 
   return (
-    <Section titreId={titreId} fond="fond-2">
-      <div className={GRILLE_INTITULE}>
-        <Apparition>
-          <Pilule intitule={contenu.intitule} registre="gris" />
+    <Section titreId={titreId} fond="fond">
+      <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
+        {/* L'intitule n'emploie pas `Pilule` : celle-ci tient la colonne de
+            gauche de `GRILLE_INTITULE`, que l'accueil n'a plus. */}
+        <Apparition className="w-fit self-start">
+          <span className="inline-flex items-center gap-2.25 rounded-pilule bg-primaire/7 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-encre">
+            <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-primaire" />
+            {contenu.intitule}
+          </span>
         </Apparition>
 
-        <Apparition>
-          <div className="flex flex-col items-start gap-5 large:flex-row large:items-end large:justify-between large:gap-[clamp(1.5rem,3vw,3rem)]">
-            <h2
-              id={titreId}
-              className="max-w-[24ch] font-titre text-[clamp(1.75rem,2.8vw,2.75rem)] leading-[1.1] tracking-[-0.045em] text-encre"
-            >
-              {contenu.titre}
-            </h2>
-            <Bouton
-              destination="rendezVous"
-              libelle={contenu.cta}
-              variante="contour"
-              taille="compacte"
-              ornement="etoile"
-              couleurOrnement="text-primaire"
-              className="min-h-11 shrink-0"
-            />
-          </div>
+        <Apparition registre="texte">
+          <h2
+            id={titreId}
+            className="max-w-[24ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-encre"
+          >
+            {contenu.titre}
+          </h2>
         </Apparition>
       </div>
 
-      <div className="mt-[clamp(2.125rem,3.6vw,3.5rem)] grid grid-cols-1 items-start gap-[clamp(1.125rem,1.8vw,1.625rem)] large:grid-cols-[minmax(0,11.875rem)_minmax(0,1fr)] large:gap-[clamp(1.75rem,2.8vw,2.75rem)] [&>*]:min-w-0">
-        <Apparition>
-          <ul className="flex flex-col overflow-hidden rounded-carte border border-trait bg-white">
+      <div className="mt-[clamp(2.125rem,3.6vw,3.5rem)] flex flex-wrap items-start gap-[clamp(1.125rem,1.8vw,1.625rem)]">
+        <Apparition className="min-w-0 shrink grow-0 basis-[14.75rem]">
+          <ul className="flex flex-col gap-0.75">
             {contenu.liste.map((profil, indice) => {
               const courant = indice === choisi
               return (
@@ -74,23 +71,21 @@ export function Profils({
                     type="button"
                     aria-pressed={courant}
                     onClick={() => setChoisi(indice)}
-                    className={`flex min-h-13 w-full items-center gap-3.5 px-4.5 text-left transition-[background-color] ${FOCUS} ${
-                      courant ? 'bg-fond-2' : 'bg-transparent'
-                    } ${indice === contenu.liste.length - 1 ? '' : 'border-b border-trait-2'}`}
+                    className={classes(
+                      'flex min-h-[2.875rem] w-full items-center justify-between gap-3 rounded-marque px-4 py-2 text-left text-[0.90625rem] tracking-[-0.015em] transition-[background-color,color] duration-200',
+                      FOCUS,
+                      courant
+                        ? 'bg-primaire text-white'
+                        : 'text-encre-2 hover:bg-primaire/9 hover:text-encre',
+                    )}
                   >
-                    <span
-                      aria-hidden
-                      className={`size-1.5 shrink-0 rounded-pilule transition-[background-color] ${
-                        courant ? 'bg-primaire' : 'bg-trait-4'
-                      }`}
+                    <span className="min-w-0">{profil.nom}</span>
+                    <Fleche
+                      className={classes(
+                        'h-[0.5625rem] w-4 shrink-0',
+                        courant ? 'opacity-100' : 'opacity-0',
+                      )}
                     />
-                    <span
-                      className={`min-w-0 flex-1 truncate etiquette ${
-                        courant ? 'text-encre' : 'text-encre-2'
-                      }`}
-                    >
-                      {profil.nom}
-                    </span>
                   </button>
                 </li>
               )
@@ -98,9 +93,9 @@ export function Profils({
           </ul>
         </Apparition>
 
-        <Apparition>
-          <div className="grid grid-cols-1 gap-[clamp(1.125rem,1.8vw,1.625rem)] rounded-carte border border-trait bg-white p-[clamp(0.875rem,1.2vw,1rem)] large:min-h-[20.625rem] large:grid-cols-[minmax(0,1fr)_minmax(0,42%)]">
-            <div className="flex flex-col gap-4 p-[clamp(0.625rem,1vw,1.125rem)]">
+        <Apparition className="min-w-0 grow basis-[26.25rem]">
+          <div className="flex flex-wrap gap-[clamp(1.125rem,1.8vw,1.625rem)] rounded-carte bg-primaire/5 p-[clamp(0.875rem,1.2vw,1rem)]">
+            <div className="order-2 flex min-w-0 grow basis-[16.25rem] flex-col gap-4 p-[clamp(0.625rem,1vw,1.125rem)]">
               <h3 className="font-titre text-[clamp(1.25rem,1.7vw,1.625rem)] leading-[1.15] tracking-[-0.035em] text-encre">
                 {actif.nom}
               </h3>
@@ -111,7 +106,7 @@ export function Profils({
                 {actif.etiquettes.map((etiquette) => (
                   <li
                     key={etiquette}
-                    className="rounded-etiquette bg-fond-2 px-3 py-1.75 etiquette-fine tracking-[0.07em] text-encre-2"
+                    className="rounded-etiquette bg-primaire/7 px-3 py-1.75 etiquette-fine tracking-[0.07em] text-prose"
                   >
                     {etiquette}
                   </li>
@@ -119,7 +114,7 @@ export function Profils({
               </ul>
               <div className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t border-trait-2 pt-4.5">
                 <span className="flex flex-col gap-1">
-                  <span className="etiquette-fine text-encre-3">{contenu.delaiIntitule}</span>
+                  <span className="etiquette-fine text-encre-2">{contenu.delaiIntitule}</span>
                   <strong className="font-titre text-2xl leading-none tracking-[-0.04em] text-encre">
                     {contenu.delai}
                   </strong>
@@ -127,9 +122,8 @@ export function Profils({
                 <Bouton
                   destination="rendezVous"
                   libelle={contenu.ctaProfil}
-                  variante="encre"
+                  variante="vert"
                   taille="compacte"
-                  ornement="etoile"
                   aria-label={`${contenu.ctaProfil} — ${actif.nom}`}
                 />
               </div>
@@ -137,12 +131,12 @@ export function Profils({
 
             {/* alt vide : le nom et la description du profil precedent
                 immediatement, une alternative les repeterait. */}
-            <div className="relative order-first min-h-55 overflow-hidden rounded-liste bg-[#eceeea] large:order-none large:min-h-0">
+            <div className="relative order-1 min-h-55 min-w-0 grow basis-[13.125rem] overflow-hidden rounded-liste bg-white">
               <Image
                 src={photo}
                 alt=""
                 fill
-                sizes="(max-width: 1000px) 100vw, 42vw"
+                sizes="(max-width: 1000px) 100vw, 30vw"
                 className="object-cover"
               />
             </div>

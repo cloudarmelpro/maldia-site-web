@@ -30,6 +30,24 @@ export const PHOTOS = {
   vignetteAppel: photo('1547658719-da2b51169166', 200),
 
   /**
+   * Les vignettes de la colonne defilante du hero, dans l'ordre du design : les
+   * quatre premieres pour la sous-colonne descendante, les quatre suivantes pour
+   * la montante. Plusieurs de ces identifiants reviennent ailleurs dans ce
+   * fichier a d'autres largeurs — `unoptimized` fige la largeur dans l'adresse,
+   * donc chaque usage sert la sienne et non celle d'un hero pleine page.
+   */
+  vignettesHero: [
+    photo('1522071820081-009f0129c71c', 600),
+    photo('1517180102446-f3ece451e9d8', 600),
+    photo('1497366754035-f200968a6e72', 600),
+    photo('1561070791-2526d30994b5', 600),
+    photo('1454165804606-c3d57bc86b40', 600),
+    photo('1553877522-43269d4ea984', 600),
+    photo('1574717024653-61fd2cf4d44d', 600),
+    photo('1499750310107-5fef28a66643', 600),
+  ] as const,
+
+  /**
    * Une par categorie de profils (WEB-5), designee par position dans
    * `commun.profils.liste`. Le tuple force les six : un profil ajoute sans sa
    * photo ne compile pas.

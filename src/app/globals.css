@@ -27,13 +27,20 @@
   /* Intitulés sur sombre. 5,17:1 sur --color-encre. */
   --color-sur-sombre-2: #8fa79a;
   /* Texte sur l'aplat citron. 8,12:1 — c'est lui qui rend le citron utilisable. */
-  --color-sur-lime: #3d5145;
 
   --color-primaire: #177e4f;
   /* Le survol des surfaces vertes. */
   --color-primaire-fonce: #0a5c39;
+  /* Le vert clair des accents sur fond vert. */
+  --color-vert-clair: #4fbf87;
+  /*
+   * Le voile pose sur le vert, toujours SOMBRE et jamais blanc. Le blanc sur
+   * #177e4f ne donne que 5,1 : 1 ; un voile blanc eclaircirait le vert et ferait
+   * passer le texte blanc sous le seuil AA. S'emploie en opacite : bg-voile/18
+   * a bg-voile/42 selon la profondeur.
+   */
+  --color-voile: #06301d;
   /* L'accent du design : il ne porte jamais de texte clair, seulement --color-encre. */
-  --color-lime: #cdf565;
   --color-tendre: #dceee4;
 
   /* Les champs de formulaire du design : repos, survol, focus, et la couleur
@@ -66,6 +73,8 @@
   --radius-encart: 1.125rem;
   /* Le grand panneau du design de la page Contact : 20 px. */
   --radius-panneau: 1.25rem;
+  /* Les coins hauts du bloc Contact, qui coiffe le pied. */
+  --radius-coiffe: 1.75rem;
   --radius-pilule: 9999px;
 }
 
@@ -87,18 +96,22 @@
   --breakpoint-large: 62.5rem;
 }
 
-/* Trois animations, toutes en `transform` : rien d'autre ne se compose sur le
-   GPU, et animer une géométrie ferait recalculer la mise en page à chaque image.
+/* Les animations du site, toutes en `transform` : rien d'autre ne se compose sur
+   le GPU, et animer une géométrie ferait recalculer la mise en page à chaque
+   image.
 
-   `derive` est la dérive lente de la photo du hero. Les deux défilements
-   translatent la moitié d'une liste doublée : c'est ce qui rend la boucle
-   invisible. */
+   `derive` est la dérive lente d'une photo de fond. Les défilements translatent
+   la moitié d'une liste doublée : c'est ce qui rend la boucle invisible. Cela
+   suppose que l'écart entre deux éléments soit porté par les éléments eux-mêmes
+   et non par `gap` — sinon la liste doublée perd un demi-écart à la couture. */
 @theme {
   --animate-derive: derive 26s ease-in-out infinite alternate;
   --animate-defilement: defilement 34s linear infinite;
   --animate-defilement-lent: defilement 38s linear infinite;
   --animate-defilement-tres-lent: defilement 42s linear infinite;
   --animate-defilement-inverse: defilement-inverse 34s linear infinite;
+  --animate-defilement-vertical: defilement-vertical 46s linear infinite;
+  --animate-defilement-vertical-inverse: defilement-vertical-inverse 52s linear infinite;
 
   @keyframes derive {
     from {
@@ -126,6 +139,24 @@
       transform: translateX(0);
     }
   }
+
+  @keyframes defilement-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes defilement-vertical-inverse {
+    from {
+      transform: translateY(-50%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
 }
 
 /* La variable --font-jost est posée par next/font dans
@@ -141,11 +172,12 @@
 @layer base {
   html {
     color-scheme: light;
-    /* Le sommaire d'un article mène à des ancres internes. Rien n'est collé
-       en haut — l'en-tête défile avec la page, seule la barre de progression
-       reste, sur 2 px. Ces 24 px ne compensent donc pas un recouvrement : ils
-       évitent qu'un titre atterrisse collé au bord de la fenêtre. */
-    scroll-padding-top: 1.5rem;
+    /* Le sommaire d'un article mène à des ancres internes, et l'en-tête est
+       collant : sans compensation, le titre visé atterrit dessous. L'en-tête
+       publie sa hauteur mesurée dans `--hauteur-en-tete` ; le repli de 4,5 rem
+       est sa hauteur minimale, servie avant l'hydratation. Les 24 px qui
+       s'ajoutent évitent que le titre touche le bord de la barre. */
+    scroll-padding-top: calc(var(--hauteur-en-tete, 4.5rem) + 1.5rem);
   }
 
   /* Pas de `scroll-behavior: smooth` sur `html`. L'App Router remet la page en

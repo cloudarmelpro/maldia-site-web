@@ -20,7 +20,6 @@ export function TitrePage({
   titre,
   description,
   mention,
-  enTete,
   children,
 }: {
   intitule: string
@@ -28,8 +27,6 @@ export function TitrePage({
   description: string
   /** La precision qui suit l'appel — duree, format, absence d'engagement. */
   mention?: string
-  /** L'en-tete, rendu par le gabarit — il se pose sur l'aplat. */
-  enTete: ReactNode
   /** Les appels de la page. */
   children?: ReactNode
 }) {
@@ -38,7 +35,6 @@ export function TitrePage({
       aria-labelledby="titre-page"
       className="relative flex flex-col overflow-hidden bg-nuit text-white"
     >
-      {enTete}
 
       <div className={`${CONTENEUR} pt-[clamp(3rem,6vw,5.5rem)] pb-[clamp(3rem,6vw,5.5rem)]`}>
         <div className={GRILLE_INTITULE}>

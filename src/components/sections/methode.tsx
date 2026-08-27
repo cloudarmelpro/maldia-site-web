@@ -1,20 +1,19 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
+import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
-import { EnTeteSection } from '@/components/shared/en-tete-section'
-import { Pilule } from '@/components/shared/pilule'
-import { DECALAGE_CONTENU, GRILLE_INTITULE, Section } from '@/components/shared/section'
+import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
 
 /**
- * WEB-4 — les cinq etapes, dans la frise du design.
+ * WEB-4 — les etapes de la methode, sur l'aplat vert du design.
  *
- * Au-dela de 900 px les etapes deviennent une frise horizontale defilante :
- * `grid-flow-col` avec des colonnes de 196 px minimum. C'est ce qui garde
- * l'ordre lisible sans reduire chaque etape a une ligne.
+ * La section batit son `<section>` elle-meme : `Section` ne propose pas d'aplat
+ * vert, et recopier sa respiration la ferait diverger — d'ou HAUT, BAS et
+ * CONTENEUR, importes plutot que reecrits.
  *
- * Le rang est calcule, jamais recopie : une etape inseree renumerote la suite
- * toute seule.
+ * Le cote se lit sur `etape.cote`, jamais sur `acteur` qui est traduit. Le rang
+ * est calcule : une etape inseree renumerote la suite toute seule.
  */
 export function Methode({
   contenu,
@@ -31,82 +30,94 @@ export function Methode({
   avecAppel?: boolean
 }) {
   return (
-    <Section titreId={titreId} fond="encre">
-      <div className={GRILLE_INTITULE}>
-        <Apparition>
-          <Pilule intitule={contenu.intitule} registre="sombre" />
-        </Apparition>
-        <Apparition>
-          <EnTeteSection
-            titreId={titreId}
-            titre={contenu.titre}
-            description={contenu.description}
-            sombre
-          />
-        </Apparition>
-      </div>
+    <section
+      aria-labelledby={titreId}
+      className={classes('bg-primaire text-white', HAUT, BAS)}
+    >
+      <div className={CONTENEUR}>
+        <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
+          <Apparition>
+            {/* Sur le vert, le voile d'une pastille est sombre : un voile blanc
+                eclaircirait l'aplat et ferait passer le texte blanc sous AA. */}
+            <span className="inline-flex w-fit items-center gap-2.25 rounded-pilule bg-voile/42 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-white">
+              <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-vert-clair" />
+              {contenu.intitule}
+            </span>
+          </Apparition>
 
-      <ol
-        className={`mt-[clamp(2.125rem,3.6vw,3.5rem)] grid grid-cols-1 gap-1.5 duo:grid-cols-2 frise:auto-cols-[minmax(12.25rem,1fr)] frise:grid-flow-col frise:grid-cols-none frise:overflow-x-auto frise:pb-1 ${DECALAGE_CONTENU}`}
-      >
-        {contenu.liste.map((etape, indice) => (
-          <li key={etape.titre} className="min-w-0">
-            {/* La carte est l'element anime : `display: contents` sur un
-                conteneur intermediaire annulerait la transformation. */}
-            <Apparition
-              delai={delaiDeGrille(indice)}
-              className="grid h-full min-h-[clamp(12.25rem,16vw,14.125rem)] min-w-0 grid-rows-[auto_1fr_auto] rounded-carte border border-white/12 bg-white/4 p-[clamp(1rem,1.4vw,1.25rem)]"
-            >
-              <span className="flex items-center justify-between gap-3">
-                <span className="etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case text-lime">
-                  {String(indice + 1).padStart(2, '0')}
-                </span>
-                <span
-                  className={`rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.625rem] tracking-[0.07em] whitespace-nowrap ${
-                    etape.cote === 'client' ? 'bg-lime/16 text-lime' : 'bg-white/10 text-sur-sombre'
-                  }`}
-                >
-                  {etape.acteur}
-                </span>
-              </span>
-              <span />
-              <span className="flex flex-col gap-2.25">
-                <strong className="font-titre text-[clamp(1.0625rem,1.35vw,1.25rem)] leading-[1.2] tracking-[-0.03em] text-white">
-                  {etape.titre}
-                </strong>
-                <span className="text-[0.78125rem] leading-[1.45] text-sur-sombre">
-                  {etape.description}
-                </span>
-              </span>
-            </Apparition>
-          </li>
-        ))}
-      </ol>
-
-      {avecAppel ? (
-        <Apparition>
-          <div
-            className={`mt-[clamp(1.75rem,2.8vw,2.5rem)] flex flex-col items-start gap-5 large:flex-row large:items-center large:justify-between large:gap-10 ${DECALAGE_CONTENU}`}
-          >
-            <p className="max-w-[44ch] font-titre text-[clamp(1rem,1.35vw,1.25rem)] leading-[1.35] tracking-[-0.02em] text-white">
-              {contenu.conclusion}
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Bouton
-                destination="rendezVous"
-                libelle={contenu.ctaPrincipal}
-                variante="lime"
-                ornement="fleche"
-              />
-              <Bouton
-                destination="candidature"
-                libelle={contenu.ctaSecondaire}
-                variante="contour-clair"
-              />
+          <Apparition registre="texte">
+            <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
+              <h2
+                id={titreId}
+                className="max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-white"
+              >
+                {contenu.titre}
+              </h2>
+              <p className="max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white">
+                {contenu.description}
+              </p>
             </div>
-          </div>
-        </Apparition>
-      ) : null}
-    </Section>
+          </Apparition>
+        </div>
+
+        <ol className="mt-[clamp(2.125rem,3.6vw,3.5rem)] grid grid-cols-[repeat(auto-fit,minmax(11.25rem,1fr))] gap-1.5">
+          {contenu.liste.map((etape, indice) => (
+            <li key={etape.titre} className="min-w-0">
+              {/* La carte est l'element anime : `display: contents` sur un
+                  conteneur intermediaire annulerait la transformation. */}
+              <Apparition
+                delai={delaiDeGrille(indice)}
+                className="flex h-full min-h-[clamp(12.25rem,16vw,14.125rem)] min-w-0 flex-col rounded-carte bg-voile/26 p-[clamp(1rem,1.4vw,1.25rem)]"
+              >
+                <span className="flex items-center justify-between gap-3">
+                  <span className="etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case text-white">
+                    {String(indice + 1).padStart(2, '0')}
+                  </span>
+                  <span
+                    className={classes(
+                      'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.625rem] tracking-[0.07em] whitespace-nowrap',
+                      etape.cote === 'client' ? 'bg-white text-encre' : 'bg-voile/34 text-white',
+                    )}
+                  >
+                    {etape.acteur}
+                  </span>
+                </span>
+                <span className="mt-[1.625rem] flex flex-col gap-2.25">
+                  <strong className="font-titre text-[clamp(1.0625rem,1.35vw,1.25rem)] leading-[1.2] tracking-[-0.03em] text-white">
+                    {etape.titre}
+                  </strong>
+                  <span className="text-[0.78125rem] leading-[1.45] text-white">
+                    {etape.description}
+                  </span>
+                </span>
+              </Apparition>
+            </li>
+          ))}
+        </ol>
+
+        {avecAppel ? (
+          <Apparition>
+            <div className="mt-[clamp(1.75rem,2.8vw,2.5rem)] flex flex-wrap items-center justify-between gap-[clamp(1.25rem,3vw,2.5rem)]">
+              <p className="max-w-[44ch] font-titre text-[clamp(1rem,1.35vw,1.25rem)] font-extralight leading-[1.35] tracking-[-0.02em] text-white">
+                {contenu.conclusion}
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Bouton
+                  destination="rendezVous"
+                  libelle={contenu.ctaPrincipal}
+                  variante="blanc"
+                  ornement="fleche"
+                />
+                <Bouton
+                  destination="candidature"
+                  libelle={contenu.ctaSecondaire}
+                  variante="voile"
+                />
+              </div>
+            </div>
+          </Apparition>
+        ) : null}
+      </div>
+    </section>
   )
 }

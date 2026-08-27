@@ -37,12 +37,9 @@ export default async function PageBlog({ params }: PageProps<'/[langue]/blog'>) 
 
   return (
     <Gabarit langue={langue} page="blog" contenu={contenu}>
-      {(enTete) => (
         <>
-          <div className="bg-nuit pb-6.5">{enTete}</div>
           <BlogListe contenu={contenu.blog} articles={articlesTriees(langue)} langue={langue} />
         </>
-      )}
     </Gabarit>
   )
 }

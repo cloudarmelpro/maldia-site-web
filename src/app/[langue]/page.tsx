@@ -35,15 +35,8 @@ export default async function Page({ params }: PageProps<'/[langue]'>) {
 
   return (
     <Gabarit langue={langue} page="accueil" contenu={contenu}>
-      {(enTete) => (
         <>
-          <Hero
-            contenu={accueil.hero}
-            courriel={commun.pied.courriel}
-            lieu={commun.pied.lieu}
-            marches={commun.marches.resume}
-            enTete={enTete}
-          />
+          <Hero contenu={accueil.hero} />
           <Pourquoi
             contenu={commun.pourquoi}
             marches={commun.marches}
@@ -55,7 +48,6 @@ export default async function Page({ params }: PageProps<'/[langue]'>) {
           <Base contenu={commun.base} langue={langue} titreId="titre-base" />
           <Questions contenu={accueil.questions} />
         </>
-      )}
     </Gabarit>
   )
 }

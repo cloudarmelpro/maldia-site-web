@@ -71,13 +71,13 @@ export function FormulaireContact({
           'inline-flex min-h-11.5 items-center gap-2.5 self-start rounded-bloc border-0 px-5 etiquette whitespace-nowrap transition-[background-color,transform] duration-[220ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre',
           entreprise
             ? 'bg-encre text-white hover:bg-primaire'
-            : 'bg-lime text-encre hover:-translate-y-0.5',
+            : 'bg-primaire text-white hover:bg-primaire-fonce',
           branche ? 'cursor-pointer' : 'cursor-not-allowed opacity-45',
         )}
       >
         {voie.envoyer}
         {entreprise ? (
-          <span aria-hidden className="text-lime">
+          <span aria-hidden className="text-vert-clair">
             ✦
           </span>
         ) : null}

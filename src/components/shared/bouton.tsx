@@ -20,14 +20,20 @@ const DESTINATIONS: Record<Destination, string> = {
 }
 
 /** Les cinq registres d'appel du design. */
-export type Variante = 'encre' | 'lime' | 'blanc' | 'contour' | 'contour-clair'
+export type Variante = 'encre' | 'vert' | 'voile' | 'blanc' | 'contour' | 'contour-clair'
 
 const VARIANTES: Record<Variante, string> = {
   encre: 'bg-encre text-white hover:bg-primaire focus-visible:outline-encre',
-  lime: 'bg-lime text-encre hover:-translate-y-0.5 focus-visible:outline-encre',
+  /** La surface d'action du design, sur fond clair. */
+  vert: 'bg-primaire text-white hover:bg-primaire-fonce focus-visible:outline-encre',
+  /**
+   * La seconde action SUR le vert. Le voile est sombre et jamais blanc : un
+   * voile blanc eclaircirait le vert et ferait passer le texte blanc sous AA.
+   */
+  voile: 'bg-voile/26 text-white hover:bg-voile/36 focus-visible:outline-white',
   blanc: 'bg-white text-encre hover:-translate-y-0.5 focus-visible:outline-white',
   contour:
-    'border border-trait-3 bg-white text-encre hover:bg-encre hover:text-white focus-visible:outline-encre',
+    'border border-trait-4 bg-white text-encre hover:bg-encre hover:text-white focus-visible:outline-encre',
   'contour-clair':
     'border border-white/28 text-white hover:bg-white/12 focus-visible:outline-white',
 }
@@ -38,11 +44,12 @@ const VARIANTES: Record<Variante, string> = {
  * Le design pose 42 px sur le second. Deux pixels le mettraient sous la cible
  * tactile de 44 — un ecart invisible a l'oeil, mesure par la suite d'ecrans.
  */
-export type TailleAppel = 'normale' | 'compacte'
+export type TailleAppel = 'normale' | 'compacte' | 'haute'
 
 const TAILLES: Record<TailleAppel, string> = {
   normale: 'min-h-[2.875rem] px-5',
   compacte: 'min-h-11 px-4.5',
+  haute: 'min-h-[3.125rem] px-5.5',
 }
 
 // La transition est restreinte aux couleurs de surface et au deplacement : la
@@ -60,7 +67,7 @@ function Marque({ ornement, couleur }: { ornement: Ornement; couleur?: string })
     return <ArrowUpRight aria-hidden className="size-3.5 shrink-0" />
   if (ornement === 'etoile')
     return (
-      <span aria-hidden className={couleur ?? 'text-lime'}>
+      <span aria-hidden className={couleur ?? 'text-vert-clair'}>
         ✦
       </span>
     )

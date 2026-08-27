@@ -39,14 +39,11 @@ export default async function PageTalents({ params }: PageProps<'/[langue]/talen
 
   return (
     <Gabarit langue={langue} page="talents" contenu={contenu}>
-      {(enTete) => (
         <>
-          <div className="bg-nuit pb-6.5">{enTete}</div>
           <TalentsContenu contenu={talents} />
           <TalentsDomaines contenu={talents.domaines} profils={commun.profils.liste} />
           <TalentsDeroule contenu={talents.deroule} />
         </>
-      )}
     </Gabarit>
   )
 }

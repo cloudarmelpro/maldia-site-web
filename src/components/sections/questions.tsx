@@ -4,17 +4,20 @@ import { useState } from 'react'
 
 import type { CoteQuestion, Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { EnTeteSection } from '@/components/shared/en-tete-section'
-import { Pilule } from '@/components/shared/pilule'
-import { GRILLE_INTITULE, Section } from '@/components/shared/section'
+import { Section } from '@/components/shared/section'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
-// L'ordre du tuple de filtres fige leur sens : tout, entreprises, talents.
+// L'ordre du tuple de filtres fige leur sens : tout, entreprises, talents. Le
+// filtre se lit sur ce cote et jamais sur le libelle, qui est traduit.
 const COTES: readonly (CoteQuestion | null)[] = [null, 'entreprise', 'talent']
 
+// Les deux positions de l'axe `wght` de Jost entre lesquelles la question glisse.
+const GRAISSE_FERMEE = '"wght" 300'
+const GRAISSE_OUVERTE = '"wght" 600'
+
 /**
- * La FAQ du design : trois onglets de filtre, puis un accordeon.
+ * La FAQ du design : trois filtres, puis un accordeon a un seul volet ouvert.
  *
  * `inert` sur le panneau ferme, et pas seulement `overflow: hidden` : sans lui,
  * la reponse resterait dans l'ordre de tabulation et serait lue par un lecteur
@@ -23,10 +26,14 @@ const COTES: readonly (CoteQuestion | null)[] = [null, 'entreprise', 'talent']
  * L'ouverture anime `grid-template-rows` de `0fr` a `1fr`. C'est la seule facon
  * de faire glisser une hauteur inconnue en CSS pur — animer `height` exigerait
  * de la mesurer en JavaScript.
+ *
+ * La graisse de la question glisse par `font-variation-settings` et non par
+ * `font-weight` : c'est l'axe variable qui s'interpole, et il l'emporte sur la
+ * graisse 400 que la regle de base pose sur le `h3` parent.
  */
 export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'] }) {
   const [filtre, setFiltre] = useState(0)
-  const [ouvertes, setOuvertes] = useState<readonly number[]>([0])
+  const [ouverte, setOuverte] = useState<number | null>(0)
 
   const cote = COTES[filtre]
   const visibles = contenu.liste
@@ -35,18 +42,27 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
 
   return (
     <Section titreId="titre-questions" fond="fond">
-      <div className={GRILLE_INTITULE}>
+      <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
-          <Pilule intitule={contenu.intitule} registre="clair" />
+          <span className="inline-flex items-center gap-2.25 rounded-pilule bg-primaire/7 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-encre">
+            <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-primaire" />
+            {contenu.intitule}
+          </span>
         </Apparition>
 
         <div className="flex flex-col gap-[clamp(1.75rem,3vw,2.75rem)]">
-          <Apparition>
-            <EnTeteSection
-              titreId="titre-questions"
-              titre={contenu.titre}
-              description={contenu.description}
-            />
+          <Apparition registre="texte">
+            <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
+              <h2
+                id="titre-questions"
+                className="max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-encre"
+              >
+                {contenu.titre}
+              </h2>
+              <p className="max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] text-encre-2">
+                {contenu.description}
+              </p>
+            </div>
           </Apparition>
 
           <Apparition>
@@ -60,14 +76,14 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
                     aria-pressed={actif}
                     onClick={() => {
                       setFiltre(indice)
-                      // Le design referme tout au changement de filtre : les
-                      // positions ouvertes ne designent plus les memes entrees.
-                      setOuvertes([])
+                      // Le design referme tout au changement de filtre : la
+                      // position ouverte ne designe plus la meme entree.
+                      setOuverte(null)
                     }}
-                    className={`min-h-11 cursor-pointer rounded-bloc border px-4 etiquette text-[0.6875rem] whitespace-nowrap transition-[background-color,color,border-color] ${FOCUS} ${
-                      actif
-                        ? 'border-encre bg-encre text-white'
-                        : 'border-trait bg-white text-encre-2'
+                    // Le design pose 34 px de haut ; sous 768 px la cible tactile
+                    // passe devant, et `e2e/adaptation.spec.ts` l'exige.
+                    className={`min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-colors duration-200 md:min-h-[2.125rem] md:min-w-0 md:px-[0.8125rem] ${FOCUS} ${
+                      actif ? 'bg-primaire text-white' : 'bg-primaire/7 text-encre-2'
                     }`}
                   >
                     {libelle}
@@ -79,33 +95,29 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
 
           <ul className="flex flex-col gap-2">
             {visibles.map(({ entree, position }) => {
-              const ouvert = ouvertes.includes(position)
+              const ouvert = position === ouverte
               const idPanneau = `reponse-${position}`
               return (
-                <li
-                  key={entree.question}
-                  className="overflow-hidden rounded-carte border border-trait bg-white"
-                >
+                <li key={entree.question} className="overflow-hidden rounded-carte bg-primaire/5">
                   <h3>
                     <button
                       type="button"
                       aria-expanded={ouvert}
                       aria-controls={idPanneau}
-                      onClick={() =>
-                        setOuvertes((liste) =>
-                          liste.includes(position)
-                            ? liste.filter((n) => n !== position)
-                            : [...liste, position],
-                        )
-                      }
-                      className={`flex min-h-11 w-full cursor-pointer items-center gap-4.5 px-[clamp(1.125rem,1.7vw,1.625rem)] py-[clamp(1.125rem,1.7vw,1.5rem)] text-left ${FOCUS}`}
+                      onClick={() => setOuverte(ouvert ? null : position)}
+                      className={`flex w-full cursor-pointer items-center gap-[1.125rem] px-[clamp(1.125rem,1.7vw,1.625rem)] py-[clamp(1.125rem,1.7vw,1.5rem)] text-left ${FOCUS}`}
                     >
-                      <span className="min-w-0 flex-1 font-titre text-[clamp(0.9375rem,1.25vw,1.125rem)] leading-[1.3] tracking-[-0.025em] text-encre">
+                      <span
+                        style={{
+                          fontVariationSettings: ouvert ? GRAISSE_OUVERTE : GRAISSE_FERMEE,
+                        }}
+                        className="min-w-0 flex-1 font-titre text-[clamp(0.9375rem,1.25vw,1.125rem)] leading-[1.3] tracking-[-0.025em] text-encre transition-[font-variation-settings] duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+                      >
                         {entree.question}
                       </span>
                       <span
                         aria-hidden
-                        className={`shrink-0 text-xl leading-none text-encre transition-transform duration-[300ms] ease-[cubic-bezier(.22,1,.36,1)] ${
+                        className={`shrink-0 text-xl leading-none text-encre transition-transform duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
                           ouvert ? 'rotate-[135deg]' : 'rotate-0'
                         }`}
                       >
@@ -116,7 +128,7 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
                   <div
                     id={idPanneau}
                     inert={!ouvert}
-                    className={`grid transition-[grid-template-rows,opacity] duration-[340ms] ease-[cubic-bezier(.22,1,.36,1)] ${
+                    className={`grid transition-[grid-template-rows,opacity] duration-[340ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
                       ouvert ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
                     }`}
                   >

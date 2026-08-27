@@ -282,7 +282,7 @@ export const fr: Contenu<'fr'> = {
       copyright: '© Agence Maldia 2026',
     },
 
-    retourEnHaut: 'Retour en haut',
+    retourEnHaut: 'Section précédente',
   },
 
   accueil: {
@@ -298,6 +298,7 @@ export const fr: Contenu<'fr'> = {
     },
 
     hero: {
+      intitule: 'Staff augmentation · Madagascar',
       lead: 'Des talents francophones basés à Madagascar, à distance, pour renforcer vos équipes.',
       titre: 'Renforcez votre équipe autrement.',
       carteAppel: {

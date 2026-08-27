@@ -180,7 +180,7 @@ export function ContactPage({ contenu, pied }: { contenu: Contenu; pied: Contenu
                           aria-hidden
                           className={classes(
                             'size-1.5 shrink-0 rounded-pilule',
-                            actif ? 'bg-lime' : 'bg-trait-4',
+                            actif ? 'bg-primaire' : 'bg-trait-4',
                           )}
                         />
                         {libelle}

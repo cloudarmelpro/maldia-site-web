@@ -38,14 +38,11 @@ export default async function PageAPropos({ params }: PageProps<'/[langue]/a-pro
 
   return (
     <Gabarit langue={langue} page="a-propos" contenu={contenu}>
-      {(enTete) => (
         <>
-          <div className="bg-nuit pb-6.5">{enTete}</div>
           <AProposContenu contenu={aPropos} />
           <AProposFonctionnement contenu={aPropos.fonctionnement} langue={langue} />
           <AProposReperes contenu={aPropos.reperes} arguments={commun.pourquoi.liste} />
         </>
-      )}
     </Gabarit>
   )
 }

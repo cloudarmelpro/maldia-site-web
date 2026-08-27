@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import type { ReactNode } from 'react'
 
 import { dateFormatee } from '@/content/dates'
 import { chemin } from '@/content/langues'
@@ -42,14 +41,12 @@ export function BlogArticle({
   autres,
   contenu,
   langue,
-  enTete,
 }: {
   article: Article
   /** Les autres articles, pour la section « dans la même série ». */
   autres: readonly Article[]
   contenu: Contenu
   langue: Langue
-  enTete: ReactNode
 }) {
   const { blog } = contenu
 
@@ -61,7 +58,6 @@ export function BlogArticle({
 
   return (
     <>
-      <div className="bg-nuit pb-6.5">{enTete}</div>
 
       <article className="bg-fond pt-[clamp(2.125rem,3.6vw,3.5rem)] pb-[clamp(3.5rem,6vw,6rem)]">
         <div className={CONTENEUR}>
@@ -237,7 +233,7 @@ export function BlogArticle({
                       <Bouton
                         destination="rendezVous"
                         libelle={blog.appelArticle.cta}
-                        variante="lime"
+                        variante="blanc"
                         ornement="fleche"
                         className="shrink-0"
                       />

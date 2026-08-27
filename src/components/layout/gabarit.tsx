@@ -8,7 +8,7 @@ import { BarreProgression } from '@/components/shared/barre-progression'
 import { Pied } from '@/components/layout/pied'
 import { ContactBlocs } from '@/components/sections/contact-blocs'
 import { autreLangue } from '@/components/shared/autre-langue'
-import { RetourEnHaut } from '@/components/shared/retour-en-haut'
+import { ChevronSection } from '@/components/shared/chevron-section'
 
 /**
  * L'habillage commun aux six pages (WEB-11).
@@ -17,7 +17,7 @@ import { RetourEnHaut } from '@/components/shared/retour-en-haut'
  * le hero, dans le meme aplat. Rendu avant `main`, il aurait son propre fond et
  * la photo commencerait dessous.
  *
- * Le bloc d'appel et le pied partagent une seule bande sombre, comme dans le
+ * Le bloc d'appel et le pied partagent une seule bande verte, comme dans le
  * design — c'est pourquoi le pied est passe au bloc et non rendu a cote.
  *
  * C'est ici, et nulle part ailleurs, qu'est calculee l'adresse de la meme page
@@ -37,20 +37,10 @@ export function Gabarit({
   /** Renseigne sur une page d'article : l'identifiant est commun aux deux langues. */
   article?: string
   contenu: Contenu
-  /** Le contenu de la page. Le premier element recoit `enTete`. */
-  children: (enTete: ReactNode) => ReactNode
+  children: ReactNode
 }) {
   const autre = autreLangue(langue)
   const cheminAutreLangue = article ? cheminArticle(autre, article) : chemin(autre, page)
-
-  const enTete = (
-    <EnTete
-      langue={langue}
-      page={page}
-      contenu={contenu.commun.enTete}
-      cheminAutreLangue={cheminAutreLangue}
-    />
-  )
 
   return (
     <>
@@ -58,20 +48,30 @@ export function Gabarit({
           de contenu evite qu'un `transform` pose plus bas ne cree un contexte
           qui la recalerait sur son parent au lieu de la fenetre. */}
       <BarreProgression />
-      <main>{children(enTete)}</main>
+
+      {/* Frere de `main`, et non descendu dans la premiere section. `sticky` ne
+          depasse jamais son parent : rendu dans le hero, l'en-tete se
+          decollerait au bas du hero. Et sa sonde de fond ne trouverait que la
+          section qui l'entoure. */}
+      <EnTete
+        langue={langue}
+        page={page}
+        contenu={contenu.commun.enTete}
+        cheminAutreLangue={cheminAutreLangue}
+      />
+      <main>{children}</main>
       <ContactBlocs
         contenu={contenu.commun.contact}
         pied={
           <Pied
             langue={langue}
-            page={page}
             contenu={contenu.commun.pied}
             cheminAutreLangue={cheminAutreLangue}
             changerDeLangue={contenu.commun.enTete.changerDeLangue}
           />
         }
       />
-      <RetourEnHaut libelle={contenu.commun.retourEnHaut} />
+      <ChevronSection libelle={contenu.commun.retourEnHaut} />
     </>
   )
 }

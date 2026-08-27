@@ -54,7 +54,7 @@ export function TalentsContenu({ contenu }: { contenu: Contenu['talents'] }) {
                       <span className="flex items-center justify-between gap-3">
                         <span
                           aria-hidden
-                          className="grid size-8.5 shrink-0 place-items-center rounded-liste bg-encre etiquette text-[0.6875rem] tracking-[0.04em] text-lime"
+                          className="grid size-8.5 shrink-0 place-items-center rounded-liste bg-encre etiquette text-[0.6875rem] tracking-[0.04em] text-vert-clair"
                         >
                           {String(indice + 1).padStart(2, '0')}
                         </span>
@@ -87,7 +87,7 @@ export function TalentsContenu({ contenu }: { contenu: Contenu['talents'] }) {
                 <Bouton
                   destination="candidature"
                   libelle={contenu.encart.cta}
-                  variante="lime"
+                  variante="blanc"
                   ornement="fleche"
                   className="self-start"
                 />

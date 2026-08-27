@@ -410,6 +410,8 @@ export type Contenu<L extends Langue = Langue> = {
   readonly accueil: {
     readonly meta: Meta
     readonly hero: {
+      /** L'intitulé posé au-dessus du titre : l'offre et le lieu, en capitales. */
+      readonly intitule: string
       readonly lead: string
       readonly titre: string
       readonly carteAppel: {

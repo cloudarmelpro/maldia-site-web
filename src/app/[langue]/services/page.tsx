@@ -41,14 +41,11 @@ export default async function PageServices({ params }: PageProps<'/[langue]/serv
 
   return (
     <Gabarit langue={langue} page="services" contenu={contenu}>
-      {(enTete) => (
         <>
-          <div className="bg-nuit pb-6.5">{enTete}</div>
           <ServicesOuverture contenu={services.entete} arguments={commun.pourquoi.liste} />
           <Methode contenu={commun.methode} titreId="titre-methode" avecAppel={false} />
           <ServicesPostes contenu={services.postes} familles={commun.profils.liste} />
         </>
-      )}
     </Gabarit>
   )
 }

@@ -44,14 +44,14 @@ export function TalentsDeroule({ contenu }: { contenu: Contenu['talents']['derou
                   className="carte-sombre grid h-full min-h-[clamp(12.25rem,16vw,14.125rem)] min-w-0 grid-rows-[auto_1fr_auto] rounded-carte-large border border-white/14 p-[clamp(1rem,1.4vw,1.25rem)]"
                 >
                   <span className="flex items-center justify-between gap-3">
-                    <span className="etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case text-lime">
+                    <span className="etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case text-vert-clair">
                       {String(indice + 1).padStart(2, '0')}
                     </span>
                     <span
                       className={classes(
                         'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.625rem] tracking-[0.07em] whitespace-nowrap',
                         etape.cote === 'client'
-                          ? 'bg-lime/16 text-lime'
+                          ? 'bg-vert-clair/16 text-vert-clair'
                           : 'bg-white/10 text-sur-sombre',
                       )}
                     >

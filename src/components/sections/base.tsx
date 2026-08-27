@@ -6,16 +6,11 @@ import { Apparition } from '@/components/shared/apparition'
 import { Defilement, MASQUE_BANDE } from '@/components/shared/defilement'
 import type { Allure } from '@/components/shared/defilement'
 import { classes } from '@/components/shared/classes'
-import { Pilule } from '@/components/shared/pilule'
-import {
-  BAS,
-  CONTENEUR,
-  DECALAGE_CONTENU,
-  GRILLE_INTITULE,
-  HAUT,
-} from '@/components/shared/section'
+import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
 
-// Une allure par rangee, sens alterne au milieu : ce sont les valeurs du design.
+// Une allure par rangee, le sens s'inversant au milieu : ce sont les valeurs du
+// design. `Defilement` n'expose pas de reprise inverse a la duree mediane, donc
+// la rangee du milieu porte l'inverse rapide.
 const ALLURES: readonly Allure[] = ['lente', 'inverse', 'tres-lente']
 
 /**
@@ -48,54 +43,55 @@ export function Base({
   titreId: string
 }) {
   return (
-    <section aria-labelledby={titreId} className={classes('bg-fond-2', HAUT, BAS)}>
-      <div className={CONTENEUR}>
-        <div className={GRILLE_INTITULE}>
-          <Apparition>
-            <Pilule intitule={contenu.intitule} registre="gris" />
-          </Apparition>
+    <section aria-labelledby={titreId} className={classes('bg-primaire', HAUT, BAS)}>
+      <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
+        <Apparition>
+          {/* Sur le vert, le voile d'une surface est sombre : un voile blanc
+              eclaircirait l'aplat et ferait passer le texte blanc sous AA. */}
+          <span className="inline-flex items-center gap-2.25 rounded-pilule bg-voile/24 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-white">
+            <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-vert-clair" />
+            {contenu.intitule}
+          </span>
+        </Apparition>
 
-          <div className="flex flex-col gap-[clamp(1.875rem,3.2vw,3rem)]">
-            <Apparition>
-              <div className="flex flex-col items-start gap-5 large:flex-row large:items-end large:justify-between large:gap-[clamp(1.5rem,3vw,3rem)]">
-                {/* Le nombre et sa legende forment une seule phrase : decoupee en
-                    deux pour la mise en forme, elle reste un seul titre. */}
-                <h2
-                  id={titreId}
-                  className="flex flex-col gap-1 font-titre tracking-[-0.05em] text-encre"
-                >
-                  <span className="text-[clamp(3.625rem,6.4vw,6.5rem)] leading-[0.9] text-primaire">
-                    {nombreFormate(NOMBRE_CANDIDATS, langue)}
-                    {contenu.suffixe}
-                  </span>
-                  <span className="max-w-[22ch] text-[clamp(1.375rem,2vw,1.875rem)] leading-[1.12] tracking-[-0.04em]">
-                    {contenu.libelle}
-                  </span>
-                </h2>
-                <p className="max-w-[32ch] shrink-0 text-[0.90625rem] leading-[1.6] text-encre-2 large:text-right">
-                  {contenu.precision}
-                </p>
-              </div>
-            </Apparition>
-
-            <Apparition>
-              <span className="etiquette tracking-[0.1em] text-encre-3">
-                {contenu.outilsIntitule}
+        <Apparition registre="texte">
+          <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
+            {/* Le nombre et sa legende forment une seule phrase : decoupee en
+                deux pour la mise en forme, elle reste un seul titre. */}
+            <h2
+              id={titreId}
+              className="flex flex-col gap-1 font-titre tracking-[-0.05em] text-white"
+            >
+              <span className="text-[clamp(2.75rem,4.8vw,4.625rem)] leading-[0.9]">
+                {nombreFormate(NOMBRE_CANDIDATS, langue)}
+                {contenu.suffixe}
               </span>
-            </Apparition>
+              <span className="max-w-[22ch] text-[clamp(1.1875rem,1.8vw,1.5625rem)] leading-[1.15] tracking-[-0.04em]">
+                {contenu.libelle}
+              </span>
+            </h2>
+            <p className="max-w-[32ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white">
+              {contenu.precision}
+            </p>
           </div>
-        </div>
+        </Apparition>
+
+        <Apparition>
+          <span className="etiquette text-[0.6875rem] tracking-[0.1em] text-white/94">
+            {contenu.outilsIntitule}
+          </span>
+        </Apparition>
       </div>
 
       <Apparition>
-        <div className={classes('mt-5 flex flex-col gap-2.5', MASQUE_BANDE)}>
+        <div className={classes('mt-5 flex flex-col gap-[0.5625rem]', MASQUE_BANDE)}>
           {OUTILS.map((rangee, indice) => (
             <Defilement
               key={indice}
               items={rangee}
               allure={ALLURES[indice]}
               rendu={(outil) => (
-                <span className="mr-2.5 grid h-11.5 place-items-center rounded-bloc border border-trait bg-white px-4.5 etiquette tracking-[0.06em] whitespace-nowrap normal-case text-encre-2">
+                <span className="mr-[0.5625rem] grid h-10 place-items-center rounded-marque bg-voile/22 px-[1.0625rem] text-[0.78125rem] tracking-[0.06em] whitespace-nowrap text-white">
                   {outil}
                 </span>
               )}
@@ -106,12 +102,7 @@ export function Base({
 
       <div className={CONTENEUR}>
         <Apparition>
-          <p
-            className={classes(
-              DECALAGE_CONTENU,
-              'mt-5 max-w-[62ch] text-[0.78125rem] leading-[1.55] text-encre-3',
-            )}
-          >
+          <p className="mt-5 max-w-[62ch] text-[0.78125rem] leading-[1.55] text-white/94">
             {contenu.mention}
           </p>
         </Apparition>

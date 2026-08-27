@@ -35,12 +35,9 @@ export default async function PageContact({ params }: PageProps<'/[langue]/conta
 
   return (
     <Gabarit langue={langue} page="contact" contenu={contenu}>
-      {(enTete) => (
         <>
-          <div className="bg-nuit pb-6.5">{enTete}</div>
           <ContactPage contenu={contenu} pied={contenu.commun.pied} />
         </>
-      )}
     </Gabarit>
   )
 }

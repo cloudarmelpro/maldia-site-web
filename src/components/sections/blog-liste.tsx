@@ -120,7 +120,7 @@ export function BlogListe({
 
                     <span className="flex min-w-0 flex-col gap-3.5 px-[clamp(0.625rem,1.4vw,1.125rem)] py-[clamp(0.625rem,1.4vw,1.375rem)]">
                       <span className="flex flex-wrap items-center gap-2.5">
-                        <span className="rounded-etiquette bg-lime px-2.75 py-1.5 etiquette-fine text-[0.625rem] tracking-[0.08em] text-encre">
+                        <span className="rounded-etiquette bg-vert-clair px-2.75 py-1.5 etiquette-fine text-[0.625rem] tracking-[0.08em] text-encre">
                           {contenu.aLaUne}
                         </span>
                         <span className="etiquette-fine tracking-[0.08em] text-encre-3">

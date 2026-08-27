@@ -22,7 +22,7 @@ const REGISTRES: Record<RegistrePilule, string> = {
 const PUCES: Record<RegistrePilule, string> = {
   clair: 'bg-primaire',
   gris: 'bg-primaire',
-  sombre: 'bg-lime',
+  sombre: 'bg-vert-clair',
 }
 
 export function Pilule({

@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
+import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
@@ -46,14 +47,13 @@ export function Profils({
           <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <Apparition registre="texte">
-          <h2
-            id={titreId}
-            className="max-w-[24ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-encre"
-          >
-            {contenu.titre}
-          </h2>
-        </Apparition>
+        <Revelation
+          balise="h2"
+          id={titreId}
+          className="max-w-[24ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-encre"
+        >
+          {contenu.titre}
+        </Revelation>
       </div>
 
       <div className="mt-[clamp(2.125rem,3.6vw,3.5rem)] flex flex-wrap items-start gap-[clamp(1.125rem,1.8vw,1.625rem)]">

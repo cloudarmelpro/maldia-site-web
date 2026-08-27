@@ -1,5 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { FormulaireContact } from '@/components/sections/formulaire-contact'
+import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -58,12 +59,14 @@ export function ContactPage({
 
           {/* La remontee du design : l'ecart de la colonne flex est plus large
               que celui voulu entre l'intitule et le titre. */}
-          <h1
+          <Revelation
+            balise="h1"
+            auChargement
             id="titre-page"
             className="-mt-4.5 max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white"
           >
             {contact.entete.titre}
-          </h1>
+          </Revelation>
         </div>
       </section>
 
@@ -151,11 +154,9 @@ export function ContactPage({
             ))}
           </ul>
 
-          <Apparition registre="texte">
-            <p className="max-w-[76ch] text-[0.8125rem] leading-[1.6] text-encre-2">
-              {contact.mention}
-            </p>
-          </Apparition>
+          <Revelation className="max-w-[76ch] text-[0.8125rem] leading-[1.6] text-encre-2">
+            {contact.mention}
+          </Revelation>
         </div>
       </section>
     </>

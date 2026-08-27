@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Feuille de Lenis, prise dans le paquet plutôt que recopiée : elle libère la
+   hauteur de `html` et `body`, et neutralise `scroll-behavior` pendant que Lenis
+   pilote. Recopiée ici, elle divergerait à la première mise à jour. */
+@import "lenis/dist/lenis.css";
+
 /* Palette du design « Hero Maldia v2 », valeurs reprises telles quelles.
 
    Le registre a changé de sens : le site n'est plus clair avec des blocs verts,
@@ -216,6 +221,20 @@
 /* L'étiquette en capitales du design : corps réduit, lettres espacées. Elle
    revient a beaucoup d'endroits — écrite à la main, chaque occurrence serait
    une occasion de divergence. */
+/* Le texte confié à `Revelation` part invisible : GSAP le rallume une fois
+   découpé en lignes, sinon on verrait le texte entier avant qu'il se découpe.
+
+   La règle est enfermée dans `scripting: enabled` — et c'est tout l'intérêt.
+   Sans script, ou sur un navigateur qui ignore cette requête, elle ne s'applique
+   pas : le texte reste lisible. Un titre caché en attendant un script qui
+   n'arrivera pas serait un texte perdu, et ce site n'a rien d'autre que du
+   texte. La règle échoue donc du bon côté. */
+@utility revelable {
+  @media (scripting: enabled) {
+    opacity: 0;
+  }
+}
+
 @utility etiquette {
   font-size: 0.71875rem;
   letter-spacing: 0.08em;

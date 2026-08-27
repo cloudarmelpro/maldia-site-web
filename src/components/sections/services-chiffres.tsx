@@ -32,9 +32,7 @@ export function ServicesChiffres({
           <IntituleSection intitule={intitule} />
         </Apparition>
 
-        <Apparition registre="texte">
-          <EnTeteSection titreId={TITRE_ID} titre={entete.titre} description={entete.description} />
-        </Apparition>
+        <EnTeteSection titreId={TITRE_ID} titre={entete.titre} description={entete.description} />
 
         <CartesArguments liste={liste} registre="aplat" disposition="fluide" />
       </div>

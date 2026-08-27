@@ -8,6 +8,7 @@ import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
 import { CarteArticle, MetaArticle } from '@/components/sections/carte-article'
+import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -66,7 +67,9 @@ export function BlogListe({
       >
         <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
           <IntituleSection intitule={contenu.entete.intitule} registre="vert" />
-          <h1
+          <Revelation
+            balise="h1"
+            auChargement
             id="titre-page"
             className={classes(
               'max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white',
@@ -74,7 +77,7 @@ export function BlogListe({
             )}
           >
             {contenu.entete.titre}
-          </h1>
+          </Revelation>
         </div>
       </section>
 

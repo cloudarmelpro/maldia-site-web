@@ -1,6 +1,13 @@
 import type { ReactNode } from 'react'
 
 import { classes } from '@/components/shared/classes'
+import { Revelation } from '@/components/shared/revelation'
+
+/**
+ * La phrase de droite part apres le titre. Elle le complete : partir en meme
+ * temps les mettrait au meme rang.
+ */
+const DELAI_DESCRIPTION = 0.12
 
 /**
  * L'en-tete de section : le titre a gauche, une phrase courte a droite, calees
@@ -31,7 +38,8 @@ export function EnTeteSection({
 }) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
-      <h2
+      <Revelation
+        balise="h2"
         id={titreId}
         className={classes(
           'max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em]',
@@ -39,16 +47,17 @@ export function EnTeteSection({
         )}
       >
         {titre}
-      </h2>
+      </Revelation>
       {description ? (
-        <p
+        <Revelation
+          delai={DELAI_DESCRIPTION}
           className={classes(
             'max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6]',
             sombre ? 'text-white/94' : 'text-encre-2',
           )}
         >
           {description}
-        </p>
+        </Revelation>
       ) : null}
       {children}
     </div>

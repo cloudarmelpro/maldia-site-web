@@ -33,13 +33,11 @@ export function TalentsDomaines({
           <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <Apparition registre="texte">
-          <EnTeteSection
-            titreId={TITRE_ID}
-            titre={contenu.titre}
-            description={contenu.description}
-          />
-        </Apparition>
+        <EnTeteSection
+          titreId={TITRE_ID}
+          titre={contenu.titre}
+          description={contenu.description}
+        />
 
         <ul className="grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-1">
           {profils.map((profil, indice) => (

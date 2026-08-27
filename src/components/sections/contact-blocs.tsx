@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import type { Contenu } from '@/content/types'
+import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -41,19 +42,20 @@ export function ContactBlocs({
           <IntituleSection intitule={contenu.intitule} registre="vert" />
         </Apparition>
 
-        <Apparition registre="texte" className="mt-[clamp(1.5rem,3vw,2.5rem)]">
+        <div className="mt-[clamp(1.5rem,3vw,2.5rem)]">
           <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
-            <h2
+            <Revelation
+              balise="h2"
               id="titre-contact"
               className="max-w-[18ch] font-titre text-[clamp(1.3125rem,2vw,1.75rem)] leading-none tracking-[-0.05em] text-white"
             >
               {contenu.titre}
-            </h2>
-            <p className="max-w-[30ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white/92">
+            </Revelation>
+            <Revelation delai={0.12} className="max-w-[30ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white/92">
               {contenu.description}
-            </p>
+            </Revelation>
           </div>
-        </Apparition>
+        </div>
 
         <ul className="mt-[clamp(1.875rem,3.2vw,2.875rem)] grid grid-cols-1 justify-start gap-[clamp(0.875rem,1.4vw,1.25rem)] paire:grid-cols-[repeat(2,minmax(0,max-content))]">
           {[

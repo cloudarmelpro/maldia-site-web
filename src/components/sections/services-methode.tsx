@@ -1,4 +1,5 @@
 import type { Contenu } from '@/content/types'
+import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -26,13 +27,11 @@ export function ServicesMethode({ contenu }: { contenu: Contenu['commun']['metho
           <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <Apparition registre="texte">
-          <EnTeteSection
-            titreId={TITRE_ID}
-            titre={contenu.titre}
-            description={contenu.description}
-          />
-        </Apparition>
+        <EnTeteSection
+          titreId={TITRE_ID}
+          titre={contenu.titre}
+          description={contenu.description}
+        />
 
         <ol className="grid grid-cols-[repeat(auto-fit,minmax(11.25rem,1fr))] gap-1.5">
           {contenu.liste.map((etape, indice) => (
@@ -71,11 +70,9 @@ export function ServicesMethode({ contenu }: { contenu: Contenu['commun']['metho
           ))}
         </ol>
 
-        <Apparition registre="texte">
-          <p className="max-w-[44ch] font-titre text-[clamp(1rem,1.35vw,1.25rem)] font-normal leading-[1.35] tracking-[-0.02em] text-encre">
-            {contenu.conclusion}
-          </p>
-        </Apparition>
+        <Revelation className="max-w-[44ch] font-titre text-[clamp(1rem,1.35vw,1.25rem)] font-normal leading-[1.35] tracking-[-0.02em] text-encre">
+          {contenu.conclusion}
+        </Revelation>
       </div>
     </section>
   )

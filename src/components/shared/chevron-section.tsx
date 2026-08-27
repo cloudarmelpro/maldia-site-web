@@ -3,6 +3,8 @@
 import { ChevronUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { faireDefilerVers } from '@/components/shared/defilement-lisse'
+
 // Sous ce seuil, la section « precedente » est celle ou l'on se trouve deja :
 // le bouton ne ferait rien de visible.
 const MARGE_MS = 12
@@ -36,12 +38,11 @@ export function ChevronSection({ libelle }: { libelle: string }) {
       .map((section) => section.getBoundingClientRect().top + position - hauteurEnTete)
       .filter((y) => y < position - MARGE_MS)
 
-    window.scrollTo({
-      top: cibles.length > 0 ? cibles[cibles.length - 1] : 0,
-      // `behavior: 'smooth'` ignore la preference systeme, contrairement a la
-      // regle CSS equivalente. Lue au clic : elle peut changer entre deux clics.
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-    })
+    // Passe par Lenis quand il pilote : `window.scrollTo({ behavior: 'smooth' })`
+    // animerait la meme valeur que lui en meme temps. Le repli natif garde la
+    // preference systeme, que `behavior: 'smooth'` ignore contrairement a la
+    // regle CSS equivalente.
+    faireDefilerVers(cibles.length > 0 ? cibles[cibles.length - 1] : 0)
   }
 
   return (

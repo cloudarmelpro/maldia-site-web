@@ -30,13 +30,11 @@ export function AProposReperes({
           <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <Apparition registre="texte">
-          <EnTeteSection
-            titreId="titre-reperes"
-            titre={contenu.titre}
-            description={contenu.description}
-          />
-        </Apparition>
+        <EnTeteSection
+          titreId="titre-reperes"
+          titre={contenu.titre}
+          description={contenu.description}
+        />
 
         <CartesArguments liste={liste} registre="aplat" disposition="fluide" />
       </div>

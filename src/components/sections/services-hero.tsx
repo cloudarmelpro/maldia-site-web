@@ -1,4 +1,5 @@
 import type { Contenu } from '@/content/types'
+import { Revelation } from '@/components/shared/revelation'
 import { classes } from '@/components/shared/classes'
 import { CONTENEUR } from '@/components/shared/section'
 import { IntituleSection } from '@/components/shared/intitule-section'
@@ -35,12 +36,14 @@ export function ServicesHero({
       <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
         <IntituleSection intitule={contenu.intitule} registre="vert" className="-mb-4.5" />
 
-        <h1
+        <Revelation
+          balise="h1"
+          auChargement
           id={TITRE_ID}
           className="max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white"
         >
           {contenu.titre}
-        </h1>
+        </Revelation>
 
         <ul className="flex flex-wrap gap-1.75">
           {marches.map((marche) => (

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Bouton } from '@/components/shared/bouton'
+import { Revelation } from '@/components/shared/revelation'
 import { CONTENEUR } from '@/components/shared/section'
 
 /** Le masque du design : la colonne se dissout vers le haut et vers le bas. */
@@ -46,6 +47,10 @@ const COLONNES = [
 ] as const
 
 type Vignette = (typeof COLONNES)[number]['vignettes'][number]
+
+/** Les delais du site de reference, comptes a partir du retrait du voile. */
+const DELAI_TITRE = 0.15
+const DELAI_LEAD = 0.3
 
 /**
  * Ni liste ni `aria-hidden` : l'alt vide suffit a rendre ces photos muettes, et
@@ -113,9 +118,13 @@ function Vignettes() {
  * `dvh` la ferait changer de hauteur pendant le defilement, et la page
  * sauterait.
  *
- * Rien n'est anime a l'entree ici. C'est l'element le plus haut de la page :
- * rendu a `opacity: 0` dans le HTML statique, il n'apparaitrait qu'a
- * l'hydratation.
+ * La colonne de texte est revelee ligne par ligne au retrait du voile de
+ * chargement, jamais au defilement : c'est le premier ecran, il n'y a pas de
+ * defilement a attendre.
+ *
+ * Ce hero est le seul endroit du site ou du texte au-dessus du pli depend d'un
+ * script pour paraitre. C'est ce que le voile couvre, et c'est la raison pour
+ * laquelle il existe.
  */
 export function Hero({
   contenu,
@@ -135,19 +144,28 @@ export function Hero({
           <div className="flex min-w-0 max-w-[min(100%,32.5rem)] flex-1 flex-col justify-center gap-[clamp(1.25rem,2.4vw,1.875rem)]">
             <p className="inline-flex items-center gap-2.25 self-start etiquette text-[0.6875rem] tracking-[0.1em] text-white">
               <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-white" />
-              {contenu.intitule}
+              <Revelation balise="span" decoupe="caracteres" auChargement>
+                {contenu.intitule}
+              </Revelation>
             </p>
 
-            <h1
+            <Revelation
+              balise="h1"
               id="titre-hero"
+              auChargement
+              delai={DELAI_TITRE}
               className="max-w-[13ch] font-titre text-[clamp(2.25rem,4.4vw,3.875rem)] leading-[0.99] tracking-[-0.055em] text-white"
             >
               {contenu.titre}
-            </h1>
+            </Revelation>
 
-            <p className="max-w-[34ch] text-[clamp(0.9375rem,1.15vw,1.09375rem)] leading-[1.55] text-white">
+            <Revelation
+              auChargement
+              delai={DELAI_LEAD}
+              className="max-w-[34ch] text-[clamp(0.9375rem,1.15vw,1.09375rem)] leading-[1.55] text-white"
+            >
               {contenu.lead}
-            </p>
+            </Revelation>
 
             <div className="flex flex-wrap items-center gap-2.5">
               <Bouton

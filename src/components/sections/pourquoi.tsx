@@ -1,5 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
+import { Revelation } from '@/components/shared/revelation'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
@@ -33,19 +34,26 @@ export function Pourquoi({
         </Apparition>
 
         <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">
-          <Apparition registre="texte">
-            <div className="flex flex-wrap items-start gap-[clamp(0.875rem,3vw,3.5rem)]">
-              <h2
-                id={titreId}
-                className="min-w-0 grow basis-[32.5rem] font-titre text-[clamp(1.25rem,1.9vw,1.75rem)] leading-[1.25] tracking-[-0.035em] text-pretty [word-spacing:-0.01em] text-encre"
-              >
-                {contenu.titre} <span className="text-encre-2">{contenu.titreSuite}</span>
-              </h2>
-              <span className="shrink-0 etiquette text-[0.6875rem] tracking-[0.09em] whitespace-nowrap text-encre-2">
-                {contenu.etiquette}
-              </span>
-            </div>
-          </Apparition>
+          {/* Revelation et non Apparition : le fondu de bloc porterait sur le
+              titre entier, alors que le decoupage fait monter chaque ligne
+              derriere son propre masque. Les deux ensemble feraient double
+              mouvement sur le meme texte. */}
+          <div className="flex flex-wrap items-start gap-[clamp(0.875rem,3vw,3.5rem)]">
+            <Revelation
+              balise="h2"
+              id={titreId}
+              className="min-w-0 grow basis-[32.5rem] font-titre text-[clamp(1.25rem,1.9vw,1.75rem)] leading-[1.25] tracking-[-0.035em] text-pretty [word-spacing:-0.01em] text-encre"
+            >
+              {contenu.titre} <span className="text-encre-2">{contenu.titreSuite}</span>
+            </Revelation>
+            <Revelation
+              balise="span"
+              decoupe="caracteres"
+              className="shrink-0 etiquette text-[0.6875rem] tracking-[0.09em] whitespace-nowrap text-encre-2"
+            >
+              {contenu.etiquette}
+            </Revelation>
+          </div>
 
           <CartesArguments liste={contenu.liste} registre="aplat" disposition="fluide" />
 

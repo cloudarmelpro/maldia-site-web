@@ -24,13 +24,11 @@ export function TalentsDeroule({ contenu }: { contenu: Contenu['talents']['derou
           <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <Apparition registre="texte">
-          <EnTeteSection
-            titreId={TITRE_ID}
-            titre={contenu.titre}
-            description={contenu.description}
-          />
-        </Apparition>
+        <EnTeteSection
+          titreId={TITRE_ID}
+          titre={contenu.titre}
+          description={contenu.description}
+        />
 
         <ol className="grid grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-1.5">
           {contenu.liste.map((etape, indice) => (

@@ -4,6 +4,7 @@ import { OUTILS } from '@/content/outils'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
+import { Revelation } from '@/components/shared/revelation'
 import { Defilement, MASQUE_BANDE } from '@/components/shared/defilement'
 import type { Allure } from '@/components/shared/defilement'
 import { classes } from '@/components/shared/classes'
@@ -60,27 +61,39 @@ export function Base({
           <IntituleSection intitule={contenu.intitule} registre="vert" />
         </Apparition>
 
-        <Apparition registre="texte">
-          <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
-            {/* Le nombre et sa legende forment une seule phrase : decoupee en
-                deux pour la mise en forme, elle reste un seul titre. */}
-            <h2
-              id={titreId}
-              className="flex flex-col gap-1 font-titre tracking-[-0.05em] text-white"
+        <div className="flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
+          {/* Le nombre et sa legende forment une seule phrase : decoupee en
+              deux pour la mise en forme, elle reste un seul titre. */}
+          {/* Chaque part est revelee separement, et non le `h2` : il est une
+              colonne flex, et le decoupage en lignes remplacerait ses deux
+              enfants par des lignes — son `gap` passerait alors entre les lignes
+              du nombre au lieu de separer le nombre de sa legende. */}
+          <h2
+            id={titreId}
+            className="flex flex-col gap-1 font-titre tracking-[-0.05em] text-white"
+          >
+            <Revelation
+              balise="span"
+              className="text-[clamp(2.75rem,4.8vw,4.625rem)] leading-[0.9]"
             >
-              <span className="text-[clamp(2.75rem,4.8vw,4.625rem)] leading-[0.9]">
-                {nombreFormate(NOMBRE_CANDIDATS, langue)}
-                {contenu.suffixe}
-              </span>
-              <span className="max-w-[22ch] text-[clamp(1.1875rem,1.8vw,1.5625rem)] leading-[1.15] tracking-[-0.04em]">
-                {contenu.libelle}
-              </span>
-            </h2>
-            <p className="max-w-[32ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white">
-              {contenu.precision}
-            </p>
-          </div>
-        </Apparition>
+              {nombreFormate(NOMBRE_CANDIDATS, langue)}
+              {contenu.suffixe}
+            </Revelation>
+            <Revelation
+              balise="span"
+              delai={0.08}
+              className="max-w-[22ch] text-[clamp(1.1875rem,1.8vw,1.5625rem)] leading-[1.15] tracking-[-0.04em]"
+            >
+              {contenu.libelle}
+            </Revelation>
+          </h2>
+          <Revelation
+            delai={0.16}
+            className="max-w-[32ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white"
+          >
+            {contenu.precision}
+          </Revelation>
+        </div>
 
         <Apparition>
           <span className="etiquette text-[0.6875rem] tracking-[0.1em] text-white/94">

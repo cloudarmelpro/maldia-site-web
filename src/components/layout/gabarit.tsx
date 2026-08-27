@@ -5,6 +5,8 @@ import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { EnTete } from '@/components/layout/en-tete'
 import { BarreProgression } from '@/components/shared/barre-progression'
+import { Chargement } from '@/components/shared/chargement'
+import { DefilementLisse } from '@/components/shared/defilement-lisse'
 import { Pied } from '@/components/layout/pied'
 import { ContactBlocs } from '@/components/sections/contact-blocs'
 import { autreLangue } from '@/components/shared/autre-langue'
@@ -44,6 +46,14 @@ export function Gabarit({
 
   return (
     <>
+      {/* Le voile de chargement couvre le temps que GSAP decoupe le titre du
+          hero. Il se retire de lui-meme, et n'existe pas sans script. */}
+      <Chargement />
+
+      {/* Ne rend rien : il installe Lenis et le branche sur le ticker de GSAP,
+          pour que les revelations se declenchent au bon point de defilement. */}
+      <DefilementLisse />
+
       {/* Avant `main` et non dedans : elle est `fixed`, et la sortir de l'arbre
           de contenu evite qu'un `transform` pose plus bas ne cree un contexte
           qui la recalerait sur son parent au lieu de la fenetre. */}

@@ -42,14 +42,14 @@ export function AProposFonctionnement({
 
         {/* La marge haute negative resserre le titre sous son intitule, sans
             toucher a l'ecart que la colonne pose partout ailleurs. */}
-        <Apparition registre="texte" className="-mt-4.5">
+        <div className="-mt-4.5">
           <EnTeteSection
             titreId="titre-fonctionnement"
             titre={contenu.titre}
             description={contenu.description}
             sombre
           />
-        </Apparition>
+        </div>
 
         <ul className="grid grid-cols-[repeat(auto-fit,minmax(18.75rem,1fr))] gap-1.5">
           {contenu.cotes.map((cote, indice) => (

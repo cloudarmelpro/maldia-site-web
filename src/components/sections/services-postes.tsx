@@ -36,13 +36,11 @@ export function ServicesPostes({
           <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <Apparition registre="texte">
-          <EnTeteSection
-            titreId={TITRE_ID}
-            titre={contenu.titre}
-            description={contenu.description}
-          />
-        </Apparition>
+        <EnTeteSection
+          titreId={TITRE_ID}
+          titre={contenu.titre}
+          description={contenu.description}
+        />
 
         <Apparition>
           <ServicesSelecteur contenu={profils} />

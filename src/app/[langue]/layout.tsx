@@ -29,6 +29,24 @@ export function generateStaticParams(): Array<{ langue: Langue }> {
 }
 
 /**
+ * Une actualisation repart du haut de la page.
+ *
+ * Laissee a `auto`, la restauration du navigateur rend la page a une position
+ * qui n'est pas celle qu'on avait : mesure sur l'export, depuis le haut du hero
+ * et apres deux secondes d'immobilite, `Ctrl+R` atterrit a 484, 642 ou 803 px
+ * selon l'essai. Le defaut est anterieur a toute animation — verifie en
+ * recompilant le depot sans elles.
+ *
+ * Ce script doit s'executer a l'analyse du document : pose a l'hydratation, le
+ * navigateur aurait deja restaure. Il ne peut donc pas etre un effet React.
+ *
+ * Ce que ca coute : le retour arriere ne rend plus la position non plus. Next
+ * ne touche jamais `scrollRestoration` — il laisse le navigateur faire — donc
+ * ce reglage vaut pour les deux gestes, pas seulement l'actualisation.
+ */
+const RESTAURATION_MANUELLE = "history.scrollRestoration = 'manual'"
+
+/**
  * Le layout racine ne declare aucune metadonnee : le canonique et le bloc
  * `hreflang` dependent de la page et non de la langue seule (WEB-11). Chaque
  * page les produit par `metadonnees()`.
@@ -38,6 +56,9 @@ export default async function LayoutRacine({ children, params }: LayoutProps<'/[
 
   return (
     <html lang={langue} className={jost.variable}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: RESTAURATION_MANUELLE }} />
+      </head>
       <body>{children}</body>
     </html>
   )

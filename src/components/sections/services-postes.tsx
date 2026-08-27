@@ -4,7 +4,7 @@ import { classes } from '@/components/shared/classes'
 import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { BAS, CONTENEUR } from '@/components/shared/section'
 import { IntituleSection } from '@/components/shared/intitule-section'
-import { ServicesSelecteur } from '@/components/sections/services-selecteur'
+import { SelecteurProfils } from '@/components/shared/selecteur-profils'
 
 const TITRE_ID = 'titre-postes'
 
@@ -43,7 +43,7 @@ export function ServicesPostes({
         />
 
         <Apparition>
-          <ServicesSelecteur contenu={profils} />
+          <SelecteurProfils contenu={profils} registre="services" />
         </Apparition>
       </div>
     </section>

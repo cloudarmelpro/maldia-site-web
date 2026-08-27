@@ -5,24 +5,59 @@ import { useState } from 'react'
 
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
-import { FOCUS } from '@/components/shared/focus'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { Fleche } from '@/components/shared/fleche'
+import { FOCUS } from '@/components/shared/focus'
 
 /**
- * WEB-5 — le selecteur de postes de la page Services : la liste a gauche, la
- * fiche du poste retenu a droite.
+ * WEB-5 — le selecteur de profils : la liste a gauche, la fiche retenue a
+ * droite.
  *
- * Composant client parce que la selection est un etat, et pose aussi bas que
- * possible : la section qui l'accueille reste rendue au serveur.
+ * Il existait en DEUX exemplaires, `Profils` sur l'accueil et
+ * `ServicesSelecteur` sur la page Services, identiques a trois chaines de
+ * classes pres. Et les deux se contredisaient en commentaire : l'un affirmait
+ * qu'« il n'y a pas de version serveur de ce composant », l'autre qu'il est
+ * « pose aussi bas que possible : la section qui l'accueille reste rendue au
+ * serveur ». Le fichier d'a cote etait la preuve que le premier avait tort.
+ *
+ * Composant client parce que la selection est un etat, et pose **aussi bas que
+ * possible** : les deux sections qui l'accueillent restent rendues au serveur.
  *
  * Les boutons portent `aria-pressed` : ce sont des bascules, pas des liens, et
  * rien d'autre ne dirait au clavier lequel est actif.
  *
  * La fiche change sans transition : l'oeil suit la selection, pas un fondu.
  */
-export function ServicesSelecteur({ contenu }: { contenu: Contenu['commun']['profils'] }) {
+export type RegistreSelecteur = 'accueil' | 'services'
+
+/**
+ * Les trois seules differences entre les deux exemplaires. Elles peuvent etre
+ * du design comme elles peuvent etre de la derive — elles sont conservees
+ * telles quelles plutot que tranchees ici, faute de savoir.
+ */
+const ETIQUETTE: Record<RegistreSelecteur, string> = {
+  accueil: 'bg-primaire/7 text-prose',
+  services: 'bg-white text-encre-2',
+}
+
+const FILET: Record<RegistreSelecteur, string> = {
+  accueil: 'border-trait-2',
+  services: 'border-trait',
+}
+
+const FOND_PHOTO: Record<RegistreSelecteur, string> = {
+  accueil: 'bg-white',
+  services: 'bg-fond-2',
+}
+
+export function SelecteurProfils({
+  contenu,
+  registre,
+}: {
+  contenu: Contenu['commun']['profils']
+  registre: RegistreSelecteur
+}) {
   const [choisi, setChoisi] = useState(0)
   const actif = contenu.liste[choisi] ?? contenu.liste[0]
   const photo = PHOTOS.profils[choisi] ?? PHOTOS.profils[0]
@@ -71,13 +106,21 @@ export function ServicesSelecteur({ contenu }: { contenu: Contenu['commun']['pro
             {actif.etiquettes.map((etiquette) => (
               <li
                 key={etiquette}
-                className="rounded-etiquette bg-white px-3 py-1.75 etiquette-fine tracking-[0.07em] text-encre-2"
+                className={classes(
+                  'rounded-etiquette px-3 py-1.75 etiquette-fine tracking-[0.07em]',
+                  ETIQUETTE[registre],
+                )}
               >
                 {etiquette}
               </li>
             ))}
           </ul>
-          <div className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t border-trait pt-4.5">
+          <div
+            className={classes(
+              'mt-auto flex flex-wrap items-end justify-between gap-4 border-t pt-4.5',
+              FILET[registre],
+            )}
+          >
             <span className="flex flex-col gap-1">
               <span className="etiquette-fine text-encre-2">{contenu.delaiIntitule}</span>
               <strong className="font-titre text-2xl leading-none tracking-[-0.04em] text-encre">
@@ -94,9 +137,14 @@ export function ServicesSelecteur({ contenu }: { contenu: Contenu['commun']['pro
           </div>
         </div>
 
-        {/* alt vide : le nom et la description du poste precedent immediatement,
-            une alternative les repeterait. */}
-        <div className="relative order-1 min-h-55 min-w-0 grow basis-[13.125rem] overflow-hidden rounded-liste bg-fond-2">
+        {/* alt vide : le nom et la description precedent immediatement, une
+            alternative les repeterait. */}
+        <div
+          className={classes(
+            'relative order-1 min-h-55 min-w-0 grow basis-[13.125rem] overflow-hidden rounded-liste',
+            FOND_PHOTO[registre],
+          )}
+        >
           <Image
             src={photo}
             alt=""

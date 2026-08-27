@@ -133,27 +133,24 @@ export function BlogArticle({
                     {blog.sommaire}
                   </p>
                   <nav aria-label={blog.sommaire}>
-                    {/* Aucun ecart sous 768 px : le plancher tactile de 44 px
-                        separe deja les entrees, et l'ecart s'y ajoutait — 54 px
-                        entre deux titres d'une seule ligne, mesure. Au-dessus,
-                        la boite retombe a 24 px et l'ecart reprend son role. */}
-                    <ul className="flex flex-col md:gap-2.5">
+                    {/* Aucun ecart, a aucune largeur : c'est l'interligne qui
+                        fait le rythme, comme dans la signature. */}
+                    <ul className="flex flex-col">
                       {titres.map((titre, rang) => (
                         <li key={titre.position}>
                           <a
                             href={`#${ancre(rang)}`}
-                            // Ecart deliberement reduit, et le seul du site :
-                            // 24 px partout, au lieu de 44 sous 768 px. C'est le
-                            // minimum de WCAG 2.5.8 (AA), pas celui de 2.5.5
-                            // (AAA) que le reste du site tient. La suite
-                            // d'ecrans le sait — voir `data-cible-reduite`.
+                            // L'interligne est celui du corps d'article, 1,7 :
+                            // le sommaire respire comme le texte qu'il annonce.
                             //
-                            // Un sommaire est une liste de titres qu'on lit
-                            // avant de viser : espacee au plancher tactile, elle
-                            // se lisait comme trois blocs et non comme un plan.
+                            // A 14 px, cela fait 23,8 px, et le `min-h-6` porte
+                            // la cible a 24 — le minimum de WCAG 2.5.8 (AA),
+                            // atteint pile. Le reste du site tient les 44 de
+                            // 2.5.5 (AAA), d'ou `data-cible-reduite` : la suite
+                            // d'ecrans mesure celle-ci contre 24 et non 44.
                             data-cible-reduite
                             className={classes(
-                              'flex min-h-6 items-center text-[0.875rem] leading-[1.45] text-encre-2 transition-[color] duration-[220ms] hover:text-primaire',
+                              'flex min-h-6 items-center text-[0.875rem] leading-[1.7] text-encre-2 transition-[color] duration-[220ms] hover:text-primaire',
                               FOCUS,
                             )}
                           >
@@ -193,7 +190,7 @@ export function BlogArticle({
                     <h2
                       key={position}
                       id={ancre(rangDuTitre.get(position) ?? 0)}
-                      className="mt-11 font-titre text-[clamp(1.375rem,2.2vw,1.75rem)] leading-[1.2] tracking-[-0.02em] text-encre"
+                      className="mt-8.5 font-titre text-[clamp(1.375rem,2.2vw,1.75rem)] leading-[1.2] tracking-[-0.02em] text-encre"
                     >
                       {bloc.texte}
                     </h2>
@@ -204,7 +201,7 @@ export function BlogArticle({
                   return (
                     <blockquote
                       key={position}
-                      className="mt-9 max-w-[48ch] rounded-encart bg-primaire/5 px-8 py-7 font-titre text-[clamp(1.1875rem,1.9vw,1.5rem)] font-extralight leading-[1.45] text-encre"
+                      className="mt-7 max-w-[48ch] rounded-encart bg-primaire/5 px-8 py-7 font-titre text-[clamp(1.1875rem,1.9vw,1.5rem)] font-extralight leading-[1.45] text-encre"
                     >
                       {bloc.texte}
                     </blockquote>
@@ -213,7 +210,7 @@ export function BlogArticle({
 
                 if (bloc.type === 'liste') {
                   return (
-                    <ul key={position} className="mt-6.5 flex flex-col gap-3.5">
+                    <ul key={position} className="mt-4.5 flex flex-col gap-2.5">
                       {bloc.items.map((item) => (
                         <li
                           key={item}
@@ -230,14 +227,14 @@ export function BlogArticle({
                 return (
                   <p
                     key={position}
-                    className="mt-5 max-w-[66ch] text-[1.09375rem] leading-[1.7] text-prose"
+                    className="mt-4.5 max-w-[66ch] text-[1.09375rem] leading-[1.7] text-prose"
                   >
                     {bloc.texte}
                   </p>
                 )
               })}
 
-              <Apparition className="mt-14">
+              <Apparition className="mt-11">
                 <div className="flex flex-wrap items-center justify-between gap-5.5 rounded-carte-large bg-primaire p-[clamp(1.25rem,2.2vw,1.75rem)]">
                   <div className="flex min-w-0 grow basis-65 flex-col gap-2.25">
                     <h2 className="max-w-[26ch] font-titre text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.25] tracking-[-0.03em] text-white">
@@ -262,7 +259,7 @@ export function BlogArticle({
                   retient le premier `section` sous elle, et une section imbriquee
                   sans aplat lui rendrait un fond transparent. */}
               {autres.length > 0 ? (
-                <div className="mt-14">
+                <div className="mt-11">
                   <h2 className="etiquette text-[0.71875rem] tracking-[0.12em] text-encre-2">
                     {blog.serie.intitule} · {blog.serie.titre}
                   </h2>

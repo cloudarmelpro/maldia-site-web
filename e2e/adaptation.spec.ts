@@ -25,13 +25,15 @@ const CIBLE_TACTILE_MINIMALE = 44
  * Le plancher des cibles marquées `data-cible-reduite`.
  *
  * 44 px est le minimum de WCAG 2.5.5, niveau AAA, et c'est celui que tout le
- * site tient. 24 px est celui de 2.5.8, niveau AA — le seuil réellement exigé.
+ * site tient. 24 px est celui de 2.5.8, niveau **AA** — le seuil réellement
+ * exigé.
  *
- * Une seule cible descend au second : les entrées du sommaire d'article, à la
- * demande du client. Un sommaire se lit avant de se viser, et espacé au
- * plancher tactile il se lisait comme des blocs séparés plutôt que comme un
- * plan. L'attribut rend l'écart visible dans le balisage : il ne se répand pas
- * par mégarde, et il reste mesuré ici.
+ * Une seule cible descend au second : les entrées du sommaire d'article. Elles
+ * suivent l'interligne du corps, 1,7, pour respirer comme le texte qu'elles
+ * annoncent ; à 14 px cela fait 23,8 px, et un `min-h-6` les porte à 24.
+ *
+ * L'attribut rend l'écart visible dans le balisage — il ne se répand pas par
+ * mégarde — et ces cibles restent mesurées ici.
  */
 const CIBLE_REDUITE_MINIMALE = 24
 

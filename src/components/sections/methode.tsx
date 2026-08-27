@@ -1,10 +1,10 @@
 import type { Contenu } from '@/content/types'
+import { CarteEtape } from '@/components/shared/carte-etape'
 import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
-import { delaiDeGrille } from '@/components/shared/decalage'
 import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
 
 /**
@@ -62,40 +62,7 @@ export function Methode({
         <ol className="mt-[clamp(2.125rem,3.6vw,3.5rem)] grid grid-cols-[repeat(auto-fit,minmax(11.25rem,1fr))] gap-1.5">
           {contenu.liste.map((etape, indice) => (
             <li key={etape.titre} className="min-w-0">
-              {/* La carte est l'element anime : `display: contents` sur un
-                  conteneur intermediaire annulerait la transformation. */}
-              <Apparition
-                delai={delaiDeGrille(indice)}
-                className="flex h-full min-h-[clamp(12.25rem,16vw,14.125rem)] min-w-0 flex-col rounded-carte p-[clamp(1rem,1.4vw,1.25rem)] bg-voile/26"
-              >
-                <span className="flex items-center justify-between gap-3">
-                  <span
-                    className="etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case text-white"
-                  >
-                    {String(indice + 1).padStart(2, '0')}
-                  </span>
-                  <span
-                    className={classes(
-                      'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.625rem] tracking-[0.07em] whitespace-nowrap',
-                      etape.cote === 'client' ? 'bg-white text-encre' : 'bg-voile/34 text-white',
-                    )}
-                  >
-                    {etape.acteur}
-                  </span>
-                </span>
-                <span className="mt-[1.625rem] flex flex-col gap-2.25">
-                  <strong
-                    className="font-titre text-[clamp(1.0625rem,1.35vw,1.25rem)] leading-[1.2] tracking-[-0.03em] text-white"
-                  >
-                    {etape.titre}
-                  </strong>
-                  <span
-                className="text-[0.78125rem] leading-[1.45] text-white"
-                  >
-                    {etape.description}
-                  </span>
-                </span>
-              </Apparition>
+              <CarteEtape etape={etape} indice={indice} registre="vert" />
             </li>
           ))}
         </ol>

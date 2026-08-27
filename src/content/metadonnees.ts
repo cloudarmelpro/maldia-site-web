@@ -4,6 +4,22 @@ import { chemin, cheminArticle, LANGUE_PAR_DEFAUT, LANGUES, SITE_URL } from './l
 import type { Langue, Page } from './langues'
 import type { Meta } from './types'
 
+/**
+ * La vignette de partage, declaree ici et non deduite du fichier
+ * `app/opengraph-image.png` : un `openGraph` renvoye par `generateMetadata`
+ * remplace celui que Next tire du fichier, et l'image disparaissait.
+ *
+ * Son accroche est la meme dans les deux langues — « Staff augmentation ·
+ * Madagascar » — pour qu'un partage de la page anglaise n'affiche pas une carte
+ * en francais.
+ */
+const IMAGE_PARTAGE = {
+  url: '/opengraph-image.png',
+  width: 1200,
+  height: 630,
+  alt: 'Agence Maldia',
+} as const
+
 const LOCALES_OPEN_GRAPH: Record<Langue, string> = {
   fr: 'fr_FR',
   en: 'en_US',
@@ -74,6 +90,13 @@ export function metadonnees(langue: Langue, cible: Cible, meta: Meta): Metadata 
       locale: LOCALES_OPEN_GRAPH[langue],
       title: meta.openGraph.titre,
       description: meta.openGraph.description,
+      images: [IMAGE_PARTAGE],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: meta.openGraph.titre,
+      description: meta.openGraph.description,
+      images: [IMAGE_PARTAGE],
     },
   }
 }

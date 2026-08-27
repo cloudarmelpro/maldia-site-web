@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-43 -20 300 300" role="img" aria-label="Agence Maldia">
+  <rect x="-43" y="-20" width="300" height="300" rx="66" fill="#177e4f"/>
+  <g transform="translate(0,-17)" fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M13 200V127A47 47 0 0 1 107 127V200M107 127A47 47 0 0 1 201 127V200"/>
+    <rect x="94" y="200" width="26" height="26" fill="#ffffff" stroke="none"/>
+  </g>
+</svg>

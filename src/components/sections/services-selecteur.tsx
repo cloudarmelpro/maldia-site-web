@@ -7,11 +7,12 @@ import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
+import { Fleche } from '@/components/shared/fleche'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 /**
- * WEB-5 — le selecteur de postes de la page Services : les rangees a gauche, la
+ * WEB-5 — le selecteur de postes de la page Services : la liste a gauche, la
  * fiche du poste retenu a droite.
  *
  * Composant client parce que la selection est un etat, et pose aussi bas que
@@ -20,9 +21,7 @@ const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi
  * Les boutons portent `aria-pressed` : ce sont des bascules, pas des liens, et
  * rien d'autre ne dirait au clavier lequel est actif.
  *
- * Les filets entre rangees sont l'aplat de la liste vu par les interstices, et
- * non une bordure par rangee : une bordure doublerait le trait a la jointure de
- * la rangee active, qui est pleine.
+ * La fiche change sans transition : l'oeil suit la selection, pas un fondu.
  */
 export function ServicesSelecteur({ contenu }: { contenu: Contenu['commun']['profils'] }) {
   const [choisi, setChoisi] = useState(0)
@@ -30,8 +29,8 @@ export function ServicesSelecteur({ contenu }: { contenu: Contenu['commun']['pro
   const photo = PHOTOS.profils[choisi] ?? PHOTOS.profils[0]
 
   return (
-    <div className="flex flex-wrap gap-5">
-      <ul className="flex min-w-0 grow basis-[23.75rem] flex-col gap-px border-y border-trait bg-trait">
+    <div className="flex flex-wrap items-start gap-[clamp(1.125rem,1.8vw,1.625rem)]">
+      <ul className="flex min-w-0 shrink grow-0 basis-[14.75rem] flex-col gap-0.75">
         {contenu.liste.map((profil, indice) => {
           const courant = indice === choisi
           return (
@@ -41,84 +40,71 @@ export function ServicesSelecteur({ contenu }: { contenu: Contenu['commun']['pro
                 aria-pressed={courant}
                 onClick={() => setChoisi(indice)}
                 className={classes(
-                  'flex w-full items-center gap-5 px-6 py-5.5 text-left transition-[background-color,color] duration-200',
+                  'flex min-h-[2.875rem] w-full items-center justify-between gap-3 rounded-marque px-4 py-2 text-left text-[0.90625rem] tracking-[-0.015em] transition-[background-color,color] duration-200',
                   FOCUS,
-                  courant ? 'bg-primaire' : 'bg-fond hover:bg-primaire/9',
+                  courant
+                    ? 'bg-primaire text-white'
+                    : 'text-encre-2 hover:bg-primaire/9 hover:text-encre',
                 )}
               >
-                <span className="min-w-0 grow">
-                  <span
-                    className={classes(
-                      'block text-[1.1875rem]',
-                      courant ? 'text-white' : 'text-encre',
-                    )}
-                  >
-                    {profil.nom}
-                  </span>
-                  <span
-                    className={classes(
-                      'mt-1.5 block text-[0.875rem] leading-[1.5]',
-                      courant ? 'text-white/92' : 'text-encre-2',
-                    )}
-                  >
-                    {profil.resume}
-                  </span>
-                </span>
-                <span
+                <span className="min-w-0">{profil.nom}</span>
+                <Fleche
                   className={classes(
-                    'shrink-0 etiquette tracking-[0.1em]',
-                    courant ? 'text-white/92' : 'text-encre-2',
+                    'h-[0.5625rem] w-4 shrink-0',
+                    courant ? 'opacity-100' : 'opacity-0',
                   )}
-                >
-                  {profil.famille}
-                </span>
+                />
               </button>
             </li>
           )
         })}
       </ul>
 
-      <div className="flex min-w-0 grow basis-[25rem] flex-col overflow-hidden rounded-panneau bg-white">
-        {/* alt vide : le nom et la description du poste suivent immediatement,
-            une alternative les repeterait. */}
-        <div className="relative h-55 min-w-0 shrink-0">
-          <Image
-            src={photo}
-            alt=""
-            fill
-            sizes="(max-width: 1000px) 100vw, 40vw"
-            className="object-cover"
-          />
-        </div>
-
-        <div className="flex min-w-0 grow flex-col p-[clamp(1.625rem,3vw,2.375rem)]">
-          <h3 className="font-titre text-[clamp(1.125rem,1.7vw,1.4375rem)] leading-[1.12] tracking-[-0.02em] text-encre">
+      <div className="flex min-w-0 grow basis-[26.25rem] flex-wrap gap-[clamp(1.125rem,1.8vw,1.625rem)] rounded-carte bg-primaire/5 p-[clamp(0.875rem,1.2vw,1rem)]">
+        <div className="order-2 flex min-w-0 grow basis-[16.25rem] flex-col gap-4 p-[clamp(0.625rem,1vw,1.125rem)]">
+          <h3 className="font-titre text-[clamp(1.25rem,1.7vw,1.625rem)] leading-[1.15] tracking-[-0.035em] text-encre">
             {actif.nom}
           </h3>
-          <p className="mt-3.5 max-w-[48ch] text-base leading-[1.6] text-prose">
+          <p className="max-w-[46ch] text-[0.90625rem] leading-[1.6] text-encre-2">
             {actif.description}
           </p>
-          <ul className="mt-6.5 flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-1.75">
             {actif.etiquettes.map((etiquette) => (
               <li
                 key={etiquette}
-                className="rounded-pilule bg-primaire/7 px-3.5 py-1.75 text-[0.84375rem] text-prose"
+                className="rounded-etiquette bg-white px-3 py-1.75 etiquette-fine tracking-[0.07em] text-encre-2"
               >
                 {etiquette}
               </li>
             ))}
           </ul>
-          <div className="mt-auto flex flex-wrap items-center gap-4.5 pt-7.5">
+          <div className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t border-trait pt-4.5">
+            <span className="flex flex-col gap-1">
+              <span className="etiquette-fine text-encre-2">{contenu.delaiIntitule}</span>
+              <strong className="font-titre text-2xl leading-none tracking-[-0.04em] text-encre">
+                {contenu.delai}
+              </strong>
+            </span>
             <Bouton
               destination="rendezVous"
               libelle={contenu.ctaProfil}
               variante="vert"
+              taille="compacte"
               aria-label={`${contenu.ctaProfil} — ${actif.nom}`}
             />
-            <span className="text-[0.84375rem] text-encre-2">
-              {contenu.delaiIntitule} · {contenu.delai}
-            </span>
           </div>
+        </div>
+
+        {/* alt vide : le nom et la description du poste precedent immediatement,
+            une alternative les repeterait. */}
+        <div className="relative order-1 min-h-55 min-w-0 grow basis-[13.125rem] overflow-hidden rounded-liste bg-fond-2">
+          <Image
+            src={photo}
+            alt=""
+            fill
+            sizes="(max-width: 1000px) 100vw, 30vw"
+            className="object-cover"
+          />
         </div>
       </div>
     </div>

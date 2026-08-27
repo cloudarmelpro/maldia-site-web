@@ -1,6 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Pilule } from '@/components/shared/pilule'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
 import { classes } from '@/components/shared/classes'
@@ -14,9 +14,6 @@ import { BAS_COURT, Section } from '@/components/shared/section'
  * la partie qui enleve les objections plutot que d'expliquer le service. Les
  * deux forment une seule phrase, donc un seul `h2`.
  *
- * L'intitule n'emploie pas `Pilule` : celle-ci tient la colonne de gauche de
- * `GRILLE_INTITULE`, que l'accueil n'a plus — elle s'y recalerait sur une
- * premiere ligne de titre qui n'est plus a cote d'elle.
  */
 export function Pourquoi({
   contenu,
@@ -32,7 +29,7 @@ export function Pourquoi({
     <Section titreId={titreId} fond="fond" bas={BAS_COURT}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition className="w-fit self-start">
-          <Pilule intitule={contenu.intitule} registre="clair" />
+          <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
         <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">

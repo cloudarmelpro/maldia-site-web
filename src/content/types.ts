@@ -444,9 +444,14 @@ export type Contenu<L extends Langue = Langue> = {
     readonly meta: Meta
     /** L'intitulé de la bande des six chiffres, sur cette page seule. */
     readonly obtenez: string
+    /** Le titre et la phrase de cette même bande. */
+    readonly engagements: {
+      readonly titre: string
+      readonly description: string
+    }
     /**
-     * Pas d'`EnTetePage` ici : le design pose le `h1` dans la première section
-     * claire et non dans une bande sombre, donc sans bouton.
+     * Le hero vert de la page. `description` et `mention` ne sont rendues nulle
+     * part : le design n'y laisse que l'intitulé, le titre et les marchés.
      */
     readonly entete: {
       readonly intitule: string
@@ -456,15 +461,19 @@ export type Contenu<L extends Langue = Langue> = {
       readonly mention: string
     }
     /**
-     * Les postes confiés, dans les cartes de frise du design. Les six familles
-     * viennent de `commun.profils.liste` — seul l'habillage est propre à cette
-     * page.
+     * Les postes confiés. Les six familles viennent de `commun.profils.liste` —
+     * seul l'habillage est propre à cette page.
      */
     readonly postes: {
       readonly intitule: string
       readonly titre: string
       readonly description: string
+      /**
+       * L'appel qui ferme la page. Il porte son propre intitulé, et son `titre`
+       * n'est rendu nulle part : le design le remplace par cet intitulé.
+       */
       readonly encart: {
+        readonly intitule: string
         readonly titre: string
         readonly texte: string
         readonly cta: LibelleRendezVous<L>
@@ -476,17 +485,22 @@ export type Contenu<L extends Langue = Langue> = {
   readonly talents: {
     readonly meta: Meta
     /**
-     * Pas d'`EnTetePage` ici, comme sur À propos : le design pose le `h1` dans
-     * la première section claire et non dans une bande sombre. L'appel vit dans
-     * l'encart qui suit les principes, donc sans `cta` ni mention.
+     * Le hero vert de la page : le `h1`, l'appel à candidater et les formats de
+     * CV acceptés. Le libellé de l'appel reste celui de `encart.cta` — le
+     * cahier n'en prévoit qu'un seul (WEB-3).
      */
     readonly entete: {
       readonly intitule: string
       readonly titre: string
       readonly description: string
+      /** Les formats acceptés, posés à côté de l'appel. */
+      readonly mention: string
     }
+    /** L'intitulé de la bande des trois repères — elle n'a pas de titre. */
+    readonly principesIntitule: string
     readonly principes: readonly [Principe, Principe, Principe]
     readonly encart: {
+      readonly intitule: string
       readonly titre: string
       readonly texte: string
       readonly cta: LibelleCandidature<L>
@@ -513,8 +527,8 @@ export type Contenu<L extends Langue = Langue> = {
   readonly aPropos: {
     readonly meta: Meta
     /**
-     * Pas d'`EnTetePage` ici : le design pose le `h1` dans la première section
-     * claire et non dans une bande sombre, donc sans bouton ni mention.
+     * Pas d'`EnTetePage` ici : le hero vert de la page ne porte ni bouton ni
+     * mention, seulement l'intitulé, le titre et sa phrase d'appui.
      */
     readonly entete: {
       readonly intitule: string
@@ -522,6 +536,8 @@ export type Contenu<L extends Langue = Langue> = {
       readonly description: string
     }
     readonly chapeau: string
+    readonly chapeauSuite: string
+    readonly principesIntitule: string
     readonly principes: readonly [Principe, Principe, Principe]
     readonly fonctionnement: {
       readonly intitule: string
@@ -619,8 +635,10 @@ export type Contenu<L extends Langue = Langue> = {
       readonly cta: string
     }
 
-    /** Les trois lignes de coordonnées. Les valeurs viennent du pied et des marchés. */
+    /** Les lignes de coordonnées. Les valeurs viennent du pied et des marchés. */
     readonly coordonnees: {
+      /** L'intitulé de la section, au-dessus des cartes. */
+      readonly intitule: string
       readonly courriel: string
       readonly bureau: string
       readonly marches: string

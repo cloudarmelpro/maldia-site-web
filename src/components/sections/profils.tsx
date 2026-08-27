@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Pilule } from '@/components/shared/pilule'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { Fleche } from '@/components/shared/fleche'
@@ -42,10 +42,8 @@ export function Profils({
   return (
     <Section titreId={titreId} fond="fond">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-        {/* L'intitule n'emploie pas `Pilule` : celle-ci tient la colonne de
-            gauche de `GRILLE_INTITULE`, que l'accueil n'a plus. */}
         <Apparition className="w-fit self-start">
-          <Pilule intitule={contenu.intitule} registre="clair" />
+          <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
         <Apparition registre="texte">

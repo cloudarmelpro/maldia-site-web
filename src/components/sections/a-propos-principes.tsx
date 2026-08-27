@@ -1,33 +1,52 @@
 import type { Contenu } from '@/content/types'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Apparition } from '@/components/shared/apparition'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
-import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
+import { BAS, CONTENEUR } from '@/components/shared/section'
 
 /**
- * WEB-6 — les principes de l'agence, poses sur des filets et non dans des
- * cartes.
+ * WEB-6 — les principes de l'agence, en cartes d'aplat vert tres pale.
+ *
+ * Sans padding haut : le design la donne comme la suite de la declaration, dans
+ * le meme blanc, et c'est le padding bas de celle-ci qui les separe.
  *
  * Le titre de chaque principe est un `strong` et non un `h3` : le design ne
  * donne pas de titre a cette section, et un `h3` y sauterait un niveau depuis
  * le `h1` du hero.
  */
-export function AProposPrincipes({ liste }: { liste: Contenu['aPropos']['principes'] }) {
+export function AProposPrincipes({
+  intitule,
+  liste,
+}: {
+  intitule: Contenu['aPropos']['principesIntitule']
+  liste: Contenu['aPropos']['principes']
+}) {
   return (
-    <section className={classes('bg-fond', HAUT, BAS)}>
-      <div className={CONTENEUR}>
-        <ul className="grid grid-cols-[repeat(auto-fit,minmax(16.875rem,1fr))] gap-x-10 border-t border-trait-4">
+    <section className={classes('bg-fond', BAS)}>
+      <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
+        <Apparition className="w-fit self-start">
+          <IntituleSection intitule={intitule} />
+        </Apparition>
+
+        <ul className="grid grid-cols-[repeat(auto-fit,minmax(14.375rem,1fr))] gap-1.5">
           {liste.map((principe, indice) => (
-            <li key={principe.titre} className="min-w-0 border-b border-trait-4">
-              <Apparition delai={delaiDeGrille(indice)} className="flex flex-col py-[1.875rem]">
-                <span className="etiquette text-[0.71875rem] tracking-[0.12em] text-encre-2">
+            <li key={principe.titre} className="min-w-0">
+              <Apparition
+                delai={delaiDeGrille(indice)}
+                className="flex h-full min-h-[clamp(11.875rem,16vw,13.75rem)] min-w-0 flex-col rounded-carte bg-primaire/5 p-[clamp(1.125rem,1.6vw,1.5rem)]"
+              >
+                <span className="etiquette text-[0.6875rem] tracking-[0.09em] text-encre-2">
                   {principe.intitule}
                 </span>
-                <strong className="mt-4.5 font-titre text-[clamp(1.375rem,1.9vw,1.625rem)] leading-[1.15] tracking-[-0.02em] text-encre">
-                  {principe.titre}
-                </strong>
-                <span className="mt-3 max-w-[40ch] text-[0.96875rem] leading-[1.6] text-encre-2">
-                  {principe.texte}
+
+                <span className="mt-auto flex flex-col gap-2.25">
+                  <strong className="font-titre text-[clamp(1.125rem,1.5vw,1.375rem)] leading-[1.2] tracking-[-0.035em] text-encre">
+                    {principe.titre}
+                  </strong>
+                  <span className="text-[0.8125rem] leading-[1.5] text-encre-2">
+                    {principe.texte}
+                  </span>
                 </span>
               </Apparition>
             </li>

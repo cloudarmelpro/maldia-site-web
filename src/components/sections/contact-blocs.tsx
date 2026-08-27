@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Pilule } from '@/components/shared/pilule'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Fleche } from '@/components/shared/fleche'
 import { CONTENEUR } from '@/components/shared/section'
@@ -38,7 +38,7 @@ export function ContactBlocs({
     >
       <div className={CONTENEUR}>
         <Apparition>
-          <Pilule intitule={contenu.intitule} registre="sombre" />
+          <IntituleSection intitule={contenu.intitule} registre="vert" />
         </Apparition>
 
         <Apparition registre="texte" className="mt-[clamp(1.5rem,3vw,2.5rem)]">

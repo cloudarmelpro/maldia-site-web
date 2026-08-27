@@ -43,19 +43,22 @@ précédente, calée sous l'en-tête.
 
 ## Ce qui a été écarté du prototype, et pourquoi
 
-**~~Les héros `#0b1712` des pages intérieures.~~** — **Erreur, corrigée.** Le
-document de passation écrit « hero vert » pour ces pages, et j'en avais conclu
-qu'il fallait le vert de marque `#177e4f`. Le prototype **rendu dans un
-navigateur** montre `#0b1712` sur les cinq. Les cinq pages y sont revenues, et
-avec elles les gris de la charte sombre — `#a9bcb1`, `#8fa79a`, `#4a5f54` — qui
-tiennent leur contraste sur du presque noir. `Pilule` gagne un registre `nuit`,
-seul endroit où un voile blanc est permis : sur du presque noir il éclaircit un
-fond déjà très sombre, alors que sur le vert il ferait passer le texte sous AA.
+**Les héros des pages intérieures — deux allers-retours, tranchés par la
+version 2.** Le document de passation écrit « hero vert » ; la version 1 du
+prototype montrait pourtant `#0b1712`. **La version 2 tranche : `#177e4f`, avec
+des coins BAS arrondis de 28 px**, en miroir de la coiffe du bloc Contact.
 
-**La leçon de méthode : lire le prototype ne suffisait pas.** C'est en le rendant
-dans un navigateur, et en comparant les fonds calculés section par section avec
-ceux du site, que l'écart est apparu. Les copies du prototype forcées sur chaque
-page vivent dans le dossier de mesures ; la manœuvre se refait en dix lignes.
+**La leçon de méthode.** Lire le prototype ne suffit pas : il faut le *rendre*.
+Il charge React et Babel depuis un CDN et s'hydrate ; en remplaçant
+
+```js
+const initiale = this.props && this.props.pageInitiale;
+```
+
+par la page voulue et en servant le dossier en HTTP, on obtient la vérité de
+référence. Comparer ensuite les fonds calculés section par section entre le
+design et le site donne une réponse binaire, page par page. C'est cette
+comparaison, et elle seule, qui a réglé la question.
 
 **Les voiles blancs sur le vert.** La passation est formelle et donne le calcul :
 le blanc sur `#177e4f` ne vaut que **5,1 : 1**, et un voile blanc éclaircit
@@ -80,6 +83,28 @@ passation s'applique : `bg-primaire/5`, sans contour.
 sections, « volontairement, elle n'était pas dans le périmètre » selon la
 passation. Ses trois sections et son contenu sont conservés, portés sur le
 nouveau système par analogie.
+
+## Version 2 du design — 27 août 2026
+
+Le client a mis le prototype à jour. Les changements structurels :
+
+- **Les héros intérieurs sont verts, coiffés en bas de 28 px.** Plus aucune
+  section sombre sur le site : `#0b1712`, les bandes à halos radiaux et
+  l'utilitaire `bande-encre` disparaissent.
+- **L'intitulé de section perd son aplat.** Plus de pilule : une puce ronde de
+  6 px suivie du libellé en capitales, sur toutes les pages, accueil compris.
+  `Pilule` est supprimé, remplacé par `IntituleSection` (`shared/`).
+- **La colonne d'intitulé de 190 px n'a plus aucun appelant** :
+  `GRILLE_INTITULE` et `DECALAGE_CONTENU` sortent de `section.tsx`.
+- Chaque page intérieure gagne des sections ; Talents passe de deux à cinq.
+
+Le test d'écran « les pilules serrent leur texte » est retiré : il gardait un
+défaut de la grille à deux colonnes — la pastille étirait son fond sur les
+190 px de la colonne — et la pastille comme la colonne ont disparu. Il visait
+`[data-pilule]`, donc il serait passé à vide sans plus rien garantir.
+
+**Vérifié après refonte : les six pages ont, section par section, le même fond
+et les mêmes rayons que le design rendu.**
 
 ## Un défaut du système, trouvé à l'écran
 

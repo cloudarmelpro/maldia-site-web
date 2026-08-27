@@ -1,9 +1,13 @@
 import type { Contenu } from '@/content/types'
-import { Pilule } from '@/components/shared/pilule'
+import { IntituleSection } from '@/components/shared/intitule-section'
+import { classes } from '@/components/shared/classes'
 import { CONTENEUR } from '@/components/shared/section'
 
 /**
- * WEB-6 — l'ouverture de la page A propos, sur l'aplat vert plein du design.
+ * WEB-6 — l'ouverture de la page A propos, sur l'aplat vert du design v2.
+ *
+ * Les coins BAS sont arrondis, en miroir de la coiffe du bloc Contact qui ferme
+ * la page.
  *
  * L'en-tete est collant DANS le flux, avec une marge basse negative egale a sa
  * hauteur : il repose sur cette section. Le padding haut lui rend sa place, en
@@ -17,21 +21,25 @@ export function AProposHero({ contenu }: { contenu: Contenu['aPropos']['entete']
   return (
     <section
       aria-labelledby="titre-page"
-      className="bg-nuit pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(4rem,8vw,7.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
+      className="rounded-b-coiffe bg-primaire pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(3.5rem,7vw,6.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
     >
-      <div className={CONTENEUR}>
-        <Pilule intitule={contenu.intitule} registre="nuit" />
+      <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
+        <IntituleSection intitule={contenu.intitule} registre="vert" />
 
-        <h1
-          id="titre-page"
-          className="mt-7 max-w-[22ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.01] tracking-[-0.035em] text-white"
-        >
-          {contenu.titre}
-        </h1>
+        {/* La marge haute negative resserre le titre sous son intitule, sans
+            toucher a l'ecart que la colonne pose partout ailleurs. */}
+        <div className="-mt-4.5 flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
+          <h1
+            id="titre-page"
+            className="max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white"
+          >
+            {contenu.titre}
+          </h1>
 
-        <p className="mt-7 max-w-[40ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.5] text-sur-sombre">
-          {contenu.description}
-        </p>
+          <p className="max-w-[30ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white/94">
+            {contenu.description}
+          </p>
+        </div>
       </div>
     </section>
   )

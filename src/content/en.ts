@@ -388,11 +388,16 @@ export const en: Contenu<'en'> = {
     },
     /** L'intitulé de la bande des six chiffres. */
     obtenez: 'What you get',
+    engagements: {
+      titre: 'Six commitments, in figures.',
+      description: 'What we charge for, what we don’t, and how long it takes.',
+    },
     postes: {
       intitule: 'Profiles',
       titre: 'The roles our clients entrust to us.',
       description: 'Six profile families, all French-speaking.',
       encart: {
+        intitule: 'Quote',
         titre: 'Want a quote for a specific role?',
         texte: 'A thirty-minute call is enough. We give you a range, with no commitment.',
         cta: 'Book a call',
@@ -415,7 +420,9 @@ export const en: Contenu<'en'> = {
       intitule: 'Talent',
       titre: 'Work remotely with French-speaking companies.',
       description: 'For people based in Madagascar, in every field.',
+      mention: 'PDF, DOC, DOCX',
     },
+    principesIntitule: 'What that means',
     principes: [
       {
         intitule: 'Setting',
@@ -435,6 +442,7 @@ export const en: Contenu<'en'> = {
       },
     ],
     encart: {
+      intitule: 'Application',
       titre: 'Your application, in one go.',
       texte:
         'A short form with a direct résumé upload. You receive a confirmation as soon as it arrives.',
@@ -495,7 +503,10 @@ export const en: Contenu<'en'> = {
       description: 'Staff augmentation, not one-off placement.',
     },
     chapeau:
-      'Agence Maldia builds remote teams for French-speaking companies, with talent based in Madagascar. We search, shortlist and support; the company chooses and keeps control of how it works.',
+      'Agence Maldia builds remote teams for French-speaking companies, with talent based in Madagascar.',
+    chapeauSuite:
+      'We search, shortlist and support; the company chooses and keeps control of how it works.',
+    principesIntitule: 'Principles',
     principes: [
       {
         intitule: 'Commitment',
@@ -713,6 +724,7 @@ export const en: Contenu<'en'> = {
     },
 
     coordonnees: {
+      intitule: 'Contact details',
       courriel: 'Email',
       bureau: 'Office',
       marches: 'Markets',

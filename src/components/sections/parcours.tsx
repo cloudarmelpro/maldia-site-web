@@ -1,6 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Pilule } from '@/components/shared/pilule'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -26,7 +26,7 @@ export function Parcours({
     <Section titreId={titreId} fond="fond">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
-          <Pilule intitule={contenu.intitule} registre="clair" />
+          <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
         <Apparition registre="texte">

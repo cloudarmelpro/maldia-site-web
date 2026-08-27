@@ -1,8 +1,8 @@
 import type { Contenu } from '@/content/types'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Apparition } from '@/components/shared/apparition'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
 import { EnTeteSection } from '@/components/shared/en-tete-section'
-import { Pilule } from '@/components/shared/pilule'
 import { Section } from '@/components/shared/section'
 
 /**
@@ -13,8 +13,8 @@ import { Section } from '@/components/shared/section'
  * premiere correction.
  *
  * Section claire, entre l'aplat vert du fonctionnement et celui du bloc
- * d'appel : sur un fond sombre, les deux bandes se toucheraient et la coiffe
- * arrondie du bloc d'appel ne se lirait plus.
+ * d'appel : sur du vert, les deux bandes se toucheraient et ni l'arrondi de
+ * l'une ni la coiffe de l'autre ne se liraient.
  */
 export function AProposReperes({
   contenu,
@@ -26,21 +26,19 @@ export function AProposReperes({
   return (
     <Section titreId="titre-reperes" fond="fond">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-        <Apparition>
-          <Pilule intitule={contenu.intitule} registre="clair" />
+        <Apparition className="w-fit self-start">
+          <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
-        <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">
-          <Apparition registre="texte">
-            <EnTeteSection
-              titreId="titre-reperes"
-              titre={contenu.titre}
-              description={contenu.description}
-            />
-          </Apparition>
+        <Apparition registre="texte">
+          <EnTeteSection
+            titreId="titre-reperes"
+            titre={contenu.titre}
+            description={contenu.description}
+          />
+        </Apparition>
 
-          <CartesArguments liste={liste} registre="aplat" disposition="fluide" />
-        </div>
+        <CartesArguments liste={liste} registre="aplat" disposition="fluide" />
       </div>
     </Section>
   )

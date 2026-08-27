@@ -382,11 +382,17 @@ export const fr: Contenu<'fr'> = {
     },
     /** L'intitulé de la bande des six chiffres. */
     obtenez: 'Ce que vous obtenez',
+    engagements: {
+      titre: 'Six engagements, chiffrés.',
+      description:
+        'Ce que nous facturons, ce que nous ne facturons pas, et en combien de temps.',
+    },
     postes: {
       intitule: 'Profils',
       titre: 'Les postes que nos clients nous confient.',
       description: 'Six familles de profils, tous francophones.',
       encart: {
+        intitule: 'Chiffrage',
         titre: 'Vous voulez chiffrer un poste précis ?',
         texte:
           'Un appel de trente minutes suffit. Nous vous donnons une fourchette, sans engagement.',
@@ -410,7 +416,9 @@ export const fr: Contenu<'fr'> = {
       intitule: 'Talents',
       titre: 'Travaillez à distance avec des entreprises francophones.',
       description: 'Pour les personnes basées à Madagascar, dans tous les domaines.',
+      mention: 'PDF, DOC, DOCX',
     },
+    principesIntitule: 'Ce que ça veut dire',
     principes: [
       {
         intitule: 'Cadre',
@@ -430,6 +438,7 @@ export const fr: Contenu<'fr'> = {
       },
     ],
     encart: {
+      intitule: 'Candidature',
       titre: 'Votre candidature, en une fois.',
       texte:
         'Formulaire court avec dépôt direct du CV. Vous recevez une confirmation dès réception.',
@@ -490,7 +499,10 @@ export const fr: Contenu<'fr'> = {
       description: 'Du staff augmentation, pas du placement ponctuel.',
     },
     chapeau:
-      'Agence Maldia constitue des équipes à distance pour des entreprises francophones, avec des talents basés à Madagascar. Nous cherchons, présélectionnons et accompagnons ; l’entreprise choisit et garde la main sur son organisation.',
+      'Agence Maldia constitue des équipes à distance pour des entreprises francophones, avec des talents basés à Madagascar.',
+    chapeauSuite:
+      'Nous cherchons, présélectionnons et accompagnons ; l’entreprise choisit et garde la main sur son organisation.',
+    principesIntitule: 'Principes',
     principes: [
       {
         intitule: 'Engagement',
@@ -717,6 +729,7 @@ export const fr: Contenu<'fr'> = {
     },
 
     coordonnees: {
+      intitule: 'Coordonnées',
       courriel: 'Courriel',
       bureau: 'Bureau',
       marches: 'Marchés',

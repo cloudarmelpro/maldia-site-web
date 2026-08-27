@@ -24,7 +24,7 @@ export async function generateMetadata({
 }
 
 /**
- * WEB-6 — a propos, sur le design « Site Maldia ».
+ * WEB-6 — a propos, sur le design « Site Maldia » v2.
  *
  * Le hero vert porte le `h1`, et l'en-tete du gabarit repose dessus. Le bloc
  * d'appel et le pied ferment la page, eux aussi rendus par le gabarit.
@@ -35,13 +35,11 @@ export default async function PageAPropos({ params }: PageProps<'/[langue]/a-pro
 
   return (
     <Gabarit langue={langue} page="a-propos" contenu={contenu}>
-        <>
-          <AProposHero contenu={aPropos.entete} />
-          <AProposContenu chapeau={aPropos.chapeau} />
-          <AProposPrincipes liste={aPropos.principes} />
-          <AProposFonctionnement contenu={aPropos.fonctionnement} langue={langue} />
-          <AProposReperes contenu={aPropos.reperes} arguments={commun.pourquoi.liste} />
-        </>
+      <AProposHero contenu={aPropos.entete} />
+      <AProposContenu chapeau={aPropos.chapeau} suite={aPropos.chapeauSuite} />
+      <AProposPrincipes intitule={aPropos.principesIntitule} liste={aPropos.principes} />
+      <AProposFonctionnement contenu={aPropos.fonctionnement} langue={langue} />
+      <AProposReperes contenu={aPropos.reperes} arguments={commun.pourquoi.liste} />
     </Gabarit>
   )
 }

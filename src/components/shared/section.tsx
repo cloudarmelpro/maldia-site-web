@@ -3,14 +3,15 @@ import type { ReactNode } from 'react'
 import { classes } from '@/components/shared/classes'
 
 /**
- * Les valeurs du design. Exportees parce qu'une section qui fait deborder un
- * bloc hors de la gouttiere doit batir son `<section>` elle-meme, et recopier
- * ces valeurs les ferait diverger.
+ * La respiration verticale du design. Exportees parce qu'une section qui fait
+ * deborder un bloc hors de la gouttiere, ou qui pose un aplat que `Section` ne
+ * connait pas, doit batir son `<section>` elle-meme : recopier ces valeurs les
+ * ferait diverger.
  */
 export const HAUT = 'pt-[clamp(4rem,7vw,7rem)]'
 export const BAS = 'pb-[clamp(4rem,7vw,7rem)]'
 
-/** Le padding bas plus court que le design pose sur sa premiere section. */
+/** Le padding bas plus court, la ou le design pose une section asymetrique. */
 export const BAS_COURT = 'pb-[clamp(3.5rem,6vw,6rem)]'
 
 export type Fond = 'fond' | 'fond-2' | 'encre' | 'nuit'
@@ -35,27 +36,11 @@ const FONDS: Record<Fond, string> = {
 export const CONTENEUR = 'mx-auto w-full max-w-[67.5rem] px-[clamp(1.25rem,4vw,3.5rem)]'
 
 /**
- * Le decalage qui aligne un bloc sur la colonne de contenu, quand il n'est pas
- * lui-meme dans la grille a deux colonnes. C'est la largeur de la colonne
- * d'intitule plus la gouttiere — la meme expression que la grille.
- */
-export const DECALAGE_CONTENU =
-  'large:ml-[calc(11.875rem+clamp(1.75rem,2.8vw,2.75rem))]'
-
-/**
- * La grille signature du design : une colonne d'intitule de 190 px a gauche,
- * le contenu a droite. Sous 1000 px elle se replie en une colonne, et
- * l'intitule passe simplement au-dessus.
- */
-export const GRILLE_INTITULE =
-  'grid grid-cols-1 gap-[clamp(1.5rem,2.8vw,2.125rem)] large:grid-cols-[minmax(0,11.875rem)_minmax(0,1fr)] large:gap-[clamp(1.75rem,2.8vw,2.75rem)] [&>*]:min-w-0'
-
-/**
- * Une section du design : un aplat pleine largeur, sans arrondi.
+ * Une section du design : un aplat pleine largeur.
  *
- * Le geste des blocs arrondis qui montaient l'un sur l'autre a disparu avec la
- * refonte — les sections sont maintenant des bandes franches, et c'est
- * l'alternance clair / sombre qui marque le rythme.
+ * L'intitule se pose AU-DESSUS du contenu, dans la colonne de la section. La
+ * colonne d'intitule de 190 px qui le tenait a gauche a disparu avec la refonte,
+ * et son decalage avec elle.
  */
 export function Section({
   titreId,
@@ -76,10 +61,7 @@ export function Section({
   children: ReactNode
 }) {
   return (
-    <section
-      aria-labelledby={titreId}
-      className={classes(FONDS[fond], HAUT, bas ?? BAS, className)}
-    >
+    <section aria-labelledby={titreId} className={classes(FONDS[fond], HAUT, bas ?? BAS, className)}>
       <div className={CONTENEUR}>{children}</div>
     </section>
   )

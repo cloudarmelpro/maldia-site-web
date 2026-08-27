@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import type { CoteQuestion, Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Pilule } from '@/components/shared/pilule'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Section } from '@/components/shared/section'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
@@ -45,7 +45,7 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
     <Section titreId="titre-questions" fond="fond">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
-          <Pilule intitule={contenu.intitule} registre="clair" />
+          <IntituleSection intitule={contenu.intitule} />
         </Apparition>
 
         <div className="flex flex-col gap-[clamp(1.75rem,3vw,2.75rem)]">

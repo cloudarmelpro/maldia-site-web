@@ -13,8 +13,8 @@ import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Fleche } from '@/components/shared/fleche'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Lien } from '@/components/shared/lien'
-import { Pilule } from '@/components/shared/pilule'
 import { CONTENEUR } from '@/components/shared/section'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
@@ -24,17 +24,22 @@ const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi
  * hauteur : la premiere section commence donc SOUS lui. Sa hauteur mesuree est
  * publiee dans `--hauteur-en-tete` par `components/layout/en-tete` — la barre
  * grandit quand la navigation passe a la ligne, et une valeur en dur laisserait
- * alors la pilule dessous. Le repli est accorde au `min-h-18` de la barre.
+ * alors l'intitule dessous. Le repli est accorde au `min-h-18` de la barre.
  */
-const HAUT_HERO = 'pt-[calc(clamp(4rem,8vw,7.25rem)+var(--hauteur-en-tete,4.5rem))]'
+const HAUT_HERO = 'pt-[calc(clamp(3.5rem,7vw,6.5rem)+var(--hauteur-en-tete,4.5rem))]'
+
+/** Le retrait que le design pose sur ce qui suit un intitule, dans une colonne a gouttiere. */
+const SOUS_INTITULE = '-mt-[1.125rem]'
 
 /**
- * WEB-15 — l'index du blog, sur le design « Site Maldia » : un hero vert, un
- * article a la une, puis les autres en lignes.
+ * WEB-15 — l'index du blog, sur la version 2 du design « Site Maldia » : un
+ * hero vert coiffe en bas, un article a la une, la grille des autres, puis
+ * l'appel a nous ecrire.
  *
- * L'article le plus recent passe en vedette et sort de la liste. Les onglets de
- * filtre sont deduits des categories **de la liste**, pas de tous les articles :
- * sinon filtrer sur la categorie de la vedette laisserait une liste vide.
+ * L'article le plus recent passe en vedette et sort de la grille. Les onglets
+ * de filtre sont deduits des categories **de la grille**, pas de tous les
+ * articles : sinon filtrer sur la categorie de la vedette laisserait une grille
+ * vide.
  */
 export function BlogListe({
   contenu,
@@ -57,33 +62,28 @@ export function BlogListe({
     <>
       <section
         aria-labelledby="titre-page"
-        className={classes('bg-nuit pb-[clamp(3rem,6vw,5rem)]', HAUT_HERO)}
+        className={classes('rounded-b-coiffe bg-primaire pb-[clamp(3.5rem,7vw,6rem)]', HAUT_HERO)}
       >
-        <div className={CONTENEUR}>
-          <Pilule intitule={contenu.entete.intitule} registre="nuit" />
-
-          <div className="mt-7 flex flex-wrap items-end gap-8">
-            <h1
-              id="titre-page"
-              className="max-w-[22ch] min-w-0 grow basis-120 font-titre text-[clamp(1.5625rem,3vw,2.4375rem)] leading-[1.02] tracking-[-0.035em] text-white"
-            >
-              {contenu.entete.titre}
-            </h1>
-            <p className="max-w-[38ch] min-w-0 grow basis-75 text-[1.0625rem] leading-[1.55] text-sur-sombre">
-              {contenu.entete.description}
-            </p>
-          </div>
-
-          <p className="mt-9 etiquette text-[0.6875rem] tracking-[0.08em] text-sur-sombre">
-            {contenu.entete.mention}
-          </p>
+        <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
+          <IntituleSection intitule={contenu.entete.intitule} registre="vert" />
+          <h1
+            id="titre-page"
+            className={classes(
+              'max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white',
+              SOUS_INTITULE,
+            )}
+          >
+            {contenu.entete.titre}
+          </h1>
         </div>
       </section>
 
-      <section className="bg-fond py-[clamp(3.5rem,7vw,6.25rem)]">
-        <div className={CONTENEUR}>
-          {vedette ? (
-            <Apparition>
+      {vedette ? (
+        <section aria-labelledby="titre-une" className="bg-fond pt-[clamp(4rem,7vw,7rem)]">
+          <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
+            <IntituleSection intitule={contenu.aLaUne} id="titre-une" />
+
+            <Apparition className={SOUS_INTITULE}>
               <Lien
                 href={cheminArticle(langue, vedette.identifiant)}
                 className={classes(
@@ -92,47 +92,51 @@ export function BlogListe({
                 )}
               >
                 {/* alt vide : le titre de l'article suit immediatement. */}
-                <span className="relative block h-[clamp(15rem,30vw,23.75rem)] min-w-0 grow basis-105 overflow-hidden rounded-panneau bg-fond-2">
+                <span className="relative block h-[clamp(15rem,30vw,23.75rem)] min-w-0 grow basis-75 overflow-hidden rounded-carte-large bg-fond-2">
                   <Image
                     src={PHOTOS.blog[vedette.identifiant]}
                     alt=""
                     fill
                     preload
-                    sizes="(max-width: 820px) 100vw, 46vw"
+                    sizes="(min-width: 51.25rem) 50vw, 100vw"
                     className="object-cover"
                   />
                 </span>
 
-                <div className="min-w-0 grow basis-90">
-                  <div className="flex flex-wrap items-center gap-3.5">
-                    <span className="rounded-pilule bg-primaire/7 px-3.25 py-1.25 etiquette text-[0.71875rem] tracking-[0.1em] text-encre">
-                      {contenu.aLaUne}
-                    </span>
-                    <MetaArticle article={vedette} langue={langue} deLecture={contenu.deLecture} />
-                  </div>
-
-                  <h2 className="mt-6.5 max-w-[24ch] font-titre text-[clamp(1.125rem,1.7vw,1.4375rem)] leading-[1.08] tracking-[-0.03em] text-encre">
+                <div className="flex min-w-0 grow basis-80 flex-col gap-3.5">
+                  <MetaArticle
+                    article={vedette}
+                    langue={langue}
+                    deLecture={contenu.deLecture}
+                    className="etiquette-fine text-encre-2"
+                  />
+                  <h3 className="max-w-[22ch] font-titre text-[clamp(1.25rem,1.8vw,1.6875rem)] leading-[1.15] tracking-[-0.04em] text-encre">
                     {vedette.titre}
-                  </h2>
-                  <p className="mt-4.5 max-w-[48ch] text-[1.0625rem] leading-[1.6] text-prose">
+                  </h3>
+                  <p className="max-w-[46ch] text-[0.90625rem] leading-[1.6] text-encre-2">
                     {vedette.resume}
                   </p>
-                  <span className="mt-7 inline-flex items-center gap-2.5 text-[0.96875rem] text-primaire transition-[color] duration-[220ms] group-hover:text-primaire-fonce">
+                  <span className="mt-1.5 inline-flex items-center gap-2.5 etiquette text-[0.6875rem] tracking-[0.08em] text-primaire transition-[color] duration-[220ms] group-hover:text-primaire-fonce">
                     {contenu.lire}
                     <Fleche />
                   </span>
                 </div>
               </Lien>
             </Apparition>
-          ) : null}
+          </div>
+        </section>
+      ) : null}
 
-          <div className="mt-[clamp(3rem,6vw,5.25rem)]">
+      <section aria-labelledby="titre-grille" className="bg-fond py-[clamp(4rem,7vw,7rem)]">
+        <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
+          {/* Le libelle de la grille est celui du lien de retour d'un article :
+              les deux nomment la meme chose, et le cahier n'en donne pas de
+              second. */}
+          <IntituleSection intitule={contenu.retour} id="titre-grille" />
+
+          <div className={classes('flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]', SOUS_INTITULE)}>
             {liste.length > 0 ? (
-              <div
-                role="group"
-                aria-label={contenu.entete.intitule}
-                className="flex flex-wrap gap-2"
-              >
+              <div role="group" aria-label={contenu.retour} className="flex flex-wrap gap-2">
                 {onglets.map((libelle, indice) => {
                   const actif = indice === filtre
                   return (
@@ -158,12 +162,12 @@ export function BlogListe({
             ) : null}
 
             {visibles.length === 0 ? (
-              <p className="max-w-[52ch] py-10 text-[1.0625rem] text-encre-2">{contenu.vide}</p>
+              <p className="max-w-[52ch] text-[1.0625rem] text-encre-2">{contenu.vide}</p>
             ) : (
-              <ul className="mt-6 border-t border-trait">
+              <ul className="grid grid-cols-1 gap-3.5 duo:grid-cols-2 voies:grid-cols-3">
                 {visibles.map((article, indice) => (
-                  <li key={article.identifiant} className="min-w-0">
-                    <Apparition delai={delaiDeGrille(indice)}>
+                  <li key={article.identifiant} className="flex min-w-0">
+                    <Apparition delai={delaiDeGrille(indice)} className="flex min-w-0 grow">
                       <CarteArticle
                         article={article}
                         langue={langue}
@@ -175,21 +179,29 @@ export function BlogListe({
               </ul>
             )}
           </div>
+        </div>
+      </section>
 
-          <Apparition className="mt-[clamp(3rem,6vw,5rem)]">
-            <div className="flex flex-wrap items-center gap-6 rounded-panneau bg-primaire/5 p-[clamp(1.75rem,3vw,2.75rem)]">
-              <div className="min-w-0 grow basis-100">
-                <h2 className="font-titre text-[clamp(1.125rem,1.7vw,1.4375rem)] leading-[1.12] tracking-[-0.02em] text-encre">
+      <section aria-labelledby="titre-suite" className="bg-fond pb-[clamp(4rem,7vw,7rem)]">
+        <div className={CONTENEUR}>
+          <Apparition>
+            <div className="flex flex-wrap items-center justify-between gap-[clamp(1.25rem,3vw,2.5rem)] rounded-encart bg-primaire p-[clamp(1.625rem,3vw,2.5rem)]">
+              <div className="flex min-w-0 grow basis-80 flex-col gap-3">
+                <h2
+                  id="titre-suite"
+                  className="max-w-[26ch] font-titre text-[clamp(1.1875rem,1.7vw,1.625rem)] leading-[1.25] tracking-[-0.03em] text-white"
+                >
                   {contenu.suite.titre}
                 </h2>
-                <p className="mt-3 max-w-[56ch] text-[1rem] leading-[1.6] text-prose">
+                <p className="max-w-[48ch] text-[0.90625rem] leading-[1.6] text-white">
                   {contenu.suite.texte}
                 </p>
               </div>
               <BoutonPage
                 vers={chemin(langue, 'contact')}
                 libelle={contenu.suite.cta}
-                variante="vert"
+                variante="blanc"
+                ornement="fleche"
                 className="shrink-0"
               />
             </div>

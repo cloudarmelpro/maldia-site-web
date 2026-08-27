@@ -72,7 +72,7 @@
   --radius-encart: 1.125rem;
   /* Le grand panneau du design de la page Contact : 20 px. */
   --radius-panneau: 1.25rem;
-  /* Les coins hauts du bloc Contact, qui coiffe le pied. */
+  /* Les coins du bloc Contact en haut, et ceux des heros interieurs en bas. */
   --radius-coiffe: 1.75rem;
   --radius-pilule: 9999px;
 }
@@ -233,17 +233,6 @@
    suffirait a 300 px de large et se voit a 1400. */
 @utility carte-claire {
   background-image: linear-gradient(168deg, #ffffff 0%, #f5f7f4 58%, #eef2ee 100%);
-}
-
-/* La bande sombre du design : de l'encre que deux halos radiaux reveillent, un
-   vert a gauche, un blanc a droite. C'est le seul fond sombre du nouveau
-   systeme, et il sert la ou une section verte precederait le bloc Contact, vert
-   lui aussi — sa coiffe de 28 px ne se lirait pas sur du vert. */
-@utility bande-encre {
-  background-image:
-    radial-gradient(70% 90% at 22% 42%, rgb(23 126 79 / 0.34) 0%, rgb(23 126 79 / 0) 62%),
-    radial-gradient(62% 82% at 78% 58%, rgb(255 255 255 / 0.07) 0%, rgb(255 255 255 / 0) 60%);
-  background-color: #0f1d17;
 }
 
 /* Le fond de la carte claire des deux parcours : un blanc que deux halos

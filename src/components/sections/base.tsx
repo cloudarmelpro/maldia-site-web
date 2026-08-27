@@ -3,7 +3,7 @@ import type { Langue } from '@/content/langues'
 import { OUTILS } from '@/content/outils'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Pilule } from '@/components/shared/pilule'
+import { IntituleSection } from '@/components/shared/intitule-section'
 import { Defilement, MASQUE_BANDE } from '@/components/shared/defilement'
 import type { Allure } from '@/components/shared/defilement'
 import { classes } from '@/components/shared/classes'
@@ -49,7 +49,7 @@ export function Base({
         <Apparition>
           {/* Sur le vert, le voile d'une surface est sombre : un voile blanc
               eclaircirait l'aplat et ferait passer le texte blanc sous AA. */}
-          <Pilule intitule={contenu.intitule} registre="sombre" />
+          <IntituleSection intitule={contenu.intitule} registre="vert" />
         </Apparition>
 
         <Apparition registre="texte">

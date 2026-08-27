@@ -120,39 +120,5 @@ for (const adresse of CHEMINS) {
       expect(trop_longues, trop_longues.join(' | ')).toEqual([])
     })
 
-    // La pilule d'intitule est un item de la grille a deux colonnes. Un item de
-    // grille s'etire par defaut : sans `justify-self`, son fond couvrait les
-    // 190 px de la colonne au lieu de serrer son texte. `self-start` seul ne
-    // l'attrape pas — il porte sur l'axe vertical.
-    test('les pilules serrent leur texte', async ({ page }) => {
-      await page.goto(adresse)
-
-      const etirees = await page.evaluate(() => {
-        const fautives: string[] = []
-
-        for (const el of document.querySelectorAll('[data-pilule]')) {
-          const boite = el.getBoundingClientRect()
-          if (boite.width === 0) continue
-
-          const plage = document.createRange()
-          plage.selectNodeContents(el)
-          const contenu = plage.getBoundingClientRect()
-
-          const style = getComputedStyle(el)
-          const attendu =
-            contenu.width + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight)
-
-          // Deux pixels de tolerance : un arrondi de sous-pixel n'est pas un etirement.
-          if (boite.width > attendu + 2) {
-            fautives.push(
-              `« ${(el.textContent ?? '').trim()} » — ${Math.round(boite.width)} px pour ${Math.round(attendu)} px de contenu`,
-            )
-          }
-        }
-        return fautives
-      })
-
-      expect(etirees, etirees.join(' | ')).toEqual([])
-    })
   })
 }

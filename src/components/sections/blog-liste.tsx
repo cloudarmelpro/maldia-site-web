@@ -8,6 +8,7 @@ import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
 import { CarteArticle, MetaArticle } from '@/components/sections/carte-article'
+import { HeroPage } from '@/components/shared/hero-page'
 import { FOCUS } from '@/components/shared/focus'
 import { Apparition } from '@/components/shared/apparition'
 import { BoutonPage } from '@/components/shared/bouton'
@@ -25,10 +26,9 @@ import { CONTENEUR } from '@/components/shared/section'
  * grandit quand la navigation passe a la ligne, et une valeur en dur laisserait
  * alors l'intitule dessous. Le repli est accorde au `min-h-18` de la barre.
  */
-const HAUT_HERO = 'pt-[calc(clamp(3.5rem,7vw,6.5rem)+var(--hauteur-en-tete,4.5rem))]'
 
 /** Le retrait que le design pose sur ce qui suit un intitule, dans une colonne a gouttiere. */
-const SOUS_INTITULE = '-mt-[1.125rem]'
+const SOUS_INTITULE = '-mt-4.5'
 
 /**
  * WEB-15 — l'index du blog, sur la version 2 du design « Site Maldia » : un
@@ -59,23 +59,7 @@ export function BlogListe({
 
   return (
     <>
-      <section
-        aria-labelledby="titre-page"
-        className={classes('rounded-b-coiffe bg-primaire pb-[clamp(3.5rem,7vw,6rem)]', HAUT_HERO)}
-      >
-        <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
-          <IntituleSection intitule={contenu.entete.intitule} registre="vert" />
-          <h1
-            id="titre-page"
-            className={classes(
-              'max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white',
-              SOUS_INTITULE,
-            )}
-          >
-            {contenu.entete.titre}
-          </h1>
-        </div>
-      </section>
+      <HeroPage intitule={contenu.entete.intitule} titre={contenu.entete.titre} />
 
       {vedette ? (
         <section aria-labelledby="titre-une" className="bg-fond pt-[clamp(4rem,7vw,7rem)]">

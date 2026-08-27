@@ -1,5 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { FormulaireContact } from '@/components/sections/formulaire-contact'
+import { HeroPage } from '@/components/shared/hero-page'
 import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
@@ -47,26 +48,7 @@ export function ContactPage({
 
   return (
     <>
-      {/* Rien n'est anime a l'entree : c'est l'element le plus haut de la page,
-          rendu a `opacity: 0` dans le HTML statique il n'apparaitrait qu'a
-          l'hydratation. */}
-      <section
-        aria-labelledby="titre-page"
-        className="rounded-b-coiffe bg-primaire pt-[calc(clamp(3.5rem,7vw,6.5rem)+var(--hauteur-en-tete,4.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
-      >
-        <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
-          <IntituleSection intitule={contact.entete.intitule} registre="vert" />
-
-          {/* La remontee du design : l'ecart de la colonne flex est plus large
-              que celui voulu entre l'intitule et le titre. */}
-          <h1
-            id="titre-page"
-            className="-mt-4.5 max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white"
-          >
-            {contact.entete.titre}
-          </h1>
-        </div>
-      </section>
+      <HeroPage intitule={contact.entete.intitule} titre={contact.entete.titre} />
 
       <section aria-labelledby="titre-reservation" className="bg-fond py-[clamp(4rem,7vw,7rem)]">
         <div

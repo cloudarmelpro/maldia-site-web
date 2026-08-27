@@ -8,7 +8,6 @@ import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
 import { CarteArticle, MetaArticle } from '@/components/sections/carte-article'
-import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -67,9 +66,7 @@ export function BlogListe({
       >
         <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
           <IntituleSection intitule={contenu.entete.intitule} registre="vert" />
-          <Revelation
-            balise="h1"
-            auChargement
+          <h1
             id="titre-page"
             className={classes(
               'max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white',
@@ -77,7 +74,7 @@ export function BlogListe({
             )}
           >
             {contenu.entete.titre}
-          </Revelation>
+          </h1>
         </div>
       </section>
 
@@ -152,7 +149,7 @@ export function BlogListe({
                       // tactile passe devant, et `e2e/adaptation.spec.ts`
                       // l'exige.
                       className={classes(
-                        'min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-colors duration-200 md:min-h-[2.125rem] md:min-w-0 md:px-[0.8125rem]',
+                        'min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-colors duration-200 large:min-h-[2.125rem] large:min-w-0 large:px-[0.8125rem]',
                         FOCUS,
                         actif ? 'bg-primaire text-white' : 'bg-primaire/7 text-encre-2',
                       )}

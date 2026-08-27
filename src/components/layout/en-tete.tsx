@@ -142,12 +142,19 @@ export function EnTete({
 
     const observateur = new ResizeObserver(() => {
       const valeur = Math.round(element.getBoundingClientRect().height)
-      if (!valeur || valeur === mesuree.current) return
+      if (!valeur) return
+
+      // Publiee a CHAQUE mesure, y compris la premiere, et avant le garde
+      // d'egalite. La hauteur reelle vaut justement `HAUTEUR_INITIALE` tant que
+      // la navigation ne passe pas a la ligne : compare a `mesuree`, ce cas —
+      // le plus frequent de tous — sortait avant la publication, et la variable
+      // n'etait jamais posee. `scroll-padding-top` ne tenait alors que par son
+      // repli, egal par coincidence.
+      document.documentElement.style.setProperty('--hauteur-en-tete', `${valeur}px`)
+
+      if (valeur === mesuree.current) return
       mesuree.current = valeur
       setHauteur(valeur)
-      // Publiee pour `scroll-padding-top` : une ancre interne atterrirait sous
-      // la barre collante sans elle, et le CSS ne sait pas la mesurer.
-      document.documentElement.style.setProperty('--hauteur-en-tete', `${valeur}px`)
       surDefilement()
     })
     observateur.observe(element)
@@ -198,7 +205,7 @@ export function EnTete({
   // devant, et `e2e/adaptation.spec.ts` l'exige : la pastille y devient un carre
   // de 44 px. Elle tient dans la barre sans la grandir, qui fait 72 px de haut.
   const langues =
-    'grid min-h-11 min-w-11 place-items-center rounded-etiquette text-[0.78125rem] tracking-[0.04em] uppercase md:min-h-0 md:min-w-0 md:px-2.5 md:py-1'
+    'grid min-h-11 min-w-11 place-items-center rounded-etiquette text-[0.78125rem] tracking-[0.04em] uppercase large:min-h-0 large:min-w-0 large:px-2.5 large:py-1'
 
   return (
     <>
@@ -363,12 +370,12 @@ export function EnTete({
                               courante ? 'bg-white' : 'bg-transparent',
                             )}
                           />
-                          {/* `auChargement` vaut ici « des le montage » : le
-                              panneau se monte a l'ouverture, et le voile est
-                              parti depuis longtemps. */}
+                          {/* Le panneau se monte a l'ouverture : la revelation joue
+                              des l'arrivee de GSAP, sans point de defilement a
+                              attendre. */}
                           <Revelation
                             balise="span"
-                            auChargement
+                            desLeMontage
                             delai={indice * PAS_MENU}
                             className="block"
                           >

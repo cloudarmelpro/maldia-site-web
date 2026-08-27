@@ -7,8 +7,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { useRef, type ReactNode, type RefObject } from 'react'
 
-import { quandPagePrete } from '@/components/shared/chargement'
-
 gsap.registerPlugin(useGSAP, CustomEase, ScrollTrigger, SplitText)
 
 /**
@@ -29,6 +27,9 @@ const REGLAGES = {
   lignes: { type: 'lines', duree: 0.9, decalage: 0.07 },
   caracteres: { type: 'lines,chars', duree: 0.5, decalage: 0.02 },
 } as const satisfies Record<DecoupeRevelation, { type: string; duree: number; decalage: number }>
+
+/** La classe posee sur chaque ligne decoupee, et sur son masque. */
+const LIGNE = 'ligne-revelee'
 
 /** Le depart sous le masque : au-dela de 100 %, la ligne est hors du cadre. */
 const DEPART_POURCENT = 115
@@ -56,8 +57,8 @@ type BaliseRevelation = 'h1' | 'h2' | 'h3' | 'p' | 'span'
  * Cela reserve ce composant au contenu **sous la ligne de flottaison**, pour la
  * meme raison qu'`Apparition` : au-dessus, le texte attendrait le bundle.
  *
- * `auChargement` attend le retrait du voile de `Chargement` : sans ca, le hero
- * jouerait sous le voile et serait fini quand on le decouvre.
+ * `desLeMontage` joue des l'arrivee de GSAP, sans attendre un point de
+ * defilement. Reserve a ce qui se monte deja visible — le panneau du menu.
  *
  * Mouvement reduit : `matchMedia` de GSAP n'execute pas le bloc, donc aucun
  * decoupage et aucun mouvement — le texte parait, simplement.
@@ -65,7 +66,7 @@ type BaliseRevelation = 'h1' | 'h2' | 'h3' | 'p' | 'span'
 export function Revelation({
   balise: Balise = 'p',
   decoupe = 'lignes',
-  auChargement = false,
+  desLeMontage = false,
   delai = 0,
   id,
   className,
@@ -74,7 +75,7 @@ export function Revelation({
   balise?: BaliseRevelation
   decoupe?: DecoupeRevelation
   /** Joue des le montage au lieu d'attendre le defilement. */
-  auChargement?: boolean
+  desLeMontage?: boolean
   /** En secondes, comme le reste de l'API GSAP. */
   delai?: number
   id?: string
@@ -92,57 +93,47 @@ export function Revelation({
       // tick, donc aucune image n'est peinte avec le texte non decoupe.
       gsap.set(element, { autoAlpha: 1 })
 
+      // `revelable` veut dire « j'attends GSAP ». GSAP est la : la classe part,
+      // et avec elle le filet de securite qui rallumerait le texte a 4 s. Sans
+      // ce retrait, ce filet forcerait l'opacite d'un bloc encore sous le pli —
+      // une animation l'emporte sur un style en ligne dans la cascade.
+      element.classList.remove('revelable')
+
       const { type, duree, decalage } = REGLAGES[decoupe]
       const media = gsap.matchMedia()
 
       media.add('(prefers-reduced-motion: no-preference)', () => {
-        // `autoSplit` rejoue `onSplit` a chaque redecoupage. Ce drapeau evite
-        // qu'un redecoupage apres le retrait du voile remette l'animation en
-        // pause — le texte resterait alors sous son masque pour de bon.
-        let liberee = !auChargement
-        let jouer: (() => void) | null = null
-
         const decoupage = SplitText.create(element, {
           type,
           mask: 'lines',
+          // Une classe stable sur chaque ligne — et sur son masque, qui en est
+          // un clone. C'est ce qui permet a la suite d'ecrans de distinguer les
+          // blocs poses par SplitText d'un vrai bloc enfant.
+          linesClass: LIGNE,
           autoSplit: true,
           aria: 'auto',
           onSplit(self) {
             const cibles = decoupe === 'caracteres' ? self.chars : self.lines
 
-            const mouvement = gsap.from(cibles, {
+            return gsap.from(cibles, {
               yPercent: DEPART_POURCENT,
               duration: duree,
               ease: COURBE,
               delay: delai,
               stagger: decalage,
-              paused: !liberee,
-              scrollTrigger: auChargement
+              scrollTrigger: desLeMontage
                 ? undefined
                 : { trigger: element, start: DECLENCHEMENT, once: true },
             })
-
-            jouer = () => mouvement.play()
-            return mouvement
           },
         })
 
-        const desabonner = auChargement
-          ? quandPagePrete(() => {
-              liberee = true
-              jouer?.()
-            })
-          : () => {}
-
-        return () => {
-          desabonner()
-          decoupage.revert()
-        }
+        return () => decoupage.revert()
       })
 
       return () => media.revert()
     },
-    { scope: cadre, dependencies: [decoupe, auChargement, delai] },
+    { scope: cadre, dependencies: [decoupe, desLeMontage, delai] },
   )
 
   return (

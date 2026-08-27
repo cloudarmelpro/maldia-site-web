@@ -59,14 +59,12 @@ export function ContactPage({
 
           {/* La remontee du design : l'ecart de la colonne flex est plus large
               que celui voulu entre l'intitule et le titre. */}
-          <Revelation
-            balise="h1"
-            auChargement
+          <h1
             id="titre-page"
             className="-mt-4.5 max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white"
           >
             {contact.entete.titre}
-          </Revelation>
+          </h1>
         </div>
       </section>
 

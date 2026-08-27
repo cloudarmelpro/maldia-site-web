@@ -10,9 +10,17 @@ const PAS_MINIMAL = 0.004
  * La barre de progression de defilement, venue du design de l'article et posee
  * par le gabarit sur toutes les pages.
  *
- * `fixed` en haut de la fenetre et non dans l'en-tete : l'en-tete du site n'est
- * pas colle, il defile avec la page. Posee dedans, la barre disparaitrait au
- * premier defilement — c'est-a-dire au moment ou elle sert.
+ * `fixed` en haut de la fenetre et non dans l'en-tete. L'en-tete est colle, donc
+ * il resterait bien visible — mais il repeint son fond a chaque section
+ * survolee, et la barre y perdrait son contraste a chaque changement d'aplat.
+ * Elle est aussi rendue AVANT `main`, hors de tout ancetre transforme : un
+ * `transform` pose plus bas creerait un contexte qui la recalerait sur son
+ * parent au lieu de la fenetre.
+ *
+ * Elle anime `transform: scaleX` et jamais `width` : une largeur recalculee a
+ * chaque image de defilement refait la mise en page, et elle partage ces images
+ * avec Lenis et ScrollTrigger. `origin-left` est ce qui la fait croitre depuis
+ * le bord gauche.
  *
  * La mesure passe par `requestAnimationFrame` : l'evenement de defilement se
  * declenche bien plus souvent qu'une image, et recalculer a chaque fois
@@ -54,8 +62,8 @@ export function BarreProgression() {
   return (
     <div
       aria-hidden
-      className="fixed inset-x-0 top-0 z-70 h-0.5 origin-left bg-primaire transition-[width] duration-[120ms] ease-linear motion-reduce:transition-none"
-      style={{ width: `${(progression * 100).toFixed(2)}%` }}
+      className="fixed inset-x-0 top-0 z-70 h-0.5 w-full origin-left bg-primaire transition-transform duration-[120ms] ease-linear motion-reduce:transition-none"
+      style={{ transform: `scaleX(${progression.toFixed(4)})` }}
     />
   )
 }

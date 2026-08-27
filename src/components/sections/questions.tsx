@@ -80,7 +80,7 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
                     }}
                     // Le design pose 34 px de haut ; sous 768 px la cible tactile
                     // passe devant, et `e2e/adaptation.spec.ts` l'exige.
-                    className={`min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-colors duration-200 md:min-h-[2.125rem] md:min-w-0 md:px-[0.8125rem] ${FOCUS} ${
+                    className={`min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-colors duration-200 large:min-h-[2.125rem] large:min-w-0 large:px-[0.8125rem] ${FOCUS} ${
                       actif ? 'bg-primaire text-white' : 'bg-primaire/7 text-encre-2'
                     }`}
                   >

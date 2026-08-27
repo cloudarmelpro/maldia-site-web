@@ -1,5 +1,4 @@
 import type { Contenu } from '@/content/types'
-import { Revelation } from '@/components/shared/revelation'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -48,21 +47,17 @@ export function TalentsHero({
         {/* La marge negative resserre l'intitule sur le titre : le design lui
             donne moins d'air qu'aux blocs suivants, qui partagent le meme gap. */}
         <div className="-mt-4.5 flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
-          <Revelation
-            balise="h1"
-            auChargement
+          <h1
             id="titre-page"
             className="max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white"
           >
             {contenu.titre}
-          </Revelation>
-          <Revelation
-            auChargement
-            delai={0.12}
+          </h1>
+          <p
             className="max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white/92"
           >
             {contenu.description}
-          </Revelation>
+          </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">

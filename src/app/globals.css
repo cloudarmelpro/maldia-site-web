@@ -242,6 +242,26 @@
 @utility revelable {
   @media (scripting: enabled) {
     opacity: 0;
+
+    /* Le filet de sécurité, et il couvre le cas le plus probable de tous.
+
+       `scripting: enabled` protège du visiteur sans script. Il ne protège pas
+       du cas « script activé, fichier manquant » — un dépôt FTP partiel, un
+       transfert tronqué, une CSP. Mesuré : le texte restait alors invisible
+       pour toujours, et un seul fichier de 257 Ko portait cette responsabilité
+       pour les six pages.
+
+       Au bout de 4 s, l'opacité revient. `Revelation` retire la classe dès que
+       GSAP prend la main, donc ce filet ne se déclenche que s'il n'est jamais
+       venu. 4 s parce qu'il faut dépasser le pire chargement honnête sans
+       jamais gêner un chargement normal. */
+    animation: secours-revelation 1ms 4s forwards;
+  }
+}
+
+@keyframes secours-revelation {
+  to {
+    opacity: 1;
   }
 }
 

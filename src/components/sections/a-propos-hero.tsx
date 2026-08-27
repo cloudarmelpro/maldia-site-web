@@ -1,5 +1,4 @@
 import type { Contenu } from '@/content/types'
-import { Revelation } from '@/components/shared/revelation'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { classes } from '@/components/shared/classes'
 import { CONTENEUR } from '@/components/shared/section'
@@ -30,22 +29,18 @@ export function AProposHero({ contenu }: { contenu: Contenu['aPropos']['entete']
         {/* La marge haute negative resserre le titre sous son intitule, sans
             toucher a l'ecart que la colonne pose partout ailleurs. */}
         <div className="-mt-4.5 flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]">
-          <Revelation
-            balise="h1"
-            auChargement
+          <h1
             id="titre-page"
             className="max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white"
           >
             {contenu.titre}
-          </Revelation>
+          </h1>
 
-          <Revelation
-            auChargement
-            delai={0.12}
+          <p
             className="max-w-[30ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white/94"
           >
             {contenu.description}
-          </Revelation>
+          </p>
         </div>
       </div>
     </section>

@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Bouton } from '@/components/shared/bouton'
-import { Revelation } from '@/components/shared/revelation'
 import { CONTENEUR } from '@/components/shared/section'
 
 /** Le masque du design : la colonne se dissout vers le haut et vers le bas. */
@@ -47,10 +46,6 @@ const COLONNES = [
 ] as const
 
 type Vignette = (typeof COLONNES)[number]['vignettes'][number]
-
-/** Les delais du site de reference, comptes a partir du retrait du voile. */
-const DELAI_TITRE = 0.15
-const DELAI_LEAD = 0.3
 
 /**
  * Ni liste ni `aria-hidden` : l'alt vide suffit a rendre ces photos muettes, et
@@ -144,28 +139,23 @@ export function Hero({
           <div className="flex min-w-0 max-w-[min(100%,32.5rem)] flex-1 flex-col justify-center gap-[clamp(1.25rem,2.4vw,1.875rem)]">
             <p className="inline-flex items-center gap-2.25 self-start etiquette text-[0.6875rem] tracking-[0.1em] text-white">
               <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-white" />
-              <Revelation balise="span" decoupe="caracteres" auChargement>
+              <span>
                 {contenu.intitule}
-              </Revelation>
+              </span>
             </p>
 
-            <Revelation
-              balise="h1"
+            <h1
               id="titre-hero"
-              auChargement
-              delai={DELAI_TITRE}
               className="max-w-[13ch] font-titre text-[clamp(2.25rem,4.4vw,3.875rem)] leading-[0.99] tracking-[-0.055em] text-white"
             >
               {contenu.titre}
-            </Revelation>
+            </h1>
 
-            <Revelation
-              auChargement
-              delai={DELAI_LEAD}
+            <p
               className="max-w-[34ch] text-[clamp(0.9375rem,1.15vw,1.09375rem)] leading-[1.55] text-white"
             >
               {contenu.lead}
-            </Revelation>
+            </p>
 
             <div className="flex flex-wrap items-center gap-2.5">
               <Bouton

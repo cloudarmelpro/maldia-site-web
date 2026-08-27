@@ -17,21 +17,8 @@ gsap.registerPlugin(ScrollTrigger)
  */
 let instance: Lenis | null = null
 
-const REPLI_HAUTEUR_EN_TETE = 96
-
 function mouvementReduit() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
-/**
- * Le decalage des ancres internes. `scroll-padding-top` ne s'applique qu'au
- * defilement natif : des que Lenis l'intercepte, la regle CSS n'est plus lue et
- * un titre vise atterrit sous la barre collante.
- */
-function decalageAncre() {
-  const publiee = getComputedStyle(document.documentElement).getPropertyValue('--hauteur-en-tete')
-  const hauteur = Number.parseFloat(publiee)
-  return -((Number.isFinite(hauteur) && hauteur > 0 ? hauteur : REPLI_HAUTEUR_EN_TETE) + 24)
 }
 
 /**
@@ -72,7 +59,12 @@ export function DefilementLisse() {
   useEffect(() => {
     if (mouvementReduit()) return
 
-    const lenis = new Lenis({ autoRaf: false, anchors: { offset: decalageAncre() } })
+    // `anchors: true` et surtout AUCUN `offset` : Lenis 1.3 lit lui-meme le
+    // `scroll-padding-top` de la racine et le soustrait de sa cible — verifie
+    // dans sa source, `… - scrollMargin - scrollPadding`. Un decalage ajoute ici
+    // compensait donc une seconde fois, et les titres vises atterrissaient
+    // 120 px trop bas.
+    const lenis = new Lenis({ autoRaf: false, anchors: true })
     instance = lenis
 
     lenis.on('scroll', ScrollTrigger.update)

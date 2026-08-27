@@ -23,15 +23,30 @@ aucune échelle :
 L'échelle est resserrée d'un cran et ramenée à trois pas, plus une respiration
 de bloc :
 
-| après | rôle |
-| --- | --- |
-| **18 px** ×6 | paragraphes et listes — un seul pas pour le texte lu |
-| **28 px** ×2 | citation, et l'entrée de « À lire » |
-| **34 px** ×4 | avant un `h2` |
-| 60 px | avant le bloc d'appel |
+| après | classe | rôle |
+| --- | --- | --- |
+| **18 px** ×6 | `mt-4.5` | paragraphes et listes — un seul pas pour le texte lu |
+| **28 px** | `mt-7` | citation |
+| **34 px** ×4 | `mt-8.5` | avant un `h2` |
+| **44 px** ×2 | `mt-11` | avant le bloc d'appel et avant « À lire » |
 
 26 et 36 disparaissent : la liste rejoint le rythme du paragraphe qu'elle
 prolonge, la citation celui de la respiration.
+
+### Une mesure fausse, corrigée
+
+La première version de ce document annonçait 60 px avant le bloc d'appel et
+28 avant « À lire ». **Les deux chiffres étaient faux** ; les classes ont
+toujours dit 44.
+
+La cause vaut d'être connue : ces deux blocs sont sous la ligne de flottaison,
+leur `Apparition` ne s'était donc pas déclenchée au moment de la mesure, et ils
+portaient encore le `translateY(16px)` de leur état de départ. D'où 44 + 16 = 60
+pour l'un, et 44 − 16 = 28 pour l'autre, le bloc précédent étant décalé lui
+aussi.
+
+**Toute mesure de géométrie sur ce site doit se faire après que les entrées ont
+joué** — sinon on mesure l'état de départ d'une animation, pas la mise en page.
 
 La **signature** passe à 19 px, la hauteur de sa ligne : deux lignes qui se
 lisent comme une signature, pas comme deux paragraphes.

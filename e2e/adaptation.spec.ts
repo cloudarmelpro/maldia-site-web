@@ -64,7 +64,13 @@ for (const adresse of CHEMINS) {
     })
 
     test('les cibles tactiles font au moins 44 px', async ({ page, viewport }) => {
-      test.skip(!viewport || viewport.width >= 768, 'ne vaut que sous 768 px')
+      // 1000 px et non 768 : c'est `--breakpoint-large` qui fait apparaître la
+      // navigation de bureau. Sous cette largeur l'écran est tactile en
+      // pratique, panneau mobile compris. Le seuil précédent, 768, tombait
+      // pile sur le `md:` où plusieurs cibles rétrécissent — la borne du saut
+      // et celle du rétrécissement étaient la même valeur, donc le test ne
+      // voyait jamais ce qu'il aurait dû attraper.
+      test.skip(!viewport || viewport.width >= 1000, 'ne vaut que sous 1000 px')
 
       await page.goto(adresse)
 
@@ -112,7 +118,13 @@ for (const adresse of CHEMINS) {
         const BLOCS = 'p, div, ul, ol, li, h1, h2, h3, h4, h5, h6, section, article'
 
         for (const el of document.querySelectorAll('p, li, blockquote')) {
-          if (el.querySelector(BLOCS)) continue
+          // Les lignes posees par SplitText sont des `div`, mais ce ne sont pas
+          // des blocs enfants au sens de cette mesure : elles font la largeur de
+          // l'element qui les porte. Sans cette exception, le garde ci-dessous
+          // ecartait TOUS les paragraphes reveles — le test passait au vert en
+          // ne mesurant plus rien.
+          const blocs = [...el.querySelectorAll(BLOCS)]
+          if (blocs.some((noeud) => !noeud.closest('.ligne-revelee'))) continue
 
           const texte = (el.textContent ?? '').trim()
           if (texte.length < 60) continue // trop court pour former une ligne pleine

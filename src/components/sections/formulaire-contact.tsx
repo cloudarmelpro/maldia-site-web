@@ -14,7 +14,7 @@ const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi
 // un peu sous la cible tactile, que `e2e/adaptation.spec.ts` exige a 44 px sous
 // 768 px — la cible passe devant, l'ecart ne se voit pas.
 const CHAMP =
-  'min-h-11 w-full rounded-marque border-0 bg-white px-3.75 py-3.25 text-[0.875rem] text-encre placeholder:text-indicatif focus:outline-2 focus:outline-offset-2 focus:outline-encre'
+  'min-h-11 w-full rounded-marque border-0 bg-white px-3.75 py-3.25 text-base text-encre placeholder:text-indicatif focus:outline-2 focus:outline-offset-2 focus:outline-encre'
 
 const LIBELLE = 'mb-1.75 block text-[0.65625rem] tracking-[0.08em] uppercase text-encre-2'
 

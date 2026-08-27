@@ -5,7 +5,6 @@ import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
 import { MetaArticle } from '@/components/sections/carte-article'
-import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -92,14 +91,12 @@ export function BlogArticle({
             {blog.retour}
           </Lien>
 
-          <Revelation
-            balise="h1"
-            auChargement
+          <h1
             id="titre-page"
             className="max-w-[22ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-balance text-white"
           >
             {article.titre}
-          </Revelation>
+          </h1>
 
           <MetaArticle
             article={article}

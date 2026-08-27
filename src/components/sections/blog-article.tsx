@@ -142,11 +142,18 @@ export function BlogArticle({
                         <li key={titre.position}>
                           <a
                             href={`#${ancre(rang)}`}
-                            // 44 px sous 768 px, 24 au-dessus. Le plancher tactile
-                            // ne vaut que pour le doigt ; a la souris, 24 px est le
-                            // minimum des WCAG, et 44 espacait les entrees.
+                            // Ecart deliberement reduit, et le seul du site :
+                            // 24 px partout, au lieu de 44 sous 768 px. C'est le
+                            // minimum de WCAG 2.5.8 (AA), pas celui de 2.5.5
+                            // (AAA) que le reste du site tient. La suite
+                            // d'ecrans le sait — voir `data-cible-reduite`.
+                            //
+                            // Un sommaire est une liste de titres qu'on lit
+                            // avant de viser : espacee au plancher tactile, elle
+                            // se lisait comme trois blocs et non comme un plan.
+                            data-cible-reduite
                             className={classes(
-                              'flex min-h-11 items-center text-[0.875rem] leading-[1.45] text-encre-2 transition-[color] duration-[220ms] hover:text-primaire md:min-h-6',
+                              'flex min-h-6 items-center text-[0.875rem] leading-[1.45] text-encre-2 transition-[color] duration-[220ms] hover:text-primaire',
                               FOCUS,
                             )}
                           >
@@ -159,9 +166,12 @@ export function BlogArticle({
                 </>
               ) : null}
 
-              <div className={classes(titres.length > 0 && 'mt-1.5 border-t border-trait pt-4')}>
-                <p className="text-[0.875rem] text-encre">{blog.auteur.nom}</p>
-                <p className="mt-1 text-[0.8125rem] text-encre-2">{blog.auteur.lieu}</p>
+              {/* Les deux lignes se lisent comme une signature, pas comme deux
+                  paragraphes : hauteur de ligne resserree, et l'interligne par
+                  defaut du corps ne s'applique pas ici. */}
+              <div className={classes(titres.length > 0 && 'mt-1.5 border-t border-trait pt-3.5')}>
+                <p className="text-[0.875rem] leading-[1.35] text-encre">{blog.auteur.nom}</p>
+                <p className="text-[0.8125rem] leading-[1.35] text-encre-2">{blog.auteur.lieu}</p>
               </div>
             </aside>
 

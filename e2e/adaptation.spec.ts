@@ -21,6 +21,20 @@ const CHEMINS = [
 
 const CIBLE_TACTILE_MINIMALE = 44
 
+/**
+ * Le plancher des cibles marquées `data-cible-reduite`.
+ *
+ * 44 px est le minimum de WCAG 2.5.5, niveau AAA, et c'est celui que tout le
+ * site tient. 24 px est celui de 2.5.8, niveau AA — le seuil réellement exigé.
+ *
+ * Une seule cible descend au second : les entrées du sommaire d'article, à la
+ * demande du client. Un sommaire se lit avant de se viser, et espacé au
+ * plancher tactile il se lisait comme des blocs séparés plutôt que comme un
+ * plan. L'attribut rend l'écart visible dans le balisage : il ne se répand pas
+ * par mégarde, et il reste mesuré ici.
+ */
+const CIBLE_REDUITE_MINIMALE = 24
+
 // 75 caractères est l'optimum de lisibilité. 90 est le plafond au-delà duquel l'œil
 // ne retrouve plus le début de la ligne suivante — c'est celui qu'on tient, pour
 // laisser à la direction artistique la marge du choix.
@@ -52,7 +66,7 @@ for (const adresse of CHEMINS) {
 
       await page.goto(adresse)
 
-      const trop_petites = await page.evaluate((minimum) => {
+      const trop_petites = await page.evaluate((seuils) => {
         const interactifs = document.querySelectorAll(
           'a[href], button, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])',
         )
@@ -61,15 +75,16 @@ for (const adresse of CHEMINS) {
         for (const el of interactifs) {
           const r = el.getBoundingClientRect()
           if (r.width === 0 || r.height === 0) continue // masqué : hors sujet
+          const minimum = el.hasAttribute('data-cible-reduite') ? seuils.reduite : seuils.normale
           if (r.width < minimum || r.height < minimum) {
             const texte = (el.textContent ?? '').trim().slice(0, 30)
             fautives.push(
-              `${el.tagName.toLowerCase()} « ${texte} » — ${Math.round(r.width)}×${Math.round(r.height)} px`,
+              `${el.tagName.toLowerCase()} « ${texte} » — ${Math.round(r.width)}×${Math.round(r.height)} px, minimum ${minimum}`,
             )
           }
         }
         return fautives
-      }, CIBLE_TACTILE_MINIMALE)
+      }, { normale: CIBLE_TACTILE_MINIMALE, reduite: CIBLE_REDUITE_MINIMALE })
 
       expect(trop_petites, trop_petites.join(' | ')).toEqual([])
     })

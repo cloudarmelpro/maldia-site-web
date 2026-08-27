@@ -3,34 +3,38 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-import { cheminArticle } from '@/content/langues'
+import { chemin, cheminArticle } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
-import { CarteArticle } from '@/components/sections/carte-article'
+import { CarteArticle, MetaArticle } from '@/components/sections/carte-article'
 import { Apparition } from '@/components/shared/apparition'
-import { Bouton } from '@/components/shared/bouton'
+import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Fleche } from '@/components/shared/fleche'
 import { Lien } from '@/components/shared/lien'
 import { Pilule } from '@/components/shared/pilule'
-import { CONTENEUR, DECALAGE_CONTENU, GRILLE_INTITULE } from '@/components/shared/section'
+import { CONTENEUR } from '@/components/shared/section'
 
 const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 /**
- * WEB-15 — l'index du blog, dans la mise en page de « Blog Maldia ».
+ * L'en-tete est collant dans le flux, avec une marge basse negative egale a sa
+ * hauteur : la premiere section commence donc SOUS lui. Sa hauteur mesuree est
+ * publiee dans `--hauteur-en-tete` par `components/layout/en-tete` — la barre
+ * grandit quand la navigation passe a la ligne, et une valeur en dur laisserait
+ * alors la pilule dessous. Le repli est accorde au `min-h-18` de la barre.
+ */
+const HAUT_HERO = 'pt-[calc(clamp(4rem,8vw,7.25rem)+var(--hauteur-en-tete,4.5rem))]'
+
+/**
+ * WEB-15 — l'index du blog, sur le design « Site Maldia » : un hero vert, un
+ * article a la une, puis les autres en lignes.
  *
- * Le `h1` de la page est ici : le blog n'a pas de bande d'en-tête sombre comme
- * les autres pages intérieures, son titre vit dans la première section blanche.
- *
- * L'article le plus récent passe en vedette et sort de la grille. Les onglets de
- * filtre sont déduits des catégories **de la grille**, pas de tous les articles :
- * sinon filtrer sur la catégorie de la vedette laisserait une grille vide.
- *
- * Une seule cible par carte, l'article entier : le titre n'est pas un lien
- * séparé, sinon la carte porterait deux fois la même destination.
+ * L'article le plus recent passe en vedette et sort de la liste. Les onglets de
+ * filtre sont deduits des categories **de la liste**, pas de tous les articles :
+ * sinon filtrer sur la categorie de la vedette laisserait une liste vide.
  */
 export function BlogListe({
   contenu,
@@ -38,165 +42,154 @@ export function BlogListe({
   langue,
 }: {
   contenu: Contenu['blog']
-  /** Triés du plus récent au plus ancien : le premier passe en vedette. */
+  /** Tries du plus recent au plus ancien : le premier passe en vedette. */
   articles: readonly Article[]
   langue: Langue
 }) {
-  const [vedette, ...grille] = articles
-  const categories = [...new Set(grille.map((article) => article.categorie))]
+  const [vedette, ...liste] = articles
+  const categories = [...new Set(liste.map((article) => article.categorie))]
   const onglets = [contenu.filtreTout, ...categories]
 
   const [filtre, setFiltre] = useState(0)
-  const visibles = filtre === 0 ? grille : grille.filter((a) => a.categorie === onglets[filtre])
+  const visibles = filtre === 0 ? liste : liste.filter((a) => a.categorie === onglets[filtre])
 
   return (
     <>
       <section
         aria-labelledby="titre-page"
-        className="bg-fond pt-[clamp(3rem,5.4vw,5.25rem)] pb-[clamp(2.125rem,3.6vw,3.25rem)]"
+        className={classes('bg-primaire pb-[clamp(3rem,6vw,5rem)]', HAUT_HERO)}
       >
         <div className={CONTENEUR}>
-          <div className={GRILLE_INTITULE}>
-            <Pilule intitule={contenu.entete.intitule} registre="clair" />
+          <Pilule intitule={contenu.entete.intitule} registre="sombre" />
 
-            <div className="flex flex-col gap-[clamp(1.75rem,3vw,2.75rem)]">
-              <div className="flex flex-col items-start gap-5 large:flex-row large:items-end large:justify-between large:gap-[clamp(1.5rem,3vw,3rem)]">
-                <h1
-                  id="titre-page"
-                  className="max-w-[22ch] font-titre text-[clamp(1.875rem,3.2vw,3.25rem)] leading-[1.06] tracking-[-0.05em] text-encre"
-                >
-                  {contenu.entete.titre}
-                </h1>
-                <p className="max-w-[30ch] shrink-0 text-[0.90625rem] leading-[1.6] text-encre-2 large:text-right">
-                  {contenu.entete.description}
-                </p>
-              </div>
-
-              {grille.length > 0 ? (
-                <div role="group" aria-label={contenu.entete.intitule} className="flex flex-wrap gap-2">
-                  {onglets.map((libelle, indice) => {
-                    const actif = indice === filtre
-                    return (
-                      <button
-                        key={libelle}
-                        type="button"
-                        aria-pressed={actif}
-                        onClick={() => setFiltre(indice)}
-                        className={classes(
-                          'min-h-11 cursor-pointer rounded-bloc border px-4 etiquette text-[0.6875rem] whitespace-nowrap transition-[background-color,color,border-color]',
-                          FOCUS,
-                          actif
-                            ? 'border-encre bg-encre text-white'
-                            : 'border-trait bg-white text-encre-2',
-                        )}
-                      >
-                        {libelle}
-                      </button>
-                    )
-                  })}
-                </div>
-              ) : null}
-
-              {vedette ? (
-                <Apparition>
-                  <Lien
-                    href={cheminArticle(langue, vedette.identifiant)}
-                    className={classes(
-                      'grid grid-cols-1 gap-[clamp(1rem,1.6vw,1.5rem)] rounded-encart border border-trait bg-fond-2 p-[clamp(0.875rem,1.2vw,1rem)] transition-transform duration-[220ms] hover:-translate-y-0.5 voies:grid-cols-[minmax(0,46%)_minmax(0,1fr)]',
-                      FOCUS,
-                    )}
-                  >
-                    {/* alt vide : le titre de l'article suit immédiatement. */}
-                    <span className="relative block min-h-[clamp(13.75rem,24vw,20rem)] overflow-hidden rounded-bloc bg-[#eceeea]">
-                      <Image
-                        src={PHOTOS.blog[vedette.identifiant]}
-                        alt=""
-                        fill
-                        priority
-                        sizes="(max-width: 820px) 100vw, 46vw"
-                        className="object-cover"
-                      />
-                    </span>
-
-                    <span className="flex min-w-0 flex-col gap-3.5 px-[clamp(0.625rem,1.4vw,1.125rem)] py-[clamp(0.625rem,1.4vw,1.375rem)]">
-                      <span className="flex flex-wrap items-center gap-2.5">
-                        <span className="rounded-etiquette bg-vert-clair px-2.75 py-1.5 etiquette-fine text-[0.625rem] tracking-[0.08em] text-encre">
-                          {contenu.aLaUne}
-                        </span>
-                        <span className="etiquette-fine tracking-[0.08em] text-encre-3">
-                          {vedette.categorie} · {vedette.duree}
-                        </span>
-                      </span>
-                      <span className="block max-w-[26ch] font-titre text-[clamp(1.3125rem,1.9vw,1.875rem)] leading-[1.14] tracking-[-0.04em] text-encre">
-                        {vedette.titre}
-                      </span>
-                      <span className="block max-w-[44ch] text-[0.875rem] leading-[1.6] text-encre-2">
-                        {vedette.resume}
-                      </span>
-                      <span className="mt-auto inline-flex items-center gap-2.25 etiquette text-[0.6875rem] text-encre">
-                        {contenu.lire}
-                        <Fleche />
-                      </span>
-                    </span>
-                  </Lien>
-                </Apparition>
-              ) : null}
-            </div>
+          <div className="mt-7 flex flex-wrap items-end gap-8">
+            <h1
+              id="titre-page"
+              className="max-w-[22ch] min-w-0 grow basis-120 font-titre text-[clamp(1.5625rem,3vw,2.4375rem)] leading-[1.02] tracking-[-0.035em] text-white"
+            >
+              {contenu.entete.titre}
+            </h1>
+            <p className="max-w-[38ch] min-w-0 grow basis-75 text-[1.0625rem] leading-[1.55] text-white/92">
+              {contenu.entete.description}
+            </p>
           </div>
+
+          <p className="mt-9 etiquette text-[0.6875rem] tracking-[0.08em] text-white/92">
+            {contenu.entete.mention}
+          </p>
         </div>
       </section>
 
-      <section
-        aria-labelledby="titre-blog-liste"
-        className="bg-fond pb-[clamp(3.5rem,6vw,6rem)]"
-      >
+      <section className="bg-fond py-[clamp(3.5rem,7vw,6.25rem)]">
         <div className={CONTENEUR}>
-          <h2 id="titre-blog-liste" className="sr-only">
-            {contenu.entete.titre}
-          </h2>
-
-          {visibles.length === 0 ? (
-            <p className={classes(DECALAGE_CONTENU, 'py-10 text-[1.0625rem] text-encre-2')}>
-              {contenu.vide}
-            </p>
-          ) : (
-            <ul
-              className={classes(
-                'grid grid-cols-1 gap-[clamp(0.875rem,1.4vw,1.25rem)] duo:grid-cols-2 large:grid-cols-3',
-                DECALAGE_CONTENU,
-              )}
-            >
-              {visibles.map((article, indice) => (
-                <li key={article.identifiant} className="min-w-0">
-                  <Apparition delai={delaiDeGrille(indice)} className="h-full">
-                    <CarteArticle article={article} langue={langue} />
-                  </Apparition>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <Apparition>
-            <div
-              className={classes(
-                'mt-[clamp(1.75rem,3vw,2.75rem)] flex flex-wrap items-center justify-between gap-5 rounded-carte-large border border-dashed border-trait-3 bg-fond-2 p-[clamp(1.375rem,2.2vw,2rem)]',
-                DECALAGE_CONTENU,
-              )}
-            >
-              <span className="flex min-w-0 flex-col gap-2">
-                <strong className="text-[1.0625rem] tracking-[-0.03em] text-encre">
-                  {contenu.suite.titre}
-                </strong>
-                <span className="max-w-[52ch] text-[0.84375rem] leading-[1.55] text-encre-2">
-                  {contenu.suite.texte}
+          {vedette ? (
+            <Apparition>
+              <Lien
+                href={cheminArticle(langue, vedette.identifiant)}
+                className={classes(
+                  'group flex flex-wrap items-center gap-[clamp(1.5rem,4vw,3.5rem)]',
+                  FOCUS,
+                )}
+              >
+                {/* alt vide : le titre de l'article suit immediatement. */}
+                <span className="relative block h-[clamp(15rem,30vw,23.75rem)] min-w-0 grow basis-105 overflow-hidden rounded-panneau bg-fond-2">
+                  <Image
+                    src={PHOTOS.blog[vedette.identifiant]}
+                    alt=""
+                    fill
+                    preload
+                    sizes="(max-width: 820px) 100vw, 46vw"
+                    className="object-cover"
+                  />
                 </span>
-              </span>
-              <Bouton
-                destination="rendezVous"
+
+                <div className="min-w-0 grow basis-90">
+                  <div className="flex flex-wrap items-center gap-3.5">
+                    <span className="rounded-pilule bg-primaire/7 px-3.25 py-1.25 etiquette text-[0.71875rem] tracking-[0.1em] text-encre">
+                      {contenu.aLaUne}
+                    </span>
+                    <MetaArticle article={vedette} langue={langue} deLecture={contenu.deLecture} />
+                  </div>
+
+                  <h2 className="mt-6.5 max-w-[24ch] font-titre text-[clamp(1.125rem,1.7vw,1.4375rem)] leading-[1.08] tracking-[-0.03em] text-encre">
+                    {vedette.titre}
+                  </h2>
+                  <p className="mt-4.5 max-w-[48ch] text-[1.0625rem] leading-[1.6] text-prose">
+                    {vedette.resume}
+                  </p>
+                  <span className="mt-7 inline-flex items-center gap-2.5 text-[0.96875rem] text-primaire transition-[color] duration-[220ms] group-hover:text-primaire-fonce">
+                    {contenu.lire}
+                    <Fleche />
+                  </span>
+                </div>
+              </Lien>
+            </Apparition>
+          ) : null}
+
+          <div className="mt-[clamp(3rem,6vw,5.25rem)]">
+            {liste.length > 0 ? (
+              <div
+                role="group"
+                aria-label={contenu.entete.intitule}
+                className="flex flex-wrap gap-2"
+              >
+                {onglets.map((libelle, indice) => {
+                  const actif = indice === filtre
+                  return (
+                    <button
+                      key={libelle}
+                      type="button"
+                      aria-pressed={actif}
+                      onClick={() => setFiltre(indice)}
+                      // Le design pose 34 px de haut ; sous 768 px la cible
+                      // tactile passe devant, et `e2e/adaptation.spec.ts`
+                      // l'exige.
+                      className={classes(
+                        'min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-colors duration-200 md:min-h-[2.125rem] md:min-w-0 md:px-[0.8125rem]',
+                        FOCUS,
+                        actif ? 'bg-primaire text-white' : 'bg-primaire/7 text-encre-2',
+                      )}
+                    >
+                      {libelle}
+                    </button>
+                  )
+                })}
+              </div>
+            ) : null}
+
+            {visibles.length === 0 ? (
+              <p className="max-w-[52ch] py-10 text-[1.0625rem] text-encre-2">{contenu.vide}</p>
+            ) : (
+              <ul className="mt-6 border-t border-trait">
+                {visibles.map((article, indice) => (
+                  <li key={article.identifiant} className="min-w-0">
+                    <Apparition delai={delaiDeGrille(indice)}>
+                      <CarteArticle
+                        article={article}
+                        langue={langue}
+                        deLecture={contenu.deLecture}
+                      />
+                    </Apparition>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <Apparition className="mt-[clamp(3rem,6vw,5rem)]">
+            <div className="flex flex-wrap items-center gap-6 rounded-panneau bg-primaire/5 p-[clamp(1.75rem,3vw,2.75rem)]">
+              <div className="min-w-0 grow basis-100">
+                <h2 className="font-titre text-[clamp(1.125rem,1.7vw,1.4375rem)] leading-[1.12] tracking-[-0.02em] text-encre">
+                  {contenu.suite.titre}
+                </h2>
+                <p className="mt-3 max-w-[56ch] text-[1rem] leading-[1.6] text-prose">
+                  {contenu.suite.texte}
+                </p>
+              </div>
+              <BoutonPage
+                vers={chemin(langue, 'contact')}
                 libelle={contenu.suite.cta}
-                variante="encre"
-                taille="compacte"
-                ornement="etoile"
+                variante="vert"
                 className="shrink-0"
               />
             </div>

@@ -20,24 +20,20 @@ export async function generateMetadata({
 }
 
 /**
- * WEB-7 — contact, sur le design « Contact Maldia ».
+ * WEB-7 — contact, sur le design « Site Maldia ».
  *
- * Le design y met deux formulaires, dont un depot de CV. Ils ne sont pas
- * construits : cette application est un export statique, il n'y a aucun serveur
- * pour recevoir un envoi ni aucun stockage pour un fichier (WEB-10). Chaque
- * onglet mene a la destination reelle. Voir decision 0019.
- *
- * L'en-tete et le pied sont ceux de l'accueil. L'en-tete etant transparent, la
- * bande nuit lui rend son fond.
+ * Le design y met deux formulaires, dont un depot de CV. Ils sont rendus, mais
+ * leur bouton d'envoi est desactive : cette application est un export statique,
+ * il n'y a aucun serveur pour recevoir un envoi ni aucun stockage pour un
+ * fichier (WEB-10). La voie qui aboutit est la carte Cal.com, a cote. Voir
+ * decision 0019.
  */
 export default async function PageContact({ params }: PageProps<'/[langue]/contact'>) {
   const { langue, contenu } = resoudre((await params).langue)
 
   return (
     <Gabarit langue={langue} page="contact" contenu={contenu}>
-        <>
-          <ContactPage contenu={contenu} pied={contenu.commun.pied} />
-        </>
+      <ContactPage contenu={contenu} pied={contenu.commun.pied} />
     </Gabarit>
   )
 }

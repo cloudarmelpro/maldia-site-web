@@ -1,5 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
+import { Pilule } from '@/components/shared/pilule'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -25,10 +26,7 @@ export function Parcours({
     <Section titreId={titreId} fond="fond">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
-          <span className="inline-flex w-fit items-center gap-2.25 rounded-pilule bg-primaire/7 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-encre">
-            <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-primaire" />
-            {contenu.intitule}
-          </span>
+          <Pilule intitule={contenu.intitule} registre="clair" />
         </Apparition>
 
         <Apparition registre="texte">

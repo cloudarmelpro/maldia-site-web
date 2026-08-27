@@ -4,9 +4,10 @@ import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
-import { TalentsContenu } from '@/components/sections/talents-contenu'
 import { TalentsDeroule } from '@/components/sections/talents-deroule'
 import { TalentsDomaines } from '@/components/sections/talents-domaines'
+import { TalentsHero } from '@/components/sections/talents-hero'
+import { TalentsPrincipes } from '@/components/sections/talents-principes'
 
 import { resoudre } from '../resoudre'
 
@@ -23,15 +24,13 @@ export async function generateMetadata({
 
 /**
  * WEB-3 et WEB-5 — la page destinee aux candidats a Madagascar, sur le design
- * « Talents Maldia ».
+ * « Site Maldia ».
  *
  * Aucun argument de cout ni de delai ici : ils s'adressent a l'entreprise qui
  * achete, pas a la personne qui postule.
  *
- * Le `h1` reste ou le design le met : dans la premiere section claire, sans bande
- * sombre. La page n'a donc pas de `TitrePage`, et l'en-tete de l'accueil —
- * transparent, fait pour se poser sur la photo du hero — recoit son fond de la
- * bande nuit ci-dessous. Le meme geste que sur A propos et sur le blog.
+ * Les bandes alternent le vert et le clair, et la derniere est claire : le bloc
+ * d'appel du gabarit est vert et coiffe d'arrondis.
  */
 export default async function PageTalents({ params }: PageProps<'/[langue]/talents'>) {
   const { langue, contenu } = resoudre((await params).langue)
@@ -39,11 +38,12 @@ export default async function PageTalents({ params }: PageProps<'/[langue]/talen
 
   return (
     <Gabarit langue={langue} page="talents" contenu={contenu}>
-        <>
-          <TalentsContenu contenu={talents} />
-          <TalentsDomaines contenu={talents.domaines} profils={commun.profils.liste} />
-          <TalentsDeroule contenu={talents.deroule} />
-        </>
+      <>
+        <TalentsHero contenu={talents.entete} cta={talents.encart.cta} />
+        <TalentsPrincipes principes={talents.principes} encart={talents.encart} />
+        <TalentsDomaines contenu={talents.domaines} profils={commun.profils.liste} />
+        <TalentsDeroule contenu={talents.deroule} />
+      </>
     </Gabarit>
   )
 }

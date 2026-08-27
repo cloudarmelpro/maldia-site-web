@@ -502,7 +502,7 @@ export type Contenu<L extends Langue = Langue> = {
       readonly intitule: string
       readonly titre: string
       readonly description: string
-      /** `cote: 'client'` désigne le candidat ici — c'est ce côté que le design met en citron. */
+      /** `cote: 'client'` désigne le candidat ici — c'est ce côté que le design met en vert. */
       readonly liste: readonly [Etape, Etape, Etape, Etape]
     }
   }
@@ -565,7 +565,7 @@ export type Contenu<L extends Langue = Langue> = {
     }
     /** L'onglet qui ne filtre rien. Les autres viennent des categories des articles. */
     readonly filtreTout: string
-    /** La pastille citron de l'article mis en avant. */
+    /** La pastille de l'article mis en avant. */
     readonly aLaUne: string
     /** Le bloc en pointilles qui ferme la liste. */
     readonly suite: {

@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
+import { Pilule } from '@/components/shared/pilule'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { Fleche } from '@/components/shared/fleche'
@@ -44,10 +45,7 @@ export function Profils({
         {/* L'intitule n'emploie pas `Pilule` : celle-ci tient la colonne de
             gauche de `GRILLE_INTITULE`, que l'accueil n'a plus. */}
         <Apparition className="w-fit self-start">
-          <span className="inline-flex items-center gap-2.25 rounded-pilule bg-primaire/7 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-encre">
-            <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-primaire" />
-            {contenu.intitule}
-          </span>
+          <Pilule intitule={contenu.intitule} registre="clair" />
         </Apparition>
 
         <Apparition registre="texte">

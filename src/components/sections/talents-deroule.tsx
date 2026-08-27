@@ -4,7 +4,7 @@ import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { Pilule } from '@/components/shared/pilule'
-import { BAS_COURT, GRILLE_INTITULE, Section } from '@/components/shared/section'
+import { Section } from '@/components/shared/section'
 
 const TITRE_ID = 'titre-deroule'
 
@@ -13,66 +13,63 @@ const TITRE_ID = 'titre-deroule'
  *
  * `cote` pilote la couleur de la pastille et non le libelle : `acteur` est
  * traduit, le comparer a « Vous » marcherait en francais et nulle part ailleurs.
- * Ici `'client'` designe le candidat.
+ * Ici `'client'` designe le candidat, et `tests/contenu.spec.ts` verifie que les
+ * deux langues portent la meme suite de cotes.
  *
- * Le padding bas est court parce que le bloc d'appel qui suit est du meme encre.
- * A pleine hauteur des deux cotes, le raccord laisserait un vide sombre.
+ * La bande reste claire : le bloc d'appel qui suit est vert et coiffe d'arrondis
+ * — sur du vert, ses coins ne se verraient pas.
  */
 export function TalentsDeroule({ contenu }: { contenu: Contenu['talents']['deroule'] }) {
   return (
-    <Section titreId={TITRE_ID} fond="encre" bas={BAS_COURT}>
-      <div className={GRILLE_INTITULE}>
+    <Section titreId={TITRE_ID} fond="fond-2">
+      <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
-          <Pilule intitule={contenu.intitule} registre="sombre" />
+          <Pilule intitule={contenu.intitule} />
         </Apparition>
 
-        <div className="flex flex-col gap-[clamp(1.625rem,2.8vw,2.5rem)]">
-          <Apparition>
-            <EnTeteSection
-              titreId={TITRE_ID}
-              titre={contenu.titre}
-              description={contenu.description}
-              sombre
-            />
-          </Apparition>
-
-          <ol className="grid grid-cols-1 gap-1.5 duo:grid-cols-2 large:grid-cols-4">
-            {contenu.liste.map((etape, indice) => (
-              <li key={etape.titre} className="min-w-0">
-                <Apparition
-                  delai={delaiDeGrille(indice)}
-                  className="carte-sombre grid h-full min-h-[clamp(12.25rem,16vw,14.125rem)] min-w-0 grid-rows-[auto_1fr_auto] rounded-carte-large border border-white/14 p-[clamp(1rem,1.4vw,1.25rem)]"
-                >
-                  <span className="flex items-center justify-between gap-3">
-                    <span className="etiquette-fine text-[0.6875rem] tracking-[0.09em] normal-case text-vert-clair">
-                      {String(indice + 1).padStart(2, '0')}
-                    </span>
-                    <span
-                      className={classes(
-                        'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.625rem] tracking-[0.07em] whitespace-nowrap',
-                        etape.cote === 'client'
-                          ? 'bg-vert-clair/16 text-vert-clair'
-                          : 'bg-white/10 text-sur-sombre',
-                      )}
-                    >
-                      {etape.acteur}
-                    </span>
-                  </span>
-                  <span />
-                  <span className="flex flex-col gap-2.25">
-                    <strong className="font-titre text-[clamp(1rem,1.3vw,1.1875rem)] leading-[1.2] tracking-[-0.03em] text-white">
-                      {etape.titre}
-                    </strong>
-                    <span className="text-[0.78125rem] leading-[1.45] text-sur-sombre">
-                      {etape.description}
-                    </span>
-                  </span>
-                </Apparition>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <Apparition registre="texte">
+          <EnTeteSection
+            titreId={TITRE_ID}
+            titre={contenu.titre}
+            description={contenu.description}
+          />
+        </Apparition>
       </div>
+
+      <ol className="mt-[clamp(2.125rem,3.6vw,3.5rem)] border-t border-trait">
+        {contenu.liste.map((etape, indice) => (
+          <li key={etape.titre} className="border-b border-trait">
+            <Apparition
+              delai={delaiDeGrille(indice)}
+              className="flex flex-wrap items-start gap-[1.375rem] py-6"
+            >
+              <span className="w-11 shrink-0 font-titre text-[1.5rem] font-extralight leading-[1.2] text-encre-2">
+                {String(indice + 1).padStart(2, '0')}
+              </span>
+
+              <div className="flex min-w-0 grow basis-[18.75rem] flex-col gap-2">
+                <strong className="font-titre text-[1.1875rem] leading-[1.2] tracking-[-0.03em] text-encre">
+                  {etape.titre}
+                </strong>
+                <span className="max-w-[52ch] text-[0.96875rem] leading-[1.55] text-encre-2">
+                  {etape.description}
+                </span>
+              </div>
+
+              <span
+                className={classes(
+                  'shrink-0 self-start rounded-pilule px-2.75 py-1 etiquette whitespace-nowrap',
+                  // Le blanc et non `pilule` : sur le gris teinte de la bande,
+                  // le gris des pilules ne se detacherait pas.
+                  etape.cote === 'client' ? 'bg-primaire text-white' : 'bg-white text-encre',
+                )}
+              >
+                {etape.acteur}
+              </span>
+            </Apparition>
+          </li>
+        ))}
+      </ol>
     </Section>
   )
 }

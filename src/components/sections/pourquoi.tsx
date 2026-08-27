@@ -1,5 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
+import { Pilule } from '@/components/shared/pilule'
 import { Bouton } from '@/components/shared/bouton'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
 import { classes } from '@/components/shared/classes'
@@ -31,10 +32,7 @@ export function Pourquoi({
     <Section titreId={titreId} fond="fond" bas={BAS_COURT}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition className="w-fit self-start">
-          <span className="inline-flex items-center gap-2.25 rounded-pilule bg-primaire/7 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-encre">
-            <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-primaire" />
-            {contenu.intitule}
-          </span>
+          <Pilule intitule={contenu.intitule} registre="clair" />
         </Apparition>
 
         <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">

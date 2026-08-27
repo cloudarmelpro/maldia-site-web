@@ -5,7 +5,8 @@ import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
 import { Gabarit } from '@/components/layout/gabarit'
 import { Methode } from '@/components/sections/methode'
-import { ServicesOuverture } from '@/components/sections/services-ouverture'
+import { ServicesChiffres } from '@/components/sections/services-chiffres'
+import { ServicesHero } from '@/components/sections/services-hero'
 import { ServicesPostes } from '@/components/sections/services-postes'
 
 import { resoudre } from '../resoudre'
@@ -22,18 +23,13 @@ export async function generateMetadata({
 }
 
 /**
- * WEB-4 — la page destinee aux entreprises, sur le design « Services Maldia ».
+ * WEB-4 — la page destinee aux entreprises, sur le design « Site Maldia ».
  *
- * Le design a son propre en-tete, clair et colle, et sa propre cloture. Les deux
- * sont ecartes : le site garde ceux de l'accueil (decision 0018). L'en-tete de
- * l'accueil est transparent — la bande nuit ci-dessous lui rend le fond que la
- * photo du hero lui donne ailleurs.
+ * Le `h1` est dans le hero vert, seule bande de la page a en porter un. Le bloc
+ * de contact et le pied la ferment : ils viennent du gabarit.
  *
- * Le `h1` reste ou le design le met : dans la premiere section claire, sans
- * bande sombre. La page n'a donc pas de `TitrePage`.
- *
- * La methode perd sa conclusion et ses appels ici : le design ne les met pas
- * entre les etapes et les postes, l'appel de la page etant celui de l'encart.
+ * La methode perd ses appels ici — l'appel de la page est celui de l'encart, au
+ * bas des postes.
  */
 export default async function PageServices({ params }: PageProps<'/[langue]/services'>) {
   const { langue, contenu } = resoudre((await params).langue)
@@ -41,11 +37,10 @@ export default async function PageServices({ params }: PageProps<'/[langue]/serv
 
   return (
     <Gabarit langue={langue} page="services" contenu={contenu}>
-        <>
-          <ServicesOuverture contenu={services.entete} arguments={commun.pourquoi.liste} />
-          <Methode contenu={commun.methode} titreId="titre-methode" avecAppel={false} />
-          <ServicesPostes contenu={services.postes} familles={commun.profils.liste} />
-        </>
+      <ServicesHero contenu={services.entete} marches={commun.marches.liste} />
+      <ServicesChiffres intitule={commun.pourquoi.intitule} liste={commun.pourquoi.liste} />
+      <ServicesPostes contenu={services.postes} profils={commun.profils} />
+      <Methode contenu={commun.methode} titreId="titre-methode" avecAppel={false} clair />
     </Gabarit>
   )
 }

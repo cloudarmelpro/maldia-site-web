@@ -3,16 +3,18 @@ import { Apparition } from '@/components/shared/apparition'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
 import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { Pilule } from '@/components/shared/pilule'
-import { BAS_COURT, GRILLE_INTITULE, Section } from '@/components/shared/section'
+import { Section } from '@/components/shared/section'
 
 /**
- * WEB-6 et WEB-12 — les reperes chiffres, sur la bande sombre du design.
+ * WEB-6 et WEB-12 — les reperes chiffres.
  *
- * Ce sont les six memes messages que la section Pourquoi de Services, pris a la
- * meme source : les recopier ici les ferait diverger a la premiere correction.
+ * Ce sont les memes messages que la section Pourquoi de l'accueil et de
+ * Services, pris a la meme source : les recopier ici les ferait diverger a la
+ * premiere correction.
  *
- * Le padding bas est court parce que le bloc d'appel qui suit est du meme encre.
- * A pleine hauteur des deux cotes, le raccord laisserait un vide sombre.
+ * Section claire, entre l'aplat vert du fonctionnement et celui du bloc
+ * d'appel : sur un fond sombre, les deux bandes se toucheraient et la coiffe
+ * arrondie du bloc d'appel ne se lirait plus.
  */
 export function AProposReperes({
   contenu,
@@ -22,23 +24,22 @@ export function AProposReperes({
   arguments: Contenu['commun']['pourquoi']['liste']
 }) {
   return (
-    <Section titreId="titre-reperes" fond="encre" bas={BAS_COURT}>
-      <div className={GRILLE_INTITULE}>
+    <Section titreId="titre-reperes" fond="fond">
+      <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
-          <Pilule intitule={contenu.intitule} registre="sombre" />
+          <Pilule intitule={contenu.intitule} registre="clair" />
         </Apparition>
 
-        <div className="flex flex-col gap-[clamp(1.625rem,2.8vw,2.5rem)]">
-          <Apparition>
+        <div className="flex flex-col gap-[clamp(2.125rem,3.6vw,3.5rem)]">
+          <Apparition registre="texte">
             <EnTeteSection
               titreId="titre-reperes"
               titre={contenu.titre}
               description={contenu.description}
-              sombre
             />
           </Apparition>
 
-          <CartesArguments liste={liste} sombre />
+          <CartesArguments liste={liste} registre="aplat" disposition="fluide" />
         </div>
       </div>
     </Section>

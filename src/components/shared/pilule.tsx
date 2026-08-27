@@ -16,13 +16,16 @@ export type RegistrePilule = 'clair' | 'gris' | 'sombre'
 const REGISTRES: Record<RegistrePilule, string> = {
   clair: 'bg-primaire/7 text-encre',
   gris: 'bg-white text-encre',
-  sombre: 'bg-voile/26 text-white',
+  sombre: 'bg-voile/42 text-white',
 }
 
+// Sur le vert, la puce est en vert clair : c'est le design. Elle n'y tient que
+// 2,6 : 1, ce qui suffit — elle est decorative et `aria-hidden`, le libelle de
+// la pilule porte seul l'information.
 const PUCES: Record<RegistrePilule, string> = {
   clair: 'bg-primaire',
   gris: 'bg-primaire',
-  sombre: 'bg-white',
+  sombre: 'bg-vert-clair',
 }
 
 export function Pilule({

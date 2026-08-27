@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
+import { Pilule } from '@/components/shared/pilule'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Fleche } from '@/components/shared/fleche'
 import { CONTENEUR } from '@/components/shared/section'
@@ -37,13 +38,7 @@ export function ContactBlocs({
     >
       <div className={CONTENEUR}>
         <Apparition>
-          {/* L'intitule est ecrit ici plutot que via `Pilule` : son registre
-              sombre pose un voile blanc et une puce citron, tous deux exclus
-              sur le vert. */}
-          <span className="inline-flex items-center gap-2.25 rounded-pilule bg-voile/24 px-4 py-2 etiquette text-[0.6875rem] tracking-[0.1em] text-white">
-            <span aria-hidden className="size-1.5 shrink-0 rounded-pilule bg-vert-clair" />
-            {contenu.intitule}
-          </span>
+          <Pilule intitule={contenu.intitule} registre="sombre" />
         </Apparition>
 
         <Apparition registre="texte" className="mt-[clamp(1.5rem,3vw,2.5rem)]">

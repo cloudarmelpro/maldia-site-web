@@ -133,7 +133,11 @@ export function BlogArticle({
                     {blog.sommaire}
                   </p>
                   <nav aria-label={blog.sommaire}>
-                    <ul className="flex flex-col gap-2.5">
+                    {/* Aucun ecart sous 768 px : le plancher tactile de 44 px
+                        separe deja les entrees, et l'ecart s'y ajoutait — 54 px
+                        entre deux titres d'une seule ligne, mesure. Au-dessus,
+                        la boite retombe a 24 px et l'ecart reprend son role. */}
+                    <ul className="flex flex-col md:gap-2.5">
                       {titres.map((titre, rang) => (
                         <li key={titre.position}>
                           <a

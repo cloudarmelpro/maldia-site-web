@@ -30,11 +30,19 @@ d'historique qui est en cause, pas la mise en page.
 
 ## Décision
 
-`history.scrollRestoration = 'manual'`, dans un `<script>` en ligne du layout
-racine — donc sur les vingt-six pages, les deux langues comprises.
+`history.scrollRestoration = 'manual'`, dans un script en ligne du layout racine
+— donc sur les vingt-six pages, les deux langues comprises.
 
-Il doit s'exécuter **à l'analyse du document**. Posé dans un effet React, le
+Il doit s'exécuter **avant l'hydratation**. Posé dans un effet React, le
 navigateur aurait déjà restauré : ce ne peut pas être un composant client.
+
+**Par `next/script` en `beforeInteractive`, et non par une balise `<script>`
+écrite à la main.** React n'exécute jamais un script qu'il rend lui-même côté
+client, et le signale en console — c'est arrivé, sur la bascule de langue, qui
+re-rend le layout `[langue]`. L'`id` est exigé par Next pour tout script en
+ligne.
+
+Vérifié dans l'export : le script est en tête de `<body>`, à 1,3 % du document.
 
 Vérifié après correction : actualisation depuis le haut → 0 ; depuis le milieu
 de page → 0.

@@ -1,4 +1,5 @@
 import { Jost } from 'next/font/google'
+import Script from 'next/script'
 
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
@@ -37,8 +38,13 @@ export function generateStaticParams(): Array<{ langue: Langue }> {
  * selon l'essai. Le defaut est anterieur a toute animation — verifie en
  * recompilant le depot sans elles.
  *
- * Ce script doit s'executer a l'analyse du document : pose a l'hydratation, le
- * navigateur aurait deja restaure. Il ne peut donc pas etre un effet React.
+ * Il doit s'executer a l'analyse du document : pose a l'hydratation, le
+ * navigateur aurait deja restaure. D'ou `beforeInteractive`, qui injecte le
+ * script dans le HTML initial, avant tout module de Next.
+ *
+ * Et d'ou `next/script` plutot qu'une balise `<script>` ecrite a la main : React
+ * n'execute jamais un script qu'il rend lui-meme cote client, et le signale en
+ * console. L'`id` est exige par Next pour tout script en ligne.
  *
  * Ce que ca coute : le retour arriere ne rend plus la position non plus. Next
  * ne touche jamais `scrollRestoration` — il laisse le navigateur faire — donc
@@ -56,10 +62,14 @@ export default async function LayoutRacine({ children, params }: LayoutProps<'/[
 
   return (
     <html lang={langue} className={jost.variable}>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: RESTAURATION_MANUELLE }} />
-      </head>
-      <body>{children}</body>
+      <body>
+        <Script
+          id="restauration-defilement"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: RESTAURATION_MANUELLE }}
+        />
+        {children}
+      </body>
     </html>
   )
 }

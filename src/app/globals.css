@@ -174,6 +174,16 @@
 }
 
 @layer base {
+  /* Tailwind v4 a retiré le `cursor: pointer` que sa base donnait aux boutons :
+     ils suivent désormais la spécification, qui dit `default`. Résultat, dix
+     boutons du site ne signalaient plus qu'on peut cliquer — mesuré, deux
+     règles `cursor: pointer` dans tout le CSS produit. La base le rend. */
+  button:not(:disabled),
+  [role='button']:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
   html {
     color-scheme: light;
     /* Le sommaire d'un article mène à des ancres internes, et l'en-tête est

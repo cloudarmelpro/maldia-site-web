@@ -61,7 +61,19 @@ export default async function LayoutRacine({ children, params }: LayoutProps<'/[
   const { langue } = resoudre((await params).langue)
 
   return (
-    <html lang={langue} className={jost.variable}>
+    /*
+     * `suppressHydrationWarning` ne porte que sur cet element, jamais sur son
+     * sous-arbre : les ecarts reels de nos composants restent signales.
+     *
+     * Il est la parce que des tiers ecrivent sur `<html>` avant l'hydratation —
+     * le mode appareil de DevTools y pose `simulator-touch`, une extension peut
+     * en poser d'autres, et Lenis y ajoute les siennes. Aucun n'existe au
+     * rendu : React voyait donc un ecart a chaque fois, et le signalait.
+     *
+     * Sans risque ici : `lang` et `className` sont les deux seuls attributs
+     * qu'on pose, et tous deux sont determines par la langue de la page.
+     */
+    <html lang={langue} className={jost.variable} suppressHydrationWarning>
       <body>
         <Script
           id="restauration-defilement"

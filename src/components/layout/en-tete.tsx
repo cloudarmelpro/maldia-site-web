@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
+import { Revelation } from '@/components/shared/revelation'
 import { autreLangue } from '@/components/shared/autre-langue'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -20,6 +21,9 @@ const FOCUS =
 
 /** Le fond et l'encre suivent la section survolee, sur la meme duree. */
 const TRANSITION = 'transition-[background,color] duration-[260ms]'
+
+/** Le decalage entre deux entrees du menu, a l'ouverture du panneau. */
+const PAS_MENU = 0.06
 
 /** Repli avant la premiere mesure, accorde au `min-h-18` de la barre. */
 const HAUTEUR_INITIALE = 72
@@ -308,7 +312,7 @@ export function EnTete({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: reduit ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-0 z-90 flex flex-col overflow-y-auto bg-nuit px-[clamp(1.25rem,4vw,3.5rem)] pt-4 pb-8.5 text-white"
+              className="fixed inset-0 z-90 flex flex-col overflow-y-auto bg-primaire px-[clamp(1.25rem,4vw,3.5rem)] pt-4 pb-8.5 text-white"
               onClick={(evenement) => {
                 // Suivre un lien referme le panneau, sinon la page défilerait dessous.
                 if (evenement.target instanceof Element && evenement.target.closest('a')) {
@@ -323,7 +327,9 @@ export function EnTete({
                   aria-label={contenu.fermerMenu}
                   onClick={() => setOuvert(false)}
                   className={classes(
-                    'grid size-11 place-items-center rounded-bloc bg-white/12 text-2xl leading-none text-white',
+                    // Voile sombre et non blanc : sur le vert, un voile blanc
+                    // eclaircit l'aplat et fait passer l'encre sous le seuil.
+                    'grid size-11 place-items-center rounded-bloc bg-voile/26 text-2xl leading-none text-white',
                     FOCUS,
                   )}
                 >
@@ -333,7 +339,7 @@ export function EnTete({
 
               <nav aria-label={contenu.marque} className="mt-11">
                 <ul className="flex flex-col gap-1.5">
-                  {contenu.navigation.map((lien) => {
+                  {contenu.navigation.map((lien, indice) => {
                     const courante = lien.page === page
                     return (
                       <li key={lien.page}>
@@ -341,12 +347,33 @@ export function EnTete({
                           href={chemin(langue, lien.page)}
                           aria-current={courante ? 'page' : undefined}
                           className={classes(
-                            'flex min-h-13 items-center text-[clamp(1.875rem,8vw,2.5rem)] leading-[1.15] tracking-[-0.04em]',
+                            'flex min-h-13 items-center gap-3 text-[clamp(1.375rem,5.2vw,1.75rem)] leading-[1.15] tracking-[-0.04em] text-white',
                             FOCUS,
-                            courante ? 'text-vert-clair' : 'text-white',
                           )}
                         >
-                          {lien.libelle}
+                          {/* La page courante se marque par la puce et non par
+                              une encre plus pale : sur le vert, le vert clair ne
+                              tient que 2,6 : 1, et un blanc voile passerait sous
+                              le seuil a ce corps. La puce est toujours rendue,
+                              pour que les entrees restent alignees. */}
+                          <span
+                            aria-hidden
+                            className={classes(
+                              'size-1.5 shrink-0 rounded-pilule',
+                              courante ? 'bg-white' : 'bg-transparent',
+                            )}
+                          />
+                          {/* `auChargement` vaut ici « des le montage » : le
+                              panneau se monte a l'ouverture, et le voile est
+                              parti depuis longtemps. */}
+                          <Revelation
+                            balise="span"
+                            auChargement
+                            delai={indice * PAS_MENU}
+                            className="block"
+                          >
+                            {lien.libelle}
+                          </Revelation>
                         </Lien>
                       </li>
                     )
@@ -366,7 +393,13 @@ export function EnTete({
                   aria-label={contenu.changerDeLangue}
                   className="flex items-center justify-center gap-2.5 pt-1"
                 >
-                  <span aria-current="true" className="etiquette text-white">
+                  {/* La langue en cours se marque par un voile SOMBRE : les
+                      deux libelles sont en blanc plein, seul un fond les
+                      distingue, et un voile blanc eclaircirait l'aplat. */}
+                  <span
+                    aria-current="true"
+                    className="rounded-etiquette bg-voile/26 px-2.5 py-1 etiquette text-white"
+                  >
                     {langue}
                   </span>
                   <span aria-hidden className="block h-3 w-px bg-white/30" />
@@ -374,8 +407,10 @@ export function EnTete({
                     langue={autre}
                     vers={cheminAutreLangue}
                     libelle={autre}
+                    // Blanc plein, et non voile : mesure sur le vert du
+                    // panneau, `text-white/65` tombait a 2,98 : 1 a ce corps.
                     className={classes(
-                      'inline-flex min-h-11 min-w-11 items-center justify-center etiquette text-white/65 hover:text-white',
+                      'inline-flex min-h-11 min-w-11 items-center justify-center etiquette text-white',
                       FOCUS,
                     )}
                   />

@@ -1,10 +1,9 @@
 import { NOMS_LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
+import { FOCUS_CLAIR } from '@/components/shared/focus'
 import { autreLangue } from '@/components/shared/autre-langue'
 import { classes } from '@/components/shared/classes'
 import { SelecteurLangue } from '@/components/shared/selecteur-langue'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 
 const MENTION = 'etiquette tracking-[0.07em]'
 
@@ -46,7 +45,7 @@ export function BarreBas({
           className={classes(
             'inline-flex min-h-11 min-w-11 items-center text-white/92 transition-[color] hover:text-white',
             MENTION,
-            FOCUS,
+            FOCUS_CLAIR,
           )}
         />
       </div>

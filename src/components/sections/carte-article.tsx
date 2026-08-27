@@ -5,10 +5,9 @@ import { cheminArticle } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article } from '@/content/types'
+import { FOCUS } from '@/components/shared/focus'
 import { classes } from '@/components/shared/classes'
 import { Lien } from '@/components/shared/lien'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 /**
  * La ligne de metadonnees d'un article : la categorie s'il y a lieu, la date,

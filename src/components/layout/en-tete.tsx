@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
+import { FOCUS_SUIVEUR } from '@/components/shared/focus'
 import { Revelation } from '@/components/shared/revelation'
 import { autreLangue } from '@/components/shared/autre-langue'
 import { Bouton } from '@/components/shared/bouton'
@@ -15,9 +16,6 @@ import { CONTENEUR } from '@/components/shared/section'
 import { Lien } from '@/components/shared/lien'
 import { Logo } from '@/components/shared/logo'
 import { SelecteurLangue } from '@/components/shared/selecteur-langue'
-
-const FOCUS =
-  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current'
 
 /** Le fond et l'encre suivent la section survolee, sur la meme duree. */
 const TRANSITION = 'transition-[background,color] duration-[260ms]'
@@ -195,7 +193,7 @@ export function EnTete({
   const marque = (
     <Lien
       href={chemin(langue)}
-      className={classes('inline-flex min-h-11 shrink-0 items-center', FOCUS)}
+      className={classes('inline-flex min-h-11 shrink-0 items-center', FOCUS_SUIVEUR)}
     >
       <Logo hauteur={24} className="block w-auto" />
     </Lien>
@@ -240,7 +238,7 @@ export function EnTete({
                   className={classes(
                     'inline-flex items-center rounded-bloc px-2.5 py-2 text-[0.84375rem] whitespace-nowrap',
                     TRANSITION,
-                    FOCUS,
+                    FOCUS_SUIVEUR,
                     courante
                       ? clair
                         ? 'bg-primaire text-white'
@@ -275,7 +273,7 @@ export function EnTete({
                 className={classes(
                   langues,
                   TRANSITION,
-                  FOCUS,
+                  FOCUS_SUIVEUR,
                   clair ? 'text-encre-3 hover:text-encre' : 'text-white/65 hover:text-white',
                 )}
               />
@@ -298,7 +296,7 @@ export function EnTete({
               onClick={() => setOuvert(true)}
               className={classes(
                 'inline-flex size-11 items-center justify-center rounded-bloc large:hidden',
-                FOCUS,
+                FOCUS_SUIVEUR,
               )}
             >
               <span aria-hidden className="flex flex-col gap-1.25">
@@ -337,7 +335,7 @@ export function EnTete({
                     // Voile sombre et non blanc : sur le vert, un voile blanc
                     // eclaircit l'aplat et fait passer l'encre sous le seuil.
                     'grid size-11 place-items-center rounded-bloc bg-voile/26 text-2xl leading-none text-white',
-                    FOCUS,
+                    FOCUS_SUIVEUR,
                   )}
                 >
                   <span aria-hidden>×</span>
@@ -355,7 +353,7 @@ export function EnTete({
                           aria-current={courante ? 'page' : undefined}
                           className={classes(
                             'flex min-h-13 items-center gap-3 text-[clamp(1.375rem,5.2vw,1.75rem)] leading-[1.15] tracking-[-0.04em] text-white',
-                            FOCUS,
+                            FOCUS_SUIVEUR,
                           )}
                         >
                           {/* La page courante se marque par la puce et non par
@@ -418,7 +416,7 @@ export function EnTete({
                     // panneau, `text-white/65` tombait a 2,98 : 1 a ce corps.
                     className={classes(
                       'inline-flex min-h-11 min-w-11 items-center justify-center etiquette text-white',
-                      FOCUS,
+                      FOCUS_SUIVEUR,
                     )}
                   />
                 </div>

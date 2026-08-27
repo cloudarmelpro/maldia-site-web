@@ -1,11 +1,10 @@
 import type { Langue } from '@/content/langues'
 import type { Contenu } from '@/content/types'
+import { FOCUS_CLAIR } from '@/components/shared/focus'
 import { Facebook, Instagram, Linkedin } from '@/components/shared/icones-reseaux'
 import { BarreBas } from '@/components/layout/barre-bas'
 import { classes } from '@/components/shared/classes'
 import { Logo } from '@/components/shared/logo'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 
 const RESEAUX = [Linkedin, Facebook, Instagram] as const
 
@@ -59,7 +58,7 @@ export function Pied({
             className={classes(
               '-my-3 inline-flex w-fit py-3 text-white hover:underline hover:underline-offset-4',
               LIGNE,
-              FOCUS,
+              FOCUS_CLAIR,
             )}
           >
             {contenu.courriel}

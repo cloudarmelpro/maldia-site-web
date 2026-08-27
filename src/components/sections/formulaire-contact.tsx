@@ -5,9 +5,8 @@ import { useState } from 'react'
 
 import { DESTINATION_FORMULAIRE } from '@/content/liens'
 import type { ChampFormulaire, Contenu } from '@/content/types'
+import { FOCUS } from '@/components/shared/focus'
 import { classes } from '@/components/shared/classes'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 // Aucune bordure : le champ se detache par son aplat blanc sur le panneau
 // teinte, et c'est l'anneau de focus qui signale l'etat actif. Le design le pose

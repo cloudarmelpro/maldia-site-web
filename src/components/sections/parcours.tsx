@@ -24,7 +24,7 @@ export function Parcours({
   titreId: string
 }) {
   return (
-    <Section titreId={titreId} fond="fond">
+    <Section titreId={titreId}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
           <IntituleSection intitule={contenu.intitule} />

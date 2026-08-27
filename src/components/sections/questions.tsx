@@ -3,12 +3,11 @@
 import { useState } from 'react'
 
 import type { CoteQuestion, Contenu } from '@/content/types'
+import { FOCUS } from '@/components/shared/focus'
 import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Section } from '@/components/shared/section'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 // L'ordre du tuple de filtres fige leur sens : tout, entreprises, talents. Le
 // filtre se lit sur ce cote et jamais sur le libelle, qui est traduit.
@@ -43,7 +42,7 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
     .filter(({ entree }) => cote === null || entree.cote === cote)
 
   return (
-    <Section titreId="titre-questions" fond="fond">
+    <Section titreId="titre-questions">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition>
           <IntituleSection intitule={contenu.intitule} />

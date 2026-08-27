@@ -8,6 +8,7 @@ import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
 import { CarteArticle, MetaArticle } from '@/components/sections/carte-article'
+import { FOCUS } from '@/components/shared/focus'
 import { Apparition } from '@/components/shared/apparition'
 import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -16,8 +17,6 @@ import { Fleche } from '@/components/shared/fleche'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { Lien } from '@/components/shared/lien'
 import { CONTENEUR } from '@/components/shared/section'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 /**
  * L'en-tete est collant dans le flux, avec une marge basse negative egale a sa

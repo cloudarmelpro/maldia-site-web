@@ -5,14 +5,17 @@
    pilote. Recopiée ici, elle divergerait à la première mise à jour. */
 @import "lenis/dist/lenis.css";
 
-/* Palette du design « Hero Maldia v2 », valeurs reprises telles quelles.
+/* Palette du design « Site Maldia v2 », valeurs reprises telles quelles.
 
-   Le registre a changé de sens : le site n'est plus clair avec des blocs verts,
-   il est clair avec des sections sombres qui l'ouvrent et le ferment. D'où deux
-   familles de texte distinctes — sur clair et sur sombre. */
+   Deux couleurs de marque, le vert et le blanc. Le site est clair, avec des
+   sections vertes qui l'ouvrent et le ferment — la décision 0023 a supprimé
+   toutes les sections sombres, et avec elles les jetons qui n'existaient que
+   pour elles : `--color-nuit`, `--color-sur-sombre`, `--color-sur-sombre-2`.
+
+   Les ratios cités ci-dessous sont mesurés, pas estimés. Deux sont sous le
+   seuil AA et le disent : ce sont des manquements ouverts, pas des valeurs
+   validées. */
 @theme {
-  /* Le fond du hero, plus sombre que les sections sombres. */
-  --color-nuit: #0b1712;
   --color-encre: #0f1d17;
   --color-fond: #ffffff;
   --color-fond-2: #f4f5f3;
@@ -21,16 +24,13 @@
 
   /* Texte secondaire sur clair — 6,87:1 sur blanc. */
   --color-encre-2: #4a5f54;
-  /* Texte tertiaire sur clair : intitulés, mentions. 4,58:1 sur blanc. */
+  /* Texte tertiaire sur clair : intitulés, mentions.
+     MESURÉ 3,05:1 SUR BLANC — sous le seuil AA. Le commentaire précédent
+     annonçait 4,58:1, et c'est ce chiffre qu'un relecteur aurait cru. */
   --color-encre-3: #85988f;
   /* Le corps d'un article : plus sombre que le texte secondaire, parce qu'on le
-     lit plus longtemps. 8,12:1 sur blanc. */
+     lit plus longtemps. 8,53:1 sur blanc, mesuré. */
   --color-prose: #3d5145;
-
-  /* Texte secondaire sur les sections sombres — 6,42:1 sur --color-encre. */
-  --color-sur-sombre: #a9bcb1;
-  /* Intitulés sur sombre. 5,17:1 sur --color-encre. */
-  --color-sur-sombre-2: #8fa79a;
 
   --color-primaire: #177e4f;
   /* Le survol des surfaces vertes. */
@@ -44,28 +44,20 @@
    * a bg-voile/42 selon la profondeur.
    */
   --color-voile: #06301d;
-  /* L'accent du design : il ne porte jamais de texte clair, seulement --color-encre. */
-  --color-tendre: #dceee4;
 
-  /* Les champs de formulaire du design : repos, survol, focus, et la couleur
-     du texte indicatif. Aucune bordure — c'est l'aplat qui délimite le champ,
-     et son changement au focus qui le signale. */
-  --color-champ: #f6f7f5;
-  --color-champ-survol: #f2f4f1;
-  --color-champ-actif: #eef2ee;
-  /* 4,52:1 sur --color-champ : un texte indicatif reste du texte. */
+  /* Le texte indicatif d'un champ. Les trois aplats de champ du design —
+     repos, survol, focus — n'ont jamais eu d'appelant : le formulaire est en
+     `bg-white`, et c'est sur ce blanc qu'il faut mesurer.
+
+     MESURÉ 3,33:1 SUR BLANC — sous le seuil AA de 4,5:1 pour un corps normal.
+     Le commentaire précédent annonçait 4,52:1, et sur le mauvais fond. */
   --color-indicatif: #7f9188;
 
   --color-trait: #e2e6e1;
   /* Le filet intérieur d'une carte, plus discret que sa bordure. */
   --color-trait-2: #eceeeb;
-  /* Le filet d'un bouton à contour sur blanc. */
-  --color-trait-3: #d5dcd7;
   /* La puce inactive d'une liste, et les points de séparation d'une bande. */
   --color-trait-4: #cdd6cf;
-
-  /* La pastille de la page courante dans la navigation du hero. */
-  --color-signal: #4ade80;
 
   /* Les rayons du design : 8, 10, 11, 12, 14, 16 et 18 px. */
   --radius-etiquette: 0.5rem;
@@ -278,12 +270,6 @@
   text-transform: uppercase;
 }
 
-/* Le fond de carte du design : un degrade a 168 deg, pas un aplat. Un aplat
-   suffirait a 300 px de large et se voit a 1400. */
-@utility carte-claire {
-  background-image: linear-gradient(168deg, #ffffff 0%, #f5f7f4 58%, #eef2ee 100%);
-}
-
 /* Le fond de la carte claire des deux parcours : un blanc que deux halos
    radiaux teintent, l'un vert en haut a gauche, l'autre blanc en bas a droite.
    Un aplat uni a la place se voit — la carte fait plus de 500 px de large. */
@@ -294,11 +280,3 @@
   background-color: #ffffff;
 }
 
-@utility carte-sombre {
-  background-image: linear-gradient(
-    168deg,
-    rgb(255 255 255 / 0.11) 0%,
-    rgb(255 255 255 / 0.045) 56%,
-    rgb(255 255 255 / 0.02) 100%
-  );
-}

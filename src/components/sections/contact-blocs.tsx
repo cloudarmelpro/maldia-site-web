@@ -3,14 +3,13 @@ import type { ReactNode } from 'react'
 
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import type { Contenu } from '@/content/types'
+import { FOCUS_CLAIR } from '@/components/shared/focus'
 import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Fleche } from '@/components/shared/fleche'
 import { CONTENEUR } from '@/components/shared/section'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 
 /**
  * Le bloc d'appel qui ferme chaque page, et le pied dans le meme aplat vert.
@@ -82,7 +81,7 @@ export function ContactBlocs({
               <Apparition delai={delaiDeGrille(indice)}>
                 <a
                   href={entree.href}
-                  className={`flex min-w-0 items-center gap-4.5 rounded-bloc bg-white p-3.5 pr-5 text-left transition-transform duration-[220ms] hover:-translate-y-0.5 ${FOCUS}`}
+                  className={`flex min-w-0 items-center gap-4.5 rounded-bloc bg-white p-3.5 pr-5 text-left transition-transform duration-[220ms] hover:-translate-y-0.5 ${FOCUS_CLAIR}`}
                 >
                   <span
                     aria-hidden

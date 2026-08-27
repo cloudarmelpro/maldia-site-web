@@ -26,7 +26,7 @@ export function ServicesChiffres({
   liste: Contenu['commun']['pourquoi']['liste']
 }) {
   return (
-    <Section titreId={TITRE_ID} fond="fond">
+    <Section titreId={TITRE_ID}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition className="w-fit self-start">
           <IntituleSection intitule={intitule} />
@@ -34,7 +34,7 @@ export function ServicesChiffres({
 
         <EnTeteSection titreId={TITRE_ID} titre={entete.titre} description={entete.description} />
 
-        <CartesArguments liste={liste} registre="aplat" disposition="fluide" />
+        <CartesArguments liste={liste} />
       </div>
     </Section>
   )

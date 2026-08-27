@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
+import { FOCUS } from '@/components/shared/focus'
 import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { IntituleSection } from '@/components/shared/intitule-section'
@@ -12,8 +13,6 @@ import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { Fleche } from '@/components/shared/fleche'
 import { Section } from '@/components/shared/section'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 /**
  * WEB-5 — le selecteur de profils du design : la liste a gauche, le detail a
@@ -41,7 +40,7 @@ export function Profils({
   const photo = PHOTOS.profils[choisi] ?? PHOTOS.profils[0]
 
   return (
-    <Section titreId={titreId} fond="fond">
+    <Section titreId={titreId}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition className="w-fit self-start">
           <IntituleSection intitule={contenu.intitule} />

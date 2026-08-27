@@ -14,14 +14,14 @@ export const BAS = 'pb-[clamp(4rem,7vw,7rem)]'
 /** Le padding bas plus court, la ou le design pose une section asymetrique. */
 export const BAS_COURT = 'pb-[clamp(3.5rem,6vw,6rem)]'
 
-export type Fond = 'fond' | 'fond-2' | 'encre' | 'nuit'
-
-const FONDS: Record<Fond, string> = {
-  fond: 'bg-fond',
-  'fond-2': 'bg-fond-2',
-  encre: 'bg-encre text-white',
-  nuit: 'bg-nuit text-white',
-}
+/**
+ * Le fond etait une prop a quatre valeurs. Les six appelants passaient tous
+ * `fond`, qui etait deja la valeur par defaut ; `fond-2`, `encre` et `nuit`
+ * n'avaient aucun appelant depuis que la decision 0023 a supprime toutes les
+ * sections sombres. Le jeton `--color-nuit` n'existait plus que pour cette
+ * entree, et disparait avec elle.
+ */
+const FOND = 'bg-fond'
 
 /**
  * La gouttiere de page du design : 1080 px de large, marges de 20 a 56 px.
@@ -44,14 +44,12 @@ export const CONTENEUR = 'mx-auto w-full max-w-[67.5rem] px-[clamp(1.25rem,4vw,3
  */
 export function Section({
   titreId,
-  fond = 'fond',
   bas,
   className,
   children,
 }: {
   /** Doit etre l'id du titre rendu dans children : c'est lui que aria-labelledby vise. */
   titreId: string
-  fond?: Fond
   /**
    * Classe de padding bas, quand le design en pose une autre que le haut. Deux
    * de ses sections sont asymetriques ; les autres non.
@@ -61,7 +59,7 @@ export function Section({
   children: ReactNode
 }) {
   return (
-    <section aria-labelledby={titreId} className={classes(FONDS[fond], HAUT, bas ?? BAS, className)}>
+    <section aria-labelledby={titreId} className={classes(FOND, HAUT, bas ?? BAS, className)}>
       <div className={CONTENEUR}>{children}</div>
     </section>
   )

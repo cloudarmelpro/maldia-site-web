@@ -27,7 +27,7 @@ export function Pourquoi({
   titreId: string
 }) {
   return (
-    <Section titreId={titreId} fond="fond" bas={BAS_COURT}>
+    <Section titreId={titreId} bas={BAS_COURT}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition className="w-fit self-start">
           <IntituleSection intitule={contenu.intitule} />
@@ -55,7 +55,7 @@ export function Pourquoi({
             </Revelation>
           </div>
 
-          <CartesArguments liste={contenu.liste} registre="aplat" disposition="fluide" />
+          <CartesArguments liste={contenu.liste} />
 
           <Apparition>
             <div className="flex flex-wrap items-center gap-[clamp(1.375rem,3vw,2.5rem)] rounded-encart bg-primaire p-[clamp(1.625rem,3vw,2.5rem)]">

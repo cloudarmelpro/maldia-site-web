@@ -5,11 +5,10 @@ import { useState } from 'react'
 
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
+import { FOCUS } from '@/components/shared/focus'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { Fleche } from '@/components/shared/fleche'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
 
 /**
  * WEB-5 — le selecteur de postes de la page Services : la liste a gauche, la

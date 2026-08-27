@@ -24,7 +24,7 @@ export function AProposReperes({
   arguments: Contenu['commun']['pourquoi']['liste']
 }) {
   return (
-    <Section titreId="titre-reperes" fond="fond">
+    <Section titreId="titre-reperes">
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
         <Apparition className="w-fit self-start">
           <IntituleSection intitule={contenu.intitule} />
@@ -36,7 +36,7 @@ export function AProposReperes({
           description={contenu.description}
         />
 
-        <CartesArguments liste={liste} registre="aplat" disposition="fluide" />
+        <CartesArguments liste={liste} />
       </div>
     </Section>
   )

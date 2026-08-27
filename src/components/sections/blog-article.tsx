@@ -5,6 +5,7 @@ import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Article, Contenu } from '@/content/types'
 import { MetaArticle } from '@/components/sections/carte-article'
+import { FOCUS, FOCUS_CLAIR } from '@/components/shared/focus'
 import { Apparition } from '@/components/shared/apparition'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -12,10 +13,6 @@ import { delaiDeGrille } from '@/components/shared/decalage'
 import { Fleche } from '@/components/shared/fleche'
 import { Lien } from '@/components/shared/lien'
 import { CONTENEUR } from '@/components/shared/section'
-
-const FOCUS = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre'
-// Sur le vert, l'anneau passe au blanc : l'encre y disparaitrait.
-const FOCUS_VERT = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
 
 /**
  * L'en-tete est collant dans le flux, avec une marge basse negative egale a sa
@@ -84,7 +81,7 @@ export function BlogArticle({
             href={chemin(langue, 'blog')}
             className={classes(
               'inline-flex w-fit min-h-11 items-center gap-2.5 etiquette text-[0.6875rem] tracking-[0.1em] text-white underline-offset-4 hover:underline',
-              FOCUS_VERT,
+              FOCUS_CLAIR,
             )}
           >
             <Fleche sens="gauche" />

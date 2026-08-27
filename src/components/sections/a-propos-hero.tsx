@@ -17,10 +17,10 @@ export function AProposHero({ contenu }: { contenu: Contenu['aPropos']['entete']
   return (
     <section
       aria-labelledby="titre-page"
-      className="bg-primaire pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(4rem,8vw,7.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
+      className="bg-nuit pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(4rem,8vw,7.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
     >
       <div className={CONTENEUR}>
-        <Pilule intitule={contenu.intitule} registre="sombre" />
+        <Pilule intitule={contenu.intitule} registre="nuit" />
 
         <h1
           id="titre-page"
@@ -29,7 +29,7 @@ export function AProposHero({ contenu }: { contenu: Contenu['aPropos']['entete']
           {contenu.titre}
         </h1>
 
-        <p className="mt-7 max-w-[40ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.5] text-white">
+        <p className="mt-7 max-w-[40ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.5] text-sur-sombre">
           {contenu.description}
         </p>
       </div>

@@ -57,10 +57,10 @@ export function BlogListe({
     <>
       <section
         aria-labelledby="titre-page"
-        className={classes('bg-primaire pb-[clamp(3rem,6vw,5rem)]', HAUT_HERO)}
+        className={classes('bg-nuit pb-[clamp(3rem,6vw,5rem)]', HAUT_HERO)}
       >
         <div className={CONTENEUR}>
-          <Pilule intitule={contenu.entete.intitule} registre="sombre" />
+          <Pilule intitule={contenu.entete.intitule} registre="nuit" />
 
           <div className="mt-7 flex flex-wrap items-end gap-8">
             <h1
@@ -69,12 +69,12 @@ export function BlogListe({
             >
               {contenu.entete.titre}
             </h1>
-            <p className="max-w-[38ch] min-w-0 grow basis-75 text-[1.0625rem] leading-[1.55] text-white/92">
+            <p className="max-w-[38ch] min-w-0 grow basis-75 text-[1.0625rem] leading-[1.55] text-sur-sombre">
               {contenu.entete.description}
             </p>
           </div>
 
-          <p className="mt-9 etiquette text-[0.6875rem] tracking-[0.08em] text-white/92">
+          <p className="mt-9 etiquette text-[0.6875rem] tracking-[0.08em] text-sur-sombre">
             {contenu.entete.mention}
           </p>
         </div>

@@ -43,8 +43,19 @@ précédente, calée sous l'en-tête.
 
 ## Ce qui a été écarté du prototype, et pourquoi
 
-**Les héros `#0b1712` des pages intérieures.** Reste de l'ancienne charte que la
-passation remplace par le vert. Les cinq pages concernées prennent `#177e4f`.
+**~~Les héros `#0b1712` des pages intérieures.~~** — **Erreur, corrigée.** Le
+document de passation écrit « hero vert » pour ces pages, et j'en avais conclu
+qu'il fallait le vert de marque `#177e4f`. Le prototype **rendu dans un
+navigateur** montre `#0b1712` sur les cinq. Les cinq pages y sont revenues, et
+avec elles les gris de la charte sombre — `#a9bcb1`, `#8fa79a`, `#4a5f54` — qui
+tiennent leur contraste sur du presque noir. `Pilule` gagne un registre `nuit`,
+seul endroit où un voile blanc est permis : sur du presque noir il éclaircit un
+fond déjà très sombre, alors que sur le vert il ferait passer le texte sous AA.
+
+**La leçon de méthode : lire le prototype ne suffisait pas.** C'est en le rendant
+dans un navigateur, et en comparant les fonds calculés section par section avec
+ceux du site, que l'écart est apparu. Les copies du prototype forcées sur chaque
+page vivent dans le dossier de mesures ; la manœuvre se refait en dix lignes.
 
 **Les voiles blancs sur le vert.** La passation est formelle et donne le calcul :
 le blanc sur `#177e4f` ne vaut que **5,1 : 1**, et un voile blanc éclaircit

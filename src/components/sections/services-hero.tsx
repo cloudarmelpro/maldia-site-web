@@ -26,10 +26,10 @@ export function ServicesHero({
   return (
     <section
       aria-labelledby="titre-page"
-      className="bg-primaire pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(4rem,8vw,7.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
+      className="bg-nuit pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(4rem,8vw,7.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
     >
       <div className={CONTENEUR}>
-        <Pilule intitule={contenu.intitule} registre="sombre" />
+        <Pilule intitule={contenu.intitule} registre="nuit" />
 
         <h1
           id="titre-page"
@@ -39,13 +39,12 @@ export function ServicesHero({
         </h1>
 
         <div className="mt-8.5 flex flex-wrap items-end gap-[clamp(1.25rem,2.6vw,2rem)]">
-          <p className="min-w-0 grow basis-[23.75rem] max-w-[40ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.55] text-white">
+          <p className="min-w-0 grow basis-[23.75rem] max-w-[40ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.55] text-sur-sombre">
             {contenu.description}
           </p>
-          {/* Le design met cette mention en retrait par la couleur. Sur le vert,
-              le retrait ne peut se creuser que jusqu'a `white/92` : en dessous,
-              le texte passe sous le seuil AA. */}
-          <p className="min-w-0 grow basis-[16.25rem] max-w-[34ch] text-[0.875rem] leading-[1.6] text-white/92">
+          {/* Le design creuse le retrait de cette mention par la couleur. Sur la
+              bande nuit, `encre-2` tient encore ; il ne tiendrait pas sur le vert. */}
+          <p className="min-w-0 grow basis-[16.25rem] max-w-[34ch] text-[0.875rem] leading-[1.6] text-encre-2">
             {contenu.mention}
           </p>
         </div>
@@ -54,7 +53,7 @@ export function ServicesHero({
           {marches.map((marche) => (
             <li
               key={marche}
-              className="rounded-pilule bg-voile/22 px-4.5 py-2.25 text-[0.90625rem] text-white/92"
+              className="rounded-pilule bg-white/8 px-4.5 py-2.25 text-[0.90625rem] text-sur-sombre"
             >
               {marche}
             </li>

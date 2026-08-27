@@ -24,7 +24,7 @@ export function ServicesMethode({ contenu }: { contenu: Contenu['commun']['metho
     <section aria-labelledby={TITRE_ID} className={classes('bande-encre text-white', HAUT, BAS)}>
       <div className={CONTENEUR}>
         <Apparition>
-          <Pilule intitule={contenu.intitule} registre="sombre" />
+          <Pilule intitule={contenu.intitule} registre="nuit" />
         </Apparition>
 
         <Apparition registre="texte">
@@ -45,7 +45,7 @@ export function ServicesMethode({ contenu }: { contenu: Contenu['commun']['metho
               >
                 <span
                   aria-hidden
-                  className="w-11 shrink-0 font-titre text-[1.5rem] font-extralight leading-[1.2] text-white/55"
+                  className="w-11 shrink-0 font-titre text-[1.5rem] font-extralight leading-[1.2] text-encre-2"
                 >
                   {String(indice + 1).padStart(2, '0')}
                 </span>
@@ -54,7 +54,7 @@ export function ServicesMethode({ contenu }: { contenu: Contenu['commun']['metho
                   <strong className="font-titre text-[1.1875rem] font-light text-white">
                     {etape.titre}
                   </strong>
-                  <span className="max-w-[52ch] text-[0.96875rem] leading-[1.55] text-white/92">
+                  <span className="max-w-[52ch] text-[0.96875rem] leading-[1.55] text-sur-sombre">
                     {etape.description}
                   </span>
                 </span>
@@ -62,7 +62,7 @@ export function ServicesMethode({ contenu }: { contenu: Contenu['commun']['metho
                 <span
                   className={classes(
                     'shrink-0 self-start rounded-pilule px-2.75 py-1 etiquette-fine text-[0.71875rem] tracking-[0.08em] whitespace-nowrap',
-                    etape.cote === 'client' ? 'bg-white text-encre' : 'bg-voile/42 text-white',
+                    etape.cote === 'client' ? 'bg-white text-encre' : 'bg-white/10 text-sur-sombre',
                   )}
                 >
                   {etape.acteur}

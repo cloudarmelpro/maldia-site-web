@@ -33,12 +33,12 @@ export function AProposFonctionnement({
   return (
     <section
       aria-labelledby="titre-fonctionnement"
-      className={classes('bg-primaire text-white', HAUT, BAS)}
+      className={classes('bande-encre text-white', HAUT, BAS)}
     >
       <div className={CONTENEUR}>
         <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
           <Apparition>
-            <Pilule intitule={contenu.intitule} registre="sombre" />
+            <Pilule intitule={contenu.intitule} registre="nuit" />
           </Apparition>
 
           <Apparition registre="texte">
@@ -56,9 +56,9 @@ export function AProposFonctionnement({
             <li key={cote.titre} className="min-w-0">
               <Apparition
                 delai={delaiDeGrille(indice)}
-                className="flex h-full min-w-0 flex-col rounded-panneau bg-voile/18 p-[clamp(1.75rem,3vw,2.75rem)]"
+                className="flex h-full min-w-0 flex-col rounded-panneau bg-white/6 p-[clamp(1.75rem,3vw,2.75rem)]"
               >
-                <span className="etiquette text-[0.71875rem] tracking-[0.12em] text-white/92">
+                <span className="etiquette text-[0.71875rem] tracking-[0.12em] text-sur-sombre-2">
                   {cote.lieu}
                 </span>
 
@@ -66,15 +66,15 @@ export function AProposFonctionnement({
                   {cote.titre}
                 </strong>
 
-                <span className="mt-4 mb-[2.125rem] max-w-[46ch] text-base leading-[1.6] text-white/92">
+                <span className="mt-4 mb-[2.125rem] max-w-[46ch] text-base leading-[1.6] text-sur-sombre">
                   {avecNombre(cote.texte, langue)}
                 </span>
 
-                <span className="mt-auto flex flex-wrap items-baseline gap-3.5 border-t border-white/18 pt-6.5">
-                  <strong className="font-titre text-[2.25rem] font-extralight leading-none tracking-[-0.03em] text-white">
+                <span className="mt-auto flex flex-wrap items-baseline gap-3.5 border-t border-white/10 pt-6.5">
+                  <strong className="font-titre text-[2.25rem] font-extralight leading-none tracking-[-0.03em] text-vert-clair">
                     {avecNombre(cote.valeur, langue)}
                   </strong>
-                  <span className="text-[0.90625rem] text-white/92">{cote.legende}</span>
+                  <span className="text-[0.90625rem] text-sur-sombre-2">{cote.legende}</span>
                 </span>
               </Apparition>
             </li>

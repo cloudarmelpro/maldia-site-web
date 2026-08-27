@@ -39,7 +39,7 @@ export function TalentsHero({
     <section
       aria-labelledby="titre-page"
       className={classes(
-        'relative isolate overflow-hidden bg-primaire pb-[clamp(4rem,8vw,7.25rem)] text-white',
+        'relative isolate overflow-hidden bg-nuit pb-[clamp(4rem,8vw,7.25rem)] text-white',
         HAUT_HERO,
       )}
     >
@@ -61,7 +61,7 @@ export function TalentsHero({
       </div>
 
       <div className={classes(CONTENEUR, 'relative flex flex-col items-start')}>
-        <Pilule intitule={contenu.intitule} registre="sombre" />
+        <Pilule intitule={contenu.intitule} registre="nuit" />
 
         <h1
           id="titre-page"
@@ -70,7 +70,7 @@ export function TalentsHero({
           {contenu.titre}
         </h1>
 
-        <p className="mt-7 max-w-[44ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-white">
+        <p className="mt-7 max-w-[44ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-sur-sombre">
           {contenu.description}
         </p>
 

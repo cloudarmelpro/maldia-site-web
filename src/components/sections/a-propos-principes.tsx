@@ -14,7 +14,7 @@ import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
  */
 export function AProposPrincipes({ liste }: { liste: Contenu['aPropos']['principes'] }) {
   return (
-    <section className={classes('bg-fond-2', HAUT, BAS)}>
+    <section className={classes('bg-fond', HAUT, BAS)}>
       <div className={CONTENEUR}>
         <ul className="grid grid-cols-[repeat(auto-fit,minmax(16.875rem,1fr))] gap-x-10 border-t border-trait-4">
           {liste.map((principe, indice) => (

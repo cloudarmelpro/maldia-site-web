@@ -11,12 +11,18 @@ import { classes } from '@/components/shared/classes'
  * donne que 5,1 : 1, et un voile blanc eclaircirait le fond au point de faire
  * passer le texte sous le seuil AA.
  */
-export type RegistrePilule = 'clair' | 'gris' | 'sombre'
+export type RegistrePilule = 'clair' | 'gris' | 'sombre' | 'nuit'
 
 const REGISTRES: Record<RegistrePilule, string> = {
   clair: 'bg-primaire/7 text-encre',
   gris: 'bg-white text-encre',
   sombre: 'bg-voile/42 text-white',
+  /**
+   * Sur la bande `nuit`, et la seulement, le voile est blanc : sur du presque
+   * noir il ne fait qu'eclaircir un fond deja tres sombre. C'est sur le VERT
+   * qu'un voile blanc ferait passer le texte sous le seuil.
+   */
+  nuit: 'bg-white/10 text-white',
 }
 
 // Sur le vert, la puce est en vert clair : c'est le design. Elle n'y tient que
@@ -26,6 +32,7 @@ const PUCES: Record<RegistrePilule, string> = {
   clair: 'bg-primaire',
   gris: 'bg-primaire',
   sombre: 'bg-vert-clair',
+  nuit: 'bg-vert-clair',
 }
 
 export function Pilule({

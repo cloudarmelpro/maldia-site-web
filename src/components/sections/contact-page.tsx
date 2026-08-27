@@ -54,10 +54,10 @@ export function ContactPage({
           l'hydratation. */}
       <section
         aria-labelledby="titre-page"
-        className="bg-primaire pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(4rem,8vw,7.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
+        className="bg-nuit pt-[calc(var(--hauteur-en-tete,4.5rem)+clamp(4rem,8vw,7.5rem))] pb-[clamp(3.5rem,7vw,6rem)]"
       >
         <div className={CONTENEUR}>
-          <Pilule intitule={contact.entete.intitule} registre="sombre" />
+          <Pilule intitule={contact.entete.intitule} registre="nuit" />
 
           <div className="mt-7 flex flex-wrap items-end gap-[clamp(1.25rem,2.6vw,2rem)]">
             <h1
@@ -68,13 +68,13 @@ export function ContactPage({
             </h1>
 
             <div className="min-w-0 grow basis-[18.75rem]">
-              <p className="max-w-[36ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.55] text-white">
+              <p className="max-w-[36ch] text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.55] text-sur-sombre">
                 {contact.entete.description}
               </p>
               {/* Le design met cette mention en retrait par la couleur. Sur le
                   vert, le retrait ne peut se creuser que jusqu'a `white/92` :
                   en dessous, le texte passe sous le seuil AA. */}
-              <p className="mt-3.5 text-[0.84375rem] leading-[1.6] text-white/92">
+              <p className="mt-3.5 text-[0.84375rem] leading-[1.6] text-encre-2">
                 {contact.entete.mention}
               </p>
             </div>

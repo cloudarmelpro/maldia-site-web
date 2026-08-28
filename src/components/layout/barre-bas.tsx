@@ -43,13 +43,13 @@ export function BarreBas({
           vers={cheminAutreLangue}
           libelle={NOMS_LANGUES[autre]}
           className={classes(
-            'inline-flex min-h-11 min-w-11 items-center text-white/92 transition-[color] hover:text-white',
+            'inline-flex min-h-11 min-w-11 items-center text-white transition-[color] hover:text-white',
             MENTION,
             FOCUS_CLAIR,
           )}
         />
       </div>
-      <span className={classes('text-white/92', MENTION)}>{copyright}</span>
+      <span className={classes('text-white', MENTION)}>{copyright}</span>
     </div>
   )
 }

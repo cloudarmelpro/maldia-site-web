@@ -118,7 +118,12 @@ export function EnTete({
                         : 'bg-white text-encre'
                       : clair
                         ? 'text-encre-2 hover:text-encre'
-                        : 'text-white/65 hover:text-white',
+                        // Blanc plein : `text-white/65` sur le vert mesurait
+                        // 3,09 : 1, sous le seuil AA — et l'opacite ne pouvait
+                        // pas le sauver, /85 donnant 4,15 et /90 4,44. La page
+                        // courante se distingue de toute facon par sa pastille
+                        // pleine, pas par l'encre des autres.
+                        : 'text-white hover:text-white',
                   )}
                 >
                   {lien.libelle}
@@ -135,7 +140,7 @@ export function EnTete({
             >
               <span
                 aria-current="true"
-                className={classes(langues, TRANSITION, clair ? 'bg-encre/8' : 'bg-white/10')}
+                className={classes(langues, TRANSITION, clair ? 'bg-encre/8' : 'bg-voile/26')}
               >
                 {langue}
               </span>
@@ -147,7 +152,9 @@ export function EnTete({
                   langues,
                   TRANSITION,
                   FOCUS_SUIVEUR,
-                  clair ? 'text-encre-3 hover:text-encre' : 'text-white/65 hover:text-white',
+                  // Meme raison : la langue en cours porte un voile sombre, et
+                  // c'est lui qui la marque.
+                  clair ? 'text-encre-3 hover:text-encre' : 'text-white hover:text-white',
                 )}
               />
             </div>

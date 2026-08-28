@@ -96,7 +96,7 @@ export function Base({
         </div>
 
         <Apparition>
-          <span className="etiquette text-[0.6875rem] tracking-[0.1em] text-white/94">
+          <span className="etiquette text-[0.6875rem] tracking-[0.1em] text-white">
             {contenu.outilsIntitule}
           </span>
         </Apparition>
@@ -122,7 +122,7 @@ export function Base({
 
       <div className={CONTENEUR}>
         <Apparition>
-          <p className="mt-5 max-w-[62ch] text-[0.78125rem] leading-[1.55] text-white/94">
+          <p className="mt-5 max-w-[62ch] text-[0.78125rem] leading-[1.55] text-white">
             {contenu.mention}
           </p>
         </Apparition>

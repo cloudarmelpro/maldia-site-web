@@ -25,8 +25,9 @@ import type { RegistreIntitule } from '@/components/shared/intitule-section'
  * plutot que deux composants. Sans `titre`, seule la pastille est rendue.
  *
  * Trois sections reimplantaient de leur cote l'en-tete au lieu de l'appeler, et
- * l'une avait deja diverge — `text-white` la ou le composant pose
- * `text-white/94`. Elles passent ici aussi.
+ * l'une avait deja diverge — `text-white` la ou le composant posait
+ * `text-white/94`. Les deux sont au blanc plein depuis, pour la meme raison
+ * de contraste. Elles passent ici aussi.
  */
 export function TeteSection({
   intitule,

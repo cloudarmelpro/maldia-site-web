@@ -22,7 +22,7 @@ export function TalentsCandidature({ contenu }: { contenu: Contenu['talents']['e
         <Apparition>
           <div className="flex flex-wrap items-center justify-between gap-[clamp(1.25rem,3vw,2.5rem)] rounded-encart bg-primaire p-[clamp(1.625rem,3vw,2.5rem)]">
             <div className="flex min-w-0 grow basis-[20rem] flex-col gap-3">
-              <span className="etiquette text-[0.6875rem] tracking-[0.1em] text-white/92">
+              <span className="etiquette text-[0.6875rem] tracking-[0.1em] text-white">
                 {contenu.intitule}
               </span>
               <strong className="max-w-[30ch] font-titre text-[clamp(1.1875rem,1.7vw,1.625rem)] leading-[1.25] tracking-[-0.03em] text-white">

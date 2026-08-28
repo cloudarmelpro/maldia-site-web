@@ -221,7 +221,11 @@ export function BlogArticle({
                 return (
                   <p
                     key={position}
-                    className="mt-4.5 max-w-[66ch] text-[1.09375rem] leading-[1.7] text-prose"
+                    // 57ch et non 66 : l'unite `ch` vaut la largeur du « 0 », bien plus
+                    // large que la lettre moyenne en Jost Light. `66ch` achetait
+                    // 87 caracteres reels — mesure —, la ou l'optimum de lecture
+                    // est a 75.
+                    className="mt-4.5 max-w-[57ch] text-[1.09375rem] leading-[1.7] text-prose"
                   >
                     {bloc.texte}
                   </p>

@@ -24,10 +24,11 @@
 
   /* Texte secondaire sur clair — 6,87:1 sur blanc. */
   --color-encre-2: #4a5f54;
-  /* Texte tertiaire sur clair : intitulés, mentions.
-     MESURÉ 3,05:1 SUR BLANC — sous le seuil AA. Le commentaire précédent
-     annonçait 4,58:1, et c'est ce chiffre qu'un relecteur aurait cru. */
-  --color-encre-3: #85988f;
+  /* Texte tertiaire sur clair : intitulés, mentions. 4,50:1 sur blanc, mesuré.
+     La valeur d'origine, #85988f, ne donnait que 3,05:1 — sous le seuil AA, et
+     annoncée à tort à 4,58 dans ce même commentaire. Assombrie à teinte et
+     saturation constantes jusqu'au seuil, pas au-delà. */
+  --color-encre-3: #687b72;
   /* Le corps d'un article : plus sombre que le texte secondaire, parce qu'on le
      lit plus longtemps. 8,53:1 sur blanc, mesuré. */
   --color-prose: #3d5145;
@@ -49,9 +50,9 @@
      repos, survol, focus — n'ont jamais eu d'appelant : le formulaire est en
      `bg-white`, et c'est sur ce blanc qu'il faut mesurer.
 
-     MESURÉ 3,33:1 SUR BLANC — sous le seuil AA de 4,5:1 pour un corps normal.
-     Le commentaire précédent annonçait 4,52:1, et sur le mauvais fond. */
-  --color-indicatif: #7f9188;
+     4,54:1 sur blanc, mesuré. La valeur d'origine, #7f9188, ne donnait que
+     3,33:1 — un texte indicatif reste du texte, et le seuil s'y applique. */
+  --color-indicatif: #697a72;
 
   --color-trait: #e2e6e1;
   /* Le filet intérieur d'une carte, plus discret que sa bordure. */

@@ -42,7 +42,11 @@ export function EnTeteSection({
         balise="h2"
         id={titreId}
         className={classes(
-          'max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em]',
+          // `text-balance` : sans lui, six titres de section finissent sur un mot
+          // seul — mesure, de 9 a 20 % de la largeur de la ligne la plus
+          // longue. Le decoupage de SplitText le rend plus visible encore, la
+          // ligne orpheline montant a elle seule.
+          'max-w-[22ch] font-titre text-[clamp(1.375rem,2.1vw,1.875rem)] leading-[1.15] tracking-[-0.045em] text-balance',
           sombre ? 'text-white' : 'text-encre',
         )}
       >

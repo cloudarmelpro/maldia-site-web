@@ -21,7 +21,11 @@ export function ServicesHero({
   marches: Contenu['commun']['marches']['liste']
 }) {
   return (
-    <HeroPage intitule={contenu.intitule} titre={contenu.titre}>
+    <HeroPage
+      intitule={contenu.intitule}
+      titre={contenu.titre}
+      description={contenu.description}
+    >
       <ul className="flex flex-wrap gap-1.75">
         {marches.map((marche) => (
           <li
@@ -32,6 +36,13 @@ export function ServicesHero({
           </li>
         ))}
       </ul>
+
+      {/* WEB-12 : « Le delai de WEB-12.b est une moyenne, jamais une garantie
+          absolue. La page doit le dire, pas seulement l'omettre. » La chaine
+          existait dans le contenu depuis la refonte et AUCUN composant ne la
+          rendait — l'exigence n'etait donc pas tenue sur cette page, alors
+          qu'elle y affiche le chiffre. */}
+      <p className="max-w-[46ch] text-[0.90625rem] leading-[1.6] text-white">{contenu.mention}</p>
     </HeroPage>
   )
 }

@@ -42,13 +42,13 @@ export function Pied({
           <span className="flex items-center text-white">
             <Logo hauteur={32} className="block w-auto" />
           </span>
-          <span className={classes('max-w-[34ch] text-white/92', LIGNE)}>
+          <span className={classes('max-w-[34ch] text-white', LIGNE)}>
             {contenu.description}
           </span>
         </div>
 
         <div className={classes(COLONNE, 'gap-1.5')}>
-          <span className="mb-1.5 etiquette-fine tracking-[0.1em] text-white/90">
+          <span className="mb-1.5 etiquette-fine tracking-[0.1em] text-white">
             {contenu.titreContact}
           </span>
           {/* Le padding porte la cible tactile, la marge negative la reprend :
@@ -63,7 +63,7 @@ export function Pied({
           >
             {contenu.courriel}
           </a>
-          <span className={classes('-mt-1 text-white/92', LIGNE)}>{contenu.lieu}</span>
+          <span className={classes('-mt-1 text-white', LIGNE)}>{contenu.lieu}</span>
         </div>
 
         {/* Reperes visuels, pas des liens : voir le commentaire du composant. */}

@@ -72,7 +72,7 @@ export function AProposFonctionnement({
                   <strong className="font-titre text-[clamp(1.875rem,2.6vw,2.5rem)] leading-none tracking-[-0.05em] text-white">
                     {avecNombre(cote.valeur, langue)}
                   </strong>
-                  <span className="etiquette text-[0.6875rem] tracking-[0.09em] text-white/92">
+                  <span className="etiquette text-[0.6875rem] tracking-[0.09em] text-white">
                     {cote.legende}
                   </span>
                 </span>

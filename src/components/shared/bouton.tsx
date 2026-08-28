@@ -90,7 +90,12 @@ export function Bouton({
 }: CommunAppel & { destination: Destination }) {
   return (
     <a
-      href={DESTINATIONS[destination]}
+      // Tant que la destination n'est pas tranchee, AUCUN `href` — et non un
+      // `href=""`, qui pointe vers la page courante : focalisable, annonce
+      // comme lien, curseur main, et le clic recharge la page. Mesure sur
+      // l'export : 31 ancres de ce type sur les seules pages francaises. Un
+      // `<a>` sans `href` n'est pas un lien, et c'est ce qu'on veut dire.
+      href={DESTINATIONS[destination] || undefined}
       aria-label={nomAccessible}
       className={`${BASE} ${TAILLES[taille]} ${VARIANTES[variante]}${className ? ` ${className}` : ''}`}
     >

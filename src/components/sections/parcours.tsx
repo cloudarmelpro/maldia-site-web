@@ -62,7 +62,7 @@ export function Parcours({
                     <span
                       className={classes(
                         'etiquette-fine tracking-[0.08em]',
-                        vert ? 'text-white/94' : 'text-encre-2',
+                        vert ? 'text-white' : 'text-encre-2',
                       )}
                     >
                       {voie.meta}
@@ -113,7 +113,7 @@ export function Parcours({
                       <strong className={vert ? 'text-white' : 'text-encre'}>
                         {voie.libelleSupplement}
                       </strong>
-                      <span className={vert ? 'text-white/94' : 'text-encre-2'}>
+                      <span className={vert ? 'text-white' : 'text-encre-2'}>
                         {voie.supplement}
                       </span>
                     </span>

@@ -46,11 +46,11 @@ export function ContactBlocs({
             <Revelation
               balise="h2"
               id="titre-contact"
-              className="max-w-[18ch] font-titre text-[clamp(1.3125rem,2vw,1.75rem)] leading-none tracking-[-0.05em] text-white"
+              className="max-w-[18ch] font-titre text-[clamp(1.3125rem,2vw,1.75rem)] leading-[1.08] tracking-[-0.05em] text-white"
             >
               {contenu.titre}
             </Revelation>
-            <Revelation delai={0.12} className="max-w-[30ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white/92">
+            <Revelation delai={0.12} className="max-w-[30ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white">
               {contenu.description}
             </Revelation>
           </div>
@@ -60,7 +60,7 @@ export function ContactBlocs({
           {[
             {
               carte: entreprises,
-              href: DESTINATION_RENDEZ_VOUS,
+              href: DESTINATION_RENDEZ_VOUS || undefined,
               Icone: CalendarDays,
               fondIcone: 'bg-primaire/7',
               intitule: 'text-encre-2',
@@ -69,7 +69,7 @@ export function ContactBlocs({
             },
             {
               carte: talents,
-              href: DESTINATION_CANDIDATURE,
+              href: DESTINATION_CANDIDATURE || undefined,
               Icone: FileText,
               fondIcone: 'bg-encre/10',
               intitule: 'text-prose',

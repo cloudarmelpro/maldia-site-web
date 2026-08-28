@@ -31,6 +31,11 @@ import './globals.css'
  *
  * `page={null}` : aucune des six entrees du menu n'est courante ici, et marquer
  * « Accueil » le serait faussement.
+ *
+ * **Le hero est clair, et c'est la seule difference avec les cinq autres pages.**
+ * Le bloc d'appel du gabarit est vert : un hero vert le toucherait, et deux
+ * bandes vertes qui se suivent ne font qu'une — il ne resterait qu'une couture
+ * au milieu d'un aplat.
  */
 const jost = Jost({
   subsets: ['latin'],
@@ -58,6 +63,7 @@ export default function PageIntrouvable() {
             intitule={CONTENU.intitule}
             titre={CONTENU.titre}
             description={CONTENU.texte}
+            registre="clair"
           >
             {/* Enveloppe en `flex` comme les autres heros de page : les enfants
                 tombent dans une colonne, et un bouton nu s'y etirerait sur toute
@@ -66,12 +72,13 @@ export default function PageIntrouvable() {
               <BoutonPage
                 vers={chemin(LANGUE_PAR_DEFAUT)}
                 libelle={CONTENU.retour}
-                variante="blanc"
+                variante="vert"
                 taille="haute"
                 ornement="fleche"
               />
             </div>
           </HeroPage>
+
         </Gabarit>
       </body>
     </html>

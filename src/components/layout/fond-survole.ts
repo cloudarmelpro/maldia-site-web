@@ -82,7 +82,11 @@ export function useFondSurvole() {
       element.style.backgroundSize = `${Math.round(boite.width)}px ${Math.round(boite.height)}px`
       element.style.backgroundPosition = `${Math.round(boite.left)}px ${Math.round(boite.top)}px`
 
-      setClair(defile && estClair(style.backgroundColor))
+      // L'encre suit la section survolee, defilee ou non. Elle etait liee a
+      // `defile` parce que tous les heros du site etaient verts : au repos,
+      // l'en-tete restait blanc a coup sur. Le hero clair de la 404 defait cette
+      // hypothese, et l'en-tete y devenait blanc sur blanc.
+      setClair(estClair(style.backgroundColor))
     }
 
     const surDefilement = () => {

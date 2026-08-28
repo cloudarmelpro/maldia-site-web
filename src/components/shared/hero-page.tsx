@@ -52,16 +52,31 @@ const BAS = 'pb-[clamp(3.5rem,7vw,6rem)]'
 const SOUS_INTITULE = '-mt-4.5'
 
 const TITRE =
-  'max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em] text-white'
+  'max-w-[20ch] font-titre text-[clamp(1.625rem,3.2vw,2.625rem)] leading-[1.04] tracking-[-0.045em]'
+
+/**
+ * Les cinq pages interieures ouvrent sur du vert. La 404 ouvre sur du clair :
+ * son bloc d'appel est vert lui aussi, et deux bandes vertes qui se touchent ne
+ * font qu'une — il ne resterait qu'une couture au milieu d'un aplat.
+ */
+export type RegistreHero = 'vert' | 'clair'
+
+const REGISTRES = {
+  vert: { section: 'bg-primaire text-white', titre: 'text-white', phrase: 'text-white' },
+  clair: { section: 'bg-fond text-encre', titre: 'text-encre', phrase: 'text-encre-2' },
+} as const satisfies Record<RegistreHero, { section: string; titre: string; phrase: string }>
 
 export function HeroPage({
   intitule,
   titre,
   description,
+  registre = 'vert',
   children,
 }: {
   intitule: string
   titre: string
+  /** `clair` sur la 404, qui ne doit pas toucher le vert du bloc d'appel. */
+  registre?: RegistreHero
   /** La phrase posee a droite du titre, quand la page en a une. */
   description?: string
   /** Ce qui suit le titre : appels, pastilles de marches, mention. */
@@ -70,13 +85,13 @@ export function HeroPage({
   return (
     <section
       aria-labelledby="titre-page"
-      className={classes('bg-primaire text-white', HAUT, BAS)}
+      className={classes(REGISTRES[registre].section, HAUT, BAS)}
     >
       <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
-        <IntituleSection intitule={intitule} registre="vert" />
+        <IntituleSection intitule={intitule} registre={registre === 'vert' ? 'vert' : undefined} />
 
         {description === undefined ? (
-          <h1 id="titre-page" className={classes(SOUS_INTITULE, TITRE)}>
+          <h1 id="titre-page" className={classes(SOUS_INTITULE, TITRE, REGISTRES[registre].titre)}>
             {titre}
           </h1>
         ) : (
@@ -86,10 +101,15 @@ export function HeroPage({
               'flex flex-wrap items-end justify-between gap-[clamp(1.25rem,3vw,3rem)]',
             )}
           >
-            <h1 id="titre-page" className={TITRE}>
+            <h1 id="titre-page" className={classes(TITRE, REGISTRES[registre].titre)}>
               {titre}
             </h1>
-            <p className="max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6] text-white">
+            <p
+              className={classes(
+                'max-w-[34ch] shrink-0 text-[0.90625rem] leading-[1.6]',
+                REGISTRES[registre].phrase,
+              )}
+            >
               {description}
             </p>
           </div>

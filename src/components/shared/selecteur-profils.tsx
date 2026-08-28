@@ -14,12 +14,9 @@ import { FOCUS } from '@/components/shared/focus'
  * WEB-5 — le selecteur de profils : la liste a gauche, la fiche retenue a
  * droite.
  *
- * Il existait en DEUX exemplaires, `Profils` sur l'accueil et
- * `ServicesSelecteur` sur la page Services, identiques a trois chaines de
- * classes pres. Et les deux se contredisaient en commentaire : l'un affirmait
- * qu'« il n'y a pas de version serveur de ce composant », l'autre qu'il est
- * « pose aussi bas que possible : la section qui l'accueille reste rendue au
- * serveur ». Le fichier d'a cote etait la preuve que le premier avait tort.
+ * Il existait en double, `Profils` sur l'accueil et `ServicesSelecteur` sur la
+ * page Services, a quelques chaines de classes pres — d'ou la prop `registre`,
+ * qui porte ce qui differe vraiment entre les deux.
  *
  * Composant client parce que la selection est un etat, et pose **aussi bas que
  * possible** : les deux sections qui l'accueillent restent rendues au serveur.

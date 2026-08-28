@@ -14,24 +14,53 @@ const CIBLES: Cible[] = [
   ...identifiantsArticles('fr').map((article) => ({ page: 'blog' as Page, article })),
 ]
 
+/**
+ * L'adresse attendue, ecrite a la main.
+ *
+ * **C'est le point de tout ce fichier.** Il comparait `alternatives()` a
+ * `adresse()`, c'est-a-dire a la fonction que `alternatives()` appelle : le
+ * test decrivait l'implementation et restait vert meme si `chemin()` produisait
+ * un segment faux. Verifie en cassant volontairement un segment — les six
+ * assertions passaient.
+ *
+ * Cet oracle est independant. Un segment qui change casse le test, et c'est
+ * voulu : la decision 0014 fige la structure des adresses AVANT la mise en
+ * ligne, parce qu'aucune redirection n'est possible ensuite.
+ */
+const SEGMENT_ATTENDU: Record<Page, string> = {
+  accueil: '',
+  services: 'services',
+  talents: 'talents',
+  'a-propos': 'a-propos',
+  blog: 'blog',
+  contact: 'contact',
+}
+
+function adresseAttendue(langue: string, cible: Cible): string {
+  if (cible.article) return `/${langue}/blog/${cible.article}/`
+  const segment = SEGMENT_ATTENDU[cible.page]
+  return segment ? `/${langue}/${segment}/` : `/${langue}/`
+}
+
 describe('reciprocite hreflang', () => {
   it('chaque page declare toutes les variantes, y compris elle-meme', () => {
     for (const cible of CIBLES) {
       const bloc = alternatives(cible)
       for (const langue of LANGUES) {
         expect(bloc[langue], `${cible.page}/${cible.article ?? ''} : ${langue} manque`).toBe(
-          adresse(langue, cible),
+          adresseAttendue(langue, cible),
         )
       }
     }
   })
 
-  it('les deux langues declarent exactement le meme bloc', () => {
-    // Le bloc ne depend que de la cible, pas de la langue courante : c'est la
-    // propriete meme qui rend la declaration reciproque.
+  it('adresse() produit bien l adresse attendue', () => {
+    // Le meme oracle, applique a la fonction que le sitemap et les canoniques
+    // utilisent : si les deux divergent, l export et les declarations aussi.
     for (const cible of CIBLES) {
-      const bloc = alternatives(cible)
-      expect(alternatives({ ...cible })).toEqual(bloc)
+      for (const langue of LANGUES) {
+        expect(adresse(langue, cible)).toBe(adresseAttendue(langue, cible))
+      }
     }
   })
 
@@ -48,7 +77,7 @@ describe('reciprocite hreflang', () => {
 
     for (const cible of CIBLES) {
       if (cible.page === 'accueil' && !cible.article) continue
-      expect(alternatives(cible)['x-default']).toBe(adresse('fr', cible))
+      expect(alternatives(cible)['x-default']).toBe(adresseAttendue('fr', cible))
     }
   })
 

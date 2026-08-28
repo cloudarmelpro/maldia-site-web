@@ -54,6 +54,17 @@ export function Gabarit({
           qui la recalerait sur son parent au lieu de la fenetre. */}
       <BarreProgression />
 
+      {/* WCAG 2.4.1 — l'en-tete pose huit arrets de tabulation avant le contenu,
+          sur chacune des douze pages. Ce lien est le premier arret : invisible
+          jusqu'a ce qu'il recoive le focus, ou il devient une vraie commande.
+          `z-95` le met au-dessus de l'en-tete collant, sous le panneau mobile. */}
+      <a
+        href="#contenu"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-95 focus:inline-flex focus:min-h-11 focus:items-center focus:rounded-bloc focus:bg-white focus:px-5 focus:etiquette focus:text-encre focus:outline-2 focus:outline-offset-2 focus:outline-encre"
+      >
+        {contenu.commun.allerAuContenu}
+      </a>
+
       {/* Frere de `main`, et non descendu dans la premiere section. `sticky` ne
           depasse jamais son parent : rendu dans le hero, l'en-tete se
           decollerait au bas du hero. Et sa sonde de fond ne trouverait que la
@@ -64,17 +75,17 @@ export function Gabarit({
         contenu={contenu.commun.enTete}
         cheminAutreLangue={cheminAutreLangue}
       />
-      <main>{children}</main>
-      <ContactBlocs
-        contenu={contenu.commun.contact}
-        pied={
-          <Pied
-            langue={langue}
-            contenu={contenu.commun.pied}
-            cheminAutreLangue={cheminAutreLangue}
-            changerDeLangue={contenu.commun.enTete.changerDeLangue}
-          />
-        }
+      {/* Le bloc d'appel ferme chaque page : il est le contenu, donc il entre
+          dans `main`. Le pied reste dehors — c'est ce qui lui rend son role. */}
+      <main id="contenu" className="scroll-mt-[var(--hauteur-en-tete,4.5rem)]">
+        {children}
+        <ContactBlocs contenu={contenu.commun.contact} />
+      </main>
+      <Pied
+        langue={langue}
+        contenu={contenu.commun.pied}
+        cheminAutreLangue={cheminAutreLangue}
+        changerDeLangue={contenu.commun.enTete.changerDeLangue}
       />
       <ChevronSection libelle={contenu.commun.retourEnHaut} />
     </>

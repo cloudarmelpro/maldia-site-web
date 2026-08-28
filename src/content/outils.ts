@@ -2,9 +2,9 @@
  * WEB-14 — les outils du bandeau défilant.
  *
  * Des noms et non des logos. `simple-icons` ne redistribue plus Slack,
- * Microsoft, Adobe, Canva, Salesforce ni VS Code : onze des trente-trois
- * marques manqueraient, et un bandeau moitié logos moitié texte se lit comme
- * une erreur. Voir décision 0016.
+ * Microsoft, Adobe, Canva, Salesforce ni VS Code : il manquerait assez de
+ * marques pour qu'un bandeau moitié logos moitié texte se lise comme une
+ * erreur. Voir décision 0016.
  *
  * Hors des fichiers de langue : un nom de produit ne se traduit pas.
  *

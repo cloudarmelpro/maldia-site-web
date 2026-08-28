@@ -18,7 +18,8 @@ import { CONTENEUR } from '@/components/shared/section'
  * coiffe ; la contrainte qui reste est plus simple, et c'est celle du contenu :
  * deux bandes vertes qui se touchent ne font qu'une.
  *
- * Elle etait recopiee dans cinq fichiers, et la divergence avait commence :
+ * Elle etait recopiee dans chaque page interieure, et la divergence avait
+ * commence :
  *
  * - le meme `calc()` s'ecrivait dans **deux ordres**, `var()+clamp()` ici et
  *   `clamp()+var()` la ;
@@ -32,8 +33,8 @@ import { CONTENEUR } from '@/components/shared/section'
  * recopiee. Une seule ecriture, ici.
  *
  * **Le blanc de la phrase est plein.** Il etait voile a 92 et 94 % selon la
- * page : mesure, `text-white/92` sur `#177e4f` donne 4,566 : 1 pour un seuil a
- * 4,5 — il passe de sept milliemes. Le blanc plein vaut 5,08 et ne coute rien.
+ * page, et le voile passait le seuil AA de si peu que la moindre retouche du
+ * vert l'aurait fait tomber. Le blanc plein garde la marge, et ne coute rien.
  *
  * L'en-tete est collant DANS le flux et repose sur cette section par une marge
  * basse negative : le padding haut lui rend sa place en lisant la hauteur que

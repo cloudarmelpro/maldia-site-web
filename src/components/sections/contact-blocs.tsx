@@ -1,5 +1,4 @@
 import { ArrowUpRight, CalendarDays, FileText } from 'lucide-react'
-import type { ReactNode } from 'react'
 
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import type { Contenu } from '@/content/types'
@@ -12,29 +11,25 @@ import { Fleche } from '@/components/shared/fleche'
 import { CONTENEUR } from '@/components/shared/section'
 
 /**
- * Le bloc d'appel qui ferme chaque page, et le pied dans le meme aplat vert.
+ * Le bloc d'appel qui ferme chaque page, dans le meme aplat vert que le pied.
  *
  * Ce n'est pas une `Section` : le design fait tenir le bloc et le pied dans une
  * seule bande verte, separes par un filet. Une `Section` refermerait le padding
- * entre les deux et le filet cesserait de les relier.
+ * entre les deux et le filet cesserait de les relier. C'est aussi pourquoi
+ * cette section n'a pas de padding bas : c'est le pied qui le porte.
  *
  * L'ordre du tuple fige la destination : la premiere carte mene au calendrier,
  * la seconde a la candidature.
  */
-export function ContactBlocs({
-  contenu,
-  pied,
-}: {
-  contenu: Contenu['commun']['contact']
-  /** Le pied, rendu par le gabarit — il partage l'aplat de cette section. */
-  pied: ReactNode
-}) {
+export function ContactBlocs({ contenu }: { contenu: Contenu['commun']['contact'] }) {
   const [entreprises, talents] = contenu.cartes
 
   return (
+    // Le pied est desormais rendu a cote, et non dedans : il partage l'aplat
+    // sans etre descendant de cette section, ou il perdait son role.
     <section
       aria-labelledby="titre-contact"
-      className="bg-primaire pt-[clamp(4rem,7vw,7rem)] pb-[clamp(3rem,5vw,4.5rem)] text-white"
+      className="bg-primaire pt-[clamp(4rem,7vw,7rem)] text-white"
     >
       <div className={CONTENEUR}>
         <Apparition>
@@ -111,8 +106,6 @@ export function ContactBlocs({
             </li>
           ))}
         </ul>
-
-        {pied}
       </div>
     </section>
   )

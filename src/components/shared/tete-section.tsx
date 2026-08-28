@@ -9,7 +9,7 @@ import type { RegistreIntitule } from '@/components/shared/intitule-section'
 /**
  * La tete d'une section : la pastille d'intitule, et le titre qui la suit.
  *
- * Le bloc `Apparition` + `IntituleSection` etait recopie **verbatim onze fois**,
+ * Le bloc `Apparition` + `IntituleSection` etait recopie dans chaque section,
  * a la classe pres :
  *
  * ```
@@ -18,11 +18,14 @@ import type { RegistreIntitule } from '@/components/shared/intitule-section'
  * </Apparition>
  * ```
  *
- * `w-fit self-start` n'est pas decoratif : sans lui la pastille etire son fond
- * sur toute la colonne. C'est le genre d'invariant qu'une recopie perd un jour.
+ * `w-fit self-start` sur l'enveloppe fait suite a `IntituleSection`, qui porte
+ * deja les memes contraintes : c'est une ceinture, pas une bretelle. Ce qu'une
+ * recopie perd vraiment, c'est l'uniformite — quatre sections avaient reecrit
+ * ce bloc a la main, et rien ne garantissait qu'elles restent d'accord.
  *
- * Six de ces onze enchainaient sur un `EnTeteSection` ; d'ou le titre optionnel
- * plutot que deux composants. Sans `titre`, seule la pastille est rendue.
+ * Une partie seulement enchaine sur un `EnTeteSection` ; d'ou le titre
+ * optionnel plutot que deux composants. Sans `titre`, seule la pastille est
+ * rendue.
  *
  * Trois sections reimplantaient de leur cote l'en-tete au lieu de l'appeler, et
  * l'une avait deja diverge — `text-white` la ou le composant posait

@@ -15,7 +15,7 @@ export const BAS = 'pb-[clamp(4rem,7vw,7rem)]'
 export const BAS_COURT = 'pb-[clamp(3.5rem,6vw,6rem)]'
 
 /**
- * Le fond etait une prop a quatre valeurs. Les six appelants passaient tous
+ * Le fond etait une prop a plusieurs valeurs, mais tous les appelants passaient
  * `fond`, qui etait deja la valeur par defaut ; `fond-2`, `encre` et `nuit`
  * n'avaient aucun appelant depuis que la decision 0023 a supprime toutes les
  * sections sombres. Le jeton `--color-nuit` n'existait plus que pour cette

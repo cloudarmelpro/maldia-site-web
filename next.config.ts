@@ -20,6 +20,15 @@ const nextConfig: NextConfig = {
   },
 
   reactCompiler: true,
+
+  // `app/global-not-found.tsx` — la seule facon d'avoir un vrai 404 quand le
+  // gabarit racine est un segment dynamique (`app/[langue]/layout.tsx`), ce que
+  // la doc de Next donne comme cas d'usage. Sans ce drapeau, le fichier est
+  // ignore en silence et l'export livre le 404 interne de Next : anglais, sans
+  // `lang`, sans lien de retour.
+  experimental: {
+    globalNotFound: true,
+  },
 }
 
 // ESLint ne tourne plus pendant `next build` en 16.3 — la cle `eslint` n'existe

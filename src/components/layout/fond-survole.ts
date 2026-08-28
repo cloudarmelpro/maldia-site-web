@@ -29,9 +29,8 @@ function estClair(couleur: string): boolean {
 /**
  * L'en-tete prend le fond exact de la section qu'il survole.
  *
- * Il vivait dans `en-tete.tsx`, ou il occupait a lui seul 130 des 430 lignes du
- * fichier — sans rapport avec le balisage de la barre ni avec le panneau
- * mobile. C'est un mecanisme, pas un rendu : il se lit mieux seul.
+ * Il est separe de `en-tete.tsx` : c'est un mecanisme, pas un rendu, et il n'a
+ * rapport ni avec le balisage de la barre ni avec le panneau mobile.
  *
  * **Deux conditions tiennent hors d'ici** : l'en-tete doit etre rendu comme
  * frere des sections qu'il survole — a l'interieur de l'une d'elles, `sticky`

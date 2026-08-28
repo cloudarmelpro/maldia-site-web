@@ -1,3 +1,4 @@
+import { etiquetteRendezVous } from '@/content/liens'
 import type { Contenu } from '@/content/types'
 import { FormulaireContact } from '@/components/sections/formulaire-contact'
 import { HeroPage } from '@/components/shared/hero-page'
@@ -88,6 +89,14 @@ export function ContactPage({
                   <p className="mt-2 text-[0.78125rem] leading-[1.5] text-encre-2">
                     {reservation.emplacement.texte}
                   </p>
+                  {/* Derivee de la constante, jamais recopiee : une adresse
+                      affichee qui ne correspond pas au lien est pire qu'une
+                      adresse absente. Vide, la ligne ne parait pas. */}
+                  {etiquetteRendezVous() ? (
+                    <p className="mt-2 text-[0.78125rem] leading-[1.5] text-encre">
+                      {etiquetteRendezVous()}
+                    </p>
+                  ) : null}
                 </div>
               </div>
 
@@ -107,6 +116,7 @@ export function ContactPage({
             <FormulaireContact
               onglets={contact.onglets}
               voies={contact.voies}
+              noteFermee={contenu.commun.formulaireFerme}
               className={PANNEAU}
             />
           </Apparition>
@@ -134,7 +144,7 @@ export function ContactPage({
             ))}
           </ul>
 
-          <Revelation className="max-w-[76ch] text-[0.8125rem] leading-[1.6] text-encre-2">
+          <Revelation className="max-w-[57ch] text-[0.8125rem] leading-[1.6] text-encre-2">
             {contact.mention}
           </Revelation>
         </div>

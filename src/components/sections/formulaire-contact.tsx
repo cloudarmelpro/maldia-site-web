@@ -10,8 +10,9 @@ import { classes } from '@/components/shared/classes'
 
 // Aucune bordure : le champ se detache par son aplat blanc sur le panneau
 // teinte, et c'est l'anneau de focus qui signale l'etat actif. Le design le pose
-// un peu sous la cible tactile, que `e2e/adaptation.spec.ts` exige a 44 px sous
-// 768 px — la cible passe devant, l'ecart ne se voit pas.
+// un peu sous la cible tactile, que `e2e/adaptation.spec.ts` exige a 44 px tant
+// que la navigation de bureau n'est pas la — la cible passe devant, l'ecart ne
+// se voit pas.
 const CHAMP =
   'min-h-11 w-full rounded-marque border-0 bg-white px-3.75 py-3.25 text-base text-encre placeholder:text-indicatif focus:outline-2 focus:outline-offset-2 focus:outline-encre'
 
@@ -42,8 +43,11 @@ const ID_TITRE_VOIE = 'titre-voie-contact'
 export function FormulaireContact({
   onglets,
   voies,
+  noteFermee,
   className,
 }: {
+  /** Remplace la note de la voie tant que le formulaire n'est pas branche. */
+  noteFermee: string
   onglets: Contenu['contact']['onglets']
   voies: Contenu['contact']['voies']
   /** Les classes du panneau, posees par la section : c'est elle qui range la rangee. */
@@ -65,10 +69,13 @@ export function FormulaireContact({
               aria-pressed={actif}
               aria-controls={ID_FORMULAIRE}
               onClick={() => setOnglet(indice)}
-              // Le design pose 40 px de haut ; sous 768 px la cible tactile
-              // passe devant, et `e2e/adaptation.spec.ts` l'exige.
+              // La cible tactile passe devant jusqu'a `large`, ou la navigation
+              // de bureau apparait — pas jusqu'a `md`, qui laissait les deux
+              // orientations de l'iPad sous le seuil.
+              // `transition-colors` de Tailwind inclut `outline-color` : l'anneau
+              // de focus arriverait en fondu depuis la couleur du texte.
               className={classes(
-                'min-h-11 flex-1 cursor-pointer rounded-liste px-3.5 text-[0.78125rem] transition-colors duration-200 md:min-h-10',
+                'min-h-11 flex-1 cursor-pointer rounded-liste px-3.5 text-[0.78125rem] transition-[background-color,color] duration-200 large:min-h-10',
                 FOCUS,
                 actif ? 'bg-primaire text-white' : 'text-encre-2',
               )}
@@ -126,8 +133,12 @@ export function FormulaireContact({
           {voie.envoyer}
         </button>
 
+        {/* La note de la voie decrit un formulaire qui marche. Tant que le
+            bouton est eteint, elle ferait un refus muet : on dit pourquoi, et
+            ou aller. Elle revient d'elle-meme le jour ou la destination est
+            arretee. */}
         <span className="text-center text-[0.78125rem] leading-[1.5] text-encre-2">
-          {voie.note}
+          {branche ? voie.note : noteFermee}
         </span>
       </form>
     </div>
@@ -190,7 +201,9 @@ function Champ({ champ }: { champ: ChampFormulaire }) {
             type="file"
             name={champ.nom}
             accept=".pdf,.doc,.docx"
-            className="mt-1.5 min-h-11 max-w-full text-[0.75rem] text-encre-2 file:mr-3 file:min-h-9 file:cursor-pointer file:rounded-liste file:border-0 file:bg-primaire/7 file:px-3 file:text-[0.75rem] file:text-encre"
+            // Le bouton du selecteur, pas le champ, est ce qui s'atteint au
+            // doigt : c'est lui qui doit tenir la cible, pas son parent.
+            className="mt-1.5 min-h-11 max-w-full text-[0.75rem] text-encre-2 file:mr-3 file:min-h-11 file:cursor-pointer file:rounded-liste file:border-0 file:bg-primaire/7 file:px-3 file:text-[0.75rem] file:text-encre"
           />
         </span>
       </label>

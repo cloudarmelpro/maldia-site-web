@@ -43,10 +43,9 @@ const VARIANTES: Record<Variante, string> = {
 }
 
 /**
- * 46 px par defaut, 44 pour un appel dans une carte.
- *
- * Le design pose 42 px sur le second. Deux pixels le mettraient sous la cible
- * tactile de 44 — un ecart invisible a l'oeil, mesure par la suite d'ecrans.
+ * Aucune taille ne descend sous 44 px. Le design en posait une a 42 : deux
+ * pixels invisibles a l'oeil, sous la cible tactile, et la suite d'ecrans les
+ * mesure.
  */
 export type TailleAppel = 'normale' | 'compacte' | 'haute'
 
@@ -63,9 +62,9 @@ const BASE =
   'inline-flex min-w-11 items-center justify-center gap-2.5 rounded-bloc etiquette whitespace-nowrap transition-[color,background-color,border-color,transform] duration-[220ms] focus-visible:outline-2 focus-visible:outline-offset-2'
 
 /**
- * L'ornement de fin d'appel. Les neuf appels ornes passent tous `fleche` :
- * `fleche-montante` et `etoile` n'avaient aucun appelant. L'etoile etait de
- * plus un caractere pose la ou le depot demande une icone de `lucide-react`.
+ * L'ornement de fin d'appel. `fleche-montante` et `etoile` ont ete retires
+ * faute d'appelant ; l'etoile etait de plus un caractere pose la ou le depot
+ * demande une icone de `lucide-react`.
  */
 export type Ornement = 'fleche' | 'aucun'
 
@@ -92,9 +91,9 @@ export function Bouton({
     <a
       // Tant que la destination n'est pas tranchee, AUCUN `href` — et non un
       // `href=""`, qui pointe vers la page courante : focalisable, annonce
-      // comme lien, curseur main, et le clic recharge la page. Mesure sur
-      // l'export : 31 ancres de ce type sur les seules pages francaises. Un
-      // `<a>` sans `href` n'est pas un lien, et c'est ce qu'on veut dire.
+      // comme lien, curseur main, et le clic recharge la page. Un `<a>` sans
+      // `href` n'est pas un lien, et c'est exactement ce qu'on veut dire tant
+      // que la destination manque.
       href={DESTINATIONS[destination] || undefined}
       aria-label={nomAccessible}
       className={`${BASE} ${TAILLES[taille]} ${VARIANTES[variante]}${className ? ` ${className}` : ''}`}

@@ -41,6 +41,14 @@ const DECLENCHEMENT = 'top 88%'
 type BaliseRevelation = 'h1' | 'h2' | 'h3' | 'p' | 'span'
 
 /**
+ * Les balises sur lesquelles `aria-label` est permis. ARIA 1.2 interdit le nom
+ * d'auteur sur `paragraph` et `generic` : `aria: 'auto'` y posait un
+ * `aria-label` que la specification proscrit, tout en masquant les fragments
+ * qui portent le texte. Le paragraphe se retrouvait vide pour l'API.
+ */
+const NOMMABLES = new Set<BaliseRevelation>(['h1', 'h2', 'h3'])
+
+/**
  * Revelation de texte ligne par ligne, chaque ligne montant derriere un masque.
  *
  * `SplitText` decoupe le texte en lignes et `mask: 'lines'` double chaque ligne
@@ -49,8 +57,9 @@ type BaliseRevelation = 'h1' | 'h2' | 'h3' | 'p' | 'span'
  * change : sans lui, les lignes restent celles de la premiere mesure et le
  * masque coupe au mauvais endroit.
  *
- * `aria: 'auto'` pose `aria-label` sur le parent et `aria-hidden` sur les
- * fragments : sans ca, un lecteur d'ecran epellerait le texte ligne par ligne.
+ * `aria` vaut `'auto'` sur un titre — `aria-label` sur le parent, `aria-hidden`
+ * sur les fragments, pour qu'un lecteur d'ecran n'epelle pas le texte ligne par
+ * ligne. Sur un paragraphe il vaut `'none'` : voir `NOMMABLES`.
  *
  * **Le texte part invisible** — voir l'utilitaire `revelable` de globals.css, et
  * la raison pour laquelle il ne vaut que si le navigateur execute du script.
@@ -111,7 +120,11 @@ export function Revelation({
           // blocs poses par SplitText d'un vrai bloc enfant.
           linesClass: LIGNE,
           autoSplit: true,
-          aria: 'auto',
+          // Sur un titre, `auto` evite qu'un lecteur d'ecran annonce le texte
+          // ligne par ligne. Ailleurs, il masquerait le contenu derriere un nom
+          // que la balise n'a pas le droit de porter : les fragments restent
+          // alors visibles a l'API, au prix d'une pause entre les lignes.
+          aria: NOMMABLES.has(Balise) ? 'auto' : 'none',
           onSplit(self) {
             const cibles = decoupe === 'caracteres' ? self.chars : self.lines
 
@@ -133,7 +146,7 @@ export function Revelation({
 
       return () => media.revert()
     },
-    { scope: cadre, dependencies: [decoupe, desLeMontage, delai] },
+    { scope: cadre, dependencies: [Balise, decoupe, desLeMontage, delai] },
   )
 
   return (

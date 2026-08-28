@@ -31,8 +31,8 @@ const ALLURES: readonly Allure[] = ['lente', 'inverse', 'tres-lente']
  * formate par Intl — le separateur de milliers n'est pas le meme dans les deux
  * langues.
  *
- * Les outils sont des noms et non des logos : `simple-icons` ne redistribue plus
- * onze des trente-trois marques citees. Voir decision 0016.
+ * Les outils sont des noms et non des logos : `simple-icons` ne redistribue
+ * plus une partie des marques citees. Voir decision 0016.
  *
  * Ce n'est pas une `Section` : les bandes traversent la page entiere, et
  * `Section` enferme tout son contenu dans la gouttiere. Elles sont donc rendues
@@ -122,7 +122,7 @@ export function Base({
 
       <div className={CONTENEUR}>
         <Apparition>
-          <p className="mt-5 max-w-[62ch] text-[0.78125rem] leading-[1.55] text-white">
+          <p className="mt-5 max-w-[57ch] text-[0.78125rem] leading-[1.55] text-white">
             {contenu.mention}
           </p>
         </Apparition>

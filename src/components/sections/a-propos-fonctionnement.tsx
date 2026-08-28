@@ -33,7 +33,7 @@ export function AProposFonctionnement({
   return (
     <section
       aria-labelledby="titre-fonctionnement"
-      className={classes('rounded-coiffe bg-primaire', HAUT, BAS)}
+      className={classes('bg-primaire', HAUT, BAS)}
     >
       <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
         <TeteSection intitule={contenu.intitule} registre="vert" />

@@ -16,6 +16,10 @@ bibliothèque », mais « laquelle pour quoi ».
 
 ## Décision
 
+> **Lue seule, cette section est périmée.** `motion` a été retirée depuis —
+> voir « Suite » en fin de document. `Apparition` est écrite en GSAP. Ce qui
+> suit dit pourquoi la frontière avait été tracée, pas ce que fait le code.
+
 **Les deux coexistent, et la frontière est le texte.**
 
 - **`Revelation`** (GSAP + SplitText) — les titres de section, les `h1` de page,
@@ -64,7 +68,11 @@ cette requête, elle ne s'applique pas. **Elle échoue du bon côté.**
 **Pas de `@ts-expect-error`.** La balise polymorphe est typée sur cinq balises
 admises.
 
-### Le voile de chargement
+### Le voile de chargement — retiré depuis
+
+> Ce voile n'existe plus : la décision 0026 l'a supprimé, et le `h1` du hero
+> n'est plus révélé. Conservé ici parce qu'il explique la forme du filet de 4 s,
+> qui lui a survécu.
 
 Il existe pour une seule raison : le titre du hero et les `h1` des pages
 intérieures sont au-dessus du pli, donc invisibles tant que GSAP n'a pas découpé

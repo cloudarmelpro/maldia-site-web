@@ -34,16 +34,15 @@ const DECLENCHEMENT = 'top 95%'
  * **Elle etait ecrite avec `motion`, et ne l'est plus.** Deux raisons, et la
  * seconde compte plus que la premiere.
  *
- * Le poids : `motion` valait 30,3 Ko gzippes sur chaque page, pour un fondu
- * avec decalage que ScrollTrigger — deja charge pour `Revelation` — fait sans
- * une ligne de plus. La cible de la decision 0006 ne laisse pas la place a deux
+ * Le poids : `motion` etait servie sur chaque page pour un fondu avec decalage
+ * que ScrollTrigger — deja charge pour `Revelation` — fait sans une ligne de
+ * plus. La cible de la decision 0006 ne laisse pas la place a deux
  * bibliotheques d'animation.
  *
  * La robustesse : `motion` serialisait son etat de depart dans le HTML statique,
- * soit **31 blocs a `style="opacity:0"`** par page. Sans script — ou avec un
- * script qui n'arrive pas — ils restaient invisibles pour toujours. Ils portent
- * maintenant la classe `revelable`, donc la garde `@media (scripting: enabled)`
- * et le filet de securite de 4 s.
+ * en `style="opacity:0"`. Sans script — ou avec un script qui n'arrive pas —
+ * ces blocs restaient invisibles pour toujours. Ils portent maintenant la classe
+ * `revelable`, donc la garde `@media (scripting: enabled)` et le filet de 4 s.
  *
  * Le registre `texte`, qui posait un flou a l'entree, a disparu avec son dernier
  * appelant : c'etait la seule propriete animee du depot qui ne fut ni
@@ -87,7 +86,17 @@ export function Apparition({
           scrollTrigger: { trigger: element, start: DECLENCHEMENT, once: true },
         })
 
+        // Ces blocs enveloppent parfois des commandes — onglets, filtres,
+        // boutons. Le clavier ne suit pas le defilement : on peut tabuler dans
+        // un bloc que ScrollTrigger n'a pas encore rallume, et le focus se pose
+        // alors sur une commande invisible. Recevoir le focus termine l'entree.
+        const auFocus = () => {
+          mouvement.progress(1)
+        }
+        element.addEventListener('focusin', auFocus)
+
         return () => {
+          element.removeEventListener('focusin', auFocus)
           mouvement.scrollTrigger?.kill()
           mouvement.kill()
         }

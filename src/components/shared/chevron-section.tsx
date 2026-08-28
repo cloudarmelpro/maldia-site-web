@@ -50,8 +50,11 @@ export function ChevronSection({ libelle }: { libelle: string }) {
       type="button"
       aria-label={libelle}
       onClick={remonter}
-      className={`fixed right-[clamp(1.25rem,4vw,3.5rem)] bottom-[clamp(1.25rem,4vw,2.5rem)] z-45 grid size-11 place-items-center rounded-bloc bg-white/92 text-encre shadow-[0_6px_20px_rgba(15,29,23,0.16)] backdrop-blur-[10px] transition-[opacity,background-color] duration-[240ms] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre ${
-        visible ? 'opacity-100' : 'pointer-events-none opacity-0'
+      // `invisible` en plus de l'opacite : ni `opacity: 0` ni `pointer-events`
+      // ne retirent un bouton de l'ordre de tabulation. Sans lui, on tabule en
+      // haut de page sur une commande qu'on ne voit pas.
+      className={`fixed right-[clamp(1.25rem,4vw,3.5rem)] bottom-[clamp(1.25rem,4vw,2.5rem)] z-45 grid size-11 place-items-center rounded-bloc bg-white/92 text-encre shadow-flottant backdrop-blur-[10px] transition-[opacity,background-color] duration-[240ms] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre ${
+        visible ? 'opacity-100' : 'invisible pointer-events-none opacity-0'
       }`}
     >
       <ChevronUp aria-hidden className="size-4.25" />

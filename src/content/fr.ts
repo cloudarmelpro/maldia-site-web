@@ -41,7 +41,7 @@ export const fr: Contenu<'fr'> = {
         {
           ligne1: 'Délai moyen',
           ligne2: 'pour un profil',
-          chiffre: '14 j',
+          chiffre: '14 j',
           description: 'Du besoin exprimé aux candidats présentés.',
         },
         {
@@ -64,9 +64,9 @@ export const fr: Contenu<'fr'> = {
           description: 'En français, avec vos équipes et vos clients.',
         },
         {
-          ligne1: 'Vos outils,',
-          ligne2: 'sans changement',
-          chiffre: '100 %',
+          ligne1: 'Changements dans',
+          ligne2: 'vos outils',
+          chiffre: '0',
           description: 'Nous nous adaptons à vos outils existants.',
         },
       ],
@@ -145,13 +145,13 @@ export const fr: Contenu<'fr'> = {
         },
       ],
       delaiIntitule: 'Délai moyen',
-      delai: '14 jours',
+      delai: '14 jours',
       ctaProfil: 'Demander ce profil',
     },
 
     methode: {
       intitule: 'Méthode',
-      titre: 'Cinq étapes, et le renfort est en place.',
+      titre: 'Du besoin exprimé au renfort en place.',
       description:
         'Vous gardez la décision finale à chaque étape. Nous ne facturons pas la recherche.',
       liste: [
@@ -183,7 +183,7 @@ export const fr: Contenu<'fr'> = {
           cote: 'maldia',
           acteur: 'Maldia',
           titre: 'Nous assurons le suivi',
-          description: 'Point régulier, remplacement si le profil ne convient pas.',
+          description: 'Point régulier tout au long de la mission.',
         },
       ],
       conclusion: 'Le talent rejoint votre environnement de travail. Vous n’avez rien à changer.',
@@ -199,13 +199,13 @@ export const fr: Contenu<'fr'> = {
       voies: [
         {
           pour: 'Entreprises',
-          meta: 'Rendez-vous · 30 min',
+          meta: 'Rendez-vous · 30 min',
           titre: 'Vous cherchez du personnel',
           description:
             'Vous décrivez le poste, nous présentons des profils francophones. Aucuns frais de recrutement, quatorze jours en moyenne.',
           points: [
             'Aucuns frais de recrutement',
-            '14 jours en moyenne pour un profil',
+            '14 jours en moyenne pour un profil',
             'Vous décrivez le profil recherché',
             'Maldia recherche et présélectionne',
             'Le talent travaille avec vos outils',
@@ -248,12 +248,12 @@ export const fr: Contenu<'fr'> = {
       intitule: 'Contact',
       titre: 'Parlons de votre équipe, ou de votre carrière.',
       description:
-        'Les entreprises réservent un appel de 30 minutes. Les talents déposent leur CV en ligne.',
+        'Les entreprises réservent un appel de 30 minutes. Les talents déposent leur CV en ligne.',
       cartes: [
         {
           intitule: 'Entreprises',
           titre: 'Prendre rendez-vous',
-          mention: '30 minutes · via Cal.com',
+          mention: '30 minutes · via Cal.com',
         },
         {
           intitule: 'Talents',
@@ -283,17 +283,26 @@ export const fr: Contenu<'fr'> = {
     },
 
     retourEnHaut: 'Section précédente',
+    allerAuContenu: 'Aller au contenu',
+    formulaireFerme: 'Le dépôt en ligne n’est pas encore ouvert. Écrivez-nous en attendant.',
+    nonTrouve: {
+      titre: 'Cette page n’existe pas.',
+      texte: 'L’adresse est peut-être incomplète, ou la page a changé de nom.',
+      retour: 'Retour à l’accueil',
+      metaTitre: 'Page introuvable — Agence Maldia',
+      metaDescription: 'Cette adresse ne correspond à aucune page du site.',
+    },
   },
 
   accueil: {
     meta: {
       titre: 'Agence Maldia — Talents francophones de Madagascar pour vos équipes',
       description:
-        'Renforcez votre équipe autrement, avec des talents francophones basés à Madagascar. Aucuns frais de recrutement, 14 jours en moyenne pour un profil.',
+        'Renforcez votre équipe autrement, avec des talents francophones basés à Madagascar. Aucuns frais de recrutement, 14 jours en moyenne pour un profil.',
       openGraph: {
         titre: 'Renforcez votre équipe autrement.',
         description:
-          'Agence Maldia connecte les talents de Madagascar avec des entreprises du Canada francophone et d’Europe. Aucuns frais de recrutement, 14 jours en moyenne.',
+          'Agence Maldia connecte les talents de Madagascar avec des entreprises du Canada francophone et d’Europe. Aucuns frais de recrutement, 14 jours en moyenne.',
       },
     },
 
@@ -303,7 +312,7 @@ export const fr: Contenu<'fr'> = {
       titre: 'Renforcez votre équipe autrement.',
       carteAppel: {
         intitule: 'Parlons-en',
-        titre: 'Appel de 30 minutes',
+        titre: 'Appel de 30 minutes',
         mention: 'Sans engagement · via Cal.com',
       },
       carteCandidature: 'Déposer ma candidature',
@@ -357,7 +366,7 @@ export const fr: Contenu<'fr'> = {
           cote: 'talent',
           question: 'Comment se passe la candidature ?',
           reponse:
-            'Un formulaire court, entièrement en ligne, avec dépôt direct de votre CV en PDF, DOC ou DOCX. Vous recevez une confirmation dès que la candidature est reçue.',
+            'Un formulaire court, entièrement en ligne, avec dépôt direct de votre CV en PDF, DOC ou DOCX.',
         },
       ],
     },
@@ -367,7 +376,7 @@ export const fr: Contenu<'fr'> = {
     meta: {
       titre: 'Services — Staff augmentation | Agence Maldia',
       description:
-        'Vous décrivez le poste, Maldia cherche et présélectionne. Aucuns frais de recrutement, 14 jours en moyenne, talents francophones, vos outils inchangés.',
+        'Vous décrivez le poste, Maldia cherche et présélectionne. Aucuns frais de recrutement, 14 jours en moyenne, talents francophones, vos outils inchangés.',
       openGraph: {
         titre: 'Staff augmentation — Agence Maldia',
         description:
@@ -378,7 +387,7 @@ export const fr: Contenu<'fr'> = {
       intitule: 'Services',
       titre: 'Le renfort d’équipe, sans frais de recrutement.',
       description: 'Pour les entreprises du Canada francophone et d’Europe.',
-      mention: 'Le délai de 14 jours est une moyenne, pas une garantie.',
+      mention: 'Le délai de 14 jours est une moyenne, pas une garantie.',
     },
     /** L'intitulé de la bande des six chiffres. */
     obtenez: 'Ce que vous obtenez',
@@ -431,17 +440,17 @@ export const fr: Contenu<'fr'> = {
         texte: 'Développement, design, vidéo, community management, support, comptabilité.',
       },
       {
-        intitule: 'Suivi',
-        titre: 'Un dossier suivi',
+        intitule: 'Base',
+        titre: 'Un dossier conservé',
         texte:
-          'Votre candidature reste dans notre base et nous vous recontactons quand un poste correspond.',
+          'Votre candidature rejoint notre base de candidats.',
       },
     ],
     encart: {
       intitule: 'Candidature',
       titre: 'Votre candidature, en une fois.',
       texte:
-        'Formulaire court avec dépôt direct du CV. Vous recevez une confirmation dès réception.',
+        'Formulaire court avec dépôt direct du CV.',
       cta: 'Déposer ma candidature',
     },
     domaines: {
@@ -534,7 +543,7 @@ export const fr: Contenu<'fr'> = {
           texte:
             'Nous recrutons, évaluons et accompagnons les talents sur place. Plus de {nombre} candidats sont présents dans notre base de données, dans tous les domaines professionnels que nous couvrons.',
           valeur: '{nombre}+',
-          legende: 'candidats dans notre base',
+          legende: 'candidats dans notre base de données',
         },
         {
           lieu: 'Canada · Europe',
@@ -555,7 +564,7 @@ export const fr: Contenu<'fr'> = {
 
   blog: {
     meta: {
-      titre: 'Blog — Agence Maldia',
+      titre: 'Blog — Recrutement à distance | Agence Maldia',
       description:
         'Ce que nous apprenons en plaçant des talents malgaches dans des équipes francophones : recrutement à distance, méthode, outils.',
       openGraph: {
@@ -605,30 +614,30 @@ export const fr: Contenu<'fr'> = {
     meta: {
       titre: 'Contact — Prendre rendez-vous | Agence Maldia',
       description:
-        'Réservez un appel de 30 minutes avec Agence Maldia via Cal.com, ou déposez votre candidature si vous êtes un talent basé à Madagascar.',
+        'Réservez un appel de 30 minutes avec Agence Maldia via Cal.com, ou déposez votre candidature si vous êtes un talent basé à Madagascar.',
       openGraph: {
         titre: 'Contacter Agence Maldia',
         description:
-          'Un appel de 30 minutes pour les entreprises, un formulaire en ligne pour les talents à Madagascar.',
+          'Un appel de 30 minutes pour les entreprises, un formulaire en ligne pour les talents à Madagascar.',
       },
     },
     entete: {
       intitule: 'Contact',
       titre: 'Dites-nous ce dont vous avez besoin.',
-      description: 'Un appel de 30 minutes suffit à savoir si le service correspond.',
+      description: 'Un appel de 30 minutes suffit à savoir si le service correspond.',
       cta: 'Prendre rendez-vous',
-      mention: '30 minutes · via Cal.com',
+      mention: '30 minutes · via Cal.com',
     },
 
     reservation: {
       intitule: 'Réservation',
       titre: 'Choisissez votre créneau maintenant.',
-      description: 'Le calendrier est celui de notre équipe. Ce que vous réservez est confirmé.',
-      evenement: 'Appel de découverte · 30 min',
+      description: 'Le calendrier est celui de notre équipe.',
+      evenement: 'Appel de découverte · 30 min',
       fuseau: 'Fuseau UTC+3',
       emplacement: {
-        titre: 'Emplacement du calendrier Cal.com',
-        texte: 'L’intégration s’affiche ici sur le site en ligne',
+        titre: 'Calendrier Cal.com',
+        texte: 'Réservation en ligne, sans échange de courriels',
       },
       mention: 'Aucun paiement · Aucun engagement',
       cta: 'Ouvrir dans Cal.com',
@@ -677,7 +686,7 @@ export const fr: Contenu<'fr'> = {
           },
         ],
         envoyer: 'Envoyer la demande',
-        note: 'Réponse sous un jour ouvré. Aucun engagement.',
+        note: 'Aucun engagement.',
       },
       {
         intitule: 'Talents',
@@ -711,11 +720,11 @@ export const fr: Contenu<'fr'> = {
             nom: 'cv',
             libelle: 'Votre CV',
             titre: 'Glissez votre fichier ici',
-            precision: 'PDF, DOC, DOCX · 5 Mo maximum',
+            precision: 'PDF, DOC, DOCX · 5 Mo maximum',
           },
         ],
         envoyer: 'Envoyer ma candidature',
-        note: 'Confirmation dès réception de votre candidature.',
+        note: 'Formulaire court, entièrement en ligne.',
       },
     ],
 

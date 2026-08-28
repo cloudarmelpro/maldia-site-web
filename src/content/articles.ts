@@ -140,7 +140,7 @@ const articlesFr: Articles = [
       {
         type: 'paragraphe',
         texte:
-          'Vous recevez une confirmation dès que la candidature a bien été reçue. Votre profil rejoint ensuite notre base de candidats. Si un besoin correspond, nous vous contactons : présélection par Maldia, puis sélection avec l’entreprise cliente.',
+          'Votre profil rejoint notre base de candidats. Présélection par Maldia, puis sélection avec l’entreprise cliente.',
       },
     ],
   },
@@ -316,7 +316,7 @@ const articlesEn: Articles = [
       {
         type: 'paragraphe',
         texte:
-          'You receive a confirmation as soon as the application has been received. Your profile then joins our candidate database. If a request matches, we contact you: shortlisting by Maldia, then selection with the client company.',
+          'Your profile is added to our candidate database. Shortlisting by Maldia, then selection with the client company.',
       },
     ],
   },

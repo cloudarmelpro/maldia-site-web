@@ -33,10 +33,16 @@ const DEPLACEMENT = -12
 /**
  * Le panneau de navigation mobile.
  *
- * Il vivait dans `en-tete.tsx`, ou il occupait 117 lignes de balisage sans
- * rapport avec la barre : celle-ci a une sonde de fond, une navigation de
- * bureau et un selecteur de langue, lui a une liste plein ecran, un piege a
- * focus et une animation de sortie. Deux sujets, un fichier.
+ * Il est separe de `en-tete.tsx` parce que les deux ne traitent pas du meme
+ * sujet : la barre a une sonde de fond, une navigation de bureau et un
+ * selecteur de langue ; le panneau a une liste plein ecran, un piege a focus et
+ * une animation de sortie.
+ *
+ * **Le piege a focus est pose par `inert` sur les freres**, en remontant
+ * jusqu'au corps du document — et non par une boucle sur le premier et le
+ * dernier element focalisable. `inert` retire l'arriere-plan de l'ordre de
+ * tabulation *et* de l'arbre d'accessibilite ; une boucle ne fait que le
+ * premier, et le lecteur d'ecran continue d'annoncer la page cachee dessous.
  *
  * Il est rendu **a cote** de l'en-tete et non dedans. `position` plus `z-index`
  * creent un contexte d'empilement, et un panneau en `fixed` place dedans y
@@ -129,81 +135,104 @@ export function PanneauNavigation({
     window.addEventListener('keydown', surTouche)
     panneau.current?.querySelector<HTMLElement>('a, button')?.focus()
 
+    // Le piege a focus. `position: fixed` et `inset-0` cachent l'arriere-plan a
+    // l'oeil, pas au clavier : sans ceci on tabule dans l'en-tete, la page et le
+    // pied, invisibles sous le panneau. `inert` les retire d'un coup de l'ordre
+    // de tabulation ET de l'arbre d'accessibilite — la ou un piege ecrit a la
+    // main ne fait que le premier.
+    const endormis: Element[] = []
+    let noeud: HTMLElement | null = panneau.current
+    while (noeud && noeud !== document.body) {
+      const parent: HTMLElement | null = noeud.parentElement
+      if (!parent) break
+      for (const frere of parent.children) {
+        if (frere !== noeud && !frere.hasAttribute('inert')) {
+          frere.setAttribute('inert', '')
+          endormis.push(frere)
+        }
+      }
+      noeud = parent
+    }
+
     return () => {
       document.body.style.overflow = debordementPrecedent
       window.removeEventListener('keydown', surTouche)
+      for (const frere of endormis) frere.removeAttribute('inert')
       boutonBascule?.focus()
     }
   }, [ouvert, setOuvert, panneau, bascule])
 
   return (
-  monte ? (
-    <div
-      ref={panneau}
-      className="fixed inset-0 z-90 flex flex-col overflow-y-auto bg-primaire px-[clamp(1.25rem,4vw,3.5rem)] pt-4 pb-8.5 text-white"
-          onClick={(evenement) => {
-            // Suivre un lien referme le panneau, sinon la page défilerait dessous.
-            if (evenement.target instanceof Element && evenement.target.closest('a')) {
-              setOuvert(false)
-            }
-          }}
-        >
-          <div className="flex min-h-16 items-center justify-between">
-            {marque}
-            <button
-              type="button"
-              aria-label={contenu.fermerMenu}
-              onClick={() => setOuvert(false)}
-              className={classes(
-                // Voile sombre et non blanc : sur le vert, un voile blanc
-                // eclaircit l'aplat et fait passer l'encre sous le seuil.
-                'grid size-11 place-items-center rounded-bloc bg-voile/26 text-2xl leading-none text-white',
-                FOCUS_SUIVEUR,
-              )}
-            >
-              <span aria-hidden>×</span>
-            </button>
-          </div>
+    monte ? (
+      <div
+        ref={panneau}
+        role="dialog"
+        aria-modal="true"
+        aria-label={contenu.menu}
+        className="fixed inset-0 z-90 flex flex-col overflow-y-auto bg-primaire px-[clamp(1.25rem,4vw,3.5rem)] pt-4 pb-8.5 text-white"
+        onClick={(evenement) => {
+          // Suivre un lien referme le panneau, sinon la page défilerait dessous.
+          if (evenement.target instanceof Element && evenement.target.closest('a')) {
+            setOuvert(false)
+          }
+        }}
+      >
+        <div className="flex min-h-16 items-center justify-between">
+          {marque}
+          <button
+            type="button"
+            aria-label={contenu.fermerMenu}
+            onClick={() => setOuvert(false)}
+            className={classes(
+              // Voile sombre et non blanc : sur le vert, un voile blanc
+              // eclaircit l'aplat et fait passer l'encre sous le seuil.
+              'grid size-11 place-items-center rounded-bloc bg-voile/26 text-2xl leading-none text-white',
+              FOCUS_SUIVEUR,
+            )}
+          >
+            <span aria-hidden>×</span>
+          </button>
+        </div>
 
-          <nav aria-label={contenu.marque} className="mt-11">
-            <ul className="flex flex-col gap-1.5">
-              {contenu.navigation.map((lien, indice) => {
-                const courante = lien.page === page
-                return (
-                  <li key={lien.page}>
-                    <Lien
-                      href={chemin(langue, lien.page)}
-                      aria-current={courante ? 'page' : undefined}
+        <nav className="mt-11">
+          <ul className="flex flex-col gap-1.5">
+            {contenu.navigation.map((lien, indice) => {
+              const courante = lien.page === page
+              return (
+                <li key={lien.page}>
+                  <Lien
+                    href={chemin(langue, lien.page)}
+                    aria-current={courante ? 'page' : undefined}
+                    className={classes(
+                      'flex min-h-13 items-center gap-3 text-[clamp(1.375rem,5.2vw,1.75rem)] leading-[1.15] tracking-[-0.04em] text-white',
+                      FOCUS_SUIVEUR,
+                    )}
+                  >
+                    {/* La page courante se marque par la puce et non par
+                        une encre plus pale : sur le vert, le vert clair ne
+                        tient que 2,6 : 1, et un blanc voile passerait sous
+                        le seuil a ce corps. La puce est toujours rendue,
+                        pour que les entrees restent alignees. */}
+                    <span
+                      aria-hidden
                       className={classes(
-                        'flex min-h-13 items-center gap-3 text-[clamp(1.375rem,5.2vw,1.75rem)] leading-[1.15] tracking-[-0.04em] text-white',
-                        FOCUS_SUIVEUR,
+                        'size-1.5 shrink-0 rounded-pilule',
+                        courante ? 'bg-white' : 'bg-transparent',
                       )}
+                    />
+                    {/* Le panneau se monte a l'ouverture : la revelation joue
+                        des l'arrivee de GSAP, sans point de defilement a
+                        attendre. */}
+                    <Revelation
+                      balise="span"
+                      desLeMontage
+                      delai={indice * PAS_MENU}
+                      className="block"
                     >
-                      {/* La page courante se marque par la puce et non par
-                          une encre plus pale : sur le vert, le vert clair ne
-                          tient que 2,6 : 1, et un blanc voile passerait sous
-                          le seuil a ce corps. La puce est toujours rendue,
-                          pour que les entrees restent alignees. */}
-                      <span
-                        aria-hidden
-                        className={classes(
-                          'size-1.5 shrink-0 rounded-pilule',
-                          courante ? 'bg-white' : 'bg-transparent',
-                        )}
-                      />
-                      {/* Le panneau se monte a l'ouverture : la revelation joue
-                          des l'arrivee de GSAP, sans point de defilement a
-                          attendre. */}
-                      <Revelation
-                        balise="span"
-                        desLeMontage
-                        delai={indice * PAS_MENU}
-                        className="block"
-                      >
-                        {lien.libelle}
-                      </Revelation>
-                    </Lien>
-                  </li>
+                      {lien.libelle}
+                    </Revelation>
+                  </Lien>
+                </li>
               )
             })}
           </ul>
@@ -244,7 +273,7 @@ export function PanneauNavigation({
             />
           </div>
         </div>
-    </div>
-  ) : null
+      </div>
+    ) : null
   )
 }

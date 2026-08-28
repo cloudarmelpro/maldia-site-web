@@ -1,8 +1,7 @@
 import type { Contenu } from '@/content/types'
-import { EnTeteSection } from '@/components/shared/en-tete-section'
 import { CarteEtape } from '@/components/shared/carte-etape'
+import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
-import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
@@ -38,11 +37,9 @@ export function Methode({
     >
       <div className={CONTENEUR}>
         <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-          <Apparition>
-            <IntituleSection intitule={contenu.intitule} registre="vert" />
-          </Apparition>
-
-          <EnTeteSection
+          <TeteSection
+            intitule={contenu.intitule}
+            registre="vert"
             titreId={titreId}
             titre={contenu.titre}
             description={contenu.description}

@@ -116,8 +116,9 @@ les liens sont réciproques, sinon la déclaration est ignorée ; une balise
 ### La performance n'est pas un adjectif
 
 `WEB-9` demande un site « rapide ». Cinq de ses six mots ne se vérifient pas ;
-celui-là se chiffre. La cible est en décision 0006 — **à trancher avant la mise en
-ligne**, sinon la question reviendra sous forme de désaccord après la livraison.
+celui-là se chiffre. La décision 0006 le fait : LCP ≤ 2,0 s, CLS ≤ 0,05,
+**JS gzippé ≤ 180 Ko par page**, images ≤ 250 Ko et aucune au-dessus de 100 Ko.
+Ces cibles se mesurent **sur l'export**, jamais sous `next dev`.
 
 ## Commandes
 
@@ -146,9 +147,10 @@ Les deux dernières viennent de dépôts tiers sous licence MIT
 (`kylezantos/design-motion-principles`, `Schoepplake/framer-motion-skill`) et sont
 laissées **telles quelles**, avis de licence compris.
 
-> Deux écarts à garder en tête en les lisant. Elles montrent parfois
-> `from "framer-motion"` : ici c'est **`motion/react*`**. Et pour le réglage des
-> regards, ce site est une page vitrine — pas un outil de productivité.
+> Deux écarts à garder en tête en les lisant. Elles décrivent Framer Motion,
+> qui **n'est pas installée ici** : le mouvement de ce site passe par GSAP, et
+> leurs exemples ne se recopient pas. Et pour le réglage des regards, ce site est
+> une page vitrine — pas un outil de productivité.
 
 ## Agents du dépôt
 
@@ -158,7 +160,7 @@ Dans `.claude/agents/` :
 - `direction-artistique` — barre premium, rythme, contrastes, après chaque section
 - `adaptation-ecrans` — mesure dans un vrai navigateur, de 360 à 2560 px
 - `redacteur-bilingue` — chaînes visibles, typographie des deux langues, parité
-- `animation-motion` — mouvement avec `motion`, coût en bundle, mouvement réduit
+- `animation-motion` — mouvement avec GSAP, coût en bundle, mouvement réduit
 - `controle-qualite` — liens qui aboutissent, hreflang, ce que l'export produit
 - `mise-en-ligne` — **avant tout déploiement** : ce que `out/` contient réellement
 
@@ -178,11 +180,18 @@ proportionnellement moins de place verticale qu'un téléphone.
 
 ## L'animation
 
-La bibliothèque est **`motion`** — l'ancien Framer Motion. Seul le nom du paquet a
-changé, pas l'API : les imports viennent de `motion/react*`, jamais de
-`framer-motion`. Quatre points d'entrée, et le choix pèse sur le bundle : part de `motion/react-mini` ou de
-`motion/react-m` avec `LazyMotion`, et ne prends `motion/react` que si une
-fonctionnalité précise l'exige — en disant laquelle.
+La bibliothèque est **GSAP**, avec `ScrollTrigger`, `SplitText` et `CustomEase`,
+plus **Lenis** pour le défilement lissé. **`motion` a été retirée** — décisions
+0025 et 0006 : trois bibliothèques d'animation ne tiennent pas dans le budget de
+JavaScript. `motion` n'est plus installée, et l'importer casse le build.
+
+Deux composants portent tout le mouvement du site, et il n'y a pas de troisième :
+
+- **`Revelation`** — le texte, ligne par ligne derrière un masque. `SplitText`
+  avec `autoSplit`, qui redécoupe quand les fontes arrivent ou que la largeur
+  change. C'est le seul service qu'aucune autre bibliothèque ne rend.
+- **`Apparition`** — tout ce qui n'est pas du texte lu : cartes, grilles,
+  encarts. Un fondu de bloc, avec décalage dans une grille.
 
 Tout composant animé est un composant client : `"use client"`, **le plus bas possible**.
 
@@ -190,8 +199,15 @@ N'anime que `transform` et `opacity`. Animer `width`, `height`, `top` ou `margin
 déclenche un recalcul de mise en page à chaque image, et fait tomber le défilement à
 vingt images par seconde sur un téléphone d'entrée de gamme.
 
-`prefers-reduced-motion` se respecte — `useReducedMotion`. Ce n'est pas une préférence
-esthétique : une parallaxe donne la nausée à qui a des troubles vestibulaires.
+`prefers-reduced-motion` se respecte — `gsap.matchMedia()` sur
+`(prefers-reduced-motion: no-preference)`, qui **n'exécute pas** le bloc plutôt
+que de raccourcir la durée. Ce n'est pas une préférence esthétique : une
+parallaxe donne la nausée à qui a des troubles vestibulaires.
+
+**Un bloc animé peut contenir une commande.** Le clavier ne suit pas le
+défilement : sans précaution, le focus se pose sur un bouton encore à
+`opacity: 0`. `Apparition` termine son entrée sur `focusin` — c'est un invariant,
+pas un détail.
 
 ## Commentaires
 

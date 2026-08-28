@@ -113,13 +113,10 @@ function Vignettes() {
  * `dvh` la ferait changer de hauteur pendant le defilement, et la page
  * sauterait.
  *
- * La colonne de texte est revelee ligne par ligne au retrait du voile de
- * chargement, jamais au defilement : c'est le premier ecran, il n'y a pas de
- * defilement a attendre.
- *
- * Ce hero est le seul endroit du site ou du texte au-dessus du pli depend d'un
- * script pour paraitre. C'est ce que le voile couvre, et c'est la raison pour
- * laquelle il existe.
+ * **Rien n'est anime dans cette colonne, et c'est deliberé.** Ni `Revelation`
+ * ni `Apparition` : les deux partent d'`opacity: 0` et attendent GSAP, donc le
+ * premier ecran attendrait le bundle pour s'afficher. Le titre, le chapeau et
+ * les deux appels de WEB-2 sortent du build peints.
  */
 export function Hero({
   contenu,

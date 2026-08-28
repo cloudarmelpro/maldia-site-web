@@ -33,10 +33,10 @@ export function generateStaticParams(): Array<{ langue: Langue }> {
  * Une actualisation repart du haut de la page.
  *
  * Laissee a `auto`, la restauration du navigateur rend la page a une position
- * qui n'est pas celle qu'on avait : mesure sur l'export, depuis le haut du hero
- * et apres deux secondes d'immobilite, `Ctrl+R` atterrit a 484, 642 ou 803 px
- * selon l'essai. Le defaut est anterieur a toute animation — verifie en
- * recompilant le depot sans elles.
+ * qui n'est pas celle qu'on avait : reproduit sur l'export, depuis le haut du
+ * hero, `Ctrl+R` atterrit plus bas — et a une hauteur differente a chaque essai.
+ * Le defaut est anterieur a toute animation, verifie en recompilant le depot
+ * sans elles.
  *
  * Il doit s'executer a l'analyse du document : pose a l'hydratation, le
  * navigateur aurait deja restaure. D'ou `beforeInteractive`, qui injecte le

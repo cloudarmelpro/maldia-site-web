@@ -4,6 +4,7 @@ import { FOCUS_CLAIR } from '@/components/shared/focus'
 import { Facebook, Instagram, Linkedin } from '@/components/shared/icones-reseaux'
 import { BarreBas } from '@/components/layout/barre-bas'
 import { classes } from '@/components/shared/classes'
+import { CONTENEUR } from '@/components/shared/section'
 import { Logo } from '@/components/shared/logo'
 
 const RESEAUX = [Linkedin, Facebook, Instagram] as const
@@ -36,55 +37,62 @@ export function Pied({
   changerDeLangue: string
 }) {
   return (
-    <footer className="mt-[clamp(3.5rem,6vw,6rem)]">
-      <div className="flex flex-wrap justify-between gap-[clamp(1.75rem,4vw,4.5rem)] border-t border-white/16 pt-[clamp(1.75rem,2.8vw,2.5rem)]">
-        <div className={classes(COLONNE, 'gap-3.5')}>
-          <span className="flex items-center text-white">
-            <Logo hauteur={32} className="block w-auto" />
-          </span>
-          <span className={classes('max-w-[34ch] text-white', LIGNE)}>
-            {contenu.description}
-          </span>
-        </div>
-
-        <div className={classes(COLONNE, 'gap-1.5')}>
-          <span className="mb-1.5 etiquette-fine tracking-[0.1em] text-white">
-            {contenu.titreContact}
-          </span>
-          {/* Le padding porte la cible tactile, la marge negative la reprend :
-              l'ecart des trois lignes reste celui du design. */}
-          <a
-            href={`mailto:${contenu.courriel}`}
-            className={classes(
-              '-my-3 inline-flex w-fit py-3 text-white hover:underline hover:underline-offset-4',
-              LIGNE,
-              FOCUS_CLAIR,
-            )}
-          >
-            {contenu.courriel}
-          </a>
-          <span className={classes('-mt-1 text-white', LIGNE)}>{contenu.lieu}</span>
-        </div>
-
-        {/* Reperes visuels, pas des liens : voir le commentaire du composant. */}
-        <span aria-hidden className="ml-auto flex gap-2 self-start">
-          {RESEAUX.map((Icone, indice) => (
-            <span
-              key={indice}
-              className="grid size-9.5 place-items-center rounded-marque bg-voile/24 text-white"
-            >
-              <Icone className="size-4" />
+    // Le pied porte lui-meme l'aplat vert et sa gouttiere. Il etait rendu dans
+    // le `<section>` du bloc d'appel : per HTML-AAM, un `<footer>` descendant
+    // d'un `<section>` perd son role `contentinfo`, et la page n'avait alors
+    // aucun repere de pied. L'aplat reste continu parce que les deux blocs sont
+    // adjacents et de la meme couleur.
+    <footer className="bg-primaire pb-[clamp(3rem,5vw,4.5rem)] text-white">
+      <div className={classes(CONTENEUR, 'pt-[clamp(3.5rem,6vw,6rem)]')}>
+        <div className="flex flex-wrap justify-between gap-[clamp(1.75rem,4vw,4.5rem)] border-t border-white/16 pt-[clamp(1.75rem,2.8vw,2.5rem)]">
+          <div className={classes(COLONNE, 'gap-3.5')}>
+            <span className="flex items-center text-white">
+              <Logo hauteur={32} className="block w-auto" />
             </span>
-          ))}
-        </span>
-      </div>
+            <span className={classes('max-w-[34ch] text-white', LIGNE)}>
+              {contenu.description}
+            </span>
+          </div>
 
-      <BarreBas
-        langue={langue}
-        cheminAutreLangue={cheminAutreLangue}
-        changerDeLangue={changerDeLangue}
-        copyright={contenu.copyright}
-      />
+          <div className={classes(COLONNE, 'gap-1.5')}>
+            <span className="mb-1.5 etiquette-fine tracking-[0.1em] text-white">
+              {contenu.titreContact}
+            </span>
+            {/* Le padding porte la cible tactile, la marge negative la reprend :
+                l'ecart des trois lignes reste celui du design. */}
+            <a
+              href={`mailto:${contenu.courriel}`}
+              className={classes(
+                '-my-3 inline-flex w-fit py-3 text-white hover:underline hover:underline-offset-4',
+                LIGNE,
+                FOCUS_CLAIR,
+              )}
+            >
+              {contenu.courriel}
+            </a>
+            <span className={classes('-mt-1 text-white', LIGNE)}>{contenu.lieu}</span>
+          </div>
+
+          {/* Reperes visuels, pas des liens : voir le commentaire du composant. */}
+          <span aria-hidden className="ml-auto flex gap-2 self-start">
+            {RESEAUX.map((Icone, indice) => (
+              <span
+                key={indice}
+                className="grid size-9.5 place-items-center rounded-marque bg-voile/24 text-white"
+              >
+                <Icone className="size-4" />
+              </span>
+            ))}
+          </span>
+        </div>
+
+        <BarreBas
+          langue={langue}
+          cheminAutreLangue={cheminAutreLangue}
+          changerDeLangue={changerDeLangue}
+          copyright={contenu.copyright}
+        />
+      </div>
     </footer>
   )
 }

@@ -12,9 +12,8 @@
    toutes les sections sombres, et avec elles les jetons qui n'existaient que
    pour elles : `--color-nuit`, `--color-sur-sombre`, `--color-sur-sombre-2`.
 
-   Les ratios cités ci-dessous sont mesurés, pas estimés. Deux sont sous le
-   seuil AA et le disent : ce sont des manquements ouverts, pas des valeurs
-   validées. */
+   Les ratios cités ci-dessous sont mesurés, pas estimés, et recalculés à chaque
+   changement de valeur. */
 @theme {
   --color-encre: #0f1d17;
   --color-fond: #ffffff;
@@ -36,8 +35,6 @@
   --color-primaire: #177e4f;
   /* Le survol des surfaces vertes. */
   --color-primaire-fonce: #0a5c39;
-  /* Le vert clair des accents sur fond vert. */
-  --color-vert-clair: #4fbf87;
   /*
    * Le voile pose sur le vert, toujours SOMBRE et jamais blanc. Le blanc sur
    * #177e4f ne donne que 5,1 : 1 ; un voile blanc eclaircirait le vert et ferait
@@ -60,7 +57,6 @@
   /* La puce inactive d'une liste, et les points de séparation d'une bande. */
   --color-trait-4: #cdd6cf;
 
-  /* Les rayons du design : 8, 10, 11, 12, 14, 16 et 18 px. */
   --radius-etiquette: 0.5rem;
   --radius-liste: 0.625rem;
   --radius-marque: 0.6875rem;
@@ -68,11 +64,14 @@
   --radius-carte: 0.875rem;
   --radius-carte-large: 1rem;
   --radius-encart: 1.125rem;
-  /* Le grand panneau du design de la page Contact : 20 px. */
+  /* Le grand panneau de la page Contact. */
   --radius-panneau: 1.25rem;
-  /* Les coins du bloc Contact en haut, et ceux des heros interieurs en bas. */
-  --radius-coiffe: 1.75rem;
   --radius-pilule: 9999px;
+
+  /* L'ombre du chevron flottant, seule ombre portee du site. Elle derive de
+     `--color-encre` : ecrite en `rgba()`, elle recopiait la couleur en decimal
+     et sortait des jetons sans en avoir l'air. */
+  --shadow-flottant: 0 6px 20px color-mix(in oklab, var(--color-encre) 16%, transparent);
 }
 
 /* Les points de rupture du design, nommés par ce qu'ils déclenchent.
@@ -97,12 +96,11 @@
    le GPU, et animer une géométrie ferait recalculer la mise en page à chaque
    image.
 
-   `derive` est la dérive lente d'une photo de fond. Les défilements translatent
+   Les défilements translatent
    la moitié d'une liste doublée : c'est ce qui rend la boucle invisible. Cela
    suppose que l'écart entre deux éléments soit porté par les éléments eux-mêmes
    et non par `gap` — sinon la liste doublée perd un demi-écart à la couture. */
 @theme {
-  --animate-derive: derive 26s ease-in-out infinite alternate;
   --animate-defilement: defilement 34s linear infinite;
   --animate-defilement-lent: defilement 38s linear infinite;
   --animate-defilement-tres-lent: defilement 42s linear infinite;
@@ -110,14 +108,6 @@
   --animate-defilement-vertical: defilement-vertical 46s linear infinite;
   --animate-defilement-vertical-inverse: defilement-vertical-inverse 52s linear infinite;
 
-  @keyframes derive {
-    from {
-      transform: scale(1.04);
-    }
-    to {
-      transform: scale(1.14);
-    }
-  }
 
   @keyframes defilement {
     from {
@@ -168,9 +158,8 @@
 
 @layer base {
   /* Tailwind v4 a retiré le `cursor: pointer` que sa base donnait aux boutons :
-     ils suivent désormais la spécification, qui dit `default`. Résultat, dix
-     boutons du site ne signalaient plus qu'on peut cliquer — mesuré, deux
-     règles `cursor: pointer` dans tout le CSS produit. La base le rend. */
+     ils suivent désormais la spécification, qui dit `default`. Sans cette règle,
+     plus rien dans le site ne signale qu'un bouton se clique. */
   button:not(:disabled),
   [role='button']:not(:disabled),
   summary {
@@ -190,8 +179,7 @@
   /* Pas de `scroll-behavior: smooth` sur `html`. L'App Router remet la page en
      haut apres une navigation ; l'animation part alors de l'ancienne position
      pendant que la nouvelle page grandit, et finit au bas du document — on
-     arrive dans le pied au lieu du titre. Mesure : 2077 px sur une page qui en
-     defile 2077.
+     arrive dans le pied au lieu du titre.
 
      Les ancres internes sautent donc sans animation. Le retour en haut, lui,
      defile en douceur : il le fait en JS, ou la hauteur ne bouge pas. */

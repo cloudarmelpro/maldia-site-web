@@ -404,6 +404,26 @@ export type Contenu<L extends Langue = Langue> = {
 
     /** Nom accessible du bouton de retour en haut. */
     readonly retourEnHaut: string
+    /** Le premier arret de tabulation de chaque page — WCAG 2.4.1. */
+    readonly allerAuContenu: string
+    /**
+     * Sous le bouton d'envoi, TANT QUE `DESTINATION_FORMULAIRE` est vide. Le
+     * bouton est alors eteint, et la note du contenu decrit un formulaire qui
+     * marche : sans ceci, le candidat lit un refus qui ne dit pas quoi faire.
+     */
+    readonly formulaireFerme: string
+    /**
+     * La page 404. Elle est servie pour une adresse qui ne correspond a aucune
+     * route, donc sans langue connue : les deux versions paraissent cote a
+     * cote, et le visiteur choisit la sienne.
+     */
+    readonly nonTrouve: {
+      readonly titre: string
+      readonly texte: string
+      readonly retour: string
+      readonly metaTitre: string
+      readonly metaDescription: string
+    }
   }
 
   /** WEB-2 — l'accueil, et le hero du design. */

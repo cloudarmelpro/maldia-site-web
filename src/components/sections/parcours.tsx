@@ -1,7 +1,6 @@
 import type { Contenu } from '@/content/types'
-import { EnTeteSection } from '@/components/shared/en-tete-section'
+import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
-import { IntituleSection } from '@/components/shared/intitule-section'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
@@ -26,11 +25,8 @@ export function Parcours({
   return (
     <Section titreId={titreId}>
       <div className="flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]">
-        <Apparition>
-          <IntituleSection intitule={contenu.intitule} />
-        </Apparition>
-
-        <EnTeteSection
+        <TeteSection
+          intitule={contenu.intitule}
           titreId={titreId}
           titre={contenu.titre}
           description={contenu.description}

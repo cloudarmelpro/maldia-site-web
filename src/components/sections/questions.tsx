@@ -70,9 +70,12 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
                       // position ouverte ne designe plus la meme entree.
                       setOuverte(null)
                     }}
-                    // Le design pose 34 px de haut ; sous 768 px la cible tactile
-                    // passe devant, et `e2e/adaptation.spec.ts` l'exige.
-                    className={`min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-colors duration-200 large:min-h-[2.125rem] large:min-w-0 large:px-[0.8125rem] ${FOCUS} ${
+                    // La cible tactile passe devant jusqu'a `large`, ou la
+                    // navigation de bureau apparait.
+                    // `transition-colors` de Tailwind inclut `outline-color` :
+                    // l'anneau de focus arriverait en fondu depuis la couleur
+                    // du texte au lieu de paraitre net.
+                    className={`min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-[background-color,color] duration-200 large:min-h-[2.125rem] large:min-w-0 large:px-[0.8125rem] ${FOCUS} ${
                       actif ? 'bg-primaire text-white' : 'bg-primaire/7 text-encre-2'
                     }`}
                   >
@@ -123,7 +126,7 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
                     }`}
                   >
                     <div className="min-h-0 overflow-hidden">
-                      <p className="max-w-[62ch] px-[clamp(1.125rem,1.7vw,1.625rem)] pb-[clamp(1.25rem,1.8vw,1.625rem)] text-[0.875rem] leading-[1.65] text-encre-2">
+                      <p className="max-w-[57ch] px-[clamp(1.125rem,1.7vw,1.625rem)] pb-[clamp(1.25rem,1.8vw,1.625rem)] text-[0.875rem] leading-[1.65] text-encre-2">
                         {entree.reponse}
                       </p>
                     </div>

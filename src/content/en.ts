@@ -64,9 +64,9 @@ export const en: Contenu<'en'> = {
           description: 'In French, with your teams and your clients.',
         },
         {
-          ligne1: 'Your tools,',
-          ligne2: 'unchanged',
-          chiffre: '100%',
+          ligne1: 'Changes to',
+          ligne2: 'your tools',
+          chiffre: '0',
           description: 'We adapt to the tools you already use.',
         },
       ],
@@ -159,7 +159,7 @@ export const en: Contenu<'en'> = {
 
     methode: {
       intitule: 'Method',
-      titre: 'Five steps, and the reinforcement is in place.',
+      titre: 'From the stated need to someone in place.',
       description: 'You keep the final say at every step. We do not bill for the search.',
       liste: [
         {
@@ -190,7 +190,7 @@ export const en: Contenu<'en'> = {
           cote: 'maldia',
           acteur: 'Maldia',
           titre: 'We handle follow-up',
-          description: 'Regular check-ins, replacement if the profile does not fit.',
+          description: 'Regular check-ins throughout the assignment.',
         },
       ],
       conclusion: 'The talent joins your working environment. You have nothing to change.',
@@ -227,7 +227,7 @@ export const en: Contenu<'en'> = {
             'You are in Madagascar and you want to work remotely with French-speaking companies. Upload your résumé.',
           points: [
             'Short form, entirely online',
-            'Upload your résumé directly',
+            'Direct résumé upload',
             'Roles at Maldia or with our clients',
             'Remote work from Madagascar',
             'Every professional field',
@@ -289,6 +289,15 @@ export const en: Contenu<'en'> = {
     },
 
     retourEnHaut: 'Previous section',
+    allerAuContenu: 'Skip to content',
+    formulaireFerme: 'Online submission is not open yet. Write to us in the meantime.',
+    nonTrouve: {
+      titre: 'This page does not exist.',
+      texte: 'The address may be incomplete, or the page was renamed.',
+      retour: 'Back to home',
+      metaTitre: 'Page not found — Agence Maldia',
+      metaDescription: 'This address does not match any page on the site.',
+    },
   },
 
   accueil: {
@@ -363,7 +372,7 @@ export const en: Contenu<'en'> = {
           cote: 'talent',
           question: 'How does applying work?',
           reponse:
-            'A short form, entirely online, with your résumé uploaded directly in PDF, DOC or DOCX. You receive a confirmation as soon as the application is received.',
+            'A short form, entirely online, with your résumé uploaded directly in PDF, DOC or DOCX.',
         },
       ],
     },
@@ -382,7 +391,7 @@ export const en: Contenu<'en'> = {
     },
     entete: {
       intitule: 'Services',
-      titre: 'Team reinforcement, with no recruitment fees.',
+      titre: 'Staff augmentation, with no recruitment fees.',
       description: 'For companies in French-speaking Canada and Europe.',
       mention: 'The 14-day timeline is an average, not a guarantee.',
     },
@@ -435,17 +444,17 @@ export const en: Contenu<'en'> = {
         texte: 'Development, design, video, community management, support, accounting.',
       },
       {
-        intitule: 'Follow-up',
+        intitule: 'Database',
         titre: 'An application we keep',
         texte:
-          'Your application stays in our database and we get back to you when a role matches.',
+          'Your application is added to our candidate database.',
       },
     ],
     encart: {
       intitule: 'Application',
       titre: 'Your application, in one go.',
       texte:
-        'A short form with a direct résumé upload. You receive a confirmation as soon as it arrives.',
+        'A short form with a direct résumé upload.',
       cta: 'Apply now',
     },
     domaines: {
@@ -557,7 +566,7 @@ export const en: Contenu<'en'> = {
 
   blog: {
     meta: {
-      titre: 'Blog — Agence Maldia',
+      titre: 'Blog — Remote hiring | Agence Maldia',
       description:
         'What we learn placing Malagasy talent inside French-speaking teams: remote recruitment, method, tools.',
       openGraph: {
@@ -604,9 +613,9 @@ export const en: Contenu<'en'> = {
 
   contact: {
     meta: {
-      titre: 'Tell us what you need.',
+      titre: 'Contact — Book a call | Agence Maldia',
       description:
-        'A thirty-minute call is enough to know if the service fits.',
+        'Book a 30-minute call with Agence Maldia through Cal.com, or apply if you are a talent based in Madagascar.',
       openGraph: {
         titre: 'Contact Agence Maldia',
         description: 'A 30-minute call for companies, an online form for talent in Madagascar.',
@@ -623,12 +632,12 @@ export const en: Contenu<'en'> = {
     reservation: {
       intitule: 'Booking',
       titre: 'Pick your slot right now.',
-      description: 'The calendar is our team’s own. What you book is confirmed.',
+      description: 'This is our team’s own calendar.',
       evenement: 'Discovery call · 30 min',
       fuseau: 'Time zone UTC+3',
       emplacement: {
-        titre: 'Cal.com calendar goes here',
-        texte: 'The embed appears here on the live site',
+        titre: 'Cal.com calendar',
+        texte: 'Book online, without an email exchange',
       },
       mention: 'No payment · No commitment',
       cta: 'Open in Cal.com',
@@ -672,7 +681,7 @@ export const en: Contenu<'en'> = {
           },
         ],
         envoyer: 'Send the request',
-        note: 'Answer within one working day. No commitment.',
+        note: 'No commitment.',
       },
       {
         intitule: 'Talent',
@@ -710,7 +719,7 @@ export const en: Contenu<'en'> = {
           },
         ],
         envoyer: 'Send my application',
-        note: 'Confirmation as soon as your application is received.',
+        note: 'A short form, entirely online.',
       },
     ],
 

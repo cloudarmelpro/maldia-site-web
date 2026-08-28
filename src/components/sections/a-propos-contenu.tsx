@@ -62,10 +62,15 @@ export function AProposContenu({
         <Apparition className={COLONNE}>
           {/* alt vide : la declaration ci-contre porte l'information. */}
           <div className="relative h-full min-h-[clamp(16.25rem,30vw,23.75rem)] overflow-hidden rounded-panneau bg-fond-2">
+            {/* Cette image est dans le pli aux deux tailles, et c'est elle que
+                le navigateur retient comme LCP. Paresseuse, elle ne pouvait pas
+                partir avant la mise en page : mesure, 1,2 s de retard sur le
+                premier rendu de la meme page. */}
             <Image
               src={PHOTOS.aPropos}
               alt=""
               fill
+              preload
               sizes="(max-width: 1000px) 100vw, 45vw"
               className="object-cover"
             />

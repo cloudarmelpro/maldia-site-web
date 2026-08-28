@@ -38,10 +38,6 @@ const TRANSITION = 'transition-[background,color] duration-[260ms]'
  * `fixed` place dedans y voyait son z-index compter seulement a l'interieur :
  * la barre de pied du hero se peignait par-dessus et interceptait ses clics.
  *
- * `AnimatePresence` vient de `motion/react` et non de `motion/react-m` : c'est
- * la seule facon d'animer une sortie, un element demonte n'ayant plus rien a
- * animer.
- *
  * Le focus entre dans le panneau a l'ouverture et revient sur le bouton a la
  * fermeture — sans ca, le clavier repartirait du haut du document.
  */

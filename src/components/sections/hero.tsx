@@ -123,8 +123,17 @@ function Vignettes() {
  */
 export function Hero({
   contenu,
+  cta,
 }: {
   contenu: Contenu['accueil']['hero']
+  /**
+   * WEB-2 fige ce libelle : « CTA "Prendre rendez-vous" ». Il vient donc de
+   * `commun.enTete.cta`, dont le type `LibelleRendezVous` le verrouille au mot
+   * pres — et non de `hero.carteAppel.titre`, qui disait « Appel de 30
+   * minutes ». Ce champ etait deja classe orphelin par la decision 0023, et
+   * avait ete repris comme libelle de bouton faute de mieux.
+   */
+  cta: Contenu['commun']['enTete']['cta']
 }) {
   return (
     <section
@@ -160,7 +169,7 @@ export function Hero({
             <div className="flex flex-wrap items-center gap-2.5">
               <Bouton
                 destination="rendezVous"
-                libelle={contenu.carteAppel.titre}
+                libelle={cta}
                 variante="blanc"
                 taille="haute"
                 ornement="fleche"

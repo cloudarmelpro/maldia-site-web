@@ -1,8 +1,9 @@
 'use client'
 
-import { AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'motion/react'
-import * as m from 'motion/react-m'
-import { useEffect, type RefObject } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { CustomEase } from 'gsap/CustomEase'
+import { useEffect, useState, type RefObject } from 'react'
 
 import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
@@ -15,8 +16,19 @@ import { Lien } from '@/components/shared/lien'
 import { Revelation } from '@/components/shared/revelation'
 import { SelecteurLangue } from '@/components/shared/selecteur-langue'
 
+gsap.registerPlugin(useGSAP, CustomEase)
+
 /** Le decalage entre deux entrees du menu, a l'ouverture du panneau. */
 const PAS_MENU = 0.06
+
+const COURBE = 'panneau'
+
+if (!gsap.parseEase(COURBE)) {
+  CustomEase.create(COURBE, 'M0,0 C0.22,1 0.36,1 1,1')
+}
+
+const DUREE = 0.3
+const DEPLACEMENT = -12
 
 /**
  * Le panneau de navigation mobile.
@@ -31,9 +43,12 @@ const PAS_MENU = 0.06
  * voyait son z-index compter seulement a l'interieur : la barre de pied du hero
  * se peignait par-dessus et interceptait ses clics.
  *
- * `AnimatePresence` vient de `motion/react` et non de `motion/react-m` : c'est
- * la seule facon d'animer une sortie, un element demonte n'ayant plus rien a
- * animer.
+ * **L'animation de sortie sans `AnimatePresence`.** C'etait le dernier usage de
+ * `motion` dans le depot, et le seul service que GSAP ne rend pas tout seul :
+ * un element demonte n'a plus rien a animer. Le panneau garde donc son propre
+ * etat `monte`, qui survit a la fermeture le temps du fondu, et se demonte
+ * a `onComplete`. `ouvert` dit ce que veut l'utilisateur, `monte` ce qui est
+ * dans le DOM.
  *
  * Le focus entre dans le panneau a l'ouverture et revient sur le bouton a la
  * fermeture — sans ca, le clavier repartirait du haut du document.
@@ -61,7 +76,44 @@ export function PanneauNavigation({
   marque: React.ReactNode
 }) {
   const autre = autreLangue(langue)
-  const reduit = useReducedMotion() ?? false
+
+  // `monte` suit `ouvert` a l'ouverture, et le retarde a la fermeture : c'est
+  // ce delai qui laisse le fondu de sortie se jouer.
+  const [monte, setMonte] = useState(ouvert)
+
+  // Ajuste pendant le RENDU et non dans un effet : c'est le motif que React
+  // documente pour un etat derive d'une prop. Dans un effet, le panneau serait
+  // rendu une fois vide avant d'apparaitre, et la regle
+  // `react-hooks/set-state-in-effect` le refuse a raison.
+  if (ouvert && !monte) setMonte(true)
+
+  useGSAP(
+    () => {
+      const element = panneau.current
+      if (!element) return
+
+      const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const duree = reduit ? 0 : DUREE
+
+      if (ouvert) {
+        gsap.fromTo(
+          element,
+          { autoAlpha: 0, y: DEPLACEMENT },
+          { autoAlpha: 1, y: 0, duration: duree, ease: COURBE },
+        )
+        return
+      }
+
+      gsap.to(element, {
+        autoAlpha: 0,
+        y: DEPLACEMENT,
+        duration: duree,
+        ease: COURBE,
+        onComplete: () => setMonte(false),
+      })
+    },
+    { dependencies: [ouvert, monte] },
+  )
 
   useEffect(() => {
     if (!ouvert) return
@@ -85,16 +137,10 @@ export function PanneauNavigation({
   }, [ouvert, setOuvert, panneau, bascule])
 
   return (
-  <LazyMotion features={domAnimation} strict>
-    <AnimatePresence>
-      {ouvert ? (
-        <m.div
-          ref={panneau}
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: reduit ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-90 flex flex-col overflow-y-auto bg-primaire px-[clamp(1.25rem,4vw,3.5rem)] pt-4 pb-8.5 text-white"
+  monte ? (
+    <div
+      ref={panneau}
+      className="fixed inset-0 z-90 flex flex-col overflow-y-auto bg-primaire px-[clamp(1.25rem,4vw,3.5rem)] pt-4 pb-8.5 text-white"
           onClick={(evenement) => {
             // Suivre un lien referme le panneau, sinon la page défilerait dessous.
             if (evenement.target instanceof Element && evenement.target.closest('a')) {
@@ -198,9 +244,7 @@ export function PanneauNavigation({
             />
           </div>
         </div>
-      </m.div>
-    ) : null}
-  </AnimatePresence>
-</LazyMotion>
+    </div>
+  ) : null
   )
 }

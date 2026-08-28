@@ -1,79 +1,106 @@
 'use client'
 
-import { LazyMotion, domAnimation, useReducedMotion } from 'motion/react'
-import * as m from 'motion/react-m'
-import type { ReactNode } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { CustomEase } from 'gsap/CustomEase'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRef, type ReactNode } from 'react'
 
-// La courbe de sortie du design.
-const COURBE = [0.16, 1, 0.3, 1] as const
+import { classes } from '@/components/shared/classes'
+
+gsap.registerPlugin(useGSAP, CustomEase, ScrollTrigger)
 
 /**
- * Les deux registres d'entree du design.
- *
- * `texte` — titres et paragraphes : 22 px et un leger flou, sur 720 ms.
- * `bloc` — tout le reste : 16 px, sans flou, sur 580 ms.
+ * La courbe du design, une exponentielle sortante. La meme que `Revelation` :
+ * les deux entrees du site parlent la meme langue, seul le grain change.
  */
-export type RegistreApparition = 'texte' | 'bloc'
+const COURBE = 'apparition'
 
-const REGISTRES: Record<RegistreApparition, { deplacement: number; flou: number; duree: number }> = {
-  texte: { deplacement: 22, flou: 6, duree: 0.72 },
-  bloc: { deplacement: 16, flou: 0, duree: 0.58 },
+if (!gsap.parseEase(COURBE)) {
+  CustomEase.create(COURBE, 'M0,0 C0.16,1 0.3,1 1,1')
 }
 
-// Le design declenche a 5 % de visibilite : un bloc haut n'attend pas d'etre
-// entierement dans la fenetre pour paraitre.
-const PROPORTION_VISIBLE = 0.05
+/** 16 px sur 580 ms — le pas d'entree du design pour un bloc. */
+const DEPLACEMENT = 16
+const DUREE = 0.58
 
-type ApparitionProps = {
-  /** En millisecondes — delaiDeGrille(indice) pour les grilles. */
-  delai?: number
-  registre?: RegistreApparition
-  className?: string
-  children: ReactNode
-}
+/** Le design declenche a 5 % de visibilite : un bloc haut n'attend pas. */
+const DECLENCHEMENT = 'top 95%'
 
 /**
- * Entree au defilement.
+ * Entree au defilement, pour tout ce qui n'est pas du texte lu : cartes,
+ * grilles, encarts, pastilles. Le texte, lui, passe par `Revelation`.
  *
- * Le contenu est rendu a `opacity: 0` dans le HTML statique : reserve au
- * contenu sous la ligne de flottaison — jamais le hero ni les deux appels
- * (WEB-2). Mouvement reduit : duree et delai nuls, le meme arbre est rendu — le
- * mouvement est coupe, pas raccourci, et le flou ne s'applique pas.
+ * **Elle etait ecrite avec `motion`, et ne l'est plus.** Deux raisons, et la
+ * seconde compte plus que la premiere.
  *
- * **Le flou du registre `texte` est une demande du design.** Le dossier
- * `design-motion-principles` de ce depot range le flou a l'entree parmi les
- * motifs a eviter, et `filter` n'est ni `transform` ni `opacity` — c'est la
- * seule propriete animee ici qui sorte de cette regle. Elle est tenue courte et
- * coupee des que le visiteur reduit le mouvement.
+ * Le poids : `motion` valait 30,3 Ko gzippes sur chaque page, pour un fondu
+ * avec decalage que ScrollTrigger — deja charge pour `Revelation` — fait sans
+ * une ligne de plus. La cible de la decision 0006 ne laisse pas la place a deux
+ * bibliotheques d'animation.
+ *
+ * La robustesse : `motion` serialisait son etat de depart dans le HTML statique,
+ * soit **31 blocs a `style="opacity:0"`** par page. Sans script — ou avec un
+ * script qui n'arrive pas — ils restaient invisibles pour toujours. Ils portent
+ * maintenant la classe `revelable`, donc la garde `@media (scripting: enabled)`
+ * et le filet de securite de 4 s.
+ *
+ * Le registre `texte`, qui posait un flou a l'entree, a disparu avec son dernier
+ * appelant : c'etait la seule propriete animee du depot qui ne fut ni
+ * `transform` ni `opacity`, et la decision 0023 la laissait « a confirmer ».
+ *
+ * Mouvement reduit : `matchMedia` de GSAP n'execute pas le bloc — le mouvement
+ * est coupe, pas raccourci, et le contenu parait simplement.
  */
 export function Apparition({
   delai = 0,
-  registre = 'bloc',
   className,
   children,
-}: ApparitionProps) {
-  const reduit = useReducedMotion() ?? false
-  const { deplacement, flou, duree } = REGISTRES[registre]
+}: {
+  /** En millisecondes — `delaiDeGrille(indice)` pour les grilles. */
+  delai?: number
+  className?: string
+  children: ReactNode
+}) {
+  const cadre = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      const element = cadre.current
+      if (!element) return
+
+      gsap.set(element, { autoAlpha: 1 })
+
+      // `revelable` veut dire « j'attends GSAP ». GSAP est la : la classe part,
+      // et avec elle le filet qui rallumerait l'opacite a 4 s.
+      element.classList.remove('revelable')
+
+      const media = gsap.matchMedia()
+
+      media.add('(prefers-reduced-motion: no-preference)', () => {
+        const mouvement = gsap.from(element, {
+          opacity: 0,
+          y: DEPLACEMENT,
+          duration: DUREE,
+          ease: COURBE,
+          delay: delai / 1000,
+          scrollTrigger: { trigger: element, start: DECLENCHEMENT, once: true },
+        })
+
+        return () => {
+          mouvement.scrollTrigger?.kill()
+          mouvement.kill()
+        }
+      })
+
+      return () => media.revert()
+    },
+    { scope: cadre, dependencies: [delai] },
+  )
 
   return (
-    <LazyMotion features={domAnimation} strict>
-      <m.div
-        initial={{
-          opacity: 0,
-          y: deplacement,
-          filter: flou > 0 ? `blur(${flou}px)` : 'blur(0px)',
-        }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true, amount: PROPORTION_VISIBLE }}
-        transition={
-          reduit
-            ? { duration: 0, delay: 0 }
-            : { duration: duree, ease: COURBE, delay: delai / 1000 }
-        }
-        className={className}
-      >
-        {children}
-      </m.div>
-    </LazyMotion>
+    <div ref={cadre} className={classes('revelable', className)}>
+      {children}
+    </div>
   )
 }

@@ -2,6 +2,7 @@ import Image from 'next/image'
 
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
+import { Revelation } from '@/components/shared/revelation'
 import { Apparition } from '@/components/shared/apparition'
 import { classes } from '@/components/shared/classes'
 import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
@@ -36,18 +37,27 @@ export function AProposContenu({
           'flex flex-wrap items-stretch gap-[clamp(1.5rem,3vw,2.75rem)]',
         )}
       >
-        <Apparition
-          registre="texte"
+        {/* La declaration passe en revelation par lignes, comme tout le texte
+            lu du site. C'etait le dernier appelant du registre `texte`, donc du
+            flou a l'entree — la seule propriete animee du depot qui ne fut ni
+            `transform` ni `opacity`, et que la decision 0023 laissait « a
+            confirmer ». La question se referme d'elle-meme. */}
+        <div
           className={classes(
             COLONNE,
             'flex flex-col justify-center gap-[clamp(1.125rem,2vw,1.625rem)]',
           )}
         >
-          <p className="max-w-[34ch] font-titre text-[clamp(1.1875rem,1.8vw,1.6875rem)] leading-[1.3] font-normal tracking-[-0.04em] text-pretty text-encre">
+          <Revelation className="max-w-[34ch] font-titre text-[clamp(1.1875rem,1.8vw,1.6875rem)] leading-[1.3] font-normal tracking-[-0.04em] text-pretty text-encre">
             {chapeau}
-          </p>
-          <p className="max-w-[42ch] text-[0.9375rem] leading-[1.65] text-encre-2">{suite}</p>
-        </Apparition>
+          </Revelation>
+          <Revelation
+            delai={0.12}
+            className="max-w-[42ch] text-[0.9375rem] leading-[1.65] text-encre-2"
+          >
+            {suite}
+          </Revelation>
+        </div>
 
         <Apparition className={COLONNE}>
           {/* alt vide : la declaration ci-contre porte l'information. */}

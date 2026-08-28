@@ -164,6 +164,43 @@ une animation GSAP qui se déroule normalement.
 **Ce qui reste fiable : la capture d'écran et l'état d'arrivée.** Le reste se
 vérifie à l'œil, dans une fenêtre au premier plan.
 
+## Suite — `motion` est retirée, le 28 août 2026
+
+La frontière posée plus haut — « du texte lu, ou pas » — justifiait deux
+bibliothèques. Elle ne justifiait pas leur coût, et la cible chiffrée de la
+décision 0006 l'a tranché : **180 Ko de JavaScript par page**, dont 145
+incompressibles pour React et Next. Trois bibliothèques d'animation n'y tiennent
+pas.
+
+`motion` est donc retirée. `Apparition` est réécrite avec GSAP et ScrollTrigger,
+déjà chargés pour `Revelation` ; le panneau mobile garde son animation de sortie
+sans `AnimatePresence`, par un état `monte` qui survit à la fermeture le temps du
+fondu.
+
+**Le gain de poids n'est pas le meilleur de l'affaire.** `motion` sérialisait son
+état de départ dans le HTML statique — mesuré, **31 blocs à `style="opacity:0"`
+par page**. Sans script, ou avec un script qui n'arrive pas, ils restaient
+invisibles pour toujours, hors de portée de la garde
+`@media (scripting: enabled)` et du filet de 4 s. Ils portent maintenant la
+classe `revelable` comme le reste.
+
+| | avant | après |
+| --- | --- | --- |
+| JS gzippé, tous morceaux | 289,7 Ko | **264,5 Ko** |
+| `opacity:0` en ligne, par page | 31 | **0** |
+| bibliothèques d'animation | 3 | 2 |
+
+**Et la question ouverte du flou se referme.** Le registre `texte` d'`Apparition`
+posait un `filter: blur()` — la seule propriété animée du dépôt qui ne fût ni
+`transform` ni `opacity`, que la décision 0023 laissait « à confirmer ». Son
+dernier appelant, la déclaration de la page À propos, est passé à `Revelation` ;
+le registre et le flou ont disparu avec lui.
+
+Vérifié dans un navigateur : le menu s'ouvre, **se ferme en gardant son fondu de
+sortie** — panneau présent à `opacity: 0` pendant la fermeture, retiré ensuite —
+et se rouvre. Après défilement jusqu'au bas de l'accueil, les seuls éléments
+encore masqués sont les cinq réponses repliées de la FAQ.
+
 ## Ce qui a été volontairement laissé de côté
 
 **Les titres de cartes** — `carte-article`, `blog-liste`, `profils`,

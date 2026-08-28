@@ -1,7 +1,7 @@
 # 0013 — Un dépôt par application
 
-**Statut :** ARRÊTÉE pour le dépôt, À TRANCHER pour le plan d'hébergement
-**Date :** 18 août 2026
+**Statut :** ARRÊTÉE
+**Date :** 18 août 2026 · hébergement tranché le 28 août 2026
 
 ## Décision
 
@@ -51,24 +51,46 @@ VPS plus tard, ou le VPS tout de suite et y servir aussi les fichiers du site. L
 second simplifie — un seul endroit, un seul certificat à renouveler — au prix de
 payer un VPS pendant les semaines où seul le site existe.
 
-## Comment le site arrive chez Hostinger
+## Comment le site arrive chez Hostinger — tranché le 28 août 2026
 
-L'hébergement mutualisé **ne construit pas**. Il n'y a ni `npm install` ni
-`npm run build` de son côté : il sert ce qu'on y dépose.
+**Par la « Node app » d'Hostinger, connectée à ce dépôt GitHub.** C'est la
+méthode que le client emploie déjà sur ses autres projets : on choisit le dépôt
+dans le panneau, et Hostinger clone, installe et démarre.
 
-Donc la construction se fait dans l'intégration continue, et c'est le dossier `out/`
-qui part — jamais le code source.
+**Ce qui manquait pour que ça marche, et qui explique le blocage.** Une Node app
+lance une *commande de démarrage*. Ce dépôt n'en avait aucune, et il ne peut pas
+avoir celle de Next : avec `output: 'export'`, `next start` n'existe pas — la doc
+de Next dit que le résultat se sert « par n'importe quel serveur web ».
 
-Poussée sur `main` → `npm run verifier` passe → une tâche construit → le contenu de
-`out/` est déposé dans `public_html`.
+Sans commande de démarrage, Hostinger clone, installe, et n'a rien à lancer.
 
-Trois conséquences à ne pas découvrir plus tard :
+**La réponse est `serveur.mjs`**, à la racine, et `npm start` qui l'appelle. Il ne
+sert que des fichiers : il ne rend rien, ne consulte rien, n'a aucun état. Les
+deux réglages à mettre dans le panneau :
+
+| champ | valeur |
+| --- | --- |
+| commande de construction | `npm run build` |
+| commande de démarrage | `npm start` |
+
+Ce serveur tient ce qu'un hébergeur tiendrait autrement : le 404 servi **avec le
+code 404** et non un 200 qu'un moteur indexerait, les types MIME, les en-têtes de
+cache — `immutable` sur les avoirs hachés de `/_next/static/`, revalidation sur
+les pages — et la compression, qui fait passer l'accueil de 250 Ko à 25 Ko.
+
+**`public/.htaccess` reste, et ne sert pas ici.** Il tient les mêmes garanties
+pour Apache, si le site passait un jour sur du mutualisé simple. C'est le seul
+doublon assumé du dépôt, et son en-tête le dit.
+
+Deux conséquences à ne pas découvrir plus tard :
 
 **`out/` n'est pas dans le dépôt.** Il est ignoré, et c'est voulu : un build commité
-crée un conflit à chaque poussée et gonfle l'historique sans rien prouver.
+crée un conflit à chaque poussée et gonfle l'historique sans rien prouver. C'est
+Hostinger qui construit, à partir des sources.
 
-**Les identifiants de dépôt de fichiers vivent dans les secrets du dépôt**, jamais
-dans un fichier.
+**Aucun identifiant nulle part.** La connexion passe par GitHub, dans le panneau
+d'Hostinger : rien à mettre dans le dépôt, et c'est ce qui garde `site-web` sans
+secret.
 
 **Aucune redirection côté serveur n'est possible depuis le code.** Une URL qui change
 se gère chez l'hébergeur — d'où la règle du `CLAUDE.md` : figer la structure des

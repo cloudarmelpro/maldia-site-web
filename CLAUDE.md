@@ -124,6 +124,9 @@ Ces cibles se mesurent **sur l'export**, jamais sous `next dev`.
 
 - `npm run dev` — serveur de développement
 - `npm run build` — export statique dans `out/`
+- `npm start` — sert `out/` en production. C'est la commande de démarrage de la
+  Node app d'Hostinger (décision 0013) ; `next start` n'existe pas pour un export
+  statique. Il ne construit rien : `npm run build` doit avoir tourné avant.
 - `npm run verifier` — types, lint et tests d'un coup
 - `npm run e2e` — Playwright sur sept écrans réels, du téléphone au grand moniteur
 - `npm run lint`, `npm run typecheck`, `npm test`

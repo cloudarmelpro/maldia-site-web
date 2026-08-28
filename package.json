@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "start": "node serveur.mjs",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "verifier": "npm run typecheck && npm run lint && npm run test",

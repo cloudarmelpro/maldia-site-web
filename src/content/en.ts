@@ -284,7 +284,6 @@ export const en: Contenu<'en'> = {
       titreContact: 'Contact',
       courriel: 'contact@agencemaldia.com',
       lieu: 'Antananarivo, Madagascar',
-      reseaux: ['LinkedIn', 'Facebook', 'Instagram'],
       copyright: '© Agence Maldia 2026',
     },
 
@@ -580,8 +579,6 @@ export const en: Contenu<'en'> = {
       intitule: 'Blog',
       titre: 'Recruiting and working remotely, no detours.',
       description: 'What we learn placing Malagasy talent inside French-speaking teams.',
-      cta: 'Book a call',
-      mention: 'Placeholder texts, to be replaced',
     },
     lire: 'Read the article',
     vide: 'The first articles are on their way.',
@@ -626,8 +623,6 @@ export const en: Contenu<'en'> = {
       intitule: 'Contact',
       titre: 'Tell us what you need.',
       description: 'A thirty-minute call is enough to know if the service fits.',
-      cta: 'Book a call',
-      mention: '30 minutes · via Cal.com',
     },
 
     reservation: {
@@ -724,14 +719,6 @@ export const en: Contenu<'en'> = {
       },
     ],
 
-    calendrier: {
-      intitule: 'Direct booking · Cal.com',
-      titre: 'Book a slot in our calendar',
-      texte:
-        'Thirty minutes, with no email back and forth. The slot lands straight in our calendar.',
-      creneaux: ['Mon – Fri', '9am – 5pm', 'UTC+3', 'Cal.com'],
-      cta: 'Open the calendar',
-    },
 
     coordonnees: {
       intitule: 'Contact details',

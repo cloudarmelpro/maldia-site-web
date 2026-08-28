@@ -66,15 +66,18 @@ export type Meta = {
 }
 
 /**
- * L'en-tête d'une page intérieure : l'intitulé en capitales, le `h1`, la
- * description, un appel.
+ * L'en-tête d'une page intérieure : l'intitulé en capitales, le `h1`, la phrase
+ * posée à droite.
+ *
+ * Il portait aussi un `cta` et une `mention`, qu'aucun composant ne lisait — le
+ * `cta` recopiait le libellé de la barre, et la `mention` était soit un doublon
+ * du bloc de réservation, soit une note d'atelier partie dans le HTML public.
+ * Le paramètre générique n'existait que pour verrouiller ce `cta`.
  */
-export type EnTetePage<A extends string> = {
+export type EnTetePage = {
   readonly intitule: string
   readonly titre: string
   readonly description: string
-  readonly cta: A
-  readonly mention: string
 }
 
 /** Les marchés desservis (WEB-1). */
@@ -398,7 +401,6 @@ export type Contenu<L extends Langue = Langue> = {
       readonly courriel: string
       readonly lieu: string
       /** Noms accessibles des trois liens sociaux, dans l'ordre du design. */
-      readonly reseaux: readonly [string, string, string]
       readonly copyright: string
     }
 
@@ -576,7 +578,7 @@ export type Contenu<L extends Langue = Langue> = {
   /** WEB-15 — le blog. */
   readonly blog: {
     readonly meta: Meta
-    readonly entete: EnTetePage<LibelleRendezVous<L>>
+    readonly entete: EnTetePage
     readonly lire: string
     /** Servi quand la liste d'articles est vide — la structure existe avant le contenu. */
     readonly vide: string
@@ -617,7 +619,7 @@ export type Contenu<L extends Langue = Langue> = {
   /** WEB-7 — Contact, par le calendrier Cal.com. */
   readonly contact: {
     readonly meta: Meta
-    readonly entete: EnTetePage<LibelleRendezVous<L>>
+    readonly entete: EnTetePage
 
     /** La section du calendrier : l'emplacement de l'intégration Cal.com. */
     readonly reservation: {
@@ -648,13 +650,6 @@ export type Contenu<L extends Langue = Langue> = {
     readonly voies: readonly [VoieContact, VoieContact]
 
     /** La carte sombre du calendrier, dans la colonne de droite. */
-    readonly calendrier: {
-      readonly intitule: string
-      readonly titre: string
-      readonly texte: string
-      readonly creneaux: readonly [string, string, string, string]
-      readonly cta: string
-    }
 
     /** Les lignes de coordonnées. Les valeurs viennent du pied et des marchés. */
     readonly coordonnees: {

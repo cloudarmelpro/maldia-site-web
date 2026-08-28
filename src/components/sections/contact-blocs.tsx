@@ -57,30 +57,38 @@ export function ContactBlocs({ contenu }: { contenu: Contenu['commun']['contact'
               carte: entreprises,
               href: DESTINATION_RENDEZ_VOUS || undefined,
               Icone: CalendarDays,
-              fondIcone: 'bg-primaire/7',
+              surface: 'bg-white',
+              titre: 'text-encre',
               intitule: 'text-encre-2',
+              // La couleur du glyphe est POSEE et non heritee : la section est
+              // en `text-white`, et sans elle l'icone serait blanche sur blanc.
+              fondIcone: 'bg-primaire/10 text-primaire',
               marque: <Fleche />,
-              fondMarque: 'bg-primaire/9',
+              fondMarque: 'bg-primaire/12 text-primaire',
             },
             {
               carte: talents,
               href: DESTINATION_CANDIDATURE || undefined,
               Icone: FileText,
-              fondIcone: 'bg-encre/10',
-              intitule: 'text-prose',
+              // Voile SOMBRE sur le vert, jamais blanc : un voile blanc
+              // eclaircit l'aplat et fait passer le texte sous le seuil AA.
+              surface: 'bg-voile/26',
+              titre: 'text-white',
+              intitule: 'text-white',
+              fondIcone: 'bg-voile/30 text-white',
               marque: <ArrowUpRight className="size-3.5" />,
-              fondMarque: 'bg-encre/10',
+              fondMarque: 'bg-voile/30 text-white',
             },
           ].map((entree, indice) => (
             <li key={entree.carte.titre} className="min-w-0">
               <Apparition delai={delaiDeGrille(indice)}>
                 <a
                   href={entree.href}
-                  className={`flex min-w-0 items-center gap-4.5 rounded-bloc bg-white p-3.5 pr-5 text-left transition-transform duration-[220ms] hover:-translate-y-0.5 ${FOCUS_CLAIR}`}
+                  className={`flex min-w-0 items-center gap-4.5 rounded-bloc p-3.5 pr-5 text-left transition-transform duration-[220ms] hover:-translate-y-0.5 ${entree.surface} ${FOCUS_CLAIR}`}
                 >
                   <span
                     aria-hidden
-                    className={`grid size-11.5 shrink-0 place-items-center rounded-bloc text-encre ${entree.fondIcone}`}
+                    className={`grid size-11.5 shrink-0 place-items-center rounded-bloc ${entree.fondIcone}`}
                   >
                     <entree.Icone className="size-4.75" />
                   </span>
@@ -88,7 +96,7 @@ export function ContactBlocs({ contenu }: { contenu: Contenu['commun']['contact'
                     <span className={`etiquette-fine tracking-[0.1em] ${entree.intitule}`}>
                       {entree.carte.intitule}
                     </span>
-                    <span className="text-[1.0625rem] tracking-[-0.025em] text-encre">
+                    <span className={`text-[1.0625rem] tracking-[-0.025em] ${entree.titre}`}>
                       {entree.carte.titre}
                     </span>
                     <span className={`etiquette-fine tracking-[0.07em] ${entree.intitule}`}>
@@ -97,7 +105,7 @@ export function ContactBlocs({ contenu }: { contenu: Contenu['commun']['contact'
                   </span>
                   <span
                     aria-hidden
-                    className={`ml-auto grid size-7.5 shrink-0 place-items-center rounded-pilule text-encre paire:ml-6.5 ${entree.fondMarque}`}
+                    className={`ml-auto grid size-7.5 shrink-0 place-items-center rounded-pilule paire:ml-6.5 ${entree.fondMarque}`}
                   >
                     {entree.marque}
                   </span>

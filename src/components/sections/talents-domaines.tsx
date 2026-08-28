@@ -52,7 +52,7 @@ export function TalentsDomaines({
                     {profil.resume}
                   </span>
                 </span>
-                <span className="shrink-0 etiquette-fine text-[0.625rem] tracking-[0.08em] text-encre-2">
+                <span className="shrink-0 etiquette-fine text-[0.6875rem] tracking-[0.08em] text-encre-2">
                   {profil.famille}
                 </span>
               </Apparition>

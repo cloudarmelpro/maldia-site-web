@@ -75,7 +75,7 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
                     // `transition-colors` de Tailwind inclut `outline-color` :
                     // l'anneau de focus arriverait en fondu depuis la couleur
                     // du texte au lieu de paraitre net.
-                    className={`min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.625rem] whitespace-nowrap transition-[background-color,color] duration-200 large:min-h-[2.125rem] large:min-w-0 large:px-[0.8125rem] ${FOCUS} ${
+                    className={`min-h-11.5 min-w-11.5 cursor-pointer rounded-liste px-4 etiquette text-[0.6875rem] whitespace-nowrap transition-[background-color,color] duration-200 large:min-h-[2.125rem] large:min-w-0 large:px-[0.8125rem] ${FOCUS} ${
                       actif ? 'bg-primaire text-white' : 'bg-primaire/7 text-encre-2'
                     }`}
                   >

@@ -30,7 +30,7 @@ export function ServicesHero({
         {marches.map((marche) => (
           <li
             key={marche}
-            className="rounded-marque bg-voile/26 px-4 py-2.25 text-[0.78125rem] tracking-[0.04em] whitespace-nowrap text-white"
+            className="rounded-liste bg-voile/26 px-4 py-2.25 text-[0.78125rem] tracking-[0.04em] whitespace-nowrap text-white"
           >
             {marche}
           </li>

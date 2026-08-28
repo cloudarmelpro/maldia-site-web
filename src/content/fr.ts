@@ -278,7 +278,6 @@ export const fr: Contenu<'fr'> = {
       titreContact: 'Contact',
       courriel: 'contact@agencemaldia.com',
       lieu: 'Antananarivo, Madagascar',
-      reseaux: ['LinkedIn', 'Facebook', 'Instagram'],
       copyright: '© Agence Maldia 2026',
     },
 
@@ -579,8 +578,6 @@ export const fr: Contenu<'fr'> = {
       titre: 'Recruter et travailler à distance, sans détour.',
       description:
         'Ce que nous apprenons en plaçant des talents malgaches dans des équipes francophones.',
-      cta: 'Prendre rendez-vous',
-      mention: 'Textes provisoires, à remplacer',
     },
     lire: 'Lire l’article',
     vide: 'Les premiers articles arrivent bientôt.',
@@ -626,8 +623,6 @@ export const fr: Contenu<'fr'> = {
       intitule: 'Contact',
       titre: 'Dites-nous ce dont vous avez besoin.',
       description: 'Un appel de 30 minutes suffit à savoir si le service correspond.',
-      cta: 'Prendre rendez-vous',
-      mention: '30 minutes · via Cal.com',
     },
 
     reservation: {
@@ -729,14 +724,6 @@ export const fr: Contenu<'fr'> = {
       },
     ],
 
-    calendrier: {
-      intitule: 'Rendez-vous direct · Cal.com',
-      titre: 'Réservez un créneau dans notre calendrier',
-      texte:
-        'Trente minutes, sans échange de courriels. Le créneau s’ajoute directement à notre calendrier.',
-      creneaux: ['Lun – Ven', '09h – 17h', 'UTC+3', 'Cal.com'],
-      cta: 'Ouvrir le calendrier',
-    },
 
     coordonnees: {
       intitule: 'Coordonnées',

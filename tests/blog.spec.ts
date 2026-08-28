@@ -39,6 +39,22 @@ describe('WEB-15 — le blog', () => {
     }
   })
 
+  it('aucun article n est date dans le futur', () => {
+    // Les dates sont provisoires (voir la docstring de `articles.ts`), donc
+    // elles seront reecrites. Ce qui ne doit jamais arriver, c'est qu'une date
+    // depasse le jour du build : le site annoncerait un article a paraitre, et
+    // rien dans le rendu ne le signalerait.
+    const aujourdhui = new Date().toISOString().slice(0, 10)
+    for (const langue of LANGUES) {
+      for (const article of ARTICLES[langue]) {
+        expect(
+          article.date <= aujourdhui,
+          `${langue}/${article.identifiant} est date du ${article.date}, apres le ${aujourdhui}`,
+        ).toBe(true)
+      }
+    }
+  })
+
   it('chaque article a un corps', () => {
     for (const langue of LANGUES) {
       for (const article of ARTICLES[langue]) {

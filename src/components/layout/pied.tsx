@@ -78,7 +78,7 @@ export function Pied({
             {RESEAUX.map((Icone, indice) => (
               <span
                 key={indice}
-                className="grid size-9.5 place-items-center rounded-marque bg-voile/24 text-white"
+                className="grid size-9.5 place-items-center rounded-liste bg-voile/24 text-white"
               >
                 <Icone className="size-4" />
               </span>

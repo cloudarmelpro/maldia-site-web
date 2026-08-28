@@ -1,14 +1,15 @@
 /**
- * La fleche du site, gauche et droite, depuis `public/icons`.
+ * La fleche du site, gauche et droite.
  *
- * **Les deux fichiers portent des noms inverses.** `Left.svg` dessine la fleche
- * vers la DROITE — son `id` interne dit `right-arrow-foward-sign` — et
- * `Right.svg` dessine celle vers la gauche. Le trace ci-dessous suit ce qu'ils
- * dessinent, pas leur nom de fichier. Ne pas « corriger » d'apres les noms.
+ * Le trace vient des SVG du design, releve puis pose ici. Les fichiers d'origine
+ * ont ete retires de `public/` : ils partaient dans l'export sans qu'aucune page
+ * ne les demande, et leurs noms etaient inverses — celui nomme « Left »
+ * dessinait la fleche vers la DROITE. Le trace ci-dessous suit ce qu'ils
+ * dessinaient, jamais leur nom.
  *
- * Le trace est inline et non `<img src="/icons/…">` pour deux raisons : les
- * polygones n'ont pas de `fill`, donc en image ils resteraient noirs — invisibles
- * sur les boutons encre et contour-clair — et chaque fleche couterait une requete.
+ * Il est inline et non `<img src="…">` pour deux raisons : les polygones n'ont
+ * pas de `fill`, donc en image ils resteraient noirs — invisibles sur un fond
+ * sombre — et chaque fleche couterait une requete.
  */
 const TRACES = {
   droite:

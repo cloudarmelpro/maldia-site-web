@@ -45,7 +45,7 @@ export default defineConfig({
   // reuseExistingServer est faux meme hors CI : un serveur laisse tourner
   // servirait un `out/` perime, et le test passerait sur l'etat d'avant.
   webServer: {
-    command: 'npm run build && node e2e/serveur-statique.mjs',
+    command: 'npm run build && npm start',
     url: 'http://localhost:3000',
     reuseExistingServer: false,
     timeout: 180_000,

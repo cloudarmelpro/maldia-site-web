@@ -78,7 +78,7 @@ export function CarteEtape({
         </span>
         <span
           className={classes(
-            'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.625rem] tracking-[0.07em] whitespace-nowrap',
+            'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.6875rem] tracking-[0.07em] whitespace-nowrap',
             PASTILLE[registre][etape.cote],
           )}
         >

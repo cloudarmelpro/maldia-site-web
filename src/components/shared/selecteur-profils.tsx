@@ -71,7 +71,7 @@ export function SelecteurProfils({
                 aria-pressed={courant}
                 onClick={() => setChoisi(indice)}
                 className={classes(
-                  'flex min-h-[2.875rem] w-full items-center justify-between gap-3 rounded-marque px-4 py-2 text-left text-[0.90625rem] tracking-[-0.015em] transition-[background-color,color] duration-200',
+                  'flex min-h-[2.875rem] w-full items-center justify-between gap-3 rounded-liste px-4 py-2 text-left text-[0.90625rem] tracking-[-0.015em] transition-[background-color,color] duration-200',
                   FOCUS,
                   courant
                     ? 'bg-primaire text-white'

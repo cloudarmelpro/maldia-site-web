@@ -67,6 +67,41 @@ domaine dans la Search Console dès la mise en ligne, sans quoi l'INP restera
 invérifiable. Mais une cible qui ne se mesure qu'après la livraison n'empêche
 aucune régression avant elle.
 
+## La mesure était fausse, et la cible reste hors d'atteinte — 28 août 2026
+
+**Les polyfills étaient comptés.** `0cz1d0mv5g_q7.js` pèse 38,6 Ko gzippés et
+porte l'attribut `noModule` : **aucun navigateur moderne ne le télécharge.** Les
+chiffres de ce document — 230 à 240 Ko — l'incluaient. Mesuré à nouveau sans lui,
+sur l'export du 28 août :
+
+| morceau | gzip |
+| --- | --- |
+| React DOM | 70,0 Ko |
+| React + runtime Next | 43,6 Ko |
+| **GSAP + ScrollTrigger + SplitText + CustomEase + Lenis** | **65,3 Ko** |
+| route, Turbopack, page | 26,4 Ko |
+| **total réellement servi** | **205,3 Ko** |
+
+**L'écart est donc de 25 Ko, pas de 60.** Mais il ne se referme pas sans trancher
+ce que ce document avait laissé ouvert : 180 Ko laissent 35 Ko d'application
+au-dessus des 145 incompressibles de React et Next. La pile d'animation en pèse
+65 à elle seule.
+
+**Les trois issues, et aucune n'est gratuite :**
+
+1. **Retirer Lenis** — 5,4 Ko. Le défilement lissé disparaît. On reste à 200 Ko.
+2. **Retirer GSAP** — on passe sous la cible, et on perd `SplitText`, donc la
+   révélation ligne par ligne, donc la signature du design (décision 0025).
+3. **Relever la cible à 210 Ko** — et acter que la révélation vaut ses 65 Ko.
+
+Le budget avait été écrit pour forcer ce choix plutôt que le contourner. Il l'a
+fait : `motion` est partie. Ce qui reste n'est plus un excès, c'est un
+arbitrage — **et il appartient au client, pas au code.**
+
+**Ce qui est acquis :** charger GSAP après l'hydratation plutôt que dans le
+paquet initial ne change pas le total, mais sort 65 Ko du chemin critique. C'est
+la piste à instruire si la cible est maintenue.
+
 ## Ce que ça engage
 
 La cible se mesure **sur l'export**, jamais sous `next dev` : le site s'y

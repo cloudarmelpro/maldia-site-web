@@ -14,9 +14,9 @@ import { classes } from '@/components/shared/classes'
 // que la navigation de bureau n'est pas la — la cible passe devant, l'ecart ne
 // se voit pas.
 const CHAMP =
-  'min-h-11 w-full rounded-marque border-0 bg-white px-3.75 py-3.25 text-base text-encre placeholder:text-indicatif focus:outline-2 focus:outline-offset-2 focus:outline-encre'
+  'min-h-11 w-full rounded-liste border-0 bg-white px-3.75 py-3.25 text-base text-encre placeholder:text-indicatif focus:outline-2 focus:outline-offset-2 focus:outline-encre'
 
-const LIBELLE = 'mb-1.75 block text-[0.65625rem] tracking-[0.08em] uppercase text-encre-2'
+const LIBELLE = 'mb-1.75 block text-[0.6875rem] tracking-[0.08em] uppercase text-encre-2'
 
 const ID_FORMULAIRE = 'formulaire-contact'
 const ID_TITRE_VOIE = 'titre-voie-contact'
@@ -93,7 +93,7 @@ export function FormulaireContact({
         >
           {voie.titre}
         </h2>
-        <span className="shrink-0 text-right text-[0.65625rem] tracking-[0.08em] uppercase text-encre-2">
+        <span className="shrink-0 text-right text-[0.6875rem] tracking-[0.08em] uppercase text-encre-2">
           {voie.mention}
         </span>
       </div>
@@ -192,7 +192,7 @@ function Champ({ champ }: { champ: ChampFormulaire }) {
     return (
       <label className="block">
         <span className={LIBELLE}>{champ.libelle}</span>
-        <span className="flex flex-col items-center gap-1.5 rounded-marque bg-white px-3.75 py-5.5 text-center">
+        <span className="flex flex-col items-center gap-1.5 rounded-liste bg-white px-3.75 py-5.5 text-center">
           <span className="text-[0.875rem] text-encre">{champ.titre}</span>
           <span className="text-[0.78125rem] text-encre-2">{champ.precision}</span>
           {/* Le controle natif est laisse visible : il est le seul a nommer le

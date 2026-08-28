@@ -111,7 +111,7 @@ export function Base({
               allure={ALLURES[indice]}
               copies={COPIES}
               rendu={(outil) => (
-                <span className="mr-[0.5625rem] grid h-10 place-items-center rounded-marque bg-voile/22 px-[1.0625rem] text-[0.78125rem] tracking-[0.06em] whitespace-nowrap text-white">
+                <span className="mr-[0.5625rem] grid h-10 place-items-center rounded-liste bg-voile/22 px-[1.0625rem] text-[0.78125rem] tracking-[0.06em] whitespace-nowrap text-white">
                   {outil}
                 </span>
               )}

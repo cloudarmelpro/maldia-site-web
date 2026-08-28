@@ -49,7 +49,11 @@ export function ContactPage({
 
   return (
     <>
-      <HeroPage intitule={contact.entete.intitule} titre={contact.entete.titre} />
+      <HeroPage
+        intitule={contact.entete.intitule}
+        titre={contact.entete.titre}
+        description={contact.entete.description}
+      />
 
       <section aria-labelledby="titre-reservation" className="bg-fond py-[clamp(4rem,7vw,7rem)]">
         <div

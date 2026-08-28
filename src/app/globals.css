@@ -59,7 +59,6 @@
 
   --radius-etiquette: 0.5rem;
   --radius-liste: 0.625rem;
-  --radius-marque: 0.6875rem;
   --radius-bloc: 0.75rem;
   --radius-carte: 0.875rem;
   --radius-carte-large: 1rem;
@@ -254,7 +253,11 @@
 
 /* La même, au corps des métadonnées de carte. */
 @utility etiquette-fine {
-  font-size: 0.65625rem;
+  /* 11 px, et non 10,5. Quatre corps cohabitaient entre 10 et 11,5 px sur la
+     seule page d'accueil — un ecart qu'aucun oeil ne classe, pour du texte deja
+     en graisse 300 et en capitales. Le plancher est remonte, et deux des quatre
+     valeurs disparaissent. */
+  font-size: 0.6875rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }

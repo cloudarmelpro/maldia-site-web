@@ -51,7 +51,11 @@ export function BlogListe({
 
   return (
     <>
-      <HeroPage intitule={contenu.entete.intitule} titre={contenu.entete.titre} />
+      <HeroPage
+        intitule={contenu.entete.intitule}
+        titre={contenu.entete.titre}
+        description={contenu.entete.description}
+      />
 
       {vedette ? (
         <section aria-labelledby="titre-une" className="bg-fond pt-[clamp(4rem,7vw,7rem)]">

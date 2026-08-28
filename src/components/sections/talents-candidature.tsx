@@ -8,8 +8,8 @@ import { BAS, CONTENEUR } from '@/components/shared/section'
  * WEB-3 — l'appel a candidater qui ferme la page.
  *
  * La bande reste claire et c'est l'encart qui porte le vert : le bloc Contact du
- * gabarit suit, vert lui aussi et coiffe d'arrondis, et sa coiffe ne se lirait
- * pas sur du vert.
+ * gabarit suit, vert lui aussi, et deux bandes vertes qui se touchent ne font
+ * qu'une.
  *
  * Ce n'est pas une `Section` : le design ne donne pas de titre a cette bande, et
  * `Section` exige l'id d'un titre pour son `aria-labelledby`. Elle reste un

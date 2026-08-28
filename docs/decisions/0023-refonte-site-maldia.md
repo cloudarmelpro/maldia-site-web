@@ -106,6 +106,25 @@ défaut de la grille à deux colonnes — la pastille étirait son fond sur les
 **Vérifié après refonte : les six pages ont, section par section, le même fond
 et les mêmes rayons que le design rendu.**
 
+## Les coiffes sont retirées — 28 août 2026
+
+Le client a fait retirer **tous les arrondis de section** : les coins bas des
+héros de page et de l'article, puis la coiffe haute du bloc Contact. Les aplats
+verts vont désormais d'un bord à l'autre.
+
+**Cela annule la règle de la section suivante.** Elle disait que la section
+précédant le bloc Contact ne devait pas être verte, parce que la coiffe s'y
+lisait comme deux encoches blanches aux angles. Il n'y a plus de coiffe.
+
+La contrainte qui reste est plus simple, et elle vient du contenu et non du
+dessin : **deux bandes vertes qui se touchent ne font qu'une**, et la limite
+entre les deux disparaît. Les commentaires des sections concernées ont été
+réécrits en ce sens — `a-propos-reperes` et `talents-candidature` justifiaient
+leur fond clair par la coiffe.
+
+Seul `a-propos-fonctionnement` garde un `rounded-coiffe` sur ses quatre coins :
+c'est un bloc au milieu d'une page, pas une ouverture de section.
+
 ## Un défaut du système, trouvé à l'écran
 
 Le bloc Contact est vert et coiffé de 28 px. **Quand la section qui le précède

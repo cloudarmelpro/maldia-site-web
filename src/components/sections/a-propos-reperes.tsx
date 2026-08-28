@@ -11,8 +11,8 @@ import { Section } from '@/components/shared/section'
  * premiere correction.
  *
  * Section claire, entre l'aplat vert du fonctionnement et celui du bloc
- * d'appel : sur du vert, les deux bandes se toucheraient et ni l'arrondi de
- * l'une ni la coiffe de l'autre ne se liraient.
+ * d'appel : deux bandes vertes qui se touchent ne font qu'une, et la limite
+ * entre les deux disparait.
  */
 export function AProposReperes({
   contenu,

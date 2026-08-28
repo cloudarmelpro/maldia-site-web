@@ -4,7 +4,7 @@ import { HeroPage } from '@/components/shared/hero-page'
 /**
  * WEB-6 — l'ouverture de la page A propos.
  *
- * Toute la geometrie vit dans `HeroPage` : l'aplat vert coiffe en bas, le
+ * Toute la geometrie vit dans `HeroPage` : l'aplat vert pleine largeur, le
  * padding qui rend sa place a l'en-tete collant, le resserrement de l'intitule
  * sur le titre. Cette page n'y ajoute rien.
  */

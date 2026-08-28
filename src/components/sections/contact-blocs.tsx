@@ -15,8 +15,8 @@ import { CONTENEUR } from '@/components/shared/section'
  * Le bloc d'appel qui ferme chaque page, et le pied dans le meme aplat vert.
  *
  * Ce n'est pas une `Section` : le design fait tenir le bloc et le pied dans une
- * seule bande coiffee d'arrondis, separes par un filet. Une `Section`
- * refermerait le padding entre les deux et le filet cesserait de les relier.
+ * seule bande verte, separes par un filet. Une `Section` refermerait le padding
+ * entre les deux et le filet cesserait de les relier.
  *
  * L'ordre du tuple fige la destination : la premiere carte mene au calendrier,
  * la seconde a la candidature.
@@ -34,7 +34,7 @@ export function ContactBlocs({
   return (
     <section
       aria-labelledby="titre-contact"
-      className="overflow-hidden rounded-t-coiffe bg-primaire pt-[clamp(4rem,7vw,7rem)] pb-[clamp(3rem,5vw,4.5rem)] text-white"
+      className="bg-primaire pt-[clamp(4rem,7vw,7rem)] pb-[clamp(3rem,5vw,4.5rem)] text-white"
     >
       <div className={CONTENEUR}>
         <Apparition>

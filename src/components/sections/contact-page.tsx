@@ -18,8 +18,8 @@ const PANNEAU =
 /**
  * WEB-7 — la page Contact, sur le design « Site Maldia v2 ».
  *
- * Le hero est vert et coiffe de coins bas arrondis, en miroir du bloc Contact
- * qui ferme la page. L'en-tete est collant dans le flux : le padding haut lui
+ * Le hero est vert et pleine largeur. L'en-tete est collant dans le flux : le
+ * padding haut lui
  * rend sa place en lisant la hauteur que `en-tete.tsx` publie, et le repli sert
  * le rendu statique, avant que la mesure existe.
  *

@@ -32,8 +32,8 @@ function ancre(rang: number) {
 
 /**
  * WEB-15 — le gabarit d'article, sur la version 2 du design « Site Maldia » :
- * un hero vert coiffe en bas, la photo pleine largeur, puis le sommaire collant
- * a cote du corps.
+ * un hero vert pleine largeur, la photo, puis le sommaire collant a cote du
+ * corps.
  *
  * Le sommaire est **deduit** des blocs `titre` du corps, dans leur ordre : une
  * section renommee renomme son entree, une section deplacee deplace son lien.

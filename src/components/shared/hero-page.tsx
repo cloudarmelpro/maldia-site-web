@@ -9,10 +9,14 @@ import { CONTENEUR } from '@/components/shared/section'
  * puis titre.
  *
  * Les coins bas etaient arrondis, en miroir de la coiffe du bloc Contact. Le
- * client les a fait retirer : l'aplat va desormais d'un bord a l'autre, sans
- * decrochement. La coiffe HAUTE du bloc Contact reste, elle — c'est le seul
- * arrondi de section qui subsiste, et la symetrie que decrivait la decision
- * 0023 n'existe donc plus.
+ * client a fait retirer les deux : plus AUCUNE section du site n'est coiffee, et
+ * les aplats vont d'un bord a l'autre.
+ *
+ * Une regle de la decision 0023 tombe avec eux. Elle disait que la section
+ * precedant le bloc Contact ne devait pas etre verte, parce que sa coiffe s'y
+ * lisait alors comme deux encoches blanches aux angles. Il n'y a plus de
+ * coiffe ; la contrainte qui reste est plus simple, et c'est celle du contenu :
+ * deux bandes vertes qui se touchent ne font qu'une.
  *
  * Elle etait recopiee dans cinq fichiers, et la divergence avait commence :
  *

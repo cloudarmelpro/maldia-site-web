@@ -32,7 +32,7 @@ const SOUS_INTITULE = '-mt-4.5'
 
 /**
  * WEB-15 — l'index du blog, sur la version 2 du design « Site Maldia » : un
- * hero vert coiffe en bas, un article a la une, la grille des autres, puis
+ * hero vert pleine largeur, un article a la une, la grille des autres, puis
  * l'appel a nous ecrire.
  *
  * L'article le plus recent passe en vedette et sort de la grille. Les onglets

@@ -292,6 +292,7 @@ export const en: Contenu<'en'> = {
     allerAuContenu: 'Skip to content',
     formulaireFerme: 'Online submission is not open yet. Write to us in the meantime.',
     nonTrouve: {
+      intitule: 'Error 404',
       titre: 'This page does not exist.',
       texte: 'The address may be incomplete, or the page was renamed.',
       retour: 'Back to home',

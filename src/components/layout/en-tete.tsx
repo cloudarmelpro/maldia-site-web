@@ -48,7 +48,8 @@ export function EnTete({
   cheminAutreLangue,
 }: {
   langue: Langue
-  page: Page
+  /** `null` sur la 404 : aucune entree n'est courante. */
+  page: Page | null
   contenu: Contenu['commun']['enTete']
   cheminAutreLangue: string
 }) {

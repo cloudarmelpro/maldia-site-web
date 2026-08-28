@@ -286,6 +286,7 @@ export const fr: Contenu<'fr'> = {
     allerAuContenu: 'Aller au contenu',
     formulaireFerme: 'Le dépôt en ligne n’est pas encore ouvert. Écrivez-nous en attendant.',
     nonTrouve: {
+      intitule: 'Erreur 404',
       titre: 'Cette page n’existe pas.',
       texte: 'L’adresse est peut-être incomplète, ou la page a changé de nom.',
       retour: 'Retour à l’accueil',

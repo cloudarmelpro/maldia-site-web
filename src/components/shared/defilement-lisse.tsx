@@ -54,8 +54,31 @@ export function faireDefilerVers(cible: number) {
  * **Rien n'est construit sous `prefers-reduced-motion`.** Un defilement qui
  * continue apres le geste est un cas type de gene vestibulaire ; la page garde
  * alors le defilement natif du navigateur.
+ *
+ * **Il pose aussi `history.scrollRestoration = 'manual'`.** Laissee a `auto`, la
+ * restauration du navigateur rend la page a une position qui n'est pas celle
+ * qu'on avait — reproduit sur l'export, `Ctrl+R` depuis le haut du hero atterrit
+ * plus bas, a une hauteur differente a chaque essai.
+ *
+ * Le reglage vivait dans le gabarit, en `<script>` injecte par `next/script`.
+ * React n'execute jamais un script qu'il rend lui-meme cote client et le signale
+ * en console — l'avertissement revenait a chaque navigation. Ici il n'y a plus
+ * de script du tout.
+ *
+ * Un effet suffit, contrairement a ce que le gabarit affirmait : une navigation
+ * neuve n'a **rien** a restaurer, et quand il y a quelque chose a restaurer —
+ * une actualisation, un retour arriere — le drapeau est deja pose par le
+ * chargement precedent. Il persiste sur l'entree d'historique.
+ *
+ * Ce que ca coute : le retour arriere ne rend plus la position non plus. Next ne
+ * touche jamais `scrollRestoration`, donc ce reglage vaut pour les deux gestes.
  */
 export function DefilementLisse() {
+  // Avant le retour anticipe : la restauration ne depend pas du mouvement.
+  useEffect(() => {
+    history.scrollRestoration = 'manual'
+  }, [])
+
   useEffect(() => {
     if (mouvementReduit()) return
 

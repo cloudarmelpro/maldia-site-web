@@ -418,6 +418,7 @@ export type Contenu<L extends Langue = Langue> = {
      * cote, et le visiteur choisit la sienne.
      */
     readonly nonTrouve: {
+      readonly intitule: string
       readonly titre: string
       readonly texte: string
       readonly retour: string

@@ -34,14 +34,15 @@ export function Gabarit({
   children,
 }: {
   langue: Langue
-  page: Page
+  /** `null` sur la 404 : aucune des six entrees du menu n'est courante. */
+  page: Page | null
   /** Renseigne sur une page d'article : l'identifiant est commun aux deux langues. */
   article?: string
   contenu: Contenu
   children: ReactNode
 }) {
   const autre = autreLangue(langue)
-  const cheminAutreLangue = article ? cheminArticle(autre, article) : chemin(autre, page)
+  const cheminAutreLangue = article ? cheminArticle(autre, article) : chemin(autre, page ?? 'accueil')
 
   return (
     <>

@@ -5,8 +5,14 @@ import { IntituleSection } from '@/components/shared/intitule-section'
 import { CONTENEUR } from '@/components/shared/section'
 
 /**
- * L'ouverture verte des pages interieures : aplat plein, coins BAS arrondis en
- * miroir de la coiffe du bloc Contact, intitule puis titre.
+ * L'ouverture verte des pages interieures : aplat plein pleine largeur, intitule
+ * puis titre.
+ *
+ * Les coins bas etaient arrondis, en miroir de la coiffe du bloc Contact. Le
+ * client les a fait retirer : l'aplat va desormais d'un bord a l'autre, sans
+ * decrochement. La coiffe HAUTE du bloc Contact reste, elle — c'est le seul
+ * arrondi de section qui subsiste, et la symetrie que decrivait la decision
+ * 0023 n'existe donc plus.
  *
  * Elle etait recopiee dans cinq fichiers, et la divergence avait commence :
  *
@@ -59,7 +65,7 @@ export function HeroPage({
   return (
     <section
       aria-labelledby="titre-page"
-      className={classes('rounded-b-coiffe bg-primaire text-white', HAUT, BAS)}
+      className={classes('bg-primaire text-white', HAUT, BAS)}
     >
       <div className={classes(CONTENEUR, 'flex flex-col gap-[clamp(1.5rem,3vw,2.5rem)]')}>
         <IntituleSection intitule={intitule} registre="vert" />

@@ -72,7 +72,7 @@ export function BlogArticle({
       <section
         aria-labelledby="titre-page"
         className={classes(
-          'rounded-b-coiffe bg-primaire pb-[clamp(3rem,6vw,5.25rem)]',
+          'bg-primaire pb-[clamp(3rem,6vw,5.25rem)]',
           HAUT_OUVERTURE,
         )}
       >

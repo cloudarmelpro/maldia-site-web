@@ -12,8 +12,9 @@
    toutes les sections sombres, et avec elles les jetons qui n'existaient que
    pour elles : `--color-nuit`, `--color-sur-sombre`, `--color-sur-sombre-2`.
 
-   Les ratios cités ci-dessous sont mesurés, pas estimés, et recalculés à chaque
-   changement de valeur. */
+   Les ratios cités ci-dessous sont mesurés, pas estimés. Ils valent pour le vert
+   EN COURS : le changer les invalide tous, et il faut alors les reprendre — ce
+   fichier ne le fait pas tout seul. */
 @theme {
   --color-encre: #0f1d17;
   --color-fond: #ffffff;
@@ -312,9 +313,21 @@
    radiaux teintent, l'un vert en haut a gauche, l'autre blanc en bas a droite.
    Un aplat uni a la place se voit — la carte fait plus de 500 px de large. */
 @utility halo-voie {
+  /* Les couleurs viennent des jetons, jamais recopiees. Ce halo portait
+     `rgb(23 126 79 / …)` — l'ancien vert ecrit en decimal, qui a donc survecu
+     au changement de `--color-primaire` sans que rien ne le signale. C'est le
+     contournement que `--shadow-flottant` documente deja. */
   background-image:
-    radial-gradient(76% 86% at 20% 26%, rgb(23 126 79 / 0.09) 0%, rgb(23 126 79 / 0) 64%),
-    radial-gradient(64% 78% at 84% 74%, rgb(255 255 255 / 0.08) 0%, rgb(255 255 255 / 0) 62%);
-  background-color: #ffffff;
+    radial-gradient(
+      76% 86% at 20% 26%,
+      --alpha(var(--color-primaire) / 9%) 0%,
+      --alpha(var(--color-primaire) / 0%) 64%
+    ),
+    radial-gradient(
+      64% 78% at 84% 74%,
+      --alpha(var(--color-fond) / 8%) 0%,
+      --alpha(var(--color-fond) / 0%) 62%
+    );
+  background-color: var(--color-fond);
 }
 

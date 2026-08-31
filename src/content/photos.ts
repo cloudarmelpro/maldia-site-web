@@ -38,6 +38,22 @@ export const PHOTOS = {
   ] as const satisfies readonly [string, string, string, string, string, string],
 
   /**
+   * Les MEMES visages, en 64 px, pour la ligne de preuve du hero.
+   *
+   * `unoptimized: true` fige la largeur dans l'adresse : aucun `srcset` n'est
+   * emis, et le navigateur telecharge ce que l'URL demande. Les servir en
+   * 1200 px pour 26 px a l'ecran coutait 637 Ko sur le premier ecran — le poste
+   * le plus lourd de la page d'accueil, mesure, pour quatre pastilles de la
+   * taille d'un ongle. Le meme identifiant sert donc deux largeurs.
+   */
+  visages: [
+    photo('1517180102446-f3ece451e9d8', 64),
+    photo('1561070791-2526d30994b5', 64),
+    photo('1574717024653-61fd2cf4d44d', 64),
+    photo('1611926653458-09294b3142bf', 64),
+  ] as const satisfies readonly [string, string, string, string],
+
+  /**
    * Une par article du blog (WEB-15), designee par identifiant et non par
    * position : un article insere ailleurs dans la liste ne decale rien.
    */

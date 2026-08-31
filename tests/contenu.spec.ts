@@ -10,6 +10,22 @@ import { OUTILS } from '@/content/outils'
 // d'un seul cote, un libelle de navigation oublie.
 
 describe('WEB-8 — parite des deux langues', () => {
+  /*
+   * WEB-8 exige DEUX langues. Aucun test ne le disait.
+   *
+   * Tous les controles de parite bouclent `for (const langue of LANGUES)` :
+   * sur un singleton ils sont vacuement satisfaits. Un mutant qui reduit
+   * `LANGUES` a `['fr']` — l'anglais disparait du site — laissait la suite
+   * ENTIEREMENT VERTE. Verifie.
+   *
+   * Un test qui itere sur la donnee qu'il devrait contraindre decrit le code.
+   * Celui-ci contraint.
+   */
+  it('WEB-8 — le site a exactement deux langues, et ce sont fr et en', () => {
+    expect([...LANGUES].sort()).toEqual(['en', 'fr'])
+    expect(Object.keys(CONTENUS).sort()).toEqual(['en', 'fr'])
+  })
+
   it('aucune chaine visible n est vide', () => {
     const vides: string[] = []
 

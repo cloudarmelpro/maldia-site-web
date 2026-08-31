@@ -65,14 +65,17 @@ export function Parcours({
                     </span>
                   </span>
 
-                  <strong
+                  {/* `h3` et non `strong` : ce sont les deux titres du bloc de
+                      conversion de WEB-2, et un lecteur d'ecran qui navigue par
+                      titres les sautait entierement. */}
+                  <h3
                     className={classes(
                       'font-titre text-[clamp(1.1875rem,1.8vw,1.5625rem)] leading-[1.15] tracking-[-0.04em]',
                       vert ? 'text-white' : 'text-encre',
                     )}
                   >
                     {voie.titre}
-                  </strong>
+                  </h3>
                   <p
                     className={classes(
                       'max-w-[42ch] text-[0.875rem] leading-[1.6]',

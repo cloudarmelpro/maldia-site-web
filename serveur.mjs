@@ -1,6 +1,6 @@
 import { createReadStream, existsSync, statSync } from 'node:fs'
 import { createServer } from 'node:http'
-import { extname, join, normalize, resolve } from 'node:path'
+import { extname, join, normalize, resolve, sep } from 'node:path'
 import { createGzip } from 'node:zlib'
 
 /**
@@ -56,11 +56,27 @@ function cache(chemin) {
     : 'public, max-age=86400'
 }
 
-/** `normalize` APRES le `join` : c'est ce qui neutralise un `..` dans l'URL. */
-function fichier(chemin) {
-  const absolu = normalize(join(RACINE, decodeURIComponent(chemin)))
-  if (!absolu.startsWith(RACINE)) return null
+/**
+ * Le chemin sur disque que sert une URL, ou `null`.
+ *
+ * **`decodeURIComponent` est DANS le `try`, et c'est le point de cette
+ * fonction.** Il leve `URIError` sur une sequence invalide — un simple
+ * `GET /%` suffit. Hors du `try`, l'exception remontait jusqu'au processus et
+ * le TUAIT : le site entier tombait sur une requete d'une ligne, mal collee ou
+ * envoyee par un robot. Reproduit avant correction.
+ */
+export function fichier(chemin) {
   try {
+    const absolu = normalize(join(RACINE, decodeURIComponent(chemin)))
+
+    // La comparaison exige le separateur : `startsWith(RACINE)` seul laisserait
+    // passer un dossier voisin nomme `out-vieux`.
+    if (absolu !== RACINE && !absolu.startsWith(RACINE + sep)) return null
+
+    // Aucun fichier cache ne se sert. Apache refuse `.ht*` nativement ; ce
+    // serveur n'a pas cette regle, et `out/.htaccess` partait en clair.
+    if (absolu.split(sep).some((part) => part.startsWith('.'))) return null
+
     // `trailingSlash: true` : chaque page est un `index.html` dans son dossier.
     return statSync(absolu).isDirectory() ? join(absolu, 'index.html') : absolu
   } catch {
@@ -75,9 +91,18 @@ function servir(reponse, chemin, code, accepte) {
     'cache-control': cache(chemin),
     // L'export ne contient aucun script tiers ; le dire ferme la question.
     'x-content-type-options': 'nosniff',
+    // Le site n'a ni compte ni formulaire qui parte : la surface est mince.
+    // Ces deux en-tetes ne coutent rien et ferment ce qui reste — une adresse
+    // fuitee dans un referent, et l'encadrement de la page par un tiers.
+    'referrer-policy': 'strict-origin-when-cross-origin',
+    'x-frame-options': 'SAMEORIGIN',
     ...(compresse ? { 'content-encoding': 'gzip', vary: 'Accept-Encoding' } : {}),
   })
   const flux = createReadStream(chemin)
+  // Sans cet ecouteur, un `EMFILE` sous charge ou un fichier disparu entre le
+  // `existsSync` et la lecture emet une erreur que personne n'attrape — et le
+  // processus meurt, comme pour `decodeURIComponent`.
+  flux.on('error', () => reponse.destroy())
   if (compresse) flux.pipe(createGzip()).pipe(reponse)
   else flux.pipe(reponse)
 }
@@ -93,7 +118,14 @@ if (!existsSync(RACINE)) {
   process.exit(1)
 }
 
-createServer((requete, reponse) => {
+/**
+ * Le serveur ne demarre pas quand ce fichier est importe par un test : sans
+ * cette garde, `vitest` ouvrirait un port et ne rendrait jamais la main.
+ */
+const LANCE_DIRECTEMENT = process.argv[1]?.endsWith('serveur.mjs') ?? false
+
+if (LANCE_DIRECTEMENT)
+  createServer((requete, reponse) => {
   const accepte = requete.headers['accept-encoding'] ?? ''
   const chemin = fichier(requete.url.split('?')[0])
 
@@ -112,6 +144,6 @@ createServer((requete, reponse) => {
 
   reponse.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' })
   reponse.end('404')
-}).listen(PORT, () => {
-  console.log(`site-web sert ${RACINE} sur le port ${PORT}`)
-})
+  }).listen(PORT, () => {
+    console.log(`site-web sert ${RACINE} sur le port ${PORT}`)
+  })

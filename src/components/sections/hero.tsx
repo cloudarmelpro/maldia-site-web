@@ -8,8 +8,8 @@ import { Bouton } from '@/components/shared/bouton'
 import { Revelation } from '@/components/shared/revelation'
 import { CONTENEUR } from '@/components/shared/section'
 
-/** Les quatre premiers profils, en pastilles rondes qui se chevauchent. */
-const VISAGES = PHOTOS.profils.slice(0, 4)
+/** Quatre pastilles rondes qui se chevauchent, servies a leur taille reelle. */
+const VISAGES = PHOTOS.visages
 
 /**
  * L'eventail : cinq cartes sur la meme piste, a trois secondes d'ecart sur un
@@ -132,9 +132,15 @@ export function Hero({
         <div className="relative mt-[clamp(1.25rem,3vw,2.5rem)] flex shrink-0 items-center justify-center overflow-hidden">
           {/* `aria-hidden` : les cinq metiers defilent sans qu'on puisse les
               atteindre, et la section Profils les liste deja de facon lisible. */}
+          {/* `motion-reduce:hidden` sur l'eventail ENTIER : les cartes partent a
+              `opacity: 0` et seule l'animation les rallume, donc sous mouvement
+              reduit elles restaient invisibles en gardant leur hauteur — une
+              bande blanche de 372 px sous les appels. Reduire le mouvement doit
+              arreter une animation, jamais laisser un trou. Ce bloc est
+              decoratif et `aria-hidden` : le retirer ne perd rien. */}
           <div
             aria-hidden
-            className={`relative h-[calc(min(44vw,20rem)*0.75+6rem)] w-[min(100%,47.5rem)] ${PERSPECTIVE}`}
+            className={`relative h-[calc(min(44vw,20rem)*0.75+6rem)] w-[min(100%,47.5rem)] motion-reduce:hidden ${PERSPECTIVE}`}
           >
             {contenu.cartes.metiers.map((metier, indice) => (
               <div

@@ -7,7 +7,7 @@ import { PanneauNavigation } from '@/components/layout/panneau-navigation'
 import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
-import { FOCUS_SUIVEUR } from '@/components/shared/focus'
+import { FOCUS_COURANTE, FOCUS_SUIVEUR } from '@/components/shared/focus'
 import { autreLangue } from '@/components/shared/autre-langue'
 import { Bouton } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
@@ -114,7 +114,9 @@ export function EnTete({
                   className={classes(
                     'inline-flex items-center rounded-bloc px-2.5 py-2 text-[0.84375rem] whitespace-nowrap',
                     TRANSITION,
-                    FOCUS_SUIVEUR,
+                    // La pastille courante inverse ses couleurs : son anneau
+                    // doit suivre le fond de la barre, pas son encre a elle.
+                    courante ? (clair ? FOCUS_COURANTE.clair : FOCUS_COURANTE.sombre) : FOCUS_SUIVEUR,
                     courante
                       ? clair
                         ? 'bg-primaire text-white'

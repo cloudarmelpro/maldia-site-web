@@ -5,6 +5,7 @@ import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
 import { Bouton } from '@/components/shared/bouton'
+import { Revelation } from '@/components/shared/revelation'
 import { CONTENEUR } from '@/components/shared/section'
 
 /** Les quatre premiers profils, en pastilles rondes qui se chevauchent. */
@@ -38,11 +39,21 @@ const CARTE = 'w-[min(44vw,20rem)] aspect-[4/3]'
  * `PHOTOS.vignettesHero` sont parties avec, et les deux defilements verticaux
  * de `globals.css` aussi — ils n'avaient que cet appelant.
  *
- * **Rien n'est anime a l'entree, et c'est deliberé.** Ni `Revelation` ni
- * `Apparition` : les deux partent d'`opacity: 0` et attendent GSAP, donc le
- * premier ecran attendrait le paquet JavaScript pour s'afficher. Le titre, le
- * chapeau et les deux appels sortent du build peints. L'eventail, lui, est en
- * CSS pur — il tourne sans script.
+ * **Le titre et le chapeau se revelent ligne par ligne, comme partout ailleurs**
+ * — en `desLeMontage`, sans attendre un point de defilement : c'est le premier
+ * ecran, il n'y a rien a attendre.
+ *
+ * Ce que ca coute, et il faut le savoir : ces deux blocs partent d'`opacity: 0`
+ * et attendent GSAP. Au-dessus du pli, c'est du texte qui n'existe pas tant que
+ * le paquet n'est pas la. Deux filets le rattrapent — la garde
+ * `@media (scripting: enabled)` de `revelable`, qui ne masque rien sans script,
+ * et le secours a 4 s si GSAP n'arrive jamais.
+ *
+ * **La ligne de preuve et les deux appels restent peints.** Une commande qui
+ * attend une animation pour exister est une commande qu'on ne peut ni voir ni
+ * atteindre, et ce sont les deux appels de WEB-2.
+ *
+ * L'eventail, lui, est en CSS pur : il tourne sans script.
  *
  * `min-h-svh` et non `100vh` : sur telephone, `100vh` vaut la fenetre SANS la
  * barre d'adresse, donc les deux appels de WEB-2 se retrouvent sous le pli au
@@ -90,16 +101,22 @@ export function Hero({
             </span>
           </p>
 
-          <h1
+          <Revelation
+            balise="h1"
             id="titre-hero"
+            desLeMontage
             className="max-w-[12ch] font-titre text-[clamp(1.875rem,4vw,3.375rem)] leading-[1.06] tracking-[-0.055em] text-balance text-encre [word-spacing:-0.02em]"
           >
             {contenu.titre}
-          </h1>
+          </Revelation>
 
-          <p className="max-w-[34ch] text-[clamp(0.90625rem,1.05vw,1rem)] leading-[1.5] text-pretty text-encre-2">
+          <Revelation
+            desLeMontage
+            delai={0.12}
+            className="max-w-[34ch] text-[clamp(0.90625rem,1.05vw,1rem)] leading-[1.5] text-pretty text-encre-2"
+          >
             {contenu.lead}
-          </p>
+          </Revelation>
 
           <div className="mt-1 flex flex-wrap items-center justify-center gap-2.5">
             <Bouton destination="rendezVous" libelle={cta} variante="vert" taille="haute" />

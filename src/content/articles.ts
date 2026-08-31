@@ -24,7 +24,7 @@ const articlesFr: Articles = [
     identifiant: 'staff-augmentation',
     date: '2026-08-04',
     categorie: 'Méthode',
-    duree: '6 min',
+    duree: ' min',
     titre: 'Le staff augmentation, en clair',
     resume:
       'Ni sous-traitance, ni agence de placement : une personne qui rejoint votre équipe, à distance, avec vos outils et vos méthodes.',
@@ -83,7 +83,7 @@ const articlesFr: Articles = [
     identifiant: 'preparer-sa-candidature',
     date: '2026-07-14',
     categorie: 'Talents',
-    duree: '5 min',
+    duree: ' min',
     titre: 'Préparer sa candidature chez Maldia',
     resume:
       'Ce que le formulaire demande, ce que nous regardons, et ce qui se passe après l’envoi.',
@@ -148,7 +148,7 @@ const articlesFr: Articles = [
     identifiant: 'travailler-avec-vos-outils',
     date: '2026-06-23',
     categorie: 'Outils',
-    duree: '5 min',
+    duree: ' min',
     titre: 'Travailler avec vos outils, pas avec les nôtres',
     resume: 'Pourquoi nous n’imposons aucun outil à nos clients, et ce que cela demande à nos talents.',
     etiquettes: ['Outils', 'Intégration', 'Présélection'],
@@ -228,7 +228,7 @@ const articlesEn: Articles = [
       {
         type: 'citation',
         texte:
-          'What Maldia brings is the person and the follow-up of the collaboration — not a parallel organisation.',
+          'What Maldia brings is the person and the follow-up of the collaboration — not a parallel organization.',
       },
       { type: 'titre', texte: 'What you do not pay for' },
       {

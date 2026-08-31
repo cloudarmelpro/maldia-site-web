@@ -12,7 +12,7 @@ import { autreLangue } from '@/components/shared/autre-langue'
 import { ChevronSection } from '@/components/shared/chevron-section'
 
 /**
- * L'habillage commun aux six pages (WEB-11).
+ * L'habillage commun a toutes les pages (WEB-11).
  *
  * L'en-tete n'est pas rendu ici mais passe a la page : le design le pose **sur**
  * le hero, dans le meme aplat. Rendu avant `main`, il aurait son propre fond et
@@ -34,7 +34,7 @@ export function Gabarit({
   children,
 }: {
   langue: Langue
-  /** `null` sur la 404 : aucune des six entrees du menu n'est courante. */
+  /** `null` sur la 404 : aucune entree du menu n'y est courante. */
   page: Page | null
   /** Renseigne sur une page d'article : l'identifiant est commun aux deux langues. */
   article?: string
@@ -55,8 +55,8 @@ export function Gabarit({
           qui la recalerait sur son parent au lieu de la fenetre. */}
       <BarreProgression />
 
-      {/* WCAG 2.4.1 — l'en-tete pose huit arrets de tabulation avant le contenu,
-          sur chacune des douze pages. Ce lien est le premier arret : invisible
+      {/* WCAG 2.4.1 — l'en-tete pose une serie d'arrets de tabulation avant le
+          contenu, sur chaque page. Ce lien est le premier arret : invisible
           jusqu'a ce qu'il recoive le focus, ou il devient une vraie commande.
           `z-95` le met au-dessus de l'en-tete collant, sous le panneau mobile. */}
       <a

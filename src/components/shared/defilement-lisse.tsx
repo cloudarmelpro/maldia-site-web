@@ -39,7 +39,7 @@ export function faireDefilerVers(cible: number) {
 /**
  * Le defilement lisse du design de reference.
  *
- * Ne rend rien. Monte dans le gabarit, donc sur les six pages.
+ * Ne rend rien. Monte dans le gabarit, donc sur chaque page.
  *
  * Lenis defile la **vraie fenetre** : `window.scrollY` reste juste et les
  * ecouteurs de `scroll` continuent de recevoir leurs evenements. C'est ce qui

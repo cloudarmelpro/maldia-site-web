@@ -9,8 +9,8 @@ import { HeroPage } from '@/components/shared/hero-page'
  *
  * Elles sont **inertes** : meme aplat, memes coins et meme hauteur qu'un bouton
  * du site, mais rien n'est cliquable. C'est le seul hero de page sans appel, et
- * l'audit de direction artistique le releve — sept formes de bouton, aucun
- * bouton. A trancher avec le client : un appel a cote, ou des pastilles qui
+ * l'audit de direction artistique le releve : des formes de bouton, et aucun
+ * bouton. A trancher avec le client — un appel a cote, ou des pastilles qui
  * cessent d'en avoir l'air.
  */
 export function ServicesHero({

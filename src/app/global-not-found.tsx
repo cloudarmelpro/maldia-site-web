@@ -29,10 +29,10 @@ import './globals.css'
  * selecteur de l'en-tete mene a l'accueil anglais, seule page equivalente
  * puisqu'il n'existe qu'un fichier 404 pour tout le site.
  *
- * `page={null}` : aucune des six entrees du menu n'est courante ici, et marquer
+ * `page={null}` : aucune entree du menu n'est courante ici, et marquer
  * « Accueil » le serait faussement.
  *
- * **Le hero est clair, et c'est la seule difference avec les cinq autres pages.**
+ * **Le hero est clair, et c'est sa seule difference avec les autres pages.**
  * Le bloc d'appel du gabarit est vert : un hero vert le toucherait, et deux
  * bandes vertes qui se suivent ne font qu'une — il ne resterait qu'une couture
  * au milieu d'un aplat.

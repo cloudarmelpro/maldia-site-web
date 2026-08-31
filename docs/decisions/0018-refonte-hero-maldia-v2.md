@@ -169,3 +169,10 @@ six du sélecteur de profils. Elles restent à remplacer avant la mise en ligne.
 
 **Les deux destinations sortantes sont toujours vides** (décision 0007) :
 `npm run verifier` échoue exprès.
+
+## Suite
+
+Le vert `#177e4f` cite plus haut a ete assombri en `#14603f` — voir la
+decision **0028**. Le hero decrit ici a ete entierement refait, et il est
+maintenant clair : voir la decision **0029**. Cette fiche n'est pas corrigee ;
+elle dit ce qui etait vrai le 20 aout 2026.

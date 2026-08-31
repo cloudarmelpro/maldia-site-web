@@ -42,7 +42,7 @@ export function BlogGrille({
   return (
     <>
       {liste.length > 0 ? (
-        <div role="group" aria-label={contenu.retour} className="flex flex-wrap gap-2">
+        <div role="group" className="flex flex-wrap gap-2">
           {onglets.map((libelle, indice) => {
             const actif = indice === filtre
             return (

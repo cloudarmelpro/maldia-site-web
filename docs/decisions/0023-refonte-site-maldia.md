@@ -162,3 +162,14 @@ porte sur sa méthode, où le design le pose.
 - Les intitulés « Ce que vous obtenez » (Services) et la vignette « RV » / « CV »
   du bloc Contact sont dans le prototype mais dans aucun fichier de contenu. Rien
   n'a été inventé.
+
+## Suite
+
+Les trois occurrences de `#177e4f` ci-dessus sont perimees : le vert de marque
+vaut `#14603f` depuis la decision **0028**, et le vert clair `#4fbf87` a ete
+retire. Le calcul du blanc sur vert cite ici — 5,1 : 1 — vaut 7,57 : 1 avec le
+nouveau vert, et la regle du voile sombre reste pourtant en vigueur.
+
+Le hero de l'accueil ne suit plus ce qui est ecrit ici : voir la decision
+**0029**, qui explique aussi pourquoi le prototype l'emporte sur le document de
+remise dans ce cas precis, contre la regle posee plus haut.

@@ -310,7 +310,6 @@ export type Contenu<L extends Langue = Langue> = {
   readonly commun: {
     readonly enTete: {
       readonly marque: string
-      readonly initiale: string
       /** Nom accessible du bouton du menu mobile — exigé par l'accessibilité, absent du design. */
       readonly menu: string
       readonly fermerMenu: string
@@ -396,11 +395,9 @@ export type Contenu<L extends Langue = Langue> = {
     readonly pied: {
       readonly navigation: Navigation
       readonly description: string
-      readonly titrePages: string
       readonly titreContact: string
       readonly courriel: string
       readonly lieu: string
-      /** Noms accessibles des trois liens sociaux, dans l'ordre du design. */
       readonly copyright: string
     }
 
@@ -452,21 +449,7 @@ export type Contenu<L extends Langue = Langue> = {
         readonly intitule: string
         readonly metiers: readonly [string, string, string, string, string]
       }
-      readonly carteAppel: {
-        readonly intitule: string
-        readonly titre: string
-        readonly mention: string
-      }
       readonly carteCandidature: LibelleCandidature<L>
-      readonly badges: readonly [
-        { readonly signe: string; readonly libelle: string },
-        { readonly signe: string; readonly libelle: string },
-      ]
-      /** Noms accessibles du bouton qui met la dérive de la photo en pause. */
-      readonly lecture: {
-        readonly pause: string
-        readonly reprendre: string
-      }
     }
     readonly questions: {
       readonly intitule: string
@@ -488,9 +471,7 @@ export type Contenu<L extends Langue = Langue> = {
       readonly description: string
     }
     /**
-     * Le hero vert de la page. `description` et `mention` ne sont rendues nulle
-     * part : le design n'y laisse que l'intitulé, le titre et les marchés.
-     */
+     * Le hero vert de la page.     */
     readonly entete: {
       readonly intitule: string
       readonly titre: string
@@ -598,7 +579,6 @@ export type Contenu<L extends Langue = Langue> = {
     /** Servi quand la liste d'articles est vide — la structure existe avant le contenu. */
     readonly vide: string
     readonly retour: string
-    readonly publieLe: string
     /** « de lecture », accolé à la durée dans la ligne sous le titre. */
     readonly deLecture: string
     /** L'intitulé du sommaire d'un article. */

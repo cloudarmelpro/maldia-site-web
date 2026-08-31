@@ -8,15 +8,10 @@ import { SelecteurProfils } from '@/components/shared/selecteur-profils'
 /**
  * WEB-5 — les profils sur l'accueil.
  *
- * **Cette section est redevenue un composant serveur.** Elle portait
- * `"use client"` pour un seul `useState` de selection, et emportait donc les six
- * profils, l'intitule, le titre et le bouton dans le paquet client. Le
- * selecteur est maintenant partage et pose aussi bas que possible : lui seul est
- * client.
- *
- * Son ancien commentaire affirmait qu'« il n'y a pas de version serveur de ce
- * composant qui rendrait la meme chose ». `services-postes` faisait pourtant
- * exactement ca, deux fichiers plus loin.
+ * **C'est un composant serveur, et le selecteur seul est client.** Une
+ * directive `"use client"` posee ici pour son `useState` emporterait tout le
+ * contenu de la section dans le paquet client. `services-postes` rend le meme
+ * catalogue par le meme partage.
  */
 export function Profils({
   contenu,

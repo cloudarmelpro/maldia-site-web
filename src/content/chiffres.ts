@@ -17,7 +17,8 @@ export const NOMBRE_CANDIDATS = 500
 
 // en-CA et non en-US : le séparateur de milliers est le même, mais le client
 // vise le Canada. Le format n'a d'effet visible qu'au-delà de mille.
-const LOCALES: Record<Langue, string> = {
+/** Une seule table de locales pour tout le depot : nombres et dates. */
+export const LOCALES: Record<Langue, string> = {
   fr: 'fr-CA',
   en: 'en-CA',
 }

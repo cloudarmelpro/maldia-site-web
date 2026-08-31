@@ -88,13 +88,19 @@
   --breakpoint-voies: 51.25rem;
   /* Les cinq étapes passent en frise défilante. */
   --breakpoint-frise: 56.25rem;
-  /* La colonne d'intitulé de 190 px apparaît à gauche du contenu. */
+  /* La navigation de bureau apparaît, et les cibles tactiles cessent de
+     passer devant le design. */
   --breakpoint-large: 62.5rem;
 }
 
-/* Les animations du site, toutes en `transform` : rien d'autre ne se compose sur
-   le GPU, et animer une géométrie ferait recalculer la mise en page à chaque
-   image.
+/* Les animations du site n'animent ni geometrie ni couleur : `transform` et
+   `opacity` se composent sur le GPU, animer une hauteur ou une marge ferait
+   recalculer la mise en page a chaque image.
+
+   Une exception, et elle est ici : l'eventail du hero anime aussi `z-index`,
+   propriete discrete — pas de recalcul de mise en page, mais un reordonnancement
+   de l'empilement a chaque palier. C'est le seul moyen de faire passer une carte
+   devant les autres au milieu d'un cycle.
 
    Les défilements translatent
    la moitié d'une liste doublée : c'est ce qui rend la boucle invisible. Cela

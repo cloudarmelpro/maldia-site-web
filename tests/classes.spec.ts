@@ -18,7 +18,7 @@ function fichiers(dossier: string): string[] {
   return readdirSync(dossier, { withFileTypes: true }).flatMap((entree) => {
     const chemin = join(dossier, entree.name)
     if (entree.isDirectory()) return fichiers(chemin)
-    return entree.name.endsWith('.tsx') ? [chemin] : []
+    return (entree.name.endsWith('.tsx') || entree.name.endsWith('.ts')) ? [chemin] : []
   })
 }
 
@@ -29,9 +29,26 @@ describe('classes Tailwind', () => {
     for (const chemin of fichiers('src')) {
       const lignes = readFileSync(chemin, 'utf8').split('\n')
       lignes.forEach((ligne, indice) => {
-        // Seules les listes de classes sont concernees : une interpolation dans
-        // un identifiant ou une URL est legitime.
-        if (!ligne.includes('className')) return
+        // Un commentaire qui CITE le motif interdit n'est pas une faute — la
+        // docstring de `classes.ts` le fait pour l'expliquer, et elle a fait
+        // rougir ce test des qu'il a cesse de ne lire que les `.tsx`.
+        const debut = ligne.trimStart()
+        if (debut.startsWith('*') || debut.startsWith('//') || debut.startsWith('/*')) return
+
+        // Le filtre etait `ligne.includes('className')`. Il laissait passer
+        // TOUTE liste de classes rangee dans une constante — `focus.ts`,
+        // `bouton.tsx`, `formulaire-contact.tsx` en ont — puisque `className`
+        // n'y est pas sur la meme ligne que l'interpolation. Le fichier qui
+        // centralise l'anneau de focus echappait donc au controle que
+        // `classes.ts` annonce tenir.
+        //
+        // On reconnait desormais une liste de classes a sa forme : un jeton
+        // Tailwind, c'est-a-dire un mot en minuscules suivi d'un tiret et d'une
+        // valeur. Ca couvre `className=`, `const BASE = '...'` et les entrees
+        // d'un objet de variantes ; une interpolation dans une URL ou un
+        // identifiant n'y correspond pas.
+        const JETON_TAILWIND = /[a-z]+-[a-z0-9[\]]/
+        if (!JETON_TAILWIND.test(ligne)) return
         if (ADJACENCE.test(ligne)) {
           fautives.push(`${chemin}:${indice + 1} ${ligne.trim().slice(0, 90)}`)
         }

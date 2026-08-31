@@ -1,9 +1,7 @@
 import type { Langue } from './langues'
+import { LOCALES } from './chiffres'
 
-const LOCALES: Record<Langue, string> = {
-  fr: 'fr-CA',
-  en: 'en-CA',
-}
+
 
 /**
  * La date d'un article, telle qu'elle s'affiche.

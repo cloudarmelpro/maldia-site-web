@@ -56,7 +56,10 @@ export function Questions({ contenu }: { contenu: Contenu['accueil']['questions'
           />
 
           <Apparition>
-            <div role="group" aria-label={contenu.titre} className="flex flex-wrap gap-2">
+            {/* Pas de `aria-label` : il reprendrait le titre juste au-dessus, et le
+                lecteur d'ecran annoncerait deux fois la meme phrase. Le groupe
+                suit son titre dans l'ordre du document. */}
+            <div role="group" className="flex flex-wrap gap-2">
               {contenu.filtres.map((libelle, indice) => {
                 const actif = indice === filtre
                 return (

@@ -6,12 +6,10 @@ import { delaiDeGrille } from '@/components/shared/decalage'
 /**
  * Une etape de parcours : son rang, qui agit, le titre, la description.
  *
- * Elle etait recopiee dans trois sections — l'accueil, Services et Talents — et
- * avait deja diverge : la troisieme avait perdu `etiquette-fine` et
- * `normal-case` sur son rang, ecrivait le meme ecart de 26 px sous deux
- * orthographes (`mt-6.5` contre `mt-[1.625rem]`), et posait un `min-w-0` que les
- * deux autres n'avaient pas. La chaine de la pastille, elle, etait identique au
- * caractere pres dans les trois.
+ * Un seul lieu pour une carte que rendent l'accueil, Services et Talents. La
+ * meme carte recopiee par section derive sans bruit : un ecart ecrit sous deux
+ * orthographes (`mt-6.5` contre `mt-[1.625rem]`) se lit identique et ne l'est
+ * pas au premier changement d'echelle.
  *
  * **Le rang est calcule depuis l'indice**, jamais recopie dans le contenu : une
  * etape inseree renumerote les suivantes toute seule.
@@ -78,7 +76,7 @@ export function CarteEtape({
         </span>
         <span
           className={classes(
-            'rounded-[0.4375rem] px-2.25 py-1.25 etiquette-fine text-[0.6875rem] tracking-[0.07em] whitespace-nowrap',
+            'rounded-etiquette px-2.25 py-1.25 etiquette-fine text-[0.6875rem] tracking-[0.07em] whitespace-nowrap',
             PASTILLE[registre][etape.cote],
           )}
         >

@@ -13,11 +13,12 @@ import { Lien } from '@/components/shared/lien'
  * La ligne de metadonnees d'un article : la categorie s'il y a lieu, la date,
  * puis la duree de lecture.
  *
- * Elle parait sur l'index, en tete d'article et sous un article. Ecrite quatre
- * fois, elle finirait par ne plus mettre le point median au meme endroit.
+ * Elle parait sur l'index, en tete d'article et sous un article. Recopiee a
+ * chaque emplacement, elle finirait par ne plus mettre le point median au meme
+ * endroit.
  *
- * La typographie vient de l'appelant : les quatre emplacements du design ne
- * posent ni la meme taille ni la meme couleur, et une taille par defaut ici
+ * La typographie vient de l'appelant : les emplacements du design ne posent ni
+ * la meme taille ni la meme couleur, et une taille par defaut ici
  * entrerait en conflit avec celle qu'on lui passe — entre deux utilitaires de
  * meme propriete, c'est l'ordre du CSS engendre qui tranche, pas l'ordre des
  * classes ecrites.

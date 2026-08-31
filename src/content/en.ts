@@ -9,7 +9,6 @@ export const en: Contenu<'en'> = {
   commun: {
     enTete: {
       marque: 'Agence Maldia',
-      initiale: 'M',
       menu: 'Open menu',
       fermerMenu: 'Close menu',
       navigation: [
@@ -41,7 +40,7 @@ export const en: Contenu<'en'> = {
         {
           ligne1: 'Average time',
           ligne2: 'for a profile',
-          chiffre: '14 d',
+          chiffre: '14 days',
           description: 'From the stated need to candidates presented.',
         },
         {
@@ -55,7 +54,7 @@ export const en: Contenu<'en'> = {
           ligne1: 'Saving on',
           ligne2: 'total payroll',
           chiffre: '25%',
-          description: 'Up to 25% of your total payroll.',
+          description: 'Up to about 25% of your total payroll.',
         },
         {
           ligne1: 'French-speaking',
@@ -280,7 +279,6 @@ export const en: Contenu<'en'> = {
       ],
       description:
         'Staff augmentation with French-speaking talent based in Madagascar, for companies in French-speaking Canada and Europe.',
-      titrePages: 'Pages',
       titreContact: 'Contact',
       courriel: 'contact@agencemaldia.com',
       lieu: 'Antananarivo, Madagascar',
@@ -315,7 +313,7 @@ export const en: Contenu<'en'> = {
     hero: {
       // TRADUCTION À RELIRE — produite par l'ingénierie, pas fournie par
       // Maldia. La maquette n'existe qu'en français.
-      preuve: 'More than {nombre} French-speaking candidates in our database',
+      preuve: 'More than {nombre} candidates in our database',
       lead: 'French-speaking talent based in Madagascar, remote, to strengthen your teams.',
       cartes: {
         intitule: 'Maldia talent',
@@ -328,20 +326,7 @@ export const en: Contenu<'en'> = {
         ],
       },
       titre: 'Strengthen your team differently.',
-      carteAppel: {
-        intitule: 'Let’s talk',
-        titre: 'A 30-minute call',
-        mention: 'No commitment · via Cal.com',
-      },
       carteCandidature: 'Apply now',
-      badges: [
-        { signe: '0', libelle: 'No recruitment fees' },
-        { signe: '14', libelle: 'Days on average' },
-      ],
-      lecture: {
-        pause: 'Pause the image',
-        reprendre: 'Resume the image animation',
-      },
     },
 
     questions: {
@@ -595,7 +580,6 @@ export const en: Contenu<'en'> = {
     lire: 'Read the article',
     vide: 'The first articles are on their way.',
     retour: 'All articles',
-    publieLe: 'Published on',
     deLecture: 'read',
     sommaire: 'Contents',
     auteur: {

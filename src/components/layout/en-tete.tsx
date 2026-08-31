@@ -99,7 +99,9 @@ export function EnTete({
           {marque}
 
           <nav
-            aria-label={contenu.marque}
+            // Le nom de la marque nommait deja le logo a cote : deux reperes
+            // differents portaient un nom identique.
+            aria-label={contenu.menu}
             // `mx-auto` et non `ml-auto` : la maquette centre la navigation
             // dans la barre au lieu de la coller aux actions de droite.
             className="mx-auto hidden flex-wrap items-center justify-center gap-0.5 large:flex"

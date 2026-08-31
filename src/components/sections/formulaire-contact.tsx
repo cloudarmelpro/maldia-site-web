@@ -13,8 +13,7 @@ import { classes } from '@/components/shared/classes'
 // un peu sous la cible tactile, que `e2e/adaptation.spec.ts` exige a 44 px tant
 // que la navigation de bureau n'est pas la — la cible passe devant, l'ecart ne
 // se voit pas.
-const CHAMP =
-  'min-h-11 w-full rounded-liste border-0 bg-white px-3.75 py-3.25 text-base text-encre placeholder:text-indicatif focus:outline-2 focus:outline-offset-2 focus:outline-encre'
+const CHAMP = `min-h-11 w-full rounded-liste border-0 bg-white px-3.75 py-3.25 text-base text-encre placeholder:text-indicatif ${FOCUS}`
 
 const LIBELLE = 'mb-1.75 block text-[0.6875rem] tracking-[0.08em] uppercase text-encre-2'
 

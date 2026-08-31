@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import { Fleche } from '@/components/shared/fleche'
 import { Lien } from '@/components/shared/lien'
+import { FOCUS, FOCUS_CLAIR } from '@/components/shared/focus'
 
 /**
  * Les deux seules destinations sortantes du site. Elles restent des constantes
@@ -19,33 +20,32 @@ const DESTINATIONS: Record<Destination, string> = {
 }
 
 /**
- * Les quatre registres d'appel reellement employes.
+ * Les registres d'appel du site.
  *
- * `encre` et `contour-clair` ont ete retires : aucun appelant, et `encre`
- * etait la valeur PAR DEFAUT. Un `<Bouton>` ecrit sans variante rendait donc
- * `#0f1d17` — la charte sombre que la decision 0023 declare supprimee — sans
- * que personne l'ait demandee. La variante est desormais **exigee** : c'est la
- * seule facon que ce cas ne revienne pas.
+ * **`variante` est exigee, et n'a pas de valeur par defaut.** Une valeur par
+ * defaut fait rendre une charte a qui ne l'a pas demandee : un `<Bouton>` ecrit
+ * sans variante prendrait silencieusement celle du haut de la liste. L'exiger
+ * est la seule facon que le choix soit toujours fait par l'appelant.
  */
 export type Variante = 'vert' | 'voile' | 'blanc' | 'contour' | 'teinte'
 
 const VARIANTES: Record<Variante, string> = {
   /** La surface d'action du design, sur fond clair. */
-  vert: 'bg-primaire text-white hover:bg-primaire-fonce focus-visible:outline-encre',
+  vert: `bg-primaire text-white hover:bg-primaire-fonce ${FOCUS}`,
   /**
    * La seconde action SUR le vert. Le voile est sombre et jamais blanc : un
    * voile blanc eclaircirait le vert et ferait passer le texte blanc sous AA.
    */
-  voile: 'bg-voile/26 text-white hover:bg-voile/36 focus-visible:outline-white',
-  blanc: 'bg-white text-encre hover:-translate-y-0.5 focus-visible:outline-white',
+  voile: `bg-voile/26 text-white hover:bg-voile/36 ${FOCUS_CLAIR}`,
+  blanc: `bg-white text-encre hover:-translate-y-0.5 ${FOCUS_CLAIR}`,
   /**
    * La seconde action sur fond CLAIR : un aplat teinte du vert, pas un contour.
-   * L'aplat est decoratif — c'est l'encre qui porte le texte, et elle donne
-   * 14,4 : 1 sur `primaire/12`.
+   * L'aplat est decoratif — c'est l'encre qui porte le texte, et elle reste
+   * tres au-dessus du seuil sur cette teinte.
    */
-  teinte: 'bg-primaire/9 text-encre hover:bg-primaire/16 focus-visible:outline-encre',
+  teinte: `bg-primaire/9 text-encre hover:bg-primaire/16 ${FOCUS}`,
   contour:
-    'text-encre shadow-[inset_0_0_0_1px_var(--color-trait-4)] hover:-translate-y-0.5 focus-visible:outline-encre',
+    `text-encre shadow-[inset_0_0_0_1px_var(--color-trait-4)] hover:-translate-y-0.5 ${FOCUS}`,
 }
 
 /**
@@ -65,7 +65,7 @@ const TAILLES: Record<TailleAppel, string> = {
 // liste `transition-colors` de Tailwind inclut outline-color, et l'anneau de
 // focus mettrait la duree de la transition a devenir visible.
 const BASE =
-  'inline-flex min-w-11 items-center justify-center gap-2.5 rounded-bloc etiquette whitespace-nowrap transition-[color,background-color,border-color,transform] duration-[220ms] focus-visible:outline-2 focus-visible:outline-offset-2'
+  'inline-flex min-w-11 items-center justify-center gap-2.5 rounded-bloc etiquette whitespace-nowrap transition-[color,background-color,border-color,transform] duration-[220ms]'
 
 /**
  * L'ornement de fin d'appel. `fleche-montante` et `etoile` ont ete retires

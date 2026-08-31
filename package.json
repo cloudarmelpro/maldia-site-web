@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run verifier",
     "build": "next build",
     "start": "node serveur.mjs",
     "lint": "eslint",

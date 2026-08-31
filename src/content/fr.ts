@@ -8,7 +8,6 @@ export const fr: Contenu<'fr'> = {
   commun: {
     enTete: {
       marque: 'Agence Maldia',
-      initiale: 'M',
       menu: 'Ouvrir le menu',
       fermerMenu: 'Fermer le menu',
       // WEB-11 — l'ordre du retour client. Le type le vérifie contre PAGES.
@@ -55,7 +54,7 @@ export const fr: Contenu<'fr'> = {
           ligne1: 'Économie sur',
           ligne2: 'la masse salariale',
           chiffre: '25 %',
-          description: 'Jusqu’à 25 % de votre masse salariale totale.',
+          description: 'Jusqu’à environ 25 % de votre masse salariale totale.',
         },
         {
           ligne1: 'Talents',
@@ -274,7 +273,6 @@ export const fr: Contenu<'fr'> = {
       ],
       description:
         'Staff augmentation avec des talents francophones basés à Madagascar, pour les entreprises du Canada francophone et d’Europe.',
-      titrePages: 'Pages',
       titreContact: 'Contact',
       courriel: 'contact@agencemaldia.com',
       lieu: 'Antananarivo, Madagascar',
@@ -307,7 +305,7 @@ export const fr: Contenu<'fr'> = {
     },
 
     hero: {
-      preuve: 'Plus de {nombre} candidats francophones dans notre base',
+      preuve: 'Plus de {nombre} candidats dans notre base de données',
       lead: 'Des talents francophones basés à Madagascar, à distance, pour renforcer vos équipes.',
       cartes: {
         intitule: 'Talent Maldia',
@@ -320,20 +318,7 @@ export const fr: Contenu<'fr'> = {
         ],
       },
       titre: 'Renforcez votre équipe autrement.',
-      carteAppel: {
-        intitule: 'Parlons-en',
-        titre: 'Appel de 30 minutes',
-        mention: 'Sans engagement · via Cal.com',
-      },
       carteCandidature: 'Déposer ma candidature',
-      badges: [
-        { signe: '0', libelle: 'Aucuns frais de recrutement' },
-        { signe: '14', libelle: 'Jours en moyenne' },
-      ],
-      lecture: {
-        pause: 'Mettre l’image en pause',
-        reprendre: 'Reprendre l’animation de l’image',
-      },
     },
 
     questions: {
@@ -592,7 +577,6 @@ export const fr: Contenu<'fr'> = {
     lire: 'Lire l’article',
     vide: 'Les premiers articles arrivent bientôt.',
     retour: 'Tous les articles',
-    publieLe: 'Publié le',
     deLecture: 'de lecture',
     sommaire: 'Sommaire',
     auteur: {

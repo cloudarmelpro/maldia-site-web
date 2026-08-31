@@ -102,3 +102,10 @@ encre-fond non mesuré plutôt qu'un document qui le rappelle.
 `::placeholder` — ce qui demande de résoudre la pseudo-classe, que le protocole
 de débogage expose. Ce jour-là, le deuxième point de la décision perd son objet,
 et c'est le seul des trois qui se retire.
+
+## Suite
+
+La marge de quinze centiemes relevee ici sur `--color-primaire` a ete jugee trop
+mince. Le jeton vaut `#14603f` depuis la decision **0028** : 6,92:1 sur
+`--color-fond-2` au lieu de 4,65:1. La mesure ci-dessus reste juste pour la
+valeur qu'elle mesurait.

@@ -67,7 +67,13 @@ const NOMMABLES = new Set<BaliseRevelation>(['h1', 'h2', 'h3'])
  * meme raison qu'`Apparition` : au-dessus, le texte attendrait le bundle.
  *
  * `desLeMontage` joue des l'arrivee de GSAP, sans attendre un point de
- * defilement. Reserve a ce qui se monte deja visible — le panneau du menu.
+ * defilement. Deux appelants : le panneau du menu, et le hero de l'accueil.
+ *
+ * **Le hero est une exception assumee**, contre ce que dit le paragraphe
+ * ci-dessus : son titre est au-dessus du pli et part donc invisible. Mesure,
+ * morceau GSAP avorte : 4,15 s d'ecran sans titre avant que le filet de 4 s
+ * ne le rallume. Le compromis a ete tranche par le client ; il est ecrit dans
+ * `sections/hero.tsx`.
  *
  * Mouvement reduit : `matchMedia` de GSAP n'execute pas le bloc, donc aucun
  * decoupage et aucun mouvement — le texte parait, simplement.

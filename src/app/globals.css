@@ -32,14 +32,14 @@
      lit plus longtemps. 8,53:1 sur blanc, mesuré. */
   --color-prose: #3d5145;
 
-  --color-primaire: #177e4f;
+  --color-primaire: #14603f;
   /* Le survol des surfaces vertes. */
-  --color-primaire-fonce: #0a5c39;
+  --color-primaire-fonce: #0f4b31;
   /*
-   * Le voile pose sur le vert, toujours SOMBRE et jamais blanc. Le blanc sur
-   * #177e4f ne donne que 5,1 : 1 ; un voile blanc eclaircirait le vert et ferait
-   * passer le texte blanc sous le seuil AA. S'emploie en opacite : bg-voile/18
-   * a bg-voile/42 selon la profondeur.
+   * Le voile pose sur le vert, toujours SOMBRE et jamais blanc. Un voile blanc
+   * eclaircirait le vert et rapprocherait le texte blanc du seuil ; un voile
+   * sombre l'en eloigne. S'emploie en opacite : bg-voile/18 a bg-voile/42 selon
+   * la profondeur.
    */
   --color-voile: #06301d;
 
@@ -104,8 +104,70 @@
   --animate-defilement-lent: defilement 38s linear infinite;
   --animate-defilement-tres-lent: defilement 42s linear infinite;
   --animate-defilement-inverse: defilement-inverse 34s linear infinite;
-  --animate-defilement-vertical: defilement-vertical 46s linear infinite;
-  --animate-defilement-vertical-inverse: defilement-vertical-inverse 52s linear infinite;
+
+  /*
+   * L'eventail du hero. Cinq cartes parcourent la meme piste a trois secondes
+   * d'ecart : chacune apparait a gauche, glisse en quatre paliers vers la
+   * droite et disparait. Les paliers sont doubles — `20%` puis `36%` a la meme
+   * position — pour que la carte MARQUE un temps d'arret avant le pas suivant.
+   * Sans ce doublement, le mouvement est continu et l'oeil ne lit plus les
+   * cartes du dessous.
+   */
+  --animate-eventail-cartes: eventail-cartes 15s linear infinite;
+  /* Le libelle ne parait que sur la carte de tete, au dernier palier. */
+  --animate-libelle-carte: libelle-carte 15s linear infinite;
+
+  @keyframes eventail-cartes {
+    0%,
+    16% {
+      transform: translate(calc(-50% + -116px), calc(-50% + -34px)) scale(0.86);
+      opacity: 0.38;
+      z-index: 1;
+    }
+    20%,
+    36% {
+      transform: translate(calc(-50% + -58px), calc(-50% + -25px)) scale(0.9);
+      opacity: 0.52;
+      z-index: 2;
+    }
+    40%,
+    56% {
+      transform: translate(-50%, calc(-50% + -17px)) scale(0.94);
+      opacity: 0.68;
+      z-index: 3;
+    }
+    60%,
+    76% {
+      transform: translate(calc(-50% + 58px), calc(-50% + -8px)) scale(0.97);
+      opacity: 0.84;
+      z-index: 4;
+    }
+    80%,
+    94% {
+      transform: translate(calc(-50% + 116px), -50%) scale(1);
+      opacity: 1;
+      z-index: 5;
+    }
+    100% {
+      transform: translate(calc(-50% + 190px), calc(-50% + 6px)) scale(1.02);
+      opacity: 0;
+      z-index: 5;
+    }
+  }
+
+  @keyframes libelle-carte {
+    0%,
+    76% {
+      opacity: 0;
+    }
+    80%,
+    94% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 
 
   @keyframes defilement {
@@ -126,23 +188,7 @@
     }
   }
 
-  @keyframes defilement-vertical {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(-50%);
-    }
-  }
 
-  @keyframes defilement-vertical-inverse {
-    from {
-      transform: translateY(-50%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
 }
 
 /* La variable --font-jost est posée par next/font dans

@@ -80,7 +80,11 @@ export function EnTete({
       <header
         ref={barre}
         className={classes(
-          'sticky top-0 z-60',
+          // Le flou d'arriere-plan est de la maquette. Il ne se voit que la ou
+          // la barre chevauche une image ou un degrade — ailleurs, la sonde de
+          // fond pose deja la couleur exacte de la section et il n'y a rien a
+          // flouter.
+          'sticky top-0 z-60 backdrop-blur-[14px]',
           TRANSITION,
           clair ? 'text-primaire' : 'text-white',
         )}
@@ -96,7 +100,9 @@ export function EnTete({
 
           <nav
             aria-label={contenu.marque}
-            className="ml-auto hidden flex-wrap items-center gap-0.5 large:flex"
+            // `mx-auto` et non `ml-auto` : la maquette centre la navigation
+            // dans la barre au lieu de la coller aux actions de droite.
+            className="mx-auto hidden flex-wrap items-center justify-center gap-0.5 large:flex"
           >
             {contenu.navigation.map((lien) => {
               const courante = lien.page === page

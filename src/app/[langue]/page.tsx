@@ -36,7 +36,7 @@ export default async function Page({ params }: PageProps<'/[langue]'>) {
   return (
     <Gabarit langue={langue} page="accueil" contenu={contenu}>
         <>
-          <Hero contenu={accueil.hero} cta={commun.enTete.cta} />
+          <Hero contenu={accueil.hero} cta={commun.enTete.cta} langue={langue} />
           <Pourquoi
             contenu={commun.pourquoi}
             marches={commun.marches}

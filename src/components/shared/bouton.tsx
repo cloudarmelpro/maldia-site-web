@@ -27,7 +27,7 @@ const DESTINATIONS: Record<Destination, string> = {
  * que personne l'ait demandee. La variante est desormais **exigee** : c'est la
  * seule facon que ce cas ne revienne pas.
  */
-export type Variante = 'vert' | 'voile' | 'blanc' | 'contour'
+export type Variante = 'vert' | 'voile' | 'blanc' | 'contour' | 'teinte'
 
 const VARIANTES: Record<Variante, string> = {
   /** La surface d'action du design, sur fond clair. */
@@ -38,6 +38,12 @@ const VARIANTES: Record<Variante, string> = {
    */
   voile: 'bg-voile/26 text-white hover:bg-voile/36 focus-visible:outline-white',
   blanc: 'bg-white text-encre hover:-translate-y-0.5 focus-visible:outline-white',
+  /**
+   * La seconde action sur fond CLAIR : un aplat teinte du vert, pas un contour.
+   * L'aplat est decoratif — c'est l'encre qui porte le texte, et elle donne
+   * 14,4 : 1 sur `primaire/12`.
+   */
+  teinte: 'bg-primaire/9 text-encre hover:bg-primaire/16 focus-visible:outline-encre',
   contour:
     'text-encre shadow-[inset_0_0_0_1px_var(--color-trait-4)] hover:-translate-y-0.5 focus-visible:outline-encre',
 }

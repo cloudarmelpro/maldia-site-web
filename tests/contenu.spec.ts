@@ -64,9 +64,12 @@ describe('WEB-8 — parite des deux langues', () => {
   // contenu ne porte qu'un jeton, et `avecNombre` le remplace au rendu. Un jeton
   // pose ailleurs partirait tel quel a l'ecran : « Plus de {nombre} candidats ».
   it('le jeton du compteur ne parait que la ou il est remplace', () => {
+    // La liste est triee : `expect` compare a `porteurs.sort()`.
     const ATTENDUS = [
       'aPropos.fonctionnement.cotes[0].texte',
       'aPropos.fonctionnement.cotes[0].valeur',
+      // La ligne de preuve du hero, rendue par `avecNombre` dans `hero.tsx`.
+      'accueil.hero.preuve',
     ]
 
     for (const langue of LANGUES) {

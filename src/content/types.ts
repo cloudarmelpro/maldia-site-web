@@ -433,10 +433,25 @@ export type Contenu<L extends Langue = Langue> = {
   readonly accueil: {
     readonly meta: Meta
     readonly hero: {
-      /** L'intitulé posé au-dessus du titre : l'offre et le lieu, en capitales. */
-      readonly intitule: string
+      /**
+       * La ligne de preuve posée au-dessus du titre, à côté des visages.
+       * Porte le jeton `{nombre}` : le compteur de candidats vit dans
+       * `chiffres.ts` et nulle part ailleurs (WEB-13).
+       */
+      readonly preuve: string
       readonly lead: string
       readonly titre: string
+      /**
+       * L'éventail de cartes sous le titre. Cinq métiers qui défilent.
+       *
+       * CES LIBELLÉS VIENNENT DE LA MAQUETTE, pas du cahier, et leur version
+       * anglaise est une traduction produite par l'ingénierie : les uns comme
+       * les autres sont à relire par Maldia avant la mise en ligne.
+       */
+      readonly cartes: {
+        readonly intitule: string
+        readonly metiers: readonly [string, string, string, string, string]
+      }
       readonly carteAppel: {
         readonly intitule: string
         readonly titre: string

@@ -313,8 +313,20 @@ export const en: Contenu<'en'> = {
     },
 
     hero: {
-      intitule: 'Staff augmentation · Madagascar',
+      // TRADUCTION À RELIRE — produite par l'ingénierie, pas fournie par
+      // Maldia. La maquette n'existe qu'en français.
+      preuve: 'More than {nombre} French-speaking candidates in our database',
       lead: 'French-speaking talent based in Madagascar, remote, to strengthen your teams.',
+      cartes: {
+        intitule: 'Maldia talent',
+        metiers: [
+          'Web developer',
+          'UI designer',
+          'Community manager',
+          'Administrative assistant',
+          'Accountant',
+        ],
+      },
       titre: 'Strengthen your team differently.',
       carteAppel: {
         intitule: 'Let’s talk',

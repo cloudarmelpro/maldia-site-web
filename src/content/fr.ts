@@ -307,8 +307,18 @@ export const fr: Contenu<'fr'> = {
     },
 
     hero: {
-      intitule: 'Staff augmentation · Madagascar',
+      preuve: 'Plus de {nombre} candidats francophones dans notre base',
       lead: 'Des talents francophones basés à Madagascar, à distance, pour renforcer vos équipes.',
+      cartes: {
+        intitule: 'Talent Maldia',
+        metiers: [
+          'Développeuse web',
+          'Designer UI',
+          'Community manager',
+          'Assistante administrative',
+          'Comptable',
+        ],
+      },
       titre: 'Renforcez votre équipe autrement.',
       carteAppel: {
         intitule: 'Parlons-en',

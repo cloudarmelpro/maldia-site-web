@@ -1,85 +1,62 @@
-// Les deux destinations sortantes du site. Vides tant qu'elles ne sont pas
-// arretees : `tests/liens.spec.ts` echoue, et un bouton mort ne peut pas partir
-// en production par oubli. Voir docs/decisions/0007.
+// Les trois destinations sortantes du site. Elles viennent TOUTES de
+// l'environnement, et aucune n'a de valeur par defaut.
 //
 // Une seule constante par destination, jamais un href recopie : le bouton
 // « Deposer ma candidature » parait a quatre endroits (WEB-1, WEB-2, WEB-3).
 
 /**
- * Decision 0007 — TRANCHEE le 8 septembre 2026 : le portail public des
- * candidats.
+ * POURQUOI L'ENVIRONNEMENT, ET PLUS LE CODE — 8 septembre 2026.
  *
- * Les trois issues que 0007 laissait ouvertes etaient un courriel, un
- * formulaire tiers, ou « le portail `cv.agencemaldia.com` QUAND IL EXISTERA ».
- * Il existe : le depot `cv/` sert le formulaire public, ses seize champs, la
- * verification humaine et le stockage des fichiers. Et 0008 avait deja ARRETE
- * ce sous-domaine pour ce role precis.
+ * ── CE QUE LA VERSION D'AVANT FAISAIT DE TRAVERS ────────────────────────────
  *
- * Le courriel avait ete ecarte par 0007 elle-meme, et l'argument tient : une
- * adresse publiee sur un site ne se retire pas, elle continue de recevoir des
- * candidatures des mois apres que le portail existe, et personne ne les lit.
+ * L'adresse du portail etait ecrite en dur, avec un remplacement possible pour
+ * le developpement. Deux defauts, et Maldia a nomme le premier :
  *
- * CE LIEN NE FONCTIONNERA QU'UNE FOIS `cv/` DEPLOYE. C'est un fait de mise en
- * ligne, pas une decision en attente : le sous-domaine est arrete, l'application
- * est ecrite. La porte de verification de `0007` ne protege plus contre ca —
- * elle verifie desormais la FORME de l'adresse, comme `tests/liens.spec.ts`
- * annoncait qu'il faudrait le faire.
+ * **Une adresse qui change demande alors de changer le CODE.** Un commit, une
+ * relecture, un deploiement — pour une chaine de caracteres qui n'est pas une
+ * decision d'ingenierie mais un fait d'exploitation. Le jour ou le portail
+ * demenage, on recommence.
+ *
+ * **Et la valeur par defaut etait elle-meme un choix que personne n'avait
+ * fait.** Elle passait pour une protection : oublier la variable donnait
+ * l'adresse de production. Mais c'est exactement ce que le socle interdit
+ * partout ailleurs — « aucune valeur par defaut, une cle absente fait REFUSER ».
+ * Un defaut silencieux deploie une valeur que personne n'a relue, et le jour ou
+ * elle est fausse, rien ne le dit.
+ *
+ * ── CE QUI REMPLACE LA PROTECTION ───────────────────────────────────────────
+ *
+ * `npm run destinations`, appelee par `prebuild`. Elle REFUSE la construction si
+ * une adresse manque ou si sa forme est mauvaise. On ne devine plus : on
+ * s'arrete, et le message dit quoi poser.
+ *
+ * C'est la meme conduite que `cv/` et `annuaire/` tiennent sur leurs propres
+ * variables — echec ferme, jamais de substitut.
+ *
+ * ── ELLES SONT FIGEES A LA CONSTRUCTION ─────────────────────────────────────
+ *
+ * Ce depot est un export statique : aucun serveur ne relit une variable quand
+ * quelqu'un clique. Le prefixe `NEXT_PUBLIC_` dit precisement cela — la valeur
+ * est inscrite dans le HTML au `build`. Changer l'environnement APRES ne change
+ * rien tant qu'on n'a pas reconstruit, et rien ne le signale.
  */
-export const PORTAIL_CANDIDATS = 'https://cv.agencemaldia.com'
+
+/** Le portail public des candidats — `WEB-1`, `WEB-2`, `WEB-3`, decision 0007. */
+export const DESTINATION_CANDIDATURE = process.env.NEXT_PUBLIC_PORTAIL_CANDIDATS ?? ''
+
+/** Le calendrier de prise de rendez-vous — `WEB-7`. */
+export const DESTINATION_RENDEZ_VOUS = process.env.NEXT_PUBLIC_CALENDRIER ?? ''
 
 /**
- * La destination REELLE du bouton, remplacable a la CONSTRUCTION.
+ * Ou part un formulaire de la page Contact — decision 0019.
  *
- * ── POURQUOI UNE VARIABLE, ET POURQUOI CELLE-LA ─────────────────────────────
- *
- * En developpement, `cv/` tourne sur la boucle locale et le sous-domaine de
- * production ne resout pas : le bouton principal du site mene nulle part sur le
- * poste de qui travaille dessus.
- *
- * Ecrire l'adresse locale dans cette constante n'etait pas une option : ce
- * fichier est VERSIONNE, et `127.0.0.1` serait parti en production au premier
- * deploiement — un bouton mort, a sept endroits, sur le chemin de recrutement
- * que `WEB-1` decrit comme la raison d'etre du site.
- *
- * ── LA VALEUR PAR DEFAUT EST CELLE DE PRODUCTION, ET C'EST LE POINT ─────────
- *
- * Sans variable, on obtient `cv.agencemaldia.com`. Le mode de defaillance d'un
- * oubli est donc le BON comportement : un deploiement qui ne pose rien deploie
- * l'adresse juste. Une valeur par defaut vide, ou locale, aurait fait
- * l'inverse — et c'est la faute que ce depot commet le moins souvent parce
- * qu'il l'ecrit partout.
- *
- * ── ELLE EST FIGEE A LA CONSTRUCTION, PAS LUE A L'EXECUTION ────────────────
- *
- * Ce depot est un export statique : il n'y a aucun serveur pour lire une
- * variable au moment ou quelqu'un clique. Le prefixe `NEXT_PUBLIC_` dit
- * precisement cela — la valeur est inscrite dans le HTML au moment du `build`,
- * et changer la variable APRES demande de reconstruire. C'est une propriete a
- * connaitre, pas un defaut.
- *
- * C'est aussi la premiere variable d'environnement de ce depot, qui n'en lisait
- * aucune. Elle est documentee dans `.env.example`, et elle ne porte aucun
- * secret : une adresse publique, affichee dans chaque page.
+ * Vide, les deux boutons d'envoi sont desactives. Cette application est un
+ * export statique, sans serveur pour recevoir un envoi ni stockage pour un CV
+ * (WEB-10) : il faut un point de reception TIERS. Un formulaire qui avale une
+ * candidature sans destinataire est pire qu'un formulaire absent — le candidat
+ * croit avoir postule.
  */
-export const DESTINATION_CANDIDATURE =
-  process.env.NEXT_PUBLIC_PORTAIL_CANDIDATS || PORTAIL_CANDIDATS
-
-/** WEB-7 — le calendrier Cal.com deja utilise par le client. */
-export const DESTINATION_RENDEZ_VOUS = ''
-
-/**
- * Ou part un formulaire de la page Contact.
- *
- * Vide, et c'est la seule raison pour laquelle les deux boutons d'envoi sont
- * desactives : cette application est un export statique, sans serveur pour
- * recevoir un envoi ni stockage pour un CV (WEB-10). Un formulaire qui avale
- * une candidature sans destinataire est pire qu'un formulaire absent — le
- * candidat croit avoir postule.
- *
- * La remplir demande trois reponses du client : ou arrivent les demandes, ou
- * vivent les CV, et qui repond. Voir decision 0019.
- */
-export const DESTINATION_FORMULAIRE = ''
+export const DESTINATION_FORMULAIRE = process.env.NEXT_PUBLIC_RECEPTION_FORMULAIRE ?? ''
 
 /**
  * L'adresse du calendrier telle qu'elle s'affiche : sans protocole ni barre
@@ -87,9 +64,75 @@ export const DESTINATION_FORMULAIRE = ''
  *
  * Derivee de la constante et non recopiee. Le design ecrit
  * « cal.com/agencemaldia » en dur ; une adresse affichee qui ne correspond pas
- * au lien est pire qu'une adresse absente, et celle-ci n'est pas encore
- * arretee (decision 0007). Vide, la ligne ne s'affiche pas.
+ * au lien est pire qu'une adresse absente. Vide, la ligne ne s'affiche pas.
  */
 export function etiquetteRendezVous(): string {
   return DESTINATION_RENDEZ_VOUS.replace(/^https?:\/\//, '').replace(/\/$/, '')
+}
+
+/* ── LA VERIFICATION DES ADRESSES ─────────────────────────────────────────── */
+
+/** Une destination, telle que la verification la nomme. */
+export type NomDestination = 'candidature' | 'rendezVous' | 'formulaire'
+
+export const VARIABLES: Record<NomDestination, string> = {
+  candidature: 'NEXT_PUBLIC_PORTAIL_CANDIDATS',
+  rendezVous: 'NEXT_PUBLIC_CALENDRIER',
+  formulaire: 'NEXT_PUBLIC_RECEPTION_FORMULAIRE',
+}
+
+/**
+ * Ce qui rend une adresse INACCEPTABLE, ou `null` si elle passe.
+ *
+ * ── CE QUE CETTE FONCTION REFUSE, ET POURQUOI CHAQUE REGLE EXISTE ───────────
+ *
+ * Elle ne juge PAS le choix — c'est celui de Maldia, et il vit dans
+ * l'environnement pour pouvoir changer sans toucher au code. Elle refuse ce qui
+ * serait un DEFAUT quel que soit le choix :
+ *
+ * **Une adresse relative.** Ces trois boutons partent vers un autre domaine.
+ * Un chemin menerait a une page de ce site qui n'existe pas.
+ *
+ * **Le sous-domaine d'administration, pour la candidature.** 0008 l'a arrete
+ * pour l'administration PRIVEE : un candidat qui y arrive voit un refus. Le
+ * portail public est un autre nom.
+ *
+ * **Un point de reception de formulaire en clair.** Il recoit un nom, un
+ * courriel, un besoin et un CV. `http://` les enverrait lisibles sur le reseau.
+ *
+ * **Un `mailto:` pour la candidature.** 0007 l'a ecarte, et son motif survit a
+ * la decision : « une adresse publiee sur un site ne se retire pas — elle
+ * continue de recevoir des candidatures des mois apres que le portail existe,
+ * et personne ne les lit ». Pour l'employer quand meme, il faut amender 0007,
+ * pas contourner cette ligne.
+ */
+export function refusDeLAdresse(nom: NomDestination, adresse: string): string | null {
+  if (adresse.trim() === '') {
+    return `absente — poser ${VARIABLES[nom]}`
+  }
+
+  if (nom === 'candidature' && adresse.startsWith('mailto:')) {
+    return 'le courriel a ete ecarte par la decision 0007 ; l amender avant de le poser'
+  }
+
+  let url: URL
+  try {
+    url = new URL(adresse)
+  } catch {
+    return `« ${adresse} » n est pas une adresse absolue — il en faut une, ce bouton quitte ce site`
+  }
+
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    return `protocole « ${url.protocol} » — il faut http ou https`
+  }
+
+  if (nom === 'candidature' && url.hostname.startsWith('admin.')) {
+    return `« ${url.hostname} » est l administration privee (0008) — un candidat y verrait un refus`
+  }
+
+  if (nom === 'formulaire' && url.protocol !== 'https:') {
+    return 'un point de reception en clair : il recoit un CV et des donnees personnelles'
+  }
+
+  return null
 }

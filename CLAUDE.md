@@ -22,10 +22,10 @@ doit comprendre en quelques secondes lequel des deux il est, et où cliquer.
 
 **Aucune base de données. Aucun compte. Aucun secret. Aucun processus.**
 
-Une seule variable d'environnement depuis le 8 septembre 2026, et elle ne porte
-aucun secret : `NEXT_PUBLIC_PORTAIL_CANDIDATS`, une adresse publique affichée dans
-chaque page. Elle est **figée à la construction** — il n'y a aucun serveur pour la
-lire quand quelqu'un clique. Si une seconde apparaît un jour, la question à poser
+**Trois variables d'environnement** depuis le 8 septembre 2026, et aucune ne porte
+de secret : les trois destinations sortantes, des adresses publiques affichées dans
+les pages. Elles sont **figées à la construction** — il n'y a aucun serveur pour les
+lire quand quelqu'un clique. Si une quatrième apparaît un jour, la question à poser
 d'abord est « pourquoi ce dépôt en aurait-il besoin ».
 
 `output: 'export'`. Le site se sert comme des fichiers, sur n'importe quel
@@ -57,17 +57,33 @@ par quelqu'un qui lira un document devenu faux.
 
 ## Les deux boutons
 
-**« Déposer ma candidature »** paraît à quatre endroits — `WEB-1`, `WEB-2`, `WEB-3`.
-Sa destination a été **tranchée le 8 septembre 2026** : le portail public des
-candidats, `cv.agencemaldia.com`. C'était la troisième issue que 0007 laissait
-ouverte — « quand il existera » — et `cv/` existe. Le lien ne fonctionnera qu'une
-fois ce dépôt déployé ; c'est un fait de mise en ligne, plus une décision.
+**Les trois destinations viennent de l'ENVIRONNEMENT**, et aucune n'a de valeur par
+défaut — `.env.example` les documente. La raison est de Maldia, et elle est
+juste : une adresse qui change ne doit pas demander un commit, une relecture et un
+déploiement de code. Ce sont des faits d'exploitation, pas des décisions
+d'ingénierie.
 
-**En développement, il se remplace à la CONSTRUCTION** par
-`NEXT_PUBLIC_PORTAIL_CANDIDATS` — voir `.env.example`. Sans la variable, on obtient
-le domaine de production : **le mode de défaillance d'un oubli est le bon
-comportement**, et c'est la seule raison pour laquelle un remplacement est
-acceptable ici.
+**Ce qui remplace la protection, c'est un REFUS.** `npm run destinations`, appelée
+par `prebuild`, arrête la construction si une adresse manque ou si sa forme est
+mauvaise, et son message dit quoi poser. La version d'avant retombait sur l'adresse
+de production quand la variable manquait : ça passait pour une protection, c'était
+une valeur que personne n'avait relue, déployée en silence. **Aucune valeur par
+défaut** — c'est la règle du socle, et ce dépôt l'enfreignait.
+
+**La règle se teste, les valeurs se vérifient à la construction.**
+`refusDeLAdresse` est une fonction pure, éprouvée par `tests/liens.spec.ts` ; la
+porte l'applique aux vraies valeurs au moment où le HTML est écrit. Un test unitaire
+ne peut rien affirmer sur un environnement de déploiement qu'il n'a pas.
+
+Ce que la vérification refuse — des défauts, jamais des choix : une adresse
+relative, le sous-domaine `admin.` pour la candidature (0008 : un candidat y verrait
+un refus), un `mailto:` pour la candidature (0007 l'a écarté), un point de réception
+de formulaire en clair (il reçoit un CV).
+
+**« Déposer ma candidature »** paraît à quatre endroits — `WEB-1`, `WEB-2`, `WEB-3`.
+La décision 0007 a été **tranchée le 8 septembre 2026** : le portail public des
+candidats. C'était sa troisième issue — « quand il existera » — et `cv/` existe.
+L'adresse elle-même vit désormais dans l'environnement.
 
 **« Prendre rendez-vous »** ne mène PLUS au calendrier. Ses sept appels répartis
 sur le site conduisent à `/{langue}/contact/`, qui porte la réservation, les
@@ -85,12 +101,14 @@ rend — jamais dans un repli caché à l'intérieur du bouton. `bouton.tsx` l'�
 « un repli silencieux ferait passer la porte de vérification et mettrait un bouton
 mort en production. »
 
-Les destinations restent **des constantes** dans `src/content/liens.ts`, jamais un
-`href` recopié. Deux sont encore vides — le calendrier et le point de réception du
-formulaire — et `npm run build` reste donc ROUGE : il passe par `verifier`, et un
-bouton mort ne peut pas partir en production par oubli. Un appel interne, lui, ne
-passe pas par ces constantes : `BoutonPage` produit l'adresse par `chemin()`, et il
-n'y a rien à y protéger.
+Les destinations restent **une seule constante chacune** dans
+`src/content/liens.ts`, jamais un `href` recopié — elles lisent l'environnement à
+cet endroit et nulle part ailleurs. Deux ne sont pas encore posées — le calendrier
+et le point de réception du formulaire — et `npm run build` reste donc ROUGE : un
+bouton mort ne peut pas partir en production par oubli.
+
+Un appel INTERNE ne passe pas par elles : `BoutonPage` produit l'adresse par
+`chemin()`, et il n'y a rien à y protéger.
 
 ## Les textes
 

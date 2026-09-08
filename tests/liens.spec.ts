@@ -1,85 +1,92 @@
 import { describe, expect, it } from 'vitest'
 
-import {
-  DESTINATION_CANDIDATURE,
-  DESTINATION_FORMULAIRE,
-  DESTINATION_RENDEZ_VOUS,
-  PORTAIL_CANDIDATS,
-} from '@/content/liens'
+import { VARIABLES, refusDeLAdresse } from '@/content/liens'
 
-// Ce fichier n'existait que pour echouer, et il disait ce qu'il faudrait en
-// faire : « il tombera le jour ou les destinations seront remplies — et c'est a
-// ce moment-la qu'il faudra le remplacer par une verification de la FORME de
-// l'adresse ».
+// ── CE QUE CE FICHIER VERIFIE DEPUIS LE 8 SEPTEMBRE 2026 ────────────────────
 //
-// Le 8 septembre 2026, la premiere des trois a ete tranchee. Son cas est donc
-// devenu une verification de forme ; les deux autres attendent encore, et leur
-// cas continue d'echouer avec le message qui dit a qui demander.
-describe('les destinations sortantes', () => {
-  it('WEB-1, WEB-2, WEB-3 — la candidature mene au portail public des candidats', () => {
-    // ── CE QUE CE CAS ATTRAPE, ET IL A REMPLACE UN `not.toBe('')` ──────────
-    //
-    // Un `not.toBe('')` cesse de proteger a la seconde ou on remplit la
-    // constante : n'importe quelle chaine le satisfait, y compris un chemin
-    // relatif, un `mailto:`, ou une adresse recopiee de travers. La forme,
-    // elle, continue de dire quelque chose apres que la decision est prise.
-    const adresse = DESTINATION_CANDIDATURE
-    expect(adresse, 'DESTINATION_CANDIDATURE est vide').not.toBe('')
+// Il verifiait que trois constantes du code n'etaient pas vides, et il disait
+// lui-meme ce qu'il faudrait en faire : « il tombera le jour ou les
+// destinations seront remplies — et c'est a ce moment-la qu'il faudra le
+// remplacer par une verification de la FORME de l'adresse ».
+//
+// Les trois adresses viennent maintenant de l'environnement, pour qu'un
+// changement d'adresse ne demande pas un commit. Un test unitaire ne peut donc
+// plus rien affirmer sur elles : il tourne sans l'environnement de
+// deploiement, et une variable absente au poste n'est pas un defaut.
+//
+// Ce qui se teste ici est la REGLE — `refusDeLAdresse`, une fonction pure. La
+// porte qui l'applique aux vraies valeurs est `npm run destinations`, appelee
+// par `prebuild`, et elle s'exerce au moment ou le HTML est ecrit.
+//
+// Le partage est celui-la : la regle se teste, les valeurs se verifient a la
+// construction. Confondre les deux donnerait soit un test qui ne dit rien,
+// soit une porte qu'on ne peut pas relire.
 
-    // Absolue et chiffree : ce bouton part vers un AUTRE domaine que celui-ci.
-    // Un chemin relatif y menerait a une page de ce site qui n'existe pas.
-    expect(adresse, 'la destination doit etre une adresse https absolue').toMatch(
-      /^https:\/\//,
+describe('les destinations sortantes — ce que la regle refuse', () => {
+  it('WEB-1 / 0007 — une adresse absente est refusee, et le message nomme la variable', () => {
+    for (const [nom, variable] of Object.entries(VARIABLES)) {
+      const cause = refusDeLAdresse(nom as keyof typeof VARIABLES, '')
+      expect(cause, `${nom} : le vide doit etre refuse`).not.toBeNull()
+      expect(cause, `${nom} : le message doit nommer la variable a poser`).toContain(
+        variable,
+      )
+    }
+  })
+
+  it('WEB-1, WEB-2, WEB-3 — une adresse relative est refusee', () => {
+    // Ces trois boutons quittent ce site. Un chemin menerait a une page de
+    // celui-ci qui n'existe pas — et le defaut ne se verrait qu'au clic.
+    for (const relative of ['/contact', 'contact', '../cv', '//cv.agencemaldia.com']) {
+      expect(
+        refusDeLAdresse('candidature', relative),
+        `« ${relative} » devrait etre refusee`,
+      ).not.toBeNull()
+    }
+  })
+
+  it('0008 — la candidature ne peut pas mener a l administration privee', () => {
+    // Un candidat qui arrive sur `admin.` voit un refus : elle n'accepte
+    // personne sans compte. C'est un defaut quel que soit le choix de Maldia,
+    // donc une regle et non une valeur.
+    expect(refusDeLAdresse('candidature', 'https://admin.agencemaldia.com')).toContain(
+      'administration privee',
     )
+    expect(refusDeLAdresse('candidature', 'https://cv.agencemaldia.com')).toBeNull()
+  })
 
-    // 0007 a ecarte le courriel, et pour un motif qui survit a la decision :
-    // une adresse publiee ne se retire pas.
-    expect(adresse, '0007 a ecarte le courriel comme destination').not.toMatch(
-      /^mailto:/,
+  it('0007 — le courriel reste ecarte pour la candidature', () => {
+    // Le motif survit a la decision : une adresse publiee sur un site ne se
+    // retire pas. Pour l'employer, il faut amender 0007 — pas contourner la
+    // verification.
+    expect(refusDeLAdresse('candidature', 'mailto:contact@agencemaldia.com')).toContain(
+      '0007',
     )
-
-    // Absolue et chiffree vaut pour la valeur EFFECTIVE. En developpement, une
-    // adresse locale est permise et n'est pas chiffree : on ne l'exige que
-    // lorsque aucun remplacement n'est pose.
   })
 
-  it('WEB-1 / 0008 — la valeur PAR DEFAUT est le portail public, jamais l administration', () => {
-    // ── CE QUE CE CAS PROTEGE, ET IL EST PLUS IMPORTANT QUE LE PRECEDENT ────
-    //
-    // `DESTINATION_CANDIDATURE` est remplacable a la construction, pour que le
-    // bouton mene au `cv/` local pendant le developpement. Un remplacement
-    // rend donc le cas ci-dessus incapable de dire quoi que ce soit sur la
-    // production.
-    //
-    // Celui-ci verifie la CONSTANTE, celle qu'on obtient quand rien n'est pose
-    // — c'est-a-dire ce qui part en production quand un deploiement oublie la
-    // variable. Le mode de defaillance d'un oubli doit rester le bon
-    // comportement.
-    //
-    // 0008 a arrete le sous-domaine du portail PUBLIC des candidats. Le figer
-    // ici empeche qu'on pointe un jour vers `admin.agencemaldia.com`, qui
-    // n'accepte personne sans compte : le candidat verrait un refus.
-    expect(PORTAIL_CANDIDATS).toMatch(/^https:\/\//)
-    expect(
-      new URL(PORTAIL_CANDIDATS).hostname,
-      'le bouton mene au portail public (0008), pas a l administration privee',
-    ).toBe('cv.agencemaldia.com')
+  it('0019 — le point de reception du formulaire ne peut pas etre en clair', () => {
+    // Il recoit un nom, un courriel, un besoin et un CV. `http://` les
+    // enverrait lisibles sur le reseau.
+    expect(refusDeLAdresse('formulaire', 'http://formulaire.test/envoi')).toContain(
+      'clair',
+    )
+    expect(refusDeLAdresse('formulaire', 'https://formulaire.test/envoi')).toBeNull()
   })
 
-  it('WEB-7 — la prise de rendez-vous mene au calendrier', () => {
-    expect(
-      DESTINATION_RENDEZ_VOUS,
-      'adresse Cal.com manquante : la demander au client',
-    ).not.toBe('')
+  it('WEB-7 — un calendrier en http passe : ce n est pas un point de depot', () => {
+    // La regle du chiffrement ne vaut que pour le formulaire, qui porte des
+    // donnees personnelles. L'imposer partout ferait une regle qu'on ne
+    // saurait plus expliquer, et une regle inexpliquee finit contournee.
+    expect(refusDeLAdresse('rendezVous', 'http://cal.test/agencemaldia')).toBeNull()
+    expect(refusDeLAdresse('rendezVous', 'https://cal.com/agencemaldia')).toBeNull()
   })
 
-  it('WEB-7 — le formulaire de contact part quelque part', () => {
-    // Vide, les deux boutons d'envoi de la page Contact sont desactives : un
-    // formulaire qui avale une candidature sans destinataire est pire qu'un
-    // formulaire absent. Voir decision 0019.
-    expect(
-      DESTINATION_FORMULAIRE,
-      'point de reception du formulaire non arrete : voir docs/decisions/0019',
-    ).not.toBe('')
+  it('les trois destinations sont nommees, et il n y en a pas une quatrieme', () => {
+    // Une destination ajoutee sans variable serait un bouton mort que la porte
+    // de construction ne verrait pas.
+    expect(Object.keys(VARIABLES).sort()).toEqual([
+      'candidature',
+      'formulaire',
+      'rendezVous',
+    ])
   })
 })

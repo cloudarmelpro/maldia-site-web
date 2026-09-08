@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npm run verifier",
+    "prebuild": "npm run verifier && npm run destinations",
     "build": "next build",
     "start": "node serveur.mjs",
     "lint": "eslint",
@@ -12,7 +12,8 @@
     "verifier": "npm run typecheck && npm run lint && npm run test",
     "test": "vitest run",
     "e2e": "playwright test",
-    "e2e:ui": "playwright test --ui"
+    "e2e:ui": "playwright test --ui",
+    "destinations": "node scripts/verifier-destinations.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

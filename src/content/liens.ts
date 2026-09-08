@@ -25,7 +25,44 @@
  * elle verifie desormais la FORME de l'adresse, comme `tests/liens.spec.ts`
  * annoncait qu'il faudrait le faire.
  */
-export const DESTINATION_CANDIDATURE = 'https://cv.agencemaldia.com'
+export const PORTAIL_CANDIDATS = 'https://cv.agencemaldia.com'
+
+/**
+ * La destination REELLE du bouton, remplacable a la CONSTRUCTION.
+ *
+ * ── POURQUOI UNE VARIABLE, ET POURQUOI CELLE-LA ─────────────────────────────
+ *
+ * En developpement, `cv/` tourne sur la boucle locale et le sous-domaine de
+ * production ne resout pas : le bouton principal du site mene nulle part sur le
+ * poste de qui travaille dessus.
+ *
+ * Ecrire l'adresse locale dans cette constante n'etait pas une option : ce
+ * fichier est VERSIONNE, et `127.0.0.1` serait parti en production au premier
+ * deploiement — un bouton mort, a sept endroits, sur le chemin de recrutement
+ * que `WEB-1` decrit comme la raison d'etre du site.
+ *
+ * ── LA VALEUR PAR DEFAUT EST CELLE DE PRODUCTION, ET C'EST LE POINT ─────────
+ *
+ * Sans variable, on obtient `cv.agencemaldia.com`. Le mode de defaillance d'un
+ * oubli est donc le BON comportement : un deploiement qui ne pose rien deploie
+ * l'adresse juste. Une valeur par defaut vide, ou locale, aurait fait
+ * l'inverse — et c'est la faute que ce depot commet le moins souvent parce
+ * qu'il l'ecrit partout.
+ *
+ * ── ELLE EST FIGEE A LA CONSTRUCTION, PAS LUE A L'EXECUTION ────────────────
+ *
+ * Ce depot est un export statique : il n'y a aucun serveur pour lire une
+ * variable au moment ou quelqu'un clique. Le prefixe `NEXT_PUBLIC_` dit
+ * precisement cela — la valeur est inscrite dans le HTML au moment du `build`,
+ * et changer la variable APRES demande de reconstruire. C'est une propriete a
+ * connaitre, pas un defaut.
+ *
+ * C'est aussi la premiere variable d'environnement de ce depot, qui n'en lisait
+ * aucune. Elle est documentee dans `.env.example`, et elle ne porte aucun
+ * secret : une adresse publique, affichee dans chaque page.
+ */
+export const DESTINATION_CANDIDATURE =
+  process.env.NEXT_PUBLIC_PORTAIL_CANDIDATS || PORTAIL_CANDIDATS
 
 /** WEB-7 — le calendrier Cal.com deja utilise par le client. */
 export const DESTINATION_RENDEZ_VOUS = ''

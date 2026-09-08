@@ -4,6 +4,7 @@ import {
   DESTINATION_CANDIDATURE,
   DESTINATION_FORMULAIRE,
   DESTINATION_RENDEZ_VOUS,
+  PORTAIL_CANDIDATS,
 } from '@/content/liens'
 
 // Ce fichier n'existait que pour echouer, et il disait ce qu'il faudrait en
@@ -37,11 +38,30 @@ describe('les destinations sortantes', () => {
       /^mailto:/,
     )
 
-    // 0008 a arrete le sous-domaine du portail public des candidats. Le lier
-    // ici empeche qu'on pointe un jour vers l'administration privee, qui porte
-    // un autre sous-domaine et n'accepte personne sans compte.
+    // Absolue et chiffree vaut pour la valeur EFFECTIVE. En developpement, une
+    // adresse locale est permise et n'est pas chiffree : on ne l'exige que
+    // lorsque aucun remplacement n'est pose.
+  })
+
+  it('WEB-1 / 0008 — la valeur PAR DEFAUT est le portail public, jamais l administration', () => {
+    // ── CE QUE CE CAS PROTEGE, ET IL EST PLUS IMPORTANT QUE LE PRECEDENT ────
+    //
+    // `DESTINATION_CANDIDATURE` est remplacable a la construction, pour que le
+    // bouton mene au `cv/` local pendant le developpement. Un remplacement
+    // rend donc le cas ci-dessus incapable de dire quoi que ce soit sur la
+    // production.
+    //
+    // Celui-ci verifie la CONSTANTE, celle qu'on obtient quand rien n'est pose
+    // — c'est-a-dire ce qui part en production quand un deploiement oublie la
+    // variable. Le mode de defaillance d'un oubli doit rester le bon
+    // comportement.
+    //
+    // 0008 a arrete le sous-domaine du portail PUBLIC des candidats. Le figer
+    // ici empeche qu'on pointe un jour vers `admin.agencemaldia.com`, qui
+    // n'accepte personne sans compte : le candidat verrait un refus.
+    expect(PORTAIL_CANDIDATS).toMatch(/^https:\/\//)
     expect(
-      new URL(adresse).hostname,
+      new URL(PORTAIL_CANDIDATS).hostname,
       'le bouton mene au portail public (0008), pas a l administration privee',
     ).toBe('cv.agencemaldia.com')
   })

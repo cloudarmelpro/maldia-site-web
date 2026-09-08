@@ -22,6 +22,12 @@ doit comprendre en quelques secondes lequel des deux il est, et où cliquer.
 
 **Aucune base de données. Aucun compte. Aucun secret. Aucun processus.**
 
+Une seule variable d'environnement depuis le 8 septembre 2026, et elle ne porte
+aucun secret : `NEXT_PUBLIC_PORTAIL_CANDIDATS`, une adresse publique affichée dans
+chaque page. Elle est **figée à la construction** — il n'y a aucun serveur pour la
+lire quand quelqu'un clique. Si une seconde apparaît un jour, la question à poser
+d'abord est « pourquoi ce dépôt en aurait-il besoin ».
+
 `output: 'export'`. Le site se sert comme des fichiers, sur n'importe quel
 hébergement, mutualisé compris. Rien à surveiller, rien à redémarrer, aucune surface
 d'attaque côté serveur.
@@ -51,16 +57,40 @@ par quelqu'un qui lira un document devenu faux.
 
 ## Les deux boutons
 
-**« Prendre rendez-vous »** mène au calendrier Cal.com déjà utilisé par le client
-(`WEB-7`). Un lien, rien à construire.
-
 **« Déposer ma candidature »** paraît à quatre endroits — `WEB-1`, `WEB-2`, `WEB-3`.
-La banque de CV n'existe pas encore, donc sa destination est **reportée** : la
-décision 0007 tranche que le bouton se construit quand même.
+Sa destination a été **tranchée le 8 septembre 2026** : le portail public des
+candidats, `cv.agencemaldia.com`. C'était la troisième issue que 0007 laissait
+ouverte — « quand il existera » — et `cv/` existe. Le lien ne fonctionnera qu'une
+fois ce dépôt déployé ; c'est un fait de mise en ligne, plus une décision.
 
-Les deux destinations sont **des constantes** dans `src/content/liens.ts`, jamais un
-`href` recopié. Vides, `npm run verifier` échoue — un bouton mort ne peut pas partir
-en production par oubli.
+**En développement, il se remplace à la CONSTRUCTION** par
+`NEXT_PUBLIC_PORTAIL_CANDIDATS` — voir `.env.example`. Sans la variable, on obtient
+le domaine de production : **le mode de défaillance d'un oubli est le bon
+comportement**, et c'est la seule raison pour laquelle un remplacement est
+acceptable ici.
+
+**« Prendre rendez-vous »** ne mène PLUS au calendrier. Ses sept appels répartis
+sur le site conduisent à `/{langue}/contact/`, qui porte la réservation, les
+coordonnées et les formulaires — Maldia l'a tranché le 8 septembre 2026, faute
+d'adresse Cal.com arrêtée.
+
+**Deux exceptions, et elles sont SUR la page contact** : le bouton de sa section
+réservation, et la carte « entreprises » du bloc de contact — qui vit dans le
+gabarit, donc sur toutes les pages. Les faire pointer vers `/contact` donnerait un
+lien vers la page où l'on se trouve déjà. Ces deux-là gardent
+`DESTINATION_RENDEZ_VOUS`, vide tant que l'identifiant Cal.com n'est pas donné.
+
+**Le choix se lit dans `gabarit.tsx`**, à l'endroit où l'on sait quelle page on
+rend — jamais dans un repli caché à l'intérieur du bouton. `bouton.tsx` l'écrit :
+« un repli silencieux ferait passer la porte de vérification et mettrait un bouton
+mort en production. »
+
+Les destinations restent **des constantes** dans `src/content/liens.ts`, jamais un
+`href` recopié. Deux sont encore vides — le calendrier et le point de réception du
+formulaire — et `npm run build` reste donc ROUGE : il passe par `verifier`, et un
+bouton mort ne peut pas partir en production par oubli. Un appel interne, lui, ne
+passe pas par ces constantes : `BoutonPage` produit l'adresse par `chemin()`, et il
+n'y a rien à y protéger.
 
 ## Les textes
 

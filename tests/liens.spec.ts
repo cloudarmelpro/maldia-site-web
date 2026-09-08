@@ -6,15 +6,44 @@ import {
   DESTINATION_RENDEZ_VOUS,
 } from '@/content/liens'
 
-// Ce fichier n'existe que pour echouer. Il tombera le jour ou les destinations
-// seront remplies — et c'est a ce moment-la qu'il faudra le remplacer par une
-// verification de la forme de l'adresse.
+// Ce fichier n'existait que pour echouer, et il disait ce qu'il faudrait en
+// faire : « il tombera le jour ou les destinations seront remplies — et c'est a
+// ce moment-la qu'il faudra le remplacer par une verification de la FORME de
+// l'adresse ».
+//
+// Le 8 septembre 2026, la premiere des trois a ete tranchee. Son cas est donc
+// devenu une verification de forme ; les deux autres attendent encore, et leur
+// cas continue d'echouer avec le message qui dit a qui demander.
 describe('les destinations sortantes', () => {
-  it('WEB-1, WEB-2, WEB-3 — la candidature mene quelque part', () => {
+  it('WEB-1, WEB-2, WEB-3 — la candidature mene au portail public des candidats', () => {
+    // ── CE QUE CE CAS ATTRAPE, ET IL A REMPLACE UN `not.toBe('')` ──────────
+    //
+    // Un `not.toBe('')` cesse de proteger a la seconde ou on remplit la
+    // constante : n'importe quelle chaine le satisfait, y compris un chemin
+    // relatif, un `mailto:`, ou une adresse recopiee de travers. La forme,
+    // elle, continue de dire quelque chose apres que la decision est prise.
+    const adresse = DESTINATION_CANDIDATURE
+    expect(adresse, 'DESTINATION_CANDIDATURE est vide').not.toBe('')
+
+    // Absolue et chiffree : ce bouton part vers un AUTRE domaine que celui-ci.
+    // Un chemin relatif y menerait a une page de ce site qui n'existe pas.
+    expect(adresse, 'la destination doit etre une adresse https absolue').toMatch(
+      /^https:\/\//,
+    )
+
+    // 0007 a ecarte le courriel, et pour un motif qui survit a la decision :
+    // une adresse publiee ne se retire pas.
+    expect(adresse, '0007 a ecarte le courriel comme destination').not.toMatch(
+      /^mailto:/,
+    )
+
+    // 0008 a arrete le sous-domaine du portail public des candidats. Le lier
+    // ici empeche qu'on pointe un jour vers l'administration privee, qui porte
+    // un autre sous-domaine et n'accepte personne sans compte.
     expect(
-      DESTINATION_CANDIDATURE,
-      'decision 0007 non tranchee : remplir DESTINATION_CANDIDATURE dans src/content/liens.ts',
-    ).not.toBe('')
+      new URL(adresse).hostname,
+      'le bouton mene au portail public (0008), pas a l administration privee',
+    ).toBe('cv.agencemaldia.com')
   })
 
   it('WEB-7 — la prise de rendez-vous mene au calendrier', () => {

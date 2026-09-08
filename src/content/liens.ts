@@ -5,8 +5,27 @@
 // Une seule constante par destination, jamais un href recopie : le bouton
 // « Deposer ma candidature » parait a quatre endroits (WEB-1, WEB-2, WEB-3).
 
-/** Decision 0007 — reportee. Courriel, formulaire tiers, ou cv.agencemaldia.com. */
-export const DESTINATION_CANDIDATURE = ''
+/**
+ * Decision 0007 — TRANCHEE le 8 septembre 2026 : le portail public des
+ * candidats.
+ *
+ * Les trois issues que 0007 laissait ouvertes etaient un courriel, un
+ * formulaire tiers, ou « le portail `cv.agencemaldia.com` QUAND IL EXISTERA ».
+ * Il existe : le depot `cv/` sert le formulaire public, ses seize champs, la
+ * verification humaine et le stockage des fichiers. Et 0008 avait deja ARRETE
+ * ce sous-domaine pour ce role precis.
+ *
+ * Le courriel avait ete ecarte par 0007 elle-meme, et l'argument tient : une
+ * adresse publiee sur un site ne se retire pas, elle continue de recevoir des
+ * candidatures des mois apres que le portail existe, et personne ne les lit.
+ *
+ * CE LIEN NE FONCTIONNERA QU'UNE FOIS `cv/` DEPLOYE. C'est un fait de mise en
+ * ligne, pas une decision en attente : le sous-domaine est arrete, l'application
+ * est ecrite. La porte de verification de `0007` ne protege plus contre ca —
+ * elle verifie desormais la FORME de l'adresse, comme `tests/liens.spec.ts`
+ * annoncait qu'il faudrait le faire.
+ */
+export const DESTINATION_CANDIDATURE = 'https://cv.agencemaldia.com'
 
 /** WEB-7 — le calendrier Cal.com deja utilise par le client. */
 export const DESTINATION_RENDEZ_VOUS = ''

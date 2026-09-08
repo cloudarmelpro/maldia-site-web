@@ -16,8 +16,12 @@ import { SelecteurProfils } from '@/components/shared/selecteur-profils'
 export function Profils({
   contenu,
   titreId,
+  versContact,
 }: {
   contenu: Contenu['commun']['profils']
+  /** Le chemin de la page contact, calculé par l'appelant : ces sections
+   * reçoivent un contenu déjà résolu et n'ont pas la langue. */
+  versContact: string
   /** Deux pages portent cette section : l'id doit rester unique par page. */
   titreId: string
 }) {
@@ -36,7 +40,7 @@ export function Profils({
       </div>
 
       <Apparition className="mt-[clamp(2.125rem,3.6vw,3.5rem)]">
-        <SelecteurProfils contenu={contenu} registre="accueil" />
+        <SelecteurProfils contenu={contenu} registre="accueil" versContact={versContact} />
       </Apparition>
     </Section>
   )

@@ -24,9 +24,13 @@ const TITRE_ID = 'titre-postes'
 export function ServicesPostes({
   contenu,
   profils,
+  versContact,
 }: {
   contenu: Contenu['services']['postes']
   profils: Contenu['commun']['profils']
+  /** Le chemin de la page contact, calculé par l'appelant : ces sections
+   * reçoivent un contenu déjà résolu et n'ont pas la langue. */
+  versContact: string
 }) {
   return (
     <section aria-labelledby={TITRE_ID} className={classes('bg-fond', BAS)}>
@@ -39,7 +43,7 @@ export function ServicesPostes({
         />
 
         <Apparition>
-          <SelecteurProfils contenu={profils} registre="services" />
+          <SelecteurProfils contenu={profils} registre="services" versContact={versContact} />
         </Apparition>
       </div>
     </section>

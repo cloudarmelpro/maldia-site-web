@@ -1,6 +1,6 @@
 import { ArrowUpRight, CalendarDays, FileText } from 'lucide-react'
 
-import { DESTINATION_CANDIDATURE, DESTINATION_RENDEZ_VOUS } from '@/content/liens'
+import { DESTINATION_CANDIDATURE } from '@/content/liens'
 import type { Contenu } from '@/content/types'
 import { FOCUS_CLAIR } from '@/components/shared/focus'
 import { Revelation } from '@/components/shared/revelation'
@@ -21,7 +21,23 @@ import { CONTENEUR } from '@/components/shared/section'
  * L'ordre du tuple fige la destination : la premiere carte mene au calendrier,
  * la seconde a la candidature.
  */
-export function ContactBlocs({ contenu }: { contenu: Contenu['commun']['contact'] }) {
+/**
+ * Ce bloc vit dans le gabarit : il paraît sur TOUTES les pages, `/contact`
+ * comprise. Sa carte « entreprises » ne peut donc pas pointer vers `/contact`
+ * sans se lier à elle-même sur cette page-là.
+ *
+ * Le gabarit calcule donc la destination — la page contact ailleurs, l'adresse
+ * du calendrier sur la page contact — et la passe ici. Le choix se lit à
+ * l'endroit où l'on sait quelle page on rend, pas dans un repli caché.
+ */
+export function ContactBlocs({
+  contenu,
+  versRendezVous,
+}: {
+  contenu: Contenu['commun']['contact']
+  /** Vide quand aucune destination n'est arrêtée : la carte n'est pas un lien. */
+  versRendezVous: string
+}) {
   const [entreprises, talents] = contenu.cartes
 
   return (
@@ -55,7 +71,7 @@ export function ContactBlocs({ contenu }: { contenu: Contenu['commun']['contact'
           {[
             {
               carte: entreprises,
-              href: DESTINATION_RENDEZ_VOUS || undefined,
+              href: versRendezVous || undefined,
               Icone: CalendarDays,
               surface: 'bg-white',
               titre: 'text-encre',

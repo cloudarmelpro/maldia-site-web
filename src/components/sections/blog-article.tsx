@@ -7,7 +7,7 @@ import type { Article, Contenu } from '@/content/types'
 import { MetaArticle } from '@/components/sections/carte-article'
 import { FOCUS, FOCUS_CLAIR } from '@/components/shared/focus'
 import { Apparition } from '@/components/shared/apparition'
-import { Bouton } from '@/components/shared/bouton'
+import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Fleche } from '@/components/shared/fleche'
@@ -242,8 +242,11 @@ export function BlogArticle({
                       {blog.appelArticle.texte}
                     </p>
                   </div>
-                  <Bouton
-                    destination="rendezVous"
+                  {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+                  <BoutonPage
+                    vers={chemin(langue, 'contact')}
                     libelle={blog.appelArticle.cta}
                     variante="blanc"
                     taille="compacte"

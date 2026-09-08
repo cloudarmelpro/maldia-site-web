@@ -9,7 +9,7 @@ import { chemin } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { autreLangue } from '@/components/shared/autre-langue'
-import { Bouton } from '@/components/shared/bouton'
+import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { FOCUS_SUIVEUR } from '@/components/shared/focus'
 import { Lien } from '@/components/shared/lien'
@@ -240,8 +240,11 @@ export function PanneauNavigation({
         </nav>
 
         <div className="mt-auto flex flex-col gap-3 border-t border-white/16 pt-6.5">
-          <Bouton
-            destination="rendezVous"
+          {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+          <BoutonPage
+            vers={chemin(langue, 'contact')}
             libelle={contenu.cta}
             variante="blanc"
             className="min-h-12 w-full"

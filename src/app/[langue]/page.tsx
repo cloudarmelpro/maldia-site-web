@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { chemin } from '@/content/langues'
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
@@ -41,9 +42,18 @@ export default async function Page({ params }: PageProps<'/[langue]'>) {
             contenu={commun.pourquoi}
             marches={commun.marches}
             titreId="titre-pourquoi"
+            versContact={chemin(langue, 'contact')}
           />
-          <Profils contenu={commun.profils} titreId="titre-profils" />
-          <Methode contenu={commun.methode} titreId="titre-methode" />
+          <Profils
+            contenu={commun.profils}
+            titreId="titre-profils"
+            versContact={chemin(langue, 'contact')}
+          />
+          <Methode
+            contenu={commun.methode}
+            titreId="titre-methode"
+            versContact={chemin(langue, 'contact')}
+          />
           <Parcours contenu={commun.parcours} titreId="titre-parcours" />
           <Base contenu={commun.base} langue={langue} titreId="titre-base" />
           <Questions contenu={accueil.questions} />

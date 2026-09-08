@@ -2,7 +2,7 @@ import type { Contenu } from '@/content/types'
 import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
 import { Revelation } from '@/components/shared/revelation'
-import { Bouton } from '@/components/shared/bouton'
+import { BoutonPage } from '@/components/shared/bouton'
 import { CartesArguments } from '@/components/shared/cartes-arguments'
 import { classes } from '@/components/shared/classes'
 import { Defilement, MASQUE_BANDE } from '@/components/shared/defilement'
@@ -20,8 +20,12 @@ export function Pourquoi({
   contenu,
   marches,
   titreId,
+  versContact,
 }: {
   contenu: Contenu['commun']['pourquoi']
+  /** Le chemin de la page contact, calculé par l'appelant : ces sections
+   * reçoivent un contenu déjà résolu et n'ont pas la langue. */
+  versContact: string
   marches: Contenu['commun']['marches']
   /** Deux pages portent cette section : l'id doit rester unique par page. */
   titreId: string
@@ -65,8 +69,11 @@ export function Pourquoi({
                   {contenu.encart.texte}
                 </p>
               </div>
-              <Bouton
-                destination="rendezVous"
+              {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+              <BoutonPage
+                vers={versContact}
                 libelle={contenu.encart.cta}
                 variante="blanc"
                 className="shrink-0 self-start"

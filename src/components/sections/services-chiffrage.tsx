@@ -1,6 +1,6 @@
 import type { Contenu } from '@/content/types'
 import { Apparition } from '@/components/shared/apparition'
-import { Bouton } from '@/components/shared/bouton'
+import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { BAS, CONTENEUR } from '@/components/shared/section'
 
@@ -16,8 +16,12 @@ import { BAS, CONTENEUR } from '@/components/shared/section'
  */
 export function ServicesChiffrage({
   contenu,
+  versContact,
 }: {
   contenu: Contenu['services']['postes']['encart']
+  /** Le chemin de la page contact, calculé par l'appelant : ces sections
+   * reçoivent un contenu déjà résolu et n'ont pas la langue. */
+  versContact: string
 }) {
   return (
     <section className={classes('bg-fond', BAS)}>
@@ -32,8 +36,11 @@ export function ServicesChiffrage({
                 {contenu.texte}
               </p>
             </div>
-            <Bouton
-              destination="rendezVous"
+            {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+            <BoutonPage
+              vers={versContact}
               libelle={contenu.cta}
               variante="blanc"
               ornement="fleche"

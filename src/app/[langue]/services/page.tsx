@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { chemin } from '@/content/langues'
 import { LANGUES } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { metadonnees } from '@/content/metadonnees'
@@ -45,9 +46,16 @@ export default async function PageServices({ params }: PageProps<'/[langue]/serv
         entete={services.engagements}
         liste={commun.pourquoi.liste}
       />
-      <ServicesPostes contenu={services.postes} profils={commun.profils} />
+      <ServicesPostes
+        contenu={services.postes}
+        profils={commun.profils}
+        versContact={chemin(langue, 'contact')}
+      />
       <ServicesMethode contenu={commun.methode} />
-      <ServicesChiffrage contenu={services.postes.encart} />
+      <ServicesChiffrage
+        contenu={services.postes.encart}
+        versContact={chemin(langue, 'contact')}
+      />
     </Gabarit>
   )
 }

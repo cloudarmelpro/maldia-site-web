@@ -9,7 +9,7 @@ import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
 import { FOCUS_COURANTE, FOCUS_SUIVEUR } from '@/components/shared/focus'
 import { autreLangue } from '@/components/shared/autre-langue'
-import { Bouton } from '@/components/shared/bouton'
+import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { CONTENEUR } from '@/components/shared/section'
 import { Lien } from '@/components/shared/lien'
@@ -167,8 +167,11 @@ export function EnTete({
             </div>
 
             <div className="hidden large:flex">
-              <Bouton
-                destination="rendezVous"
+              {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+              <BoutonPage
+                vers={chemin(langue, 'contact')}
                 libelle={contenu.cta}
                 variante={clair ? 'vert' : 'blanc'}
                 taille="compacte"

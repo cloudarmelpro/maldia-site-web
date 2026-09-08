@@ -2,7 +2,7 @@ import type { Contenu } from '@/content/types'
 import { CarteEtape } from '@/components/shared/carte-etape'
 import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
-import { Bouton } from '@/components/shared/bouton'
+import { Bouton, BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
 
@@ -19,9 +19,13 @@ import { BAS, CONTENEUR, HAUT } from '@/components/shared/section'
 export function Methode({
   contenu,
   titreId,
+  versContact,
   avecAppel = true,
 }: {
   contenu: Contenu['commun']['methode']
+  /** Le chemin de la page contact, calculé par l'appelant : ces sections
+   * reçoivent un contenu déjà résolu et n'ont pas la langue. */
+  versContact: string
   /** Deux pages portent cette section : l'id doit rester unique par page. */
   titreId: string
   /**
@@ -62,8 +66,11 @@ export function Methode({
                 {contenu.conclusion}
               </p>
               <div className="flex flex-wrap items-center gap-3">
-                <Bouton
-                  destination="rendezVous"
+                {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+                <BoutonPage
+                  vers={versContact}
                   libelle={contenu.ctaPrincipal}
                   variante="blanc"
                   ornement="fleche"

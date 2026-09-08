@@ -1,10 +1,11 @@
 import Image from 'next/image'
 
 import { avecNombre } from '@/content/chiffres'
+import { chemin } from '@/content/langues'
 import type { Langue } from '@/content/langues'
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
-import { Bouton } from '@/components/shared/bouton'
+import { Bouton, BoutonPage } from '@/components/shared/bouton'
 import { Revelation } from '@/components/shared/revelation'
 import { CONTENEUR } from '@/components/shared/section'
 
@@ -128,7 +129,12 @@ export function Hero({
           </Revelation>
 
           <div className="mt-1 flex flex-wrap items-center justify-center gap-2.5">
-            <Bouton destination="rendezVous" libelle={cta} variante="vert" taille="haute" />
+            <BoutonPage
+              vers={chemin(langue, 'contact')}
+              libelle={cta}
+              variante="vert"
+              taille="haute"
+            />
             <Bouton
               destination="candidature"
               libelle={contenu.carteCandidature}

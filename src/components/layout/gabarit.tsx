@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { DESTINATION_RENDEZ_VOUS } from '@/content/liens'
 import { chemin, cheminArticle } from '@/content/langues'
 import type { Langue, Page } from '@/content/langues'
 import type { Contenu } from '@/content/types'
@@ -80,7 +81,26 @@ export function Gabarit({
           dans `main`. Le pied reste dehors — c'est ce qui lui rend son role. */}
       <main id="contenu" className="scroll-mt-[var(--hauteur-en-tete,4.5rem)]">
         {children}
-        <ContactBlocs contenu={contenu.commun.contact} />
+        {/*
+          LA DESTINATION SE DÉCIDE ICI, ET NULLE PART AILLEURS.
+
+          Ce bloc paraît sur toutes les pages. Ailleurs sur le site, sa carte
+          « entreprises » mène à la page contact, qui porte la réservation. SUR
+          la page contact, elle garderait un lien vers la page où l'on est
+          déjà : elle reprend donc l'adresse du calendrier, vide tant que
+          `0007` n'a pas donné l'identifiant Cal.com — et une carte sans
+          adresse n'est pas un lien, ce qui est exactement ce qu'on veut dire.
+
+          Le choix se lit ici parce que c'est ici qu'on sait quelle page on
+          rend. Un repli caché dans le bouton passerait la porte de
+          vérification et mettrait un lien mort en production — `bouton.tsx`.
+        */}
+        <ContactBlocs
+          contenu={contenu.commun.contact}
+          versRendezVous={
+            page === 'contact' ? DESTINATION_RENDEZ_VOUS : chemin(langue, 'contact')
+          }
+        />
       </main>
       <Pied
         langue={langue}

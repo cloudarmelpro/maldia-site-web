@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { PHOTOS } from '@/content/photos'
 import type { Contenu } from '@/content/types'
-import { Bouton } from '@/components/shared/bouton'
+import { BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { Fleche } from '@/components/shared/fleche'
 import { FOCUS } from '@/components/shared/focus'
@@ -51,9 +51,13 @@ const FOND_PHOTO: Record<RegistreSelecteur, string> = {
 export function SelecteurProfils({
   contenu,
   registre,
+  versContact,
 }: {
   contenu: Contenu['commun']['profils']
   registre: RegistreSelecteur
+  /** Le chemin de la page contact, calculé par l'appelant : ces sections
+   * reçoivent un contenu déjà résolu et n'ont pas la langue. */
+  versContact: string
 }) {
   const [choisi, setChoisi] = useState(0)
   const actif = contenu.liste[choisi] ?? contenu.liste[0]
@@ -124,8 +128,11 @@ export function SelecteurProfils({
                 {contenu.delai}
               </strong>
             </span>
-            <Bouton
-              destination="rendezVous"
+            {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+            <BoutonPage
+              vers={versContact}
               libelle={contenu.ctaProfil}
               variante="vert"
               taille="compacte"

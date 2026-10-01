@@ -1,7 +1,7 @@
 import type { Contenu } from '@/content/types'
 import { TeteSection } from '@/components/shared/tete-section'
 import { Apparition } from '@/components/shared/apparition'
-import { Bouton } from '@/components/shared/bouton'
+import { Bouton, BoutonPage } from '@/components/shared/bouton'
 import { classes } from '@/components/shared/classes'
 import { delaiDeGrille } from '@/components/shared/decalage'
 import { Section } from '@/components/shared/section'
@@ -11,16 +11,20 @@ import { Section } from '@/components/shared/section'
  * personne qui cherche une opportunite.
  *
  * L'ordre du tuple fige la destination et le registre : la premiere carte est
- * verte et mene au calendrier, la seconde est claire et mene a la candidature.
- * Le design ne les distingue pas autrement, et une carte qui changerait de
- * couleur sans changer de destination serait un piege.
+ * verte et mene a la page contact, la seconde est claire et mene a la
+ * candidature. Le design ne les distingue pas autrement, et une carte qui
+ * changerait de couleur sans changer de destination serait un piege.
  */
 export function Parcours({
   contenu,
   titreId,
+  versContact,
 }: {
   contenu: Contenu['commun']['parcours']
   titreId: string
+  /** Le chemin de la page contact, calculé par l'appelant : ces sections
+   * reçoivent un contenu déjà résolu et n'ont pas la langue. */
+  versContact: string
 }) {
   return (
     <Section titreId={titreId}>
@@ -118,14 +122,28 @@ export function Parcours({
                     </span>
                   ) : null}
 
-                  <Bouton
-                    destination={vert ? 'rendezVous' : 'candidature'}
-                    libelle={voie.cta}
-                    variante={vert ? 'blanc' : 'contour'}
-                    ornement="fleche"
-                    className="mt-auto self-start px-5.5"
-                    aria-label={`${voie.cta} — ${voie.pour}`}
-                  />
+                  {/* WEB-7 : l'appel mène à la page contact, qui porte la réservation et les
+       coordonnées. Ce n'est PAS l'adresse du calendrier — celle-ci reste dans
+       `DESTINATION_RENDEZ_VOUS` et ne sert que sur `/contact`. */}
+                  {vert ? (
+                    <BoutonPage
+                      vers={versContact}
+                      libelle={voie.cta}
+                      variante="blanc"
+                      ornement="fleche"
+                      className="mt-auto self-start px-5.5"
+                      aria-label={`${voie.cta} — ${voie.pour}`}
+                    />
+                  ) : (
+                    <Bouton
+                      destination="candidature"
+                      libelle={voie.cta}
+                      variante="contour"
+                      ornement="fleche"
+                      className="mt-auto self-start px-5.5"
+                      aria-label={`${voie.cta} — ${voie.pour}`}
+                    />
+                  )}
                 </div>
               </Apparition>
             </li>

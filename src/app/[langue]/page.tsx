@@ -54,7 +54,11 @@ export default async function Page({ params }: PageProps<'/[langue]'>) {
             titreId="titre-methode"
             versContact={chemin(langue, 'contact')}
           />
-          <Parcours contenu={commun.parcours} titreId="titre-parcours" />
+          <Parcours
+            contenu={commun.parcours}
+            titreId="titre-parcours"
+            versContact={chemin(langue, 'contact')}
+          />
           <Base contenu={commun.base} langue={langue} titreId="titre-base" />
           <Questions contenu={accueil.questions} />
         </>

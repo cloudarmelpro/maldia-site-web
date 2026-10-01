@@ -33,6 +33,11 @@ pas avant d'écrire le site. Tant qu'elle ne l'est pas, la constante reste vide 
 la porte de vérification échoue — le lien mort ne peut pas partir en production par
 inadvertance.
 
+> **Amendé le 1er octobre 2026 par `0030`.** La porte n'échoue plus : Maldia a
+> choisi de déployer avec la candidature vide, les boutons rendus sans `href`.
+> La condition ci-dessus — arrêtée avant que `agencemaldia.com` soit public —
+> reste entière, et `0030` dit comment réarmer la porte.
+
 ## Pourquoi
 
 Attendre la décision pour construire aurait bloqué la première application sur la

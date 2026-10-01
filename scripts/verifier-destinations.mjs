@@ -33,6 +33,13 @@ import { FACULTATIVES, VARIABLES, refusDeLAdresse } from '../src/content/liens.t
 
 env.loadEnvConfig(process.cwd())
 
+// Ce que voit le visiteur quand la destination est absente.
+const CONSEQUENCE = {
+  candidature: 'boutons sans destination',
+  rendezVous: 'boutons sans destination',
+  formulaire: 'envoi desactive',
+}
+
 const refus = []
 for (const [nom, variable] of Object.entries(VARIABLES)) {
   const valeur = process.env[variable] ?? ''
@@ -47,7 +54,7 @@ if (refus.length === 0) {
     // Accepte, mais jamais en silence : le journal de construction le dit.
     const affiche =
       valeur === '' && FACULTATIVES.has(nom)
-        ? `STATIQUE — ${variable} absente, envoi desactive (0019)`
+        ? `STATIQUE — ${variable} absente, ${CONSEQUENCE[nom]} (0030)`
         : valeur
     console.log(`  ${nom.padEnd(12)} ${affiche}`)
   }

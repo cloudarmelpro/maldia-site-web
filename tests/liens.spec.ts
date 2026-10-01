@@ -23,10 +23,13 @@ import { FACULTATIVES, VARIABLES, refusDeLAdresse } from '@/content/liens'
 // soit une porte qu'on ne peut pas relire.
 
 describe('les destinations sortantes — ce que la regle refuse', () => {
-  it('WEB-1 / 0007 — une adresse absente est refusee, et le message nomme la variable', () => {
+  it('0030 — une destination retiree des facultatives redevient obligatoire', () => {
+    // Le jour ou une adresse arrive, on retire son nom de `FACULTATIVES` pour
+    // rearmer la porte. Ce cas prouve que le refus revient alors, et qu'il nomme
+    // la variable a poser.
+    const aucune = new Set<keyof typeof VARIABLES>()
     for (const [nom, variable] of Object.entries(VARIABLES)) {
-      if (FACULTATIVES.has(nom as keyof typeof VARIABLES)) continue
-      const cause = refusDeLAdresse(nom as keyof typeof VARIABLES, '')
+      const cause = refusDeLAdresse(nom as keyof typeof VARIABLES, '', aucune)
       expect(cause, `${nom} : le vide doit etre refuse`).not.toBeNull()
       expect(cause, `${nom} : le message doit nommer la variable a poser`).toContain(
         variable,
@@ -34,12 +37,19 @@ describe('les destinations sortantes — ce que la regle refuse', () => {
     }
   })
 
-  it('0019 amendee — le formulaire peut rester vide, et lui seul', () => {
-    // Vide, il est statique : son bouton desactive est tenu par
-    // `tests/formulaire.spec.ts`. Un lien vide, lui, serait un bouton mort —
-    // l'exception ne doit pas s'etendre en silence.
-    expect(refusDeLAdresse('formulaire', '')).toBeNull()
-    expect([...FACULTATIVES]).toEqual(['formulaire'])
+  it('0030 — aujourd hui, les trois peuvent rester vides', () => {
+    // Fige l'etat decide par Maldia le 1er octobre 2026. Un nom ajoute ou
+    // retire doit passer par ce test, donc par une decision.
+    for (const nom of Object.keys(VARIABLES)) {
+      expect(refusDeLAdresse(nom as keyof typeof VARIABLES, ''), nom).toBeNull()
+    }
+    expect([...FACULTATIVES].sort()).toEqual(['candidature', 'formulaire', 'rendezVous'])
+  })
+
+  it('0030 — facultative ne veut pas dire sans regle : une adresse posee reste verifiee', () => {
+    expect(refusDeLAdresse('candidature', 'https://admin.agencemaldia.com')).not.toBeNull()
+    expect(refusDeLAdresse('candidature', '/contact')).not.toBeNull()
+    expect(refusDeLAdresse('formulaire', 'http://formulaire.test/envoi')).not.toBeNull()
   })
 
   it('WEB-1, WEB-2, WEB-3 — une adresse relative est refusee', () => {

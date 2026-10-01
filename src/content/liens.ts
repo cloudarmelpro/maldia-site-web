@@ -50,8 +50,8 @@ export const DESTINATION_RENDEZ_VOUS = process.env.NEXT_PUBLIC_CALENDRIER ?? ''
 /**
  * Ou part un formulaire de la page Contact — decision 0019.
  *
- * Vide, le formulaire est STATIQUE : affiche, boutons d'envoi desactives. Seule
- * destination facultative — `tests/formulaire.spec.ts` tient le bouton desactive.
+ * Vide, le formulaire est STATIQUE : affiche, boutons d'envoi desactives (0030).
+ * `tests/formulaire.spec.ts` tient le bouton desactive.
  */
 export const DESTINATION_FORMULAIRE = process.env.NEXT_PUBLIC_RECEPTION_FORMULAIRE ?? ''
 
@@ -79,10 +79,14 @@ export const VARIABLES: Record<NomDestination, string> = {
 }
 
 /**
- * Celles qui peuvent rester vides — amendement de 0019. Un bouton de lien vide
- * serait mort ; un formulaire vide est desactive, et le dit.
+ * Celles qui peuvent rester vides — decision 0030. Retirer un nom de cet
+ * ensemble REARME la porte : son absence est de nouveau refusee.
  */
-export const FACULTATIVES: ReadonlySet<NomDestination> = new Set(['formulaire'])
+export const FACULTATIVES: ReadonlySet<NomDestination> = new Set([
+  'candidature',
+  'rendezVous',
+  'formulaire',
+])
 
 /**
  * Ce qui rend une adresse INACCEPTABLE, ou `null` si elle passe.
@@ -109,9 +113,13 @@ export const FACULTATIVES: ReadonlySet<NomDestination> = new Set(['formulaire'])
  * et personne ne les lit ». Pour l'employer quand meme, il faut amender 0007,
  * pas contourner cette ligne.
  */
-export function refusDeLAdresse(nom: NomDestination, adresse: string): string | null {
+export function refusDeLAdresse(
+  nom: NomDestination,
+  adresse: string,
+  facultatives: ReadonlySet<NomDestination> = FACULTATIVES,
+): string | null {
   if (adresse.trim() === '') {
-    return FACULTATIVES.has(nom) ? null : `absente — poser ${VARIABLES[nom]}`
+    return facultatives.has(nom) ? null : `absente — poser ${VARIABLES[nom]}`
   }
 
   if (nom === 'candidature' && adresse.startsWith('mailto:')) {

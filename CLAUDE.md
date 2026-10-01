@@ -64,8 +64,10 @@ déploiement de code. Ce sont des faits d'exploitation, pas des décisions
 d'ingénierie.
 
 **Ce qui remplace la protection, c'est un REFUS.** `npm run destinations`, appelée
-par `prebuild`, arrête la construction si une adresse manque ou si sa forme est
-mauvaise, et son message dit quoi poser. La version d'avant retombait sur l'adresse
+par `prebuild`, arrête la construction si une adresse a une mauvaise forme, ou si
+elle manque alors qu'elle n'est pas dans `FACULTATIVES` (0030), et son message dit
+quoi poser. Une absence acceptée n'est jamais silencieuse : elle s'écrit au
+journal. La version d'avant retombait sur l'adresse
 de production quand la variable manquait : ça passait pour une protection, c'était
 une valeur que personne n'avait relue, déployée en silence. **Aucune valeur par
 défaut** — c'est la règle du socle, et ce dépôt l'enfreignait.
@@ -103,10 +105,14 @@ mort en production. »
 
 Les destinations restent **une seule constante chacune** dans
 `src/content/liens.ts`, jamais un `href` recopié — elles lisent l'environnement à
-cet endroit et nulle part ailleurs. **Le formulaire est la seule qui peut rester
-vide** (0019, amendée le 1er octobre 2026) : il part alors statique, boutons
-d'envoi désactivés, et `tests/formulaire.spec.ts` tient ce bouton. Les deux autres
-sont des liens — vides, des boutons morts — et la construction les refuse.
+cet endroit et nulle part ailleurs.
+
+**Depuis le 1er octobre 2026, les trois peuvent partir vides** — décision 0030,
+ensemble `FACULTATIVES`. Le site en ligne est statique sur les trois : boutons de
+lien rendus sans `href`, formulaire affiché avec ses boutons d'envoi désactivés
+(`tests/formulaire.spec.ts` tient ce bouton). La construction l'écrit au journal,
+ligne « STATIQUE ». **Le jour où une adresse arrive : la poser sur Vercel, PUIS
+retirer son nom de `FACULTATIVES`**, sans quoi la porte ne la protège pas.
 
 Un appel INTERNE ne passe pas par elles : `BoutonPage` produit l'adresse par
 `chemin()`, et il n'y a rien à y protéger.

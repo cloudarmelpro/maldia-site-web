@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { VARIABLES, refusDeLAdresse } from '@/content/liens'
+import { FACULTATIVES, VARIABLES, refusDeLAdresse } from '@/content/liens'
 
 // ── CE QUE CE FICHIER VERIFIE DEPUIS LE 8 SEPTEMBRE 2026 ────────────────────
 //
@@ -25,12 +25,21 @@ import { VARIABLES, refusDeLAdresse } from '@/content/liens'
 describe('les destinations sortantes — ce que la regle refuse', () => {
   it('WEB-1 / 0007 — une adresse absente est refusee, et le message nomme la variable', () => {
     for (const [nom, variable] of Object.entries(VARIABLES)) {
+      if (FACULTATIVES.has(nom as keyof typeof VARIABLES)) continue
       const cause = refusDeLAdresse(nom as keyof typeof VARIABLES, '')
       expect(cause, `${nom} : le vide doit etre refuse`).not.toBeNull()
       expect(cause, `${nom} : le message doit nommer la variable a poser`).toContain(
         variable,
       )
     }
+  })
+
+  it('0019 amendee — le formulaire peut rester vide, et lui seul', () => {
+    // Vide, il est statique : son bouton desactive est tenu par
+    // `tests/formulaire.spec.ts`. Un lien vide, lui, serait un bouton mort —
+    // l'exception ne doit pas s'etendre en silence.
+    expect(refusDeLAdresse('formulaire', '')).toBeNull()
+    expect([...FACULTATIVES]).toEqual(['formulaire'])
   })
 
   it('WEB-1, WEB-2, WEB-3 — une adresse relative est refusee', () => {

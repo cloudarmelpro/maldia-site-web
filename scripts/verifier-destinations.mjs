@@ -29,7 +29,7 @@
 // comme s'il en avait echoue au chargement — pas a l'execution.
 import env from '@next/env'
 
-import { VARIABLES, refusDeLAdresse } from '../src/content/liens.ts'
+import { FACULTATIVES, VARIABLES, refusDeLAdresse } from '../src/content/liens.ts'
 
 env.loadEnvConfig(process.cwd())
 
@@ -41,11 +41,15 @@ for (const [nom, variable] of Object.entries(VARIABLES)) {
 }
 
 if (refus.length === 0) {
-  console.log(
-    `Destinations : ${Object.keys(VARIABLES).length} sur ${Object.keys(VARIABLES).length}, formes verifiees.`,
-  )
+  console.log('Destinations : formes verifiees.')
   for (const [nom, variable] of Object.entries(VARIABLES)) {
-    console.log(`  ${nom.padEnd(12)} ${process.env[variable]}`)
+    const valeur = process.env[variable] ?? ''
+    // Accepte, mais jamais en silence : le journal de construction le dit.
+    const affiche =
+      valeur === '' && FACULTATIVES.has(nom)
+        ? `STATIQUE — ${variable} absente, envoi desactive (0019)`
+        : valeur
+    console.log(`  ${nom.padEnd(12)} ${affiche}`)
   }
   process.exit(0)
 }

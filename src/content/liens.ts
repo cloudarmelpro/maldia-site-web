@@ -50,11 +50,8 @@ export const DESTINATION_RENDEZ_VOUS = process.env.NEXT_PUBLIC_CALENDRIER ?? ''
 /**
  * Ou part un formulaire de la page Contact — decision 0019.
  *
- * Vide, les deux boutons d'envoi sont desactives. Cette application est un
- * export statique, sans serveur pour recevoir un envoi ni stockage pour un CV
- * (WEB-10) : il faut un point de reception TIERS. Un formulaire qui avale une
- * candidature sans destinataire est pire qu'un formulaire absent — le candidat
- * croit avoir postule.
+ * Vide, le formulaire est STATIQUE : affiche, boutons d'envoi desactives. Seule
+ * destination facultative — `tests/formulaire.spec.ts` tient le bouton desactive.
  */
 export const DESTINATION_FORMULAIRE = process.env.NEXT_PUBLIC_RECEPTION_FORMULAIRE ?? ''
 
@@ -80,6 +77,12 @@ export const VARIABLES: Record<NomDestination, string> = {
   rendezVous: 'NEXT_PUBLIC_CALENDRIER',
   formulaire: 'NEXT_PUBLIC_RECEPTION_FORMULAIRE',
 }
+
+/**
+ * Celles qui peuvent rester vides — amendement de 0019. Un bouton de lien vide
+ * serait mort ; un formulaire vide est desactive, et le dit.
+ */
+export const FACULTATIVES: ReadonlySet<NomDestination> = new Set(['formulaire'])
 
 /**
  * Ce qui rend une adresse INACCEPTABLE, ou `null` si elle passe.
@@ -108,7 +111,7 @@ export const VARIABLES: Record<NomDestination, string> = {
  */
 export function refusDeLAdresse(nom: NomDestination, adresse: string): string | null {
   if (adresse.trim() === '') {
-    return `absente — poser ${VARIABLES[nom]}`
+    return FACULTATIVES.has(nom) ? null : `absente — poser ${VARIABLES[nom]}`
   }
 
   if (nom === 'candidature' && adresse.startsWith('mailto:')) {

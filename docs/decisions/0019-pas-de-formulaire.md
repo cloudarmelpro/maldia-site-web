@@ -1,6 +1,7 @@
 # 0019 — Le formulaire de contact n'a pas de destination
 
-**Tranchée.** À rouvrir dès que le client choisit un point de réception.
+**Tranchée, puis amendée le 1er octobre 2026** — voir la dernière section. À
+rouvrir dès que le client choisit un point de réception.
 
 ## Ce que demande le design
 
@@ -83,3 +84,32 @@ ouvré ». Cette phrase engage quelqu'un.
 
 Tant que ces trois réponses n'existent pas, mener à Cal.com et à l'application
 de CV est la seule voie qui aboutisse réellement.
+
+## Amendement du 1er octobre 2026 — le formulaire part en production statique
+
+**Décidé par Maldia** : « on met le formulaire en statique d'abord, pour que ça
+marche ». La construction de production refusait le site entier faute de point
+de réception, et le site en ligne restait figé sur une version antérieure.
+
+**Ce qui change : la porte de construction.** `NEXT_PUBLIC_RECEPTION_FORMULAIRE`
+devient la seule destination **facultative** (`FACULTATIVES`, dans
+`src/content/liens.ts`). Vide, `npm run destinations` l'accepte et l'écrit dans
+le journal de construction — « STATIQUE … envoi désactivé » — au lieu de refuser.
+
+**Ce qui ne change pas : la garantie.** Le paragraphe plus haut qui dit que
+`npm run verifier` refuse tant que le formulaire n'a pas de destination n'est
+plus vrai. La protection contre la candidature perdue, elle, tient toujours, et
+elle n'a jamais reposé sur la porte : c'est le **bouton désactivé**. Rien ne part,
+pas même par la soumission implicite au clavier.
+
+Ce bouton était protégé deux fois ; il ne l'est plus qu'une, donc il est
+**testé** : `tests/formulaire.spec.ts` rend le formulaire vide et branché, et vu
+rouge sur le défaut exact — un bouton qui ne se désactive plus.
+
+**L'exception ne s'étend pas.** Les deux autres destinations sont des LIENS : vides,
+ce seraient des boutons morts, sans rien qui le dise. Elles restent refusées, et
+`tests/liens.spec.ts` fige que `formulaire` est la seule facultative.
+
+**Le risque accepté** : le jour où un point de réception est choisi, oublier de
+poser la variable laisse le formulaire statique. C'est une fonction manquante,
+visible — bouton grisé et note — et non une donnée perdue.

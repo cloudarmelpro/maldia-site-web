@@ -36,8 +36,8 @@ const ID_TITRE_VOIE = 'titre-voie-contact'
  * a cote — la carte Cal.com de la colonne de gauche, et la mention au bas de la
  * page. Voir decision 0019.
  *
- * `tests/liens.spec.ts` echoue tant que la constante est vide : un formulaire
- * mort ne peut pas partir en production par oubli.
+ * Aucune porte de construction ne l'arrete plus (0019 amendee) : c'est
+ * `tests/formulaire.spec.ts` qui tient le bouton desactive.
  */
 export function FormulaireContact({
   onglets,

@@ -103,9 +103,10 @@ mort en production. »
 
 Les destinations restent **une seule constante chacune** dans
 `src/content/liens.ts`, jamais un `href` recopié — elles lisent l'environnement à
-cet endroit et nulle part ailleurs. Deux ne sont pas encore posées — le calendrier
-et le point de réception du formulaire — et `npm run build` reste donc ROUGE : un
-bouton mort ne peut pas partir en production par oubli.
+cet endroit et nulle part ailleurs. **Le formulaire est la seule qui peut rester
+vide** (0019, amendée le 1er octobre 2026) : il part alors statique, boutons
+d'envoi désactivés, et `tests/formulaire.spec.ts` tient ce bouton. Les deux autres
+sont des liens — vides, des boutons morts — et la construction les refuse.
 
 Un appel INTERNE ne passe pas par elles : `BoutonPage` produit l'adresse par
 `chemin()`, et il n'y a rien à y protéger.

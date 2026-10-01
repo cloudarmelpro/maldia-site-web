@@ -107,7 +107,15 @@ function servir(reponse, chemin, code, accepte) {
   else flux.pipe(reponse)
 }
 
-if (!existsSync(RACINE)) {
+/**
+ * Le serveur ne demarre pas quand ce fichier est importe par un test : sans
+ * cette garde, `vitest` ouvrirait un port et ne rendrait jamais la main.
+ */
+const LANCE_DIRECTEMENT = process.argv[1]?.endsWith('serveur.mjs') ?? false
+
+// Sous la garde, et pas avant : les tests tournent dans `prebuild`, donc avant
+// que `out/` existe, et un import ne doit jamais tuer le processus.
+if (LANCE_DIRECTEMENT && !existsSync(RACINE)) {
   // Message explicite plutot qu'un 404 sur toute page : c'est l'erreur de
   // configuration la plus probable, et elle ne se devine pas depuis un journal.
   console.error(
@@ -117,12 +125,6 @@ if (!existsSync(RACINE)) {
   )
   process.exit(1)
 }
-
-/**
- * Le serveur ne demarre pas quand ce fichier est importe par un test : sans
- * cette garde, `vitest` ouvrirait un port et ne rendrait jamais la main.
- */
-const LANCE_DIRECTEMENT = process.argv[1]?.endsWith('serveur.mjs') ?? false
 
 if (LANCE_DIRECTEMENT)
   createServer((requete, reponse) => {
